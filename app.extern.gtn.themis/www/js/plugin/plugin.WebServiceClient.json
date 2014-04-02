@@ -1,0 +1,6 @@
+{
+	"name":"plugin_WebServiceClient",
+	"shortname":"wsc",
+	"webServiceTimeoutMs":5000,
+	"webServiceMethod":"get"
+}

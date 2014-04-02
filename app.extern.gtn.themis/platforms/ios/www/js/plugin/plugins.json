@@ -1,0 +1,14 @@
+{
+	"Debug":true,
+	"FormInputDesigner":true,
+	"GlobalSettings":true,
+	"HTML5Storage":true,
+	"HtmlTemplates":true,
+	"Informator":true,
+	"jQueryExtend":true,
+	"KeyValueStack":true,
+	"LoadExternalScripts":true,
+	"MultilanguageIso639_3":true,
+	"ThemisRestClient":true,
+	"WebServiceClient":true
+}

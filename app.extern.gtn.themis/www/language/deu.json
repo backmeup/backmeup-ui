@@ -1,0 +1,19 @@
+{
+	"actions":{
+		"submit":"Absenden",
+		"okay":"Okay",
+		"cancel":"Abbrechen",
+		"reset":"Zurücksetzen",
+		"register":"Registrieren",
+		"login":"Einloggen",
+		"register":"Registrieren"
+	},
+	"labels":{
+		"password":"Passwort",
+		"username":"Benutzername",
+		"save_username_and_password":"Benutzername und Passwort speichern",
+		"login":"Einloggen",
+		"email":"E-Mail",
+		"register":"Registrieren"
+	}
+}

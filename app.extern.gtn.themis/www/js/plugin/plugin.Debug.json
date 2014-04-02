@@ -1,0 +1,8 @@
+{
+	"name":"plugin_Debug",
+	"shortname":"debug",
+	"debugDevice":true,
+	"debugPanel":true,
+	"doDebugging":false,
+	"debugLevel":1
+}

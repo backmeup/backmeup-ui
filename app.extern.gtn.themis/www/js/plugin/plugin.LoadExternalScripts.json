@@ -1,0 +1,13 @@
+{
+	"name":"LoadExternalScripts",
+	"shortname":"load",
+	"scripts":{
+		"css":{
+			"../css/fonts.css":true,
+			"../css/custom.css":true
+		},
+		"javascript":{
+			"not implemented":false
+		}
+	}
+}

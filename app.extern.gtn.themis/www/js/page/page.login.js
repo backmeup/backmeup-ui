@@ -53,7 +53,7 @@ var page_login = {
 
 		$(container).on("click", "#btnLogin", function() {
 			app.debug.alert("#btnLogin click event", 5);
-			app.trc.getJson("login", {
+			app.rc.getJson("login", {
 				"username" : container.find("#txtUsername").val(),
 				"password" : container.find("#txtPassword").val()
 			});

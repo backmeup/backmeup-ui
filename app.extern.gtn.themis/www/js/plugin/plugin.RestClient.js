@@ -1,4 +1,4 @@
-plugin_ThemisRestClient = {
+plugin_RestClient = {
 	config : null,
 	constructor : function() {
 	},
@@ -17,9 +17,9 @@ plugin_ThemisRestClient = {
 
 	functions : {
 		getJson : function(service, parameter) {
-			app.debug.alert("plugin_ThemisRestClient.functions.getJson()", 5);
-			var url = plugin_ThemisRestClient.config.url;
-			var path = plugin_ThemisRestClient.config.webservices[service];
+			app.debug.alert("plugin_RestClient.functions.getJson()", 5);
+			var url = plugin_RestClient.config.url;
+			var path = plugin_RestClient.config.webservices[service];
 
 			path = path.replace("{BACKMEUP}", url);
 			$.each(parameter, function(key, value) {

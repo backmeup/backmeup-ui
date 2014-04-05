@@ -16,7 +16,9 @@ var plugin_HtmlTemplates = {
 	pageSpecificEvents : function() {
 		app.debug.alert("Plugin: " + this.config.name + ".pageSpecificEvents()", 5);
 	},
-	// public
+	// private functions
+	
+	// public functions
 	// called by user
 	functions : {
 

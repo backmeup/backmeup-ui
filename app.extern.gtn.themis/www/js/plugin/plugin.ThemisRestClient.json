@@ -1,9 +1,0 @@
-{
-	"name":"ThemisRestClient",
-	"shortname":"trc",
-	"url":"www.backmeup.at",
-	"webservices":{
-		"login":"https://{BACKMEUP}/users/{username}/login?password={password}",
-		"register":"https://{BACKMEUP}/users/{username}/register?password={password}&email={email}"
-	}
-}

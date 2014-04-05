@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	var success = true;
+
 	// load plugins
 	var url = "../js/plugin/plugins.js"
 	$.ajax({
@@ -10,8 +12,13 @@ $(document).ready(function() {
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			alert("Fatal error in javascriptLoader.js: Can't load the plugins. Url: " + url + " Error: " + textStatus);
+			alert(errorThrown);
+			success = false;
 		}
 	});
+
+	if (!success)
+		return false;
 
 	// load pages
 	var url = "../js/page/pages.js"
@@ -24,8 +31,12 @@ $(document).ready(function() {
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			alert("Fatal error in javascriptLoader.js: Can't load the pages. Url: " + url + " Error: " + textStatus);
+			alert(errorThrown);
 		}
 	});
+
+	if (!success)
+		return false;
 
 	// load cordova
 	var url = "../cordova.js"
@@ -39,8 +50,13 @@ $(document).ready(function() {
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			alert("Fatal error in javascriptLoader.js: Can't load the plugins. Url: " + url + " Error: " + textStatus);
+			alert(errorThrown);
+			success = false;
 		}
 	});
+
+	if (!success)
+		return false;
 
 	// load jQuery mobile
 	var url = "../ext/jquery.mobile-1.4.2.min.js"
@@ -53,8 +69,12 @@ $(document).ready(function() {
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			alert("Fatal error in javascriptLoader.js: Can't load the plugins. Url: " + url + " Error: " + textStatus);
+			alert(errorThrown);
+			success = false;
 		}
 	});
+	//app.store.localStorage.clear();
+	//app.store.localStorage.show();
 
 });
 
@@ -76,6 +96,9 @@ function JsonLoader(url) {
 }
 
 var app = {
+	config : {
+		name : "themis"
+	},
 	addObject : function(name, object) {
 		// alert("Add object to app: " + name);
 		app[name] = object;

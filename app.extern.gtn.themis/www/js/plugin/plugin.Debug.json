@@ -4,5 +4,7 @@
 	"debugDevice":true,
 	"debugPanel":true,
 	"doDebugging":false,
-	"debugLevel":1
+	"debugLevel":1,
+	"useDebugArray":true,
+	"debugArray":[]
 }

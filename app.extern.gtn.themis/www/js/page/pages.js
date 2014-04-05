@@ -102,7 +102,6 @@ var pages = {
 	// is called only once
 	// use delegates in plugins
 	callPluginPageEventFunctions : function() {
-		app.debug.alert("pages.callPluginPageEventFunctions()", 6);
 		var success = true;
 		$.each(plugins.pluginNames, function(key, value) {
 			try {
@@ -121,7 +120,6 @@ var pages = {
 	// call plugins' page functions
 	// by pagebeforecreate
 	callPluginsPageFunctions : function(container) {
-		app.debug.alert("pages.callPluginsPageFunctions()", 5);
 		var success = true;
 		$.each(plugins.pluginNames, function(key, value) {
 			try {

@@ -49,7 +49,7 @@ var plugins = {
 							success = false;
 							return;
 						}
-						
+
 						try {
 							window['plugin_' + key].config = JsonLoader("../js/plugin/plugin." + key + ".json");
 							if (window['plugin_' + key].config.name == undefined) {
@@ -65,7 +65,7 @@ var plugins = {
 							success = false;
 							return;
 						}
-						
+
 						try {
 							window['plugin_' + key].constructor();
 						} catch (err) {
@@ -73,7 +73,7 @@ var plugins = {
 							success = false;
 							return;
 						}
-						
+
 						try {
 							app.addObject(window['plugin_' + key].config.name, window['plugin_' + key].functions);
 							app.addObject(window['plugin_' + key].config.shortname, window['plugin_' + key].functions);
@@ -95,6 +95,7 @@ var plugins = {
 		});
 		return success;
 	},
+
 	callPluginsLoadedEvent : function() {
 		$.each(plugins.pluginNames, function(key, value) {
 			try {
@@ -104,6 +105,7 @@ var plugins = {
 			}
 		});
 	},
+
 	callPluginEvents : function() {
 		$.each(plugins.pluginNames, function(key, value) {
 			try {

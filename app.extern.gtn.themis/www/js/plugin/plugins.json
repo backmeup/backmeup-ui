@@ -9,6 +9,6 @@
 	"KeyValueStack":true,
 	"LoadExternalScripts":true,
 	"MultilanguageIso639_3":true,
-	"ThemisRestClient":true,
+	"RestClient":true,
 	"WebServiceClient":true
 }

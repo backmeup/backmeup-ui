@@ -1,4 +1,5 @@
 {
 	"name":"Informator",
-	"shortname":"info"
+	"shortname":"info",
+	"useHtml5Storage":true
 }

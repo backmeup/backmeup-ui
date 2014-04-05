@@ -14,7 +14,7 @@ plugin_HTML5Storage = {
 			});
 		});
 	},
-	
+
 	// called by pages.js
 	afterHtmlInjectedBeforePageComputing : function(container) {
 		app.debug.alert("Plugin: " + this.config.name + ".afterHtmlInjectedBeforePageComputing()", 5);
@@ -22,21 +22,52 @@ plugin_HTML5Storage = {
 	pageSpecificEvents : function(container) {
 		app.debug.alert("Plugin: " + this.config.name + ".pageSpecificEvents()", 5);
 	},
-	
+
 	functions : {
-		set : function(key, val) {
-			app.debug.alert('plugin_HTML5Storage.set(' + key + ', ' + val + ')', 3);
-			window.localStorage.setItem(key, val);
+		localStorage : {
+			set : function(key, val) {
+				app.debug.alert('plugin_HTML5Storage.localStorage.set(' + key + ', ' + val + ')', 3);
+				window.localStorage.setItem(app.config.name + "." + key, val);
+			},
+			get : function(key) {
+				app.debug.alert('plugin_HTML5Storage.localStorage.get(' + key + ')', 3);
+				window.localStorage.getItem(app.config.name + "." + key);
+			},
+			clear : function() {
+				window.localStorage.clear();
+			},
+			removeItem : function(key) {
+				window.localStorage.removeItem(app.config.name + "." + key);
+			},
+			show : function() {
+				var string = '';
+				$.each(window.localStorage, function(key, value) {
+					// alert(key.substring(0, app.config.name.length));
+					if (key.substring(0, app.config.name.length) == app.config.name)
+						string += key.substring(app.config.name.length + 1) + " = " + value + "\n";
+				});
+				alert(string);
+			}
 		},
-		get : function(key) {
-			app.debug.alert('plugin_HTML5Storage.get(' + key + ')', 3);
-			window.localStorage.getItem(key);
+		sessionStorage : {
+			set : function(key, val) {
+				app.debug.alert('plugin_HTML5Storage.sessionStorage.set(' + key + ', ' + val + ')', 3);
+				window.sessionStorage.setItem(key, val);
+			},
+			get : function(key) {
+				app.debug.alert('plugin_HTML5Storage.sessionStorage.get(' + key + ')', 3);
+				window.sessionStorage.getItem(key);
+			},
+			clear : function() {
+				window.sessionStorage.clear();
+			},
+			removeItem : function(key) {
+				window.sessionStorage.removeItem(key);
+			},
+			show : function() {
+
+			}
 		},
-		clear : function() {
-			window.localStorage.clear();
-		},
-		removeItem : function(key) {
-			window.localStorage.removeItem(key);
-		}
+		ss : this.sessionStorage,
 	}
 };

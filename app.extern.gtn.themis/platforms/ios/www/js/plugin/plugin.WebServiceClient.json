@@ -1,6 +1,15 @@
 {
-	"name":"plugin_WebServiceClient",
+	"name":"WebServiceClient",
 	"shortname":"wsc",
-	"webServiceTimeoutMs":5000,
-	"webServiceMethod":"get"
+	"defaultWebServiceTimeoutMs":5000,
+	"defaultWebServiceMethod":"post",
+	"defaultWebServiceType":"text",
+	"preferedServer":null,
+	"server":{
+		"first":null,
+		"second":null,
+		"third":null,
+		"fouth":null,
+		"fifth":null
+	}
 }

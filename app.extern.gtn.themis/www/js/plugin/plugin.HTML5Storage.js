@@ -1,10 +1,22 @@
 // data-html5-*
+/**
+ * Plugin:
+ * 
+ * @version 1.0
+ * @namespace
+ */
 plugin_HTML5Storage = {
 	config : null,
 	constructor : function() {
 	},
 	pluginsLoaded : function() {
 	},
+
+	// called after all pages are loaded
+	pagesLoaded : function() {
+		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
+	},
+
 	definePluginEvents : function() {
 		// data-html5-<storage id>
 		$("body").on("click", "a", function(event) {
@@ -23,7 +35,61 @@ plugin_HTML5Storage = {
 		app.debug.alert("Plugin: " + this.config.name + ".pageSpecificEvents()", 5);
 	},
 
+	// private functions
+	setDeep : function(el, key, value) {
+		key = key.split('.');
+		var i = 0, n = key.length;
+		for (; i < n - 1; ++i) {
+			el = el[key[i]];
+		}
+		return el[key[i]] = value;
+	},
+
+	getDeep : function(el, key) {
+		key = key.split('.');
+		var i = 0, n = key.length;
+		for (; i < n; ++i) {
+			el = el[key[i]];
+		}
+		return el;
+	},
+
+	parseValue : function(value) {
+		switch (value) {
+		// is true?
+		case "true":
+			value = true;
+			break;
+		// is false?
+		case "false":
+			value = false;
+			break;
+		// is null?
+		case "null":
+			value = null;
+			break;
+		default:
+			// is int?
+			if (/^(\+|\-){0,1}([0-9])+$/.test(value)) {
+				value = parseInt(value);
+			}
+			// is float?
+			if (/^(\+|\-){0,1}([0-9])+(\.){1}([0-9])+$/.test(value)) {
+				value = parseFloat(value);
+			}
+			break;
+		}
+		return value;
+	},
+
+	// public functions
 	functions : {
+		loadValueIntoObject : function(locator) {
+			var propertyLocation = locator.substring("config.".length);
+			var value = this.localStorage.get(locator);
+			plugin_HTML5Storage.setDeep(window, propertyLocation, value);
+		},
+
 		localStorage : {
 			set : function(key, val) {
 				app.debug.alert('plugin_HTML5Storage.localStorage.set(' + key + ', ' + val + ')', 3);
@@ -31,7 +97,7 @@ plugin_HTML5Storage = {
 			},
 			get : function(key) {
 				app.debug.alert('plugin_HTML5Storage.localStorage.get(' + key + ')', 3);
-				window.localStorage.getItem(app.config.name + "." + key);
+				return plugin_HTML5Storage.parseValue(window.localStorage.getItem(app.config.name + "." + key));
 			},
 			clear : function() {
 				window.localStorage.clear();

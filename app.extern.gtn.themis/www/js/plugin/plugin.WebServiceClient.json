@@ -1,5 +1,5 @@
 {
-	"name":"plugin_WebServiceClient",
+	"name":"WebServiceClient",
 	"shortname":"wsc",
 	"defaultWebServiceTimeoutMs":5000,
 	"defaultWebServiceMethod":"post",

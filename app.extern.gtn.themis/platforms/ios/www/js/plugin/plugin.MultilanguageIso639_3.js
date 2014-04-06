@@ -1,3 +1,9 @@
+/**
+ * Plugin:
+ * 
+ * @version 1.0
+ * @namespace 
+ */
 plugin_MultilanguageIso639_3 = {
 	config : null,
 	dictionary : null,
@@ -5,6 +11,12 @@ plugin_MultilanguageIso639_3 = {
 	},
 	pluginsLoaded : function() {
 	},
+	
+	// called after all pages are loaded
+	pagesLoaded : function() {
+		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
+	},
+	
 	definePluginEvents : function() {
 	},
 

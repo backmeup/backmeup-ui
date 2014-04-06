@@ -1,8 +1,10 @@
 {
-	"name":"plugin_Debug",
+	"name":"Debug",
 	"shortname":"debug",
 	"debugDevice":true,
 	"debugPanel":true,
 	"doDebugging":false,
-	"debugLevel":1
+	"debugLevel":10,
+	"useDebugArray":true,
+	"debugArray":[1,2,3,4,5,6]
 }

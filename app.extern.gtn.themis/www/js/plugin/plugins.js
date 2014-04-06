@@ -1,3 +1,9 @@
+/**
+ * Plugin Manager
+ * 
+ * @version 1.0
+ * @namespace 
+ */
 var plugins = {
 	config : null,
 	pluginNames : [],

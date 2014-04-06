@@ -1,4 +1,10 @@
 //LoadExternalScripts
+/**
+ * Plugin:
+ * 
+ * @version 1.0
+ * @namespace
+ */
 var plugin_LoadExternalScripts = {
 	config : null,
 	// called by plugins.js
@@ -12,6 +18,12 @@ var plugin_LoadExternalScripts = {
 			}
 		});
 	},
+
+	// called after all pages are loaded
+	pagesLoaded : function() {
+		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
+	},
+
 	definePluginEvents : function() {
 	},
 	// called by pages.js

@@ -1,9 +1,21 @@
+/**
+ * Plugin:
+ * 
+ * @version 1.0
+ * @namespace 
+ */
 var plugin_HtmlTemplates = {
 	config : null,
 	constructor : function() {
 	},
 	pluginsLoaded : function() {
 	},
+	
+	// called after all pages are loaded
+	pagesLoaded : function() {
+		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
+	},
+	
 	definePluginEvents : function() {
 	},
 

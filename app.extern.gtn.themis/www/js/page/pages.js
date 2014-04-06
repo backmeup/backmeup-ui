@@ -9,6 +9,24 @@ var pages = {
 			alert("Fatal error: pages.loadPages()");
 		else if (!pages.setEvents())
 			alert("Fatal error: pages.setEvents()");
+		else if (!pages.callPluginsPagesLoaded())
+			alert("Fatal error: pages.callPluginsPagesLoaded()");
+	},
+
+	callPluginsPagesLoaded : function() {
+		var success = null;
+		$.each(plugins.pluginNames, function(key, value) {
+			try {
+				window['plugin_' + value].pagesLoaded();
+				success = true;
+				return;
+			} catch (err) {
+				alert("Fatal error: Cant call plugin_" + value + ".pagesLoaded()");
+				success = false;
+				return;
+			}
+		});
+		return success;
 	},
 
 	loadPageConfig : function() {
@@ -108,7 +126,7 @@ var pages = {
 				app.debug.alert("try to call: plugin_" + value + ".pageSpecificEvents()", 6);
 				window['plugin_' + value].pageSpecificEvents();
 			} catch (err) {
-				alert("Fatal error: Cant invoke plugin_" + value + ".pageSpecificEvents(). Error: "+ err.message);
+				alert("Fatal error: Cant invoke plugin_" + value + ".pageSpecificEvents(). Error: " + err.message);
 				success = false;
 			}
 			if (!success)

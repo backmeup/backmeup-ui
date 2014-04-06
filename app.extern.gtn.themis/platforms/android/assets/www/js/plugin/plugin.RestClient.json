@@ -1,0 +1,20 @@
+{
+	"name":"RestClient",
+	"shortname":"rc",
+	"url":"www.backmeup.at",
+	"webservices":{
+		"template":{
+			"uri":"string uri",
+			"method":"string method",
+			"timeout":"int timeout"
+		},
+		"login":{
+			"uri":"https://{BACKMEUP}/users/{username}/login?password={password}",
+			"method":"post",
+			"timeout":5000
+		},
+		"register":{
+			"uri":"https://{BACKMEUP}/users/{username}/register?password={password}&email={email}"
+		}
+	}
+}

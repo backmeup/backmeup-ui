@@ -1,4 +1,4 @@
-var page_ = {
+var page___Pagename__ = {
 	config : null,
 
 	constructor : function() {
@@ -14,7 +14,7 @@ var page_ = {
 	},
 
 	// load the html structure
-	creator : function() {
+	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 		var success = null;
 		try {
@@ -27,7 +27,7 @@ var page_ = {
 	},
 
 	// set the jquery events
-	setEvents : function() {
+	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 		var success = null;
 		try {
@@ -73,7 +73,7 @@ var page_ = {
 			return success;
 		},
 
-		// Triggered on the ÒfromPageÓ we are transitioning away from, before
+		// Triggered on the ï¿½fromPageï¿½ we are transitioning away from, before
 		// the
 		// actual transition animation is kicked off.
 		pagebeforehide : function(event, container) {
@@ -101,7 +101,7 @@ var page_ = {
 			return success;
 		},
 
-		// Triggered on the ÒtoPageÓ we are transitioning to, before the actual
+		// Triggered on the ï¿½toPageï¿½ we are transitioning to, before the actual
 		// transition animation is kicked off.
 		pagebeforeshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeshow()", 12);
@@ -160,7 +160,7 @@ var page_ = {
 			return success;
 		},
 
-		// Triggered on the ÒfromPageÓ after the transition animation has
+		// Triggered on the ï¿½fromPageï¿½ after the transition animation has
 		// completed.
 		pagehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagehide()", 12);
@@ -229,7 +229,7 @@ var page_ = {
 			return success;
 		},
 
-		// Triggered on the ÒtoPageÓ after the transition animation has
+		// Triggered on the ï¿½toPageï¿½ after the transition animation has
 		// completed.
 		pageshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageshow()", 12);

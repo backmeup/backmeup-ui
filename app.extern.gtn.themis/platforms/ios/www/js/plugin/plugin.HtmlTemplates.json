@@ -1,4 +1,14 @@
 {
 	"name":"HtmlTemplates",
-	"shortname":"template"
+	"shortname":"template",
+	"templates":{
+		"JQueryMobilePageStructure":"../template/JQueryMobilePageStructure.html",
+		"JQueryMobileNavigationPanel":"../template/JQueryMobileNavigationPanel.html",
+		"JQueryMobilePopupDialog":"../template/JQueryMobilePopupDialog.html",
+		"JQueryMobilePopupAlert":"../template/JQueryMobilePopupAlert.html",
+		"themis":{
+			"ThemisHeaderContent":"../template/ThemisHeaderContent.html",
+			"ThemisNavigationPanelContent":"../template/ThemisNavigationPanelContent.html"
+		}
+	}
 }

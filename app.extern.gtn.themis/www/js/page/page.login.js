@@ -7,57 +7,92 @@ var page_login = {
 
 	// load the html structure
 	creator : function(container) {
-		app.debug.alert("page_" + this.config.name + ".creator()", 3);
-		app.template.overwrite("#" + this.config.name, "JQueryMobilePageStructure");
-		app.template.append("#" + this.config.name, "JQueryMobileNavigationPanel");
-		var header = container.find('div[data-role=header]');
-		var content = container.find('div[data-role=content]');
-		var navPanel = container.find('div#nav-panel');
+		var success = null;
+		try {
+			app.debug.alert("page_" + this.config.name + ".creator()", 10);
+			app.template.overwrite("#" + this.config.name, "JQueryMobilePageStructure");
+			app.template.append("#" + this.config.name, "JQueryMobileNavigationPanel")
 
-		// header
-		header.append(plugin_HtmlTemplates.templates.themis.ThemisHeaderContent());
-		// content
-		content.append(app.ni.text.text({
-			"id" : "txtUsername",
-			"placeholder" : app.lang.string("username", "labels"),
-			"label" : true,
-			"labelText" : app.lang.string("username", "labels"),
-			"container" : true
-		}));
-		content.append(app.ni.text.password({
-			"id" : "txtPassword",
-			"placeholder" : app.lang.string("password", "labels"),
-			"label" : true,
-			"labelText" : app.lang.string("password", "labels"),
-			"container" : true
-		}));
-		/*
-		 * content.append(app.ni.checkbox({ "id" : "cbxSaveCedentials" }));
-		 */
-		content.append(app.ni.button.button({
-			"id" : "btnLogin",
-			"placeholder" : app.lang.string("login", "labels"),
-			"label" : true,
-			"labelText" : app.lang.string("login", "labels"),
-			"container" : true,
-			"value" : app.lang.string("login", "actions")
-		}));
+			var header = container.find('div[data-role=header]');
+			var content = container.find('div[data-role=content]');
+			var navPanel = container.find('div#nav-panel');
 
-		// nav-panel
-		navPanel.append(plugin_HtmlTemplates.templates.themis.ThemisNavigationPanelContent());
+			navPanel.append(app.template.get("ThemisNavigationPanelContent", "themis"));
+			header.append(app.template.get("ThemisHeaderContent", "themis"));
+			// content
+			content.append(app.ni.element.h1({
+				"text" : app.lang.string("login", "headlines")
+			}));
+			content.append(app.ni.text.text({
+				"id" : "txtEmail",
+				"placeholder" : app.lang.string("email", "labels"),
+				"label" : true,
+				"labelText" : app.lang.string("email", "labels"),
+				"container" : true
+			}));
+			content.append(app.ni.text.password({
+				"id" : "txtPassword",
+				"placeholder" : app.lang.string("password", "labels"),
+				"label" : true,
+				"labelText" : app.lang.string("password", "labels"),
+				"container" : true
+			}));
+			/*
+			 * content.append(app.ni.checkbox({ "id" : "cbxSaveCedentials" }));
+			 */
+			content.append(app.ni.button.button({
+				"id" : "btnLogin",
+				"placeholder" : app.lang.string("login", "labels"),
+				"label" : true,
+				"labelText" : app.lang.string("login", "labels"),
+				"container" : true,
+				"value" : app.lang.string("login", "actions")
+			}));
+			success = true;
+		} catch (err) {
+			app.debug.log("Error in: ");
+			success = false;
+		}
+		return success;
 
 	},
 
 	// set the jquery events
 	setEvents : function(container) {
-
-		$(container).on("click", "#btnLogin", function() {
-			app.debug.alert("#btnLogin click event", 5);
-			app.rc.getJson("login", {
-				"username" : container.find("#txtUsername").val(),
-				"password" : container.find("#txtPassword").val()
+		var success = null;
+		try {
+			$(container).on("click", "#btnLogin", function() {
+				app.debug.alert("page_" + page_register.config.name + " #btnRegister click", 25);
+				if (!app.help.validate.email(container.find("#txtEmail").val())) {
+					app.notify.alert(app.lang.string("bad_email", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_login", "headlines"))
+				} else if (!app.help.validate.password(container.find("#txtPassword").val(), container.find("#txtPasswordRpt").val())) {
+					app.notify.alert(app.lang.string("bad_password", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_login", "headlines"))
+				} else {
+					if ((json = app.rc.getJson("login", {
+						"username" : container.find("#txtEmail").val(),
+						"password" : container.find("#txtPassword").val()
+					})) != false) {
+						if (json.type == "success") {
+							app.store.localStorage.clear();
+							app.store.localStorage.set("data-html5-themis-loggedin", true);
+							app.store.localStorage.set("data-html5-themis-userid", json.userId);
+							app.store.localStorage.set("data-html5-themis-activated", json.activated);
+							app.store.localStorage.set("data-html5-themis-username", container.find("#txtEmail").val());
+							$(location).attr("href", "start.html");
+						} else {
+							alert("Benutzername oder Passwort falsch.");
+						}
+					} else {
+						app.notify.alert(app.lang.string("bad_login", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_login", "headlines"))
+					}
+				}
 			});
-		});
+			success = true;
+		} catch (err) {
+			app.debug.log("Error in: ");
+			success = false;
+		}
+		return success;
 	},
 
 	events : {
@@ -93,7 +128,7 @@ var page_login = {
 			return success;
 		},
 
-		// Triggered on the ÒfromPageÓ we are transitioning away from, before
+		// Triggered on the ï¿½fromPageï¿½ we are transitioning away from, before
 		// the
 		// actual transition animation is kicked off.
 		pagebeforehide : function(event, container) {
@@ -121,7 +156,7 @@ var page_login = {
 			return success;
 		},
 
-		// Triggered on the ÒtoPageÓ we are transitioning to, before the actual
+		// Triggered on the ï¿½toPageï¿½ we are transitioning to, before the actual
 		// transition animation is kicked off.
 		pagebeforeshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeshow()", 12);
@@ -180,7 +215,7 @@ var page_login = {
 			return success;
 		},
 
-		// Triggered on the ÒfromPageÓ after the transition animation has
+		// Triggered on the ï¿½fromPageï¿½ after the transition animation has
 		// completed.
 		pagehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagehide()", 12);
@@ -249,7 +284,7 @@ var page_login = {
 			return success;
 		},
 
-		// Triggered on the ÒtoPageÓ after the transition animation has
+		// Triggered on the ï¿½toPageï¿½ after the transition animation has
 		// completed.
 		pageshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageshow()", 12);

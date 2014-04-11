@@ -141,9 +141,7 @@ plugin_Informator = {
 			// change html5 storage
 			app.store.localStorage.set("config." + key, value);
 			// change property
-			alert(key + "=" + value);
 			plugin_Informator.setDeep(window, key, value);
-			alert(plugin_Debug.config.doDebugging);
 		}
 	// data-info-URI
 

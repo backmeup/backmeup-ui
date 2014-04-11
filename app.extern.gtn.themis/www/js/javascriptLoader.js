@@ -2,7 +2,7 @@ $(document).ready(function() {
 	var success = true;
 
 	// load plugins
-	var url = "../js/plugin/plugins.js"
+	var url = "../js/plugin/plugins.js";
 	$.ajax({
 		url : url,
 		dataType : "script",
@@ -21,7 +21,7 @@ $(document).ready(function() {
 		return false;
 
 	// load pages
-	var url = "../js/page/pages.js"
+	var url = "../js/page/pages.js";
 	$.ajax({
 		url : url,
 		dataType : "script",
@@ -39,7 +39,7 @@ $(document).ready(function() {
 		return false;
 
 	// load cordova
-	var url = "../cordova.js"
+	var url = "../cordova.js";
 	$.ajax({
 		url : url,
 		dataType : "script",
@@ -59,7 +59,7 @@ $(document).ready(function() {
 		return false;
 
 	// load jQuery mobile
-	var url = "../ext/jquery.mobile-1.4.2.min.js"
+	var url = "../ext/jquery.mobile-1.4.2.min.js";
 	$.ajax({
 		url : url,
 		dataType : "script",
@@ -73,8 +73,8 @@ $(document).ready(function() {
 			success = false;
 		}
 	});
-	//app.store.localStorage.clear();
-	//app.store.localStorage.show();
+	// app.store.localStorage.clear();
+	// app.store.localStorage.show();
 
 });
 
@@ -89,11 +89,33 @@ function JsonLoader(url) {
 			json = data;
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert("Fatal Error: Can't load JSON: " + url);
+			alert("Fatal Error: Can't load JSON. Url: " + url);
 		}
 	});
 	return json;
 }
+
+function TextLoader(url) {
+	var text = null;
+	$.ajax({
+		url : url,
+		async : false,
+		dataType : "text",
+		success : function(data) {
+			// alert(JSON.stringify(data));
+			text = data;
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			alert("Fatal Error: Can't load TEXT. Url: " + url);
+		}
+	});
+	return text;
+}
+
+$(document).bind("mobileinit", function() {
+	$.mobile.ajaxEnabled = false;
+
+});
 
 var app = {
 	config : {

@@ -1,10 +1,10 @@
 {
 	"name":"Debug",
 	"shortname":"debug",
-	"debugDevice":true,
+	"debugDevice":false,
 	"debugPanel":true,
 	"doDebugging":false,
-	"debugLevel":10,
+	"debugLevel":20,
 	"useDebugArray":true,
 	"debugArray":[1,2,3,4,5,6]
 }

@@ -2,7 +2,7 @@
  * Plugin:
  * 
  * @version 1.0
- * @namespace 
+ * @namespace
  */
 var plugin_HtmlTemplates = {
 	config : null,
@@ -10,12 +10,12 @@ var plugin_HtmlTemplates = {
 	},
 	pluginsLoaded : function() {
 	},
-	
+
 	// called after all pages are loaded
 	pagesLoaded : function() {
 		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
 	},
-	
+
 	definePluginEvents : function() {
 	},
 
@@ -27,61 +27,40 @@ var plugin_HtmlTemplates = {
 		app.debug.alert("Plugin: " + this.config.name + ".pageSpecificEvents()", 5);
 	},
 
-	templates : {
-		JQueryMobilePageStructure : function() {
-			var html = '';
-			html += '<div data-role="header"></div>';
-			html += '<!-- /header -->';
-			html += '<div data-role="content"></div>';
-			html += '<!-- /content -->';
-			html += '<div data-role="footer"></div>';
-			html += '<!-- foooter -->';
-			return html;
-		},
-		JQueryMobileNavigationPanel : function() {
-			var html = '';
-			html += '<div data-role="panel" id="nav-panel" data-display="push" data-theme="b">';
-			html += '';
-			html += '</div>';
-			html += '<!-- / left panel -->';
-			return html;
-		},
-		themis : {
-			ThemisHeaderContent : function() {
-				var html = '';
-				html += '<a href="#nav-panel" data-icon="bars" data-iconpos="notext" class=" ui-nodisc-icon ui-btn ui-corner-all ui-icon-bars ui-btn-icon-left ui-btn-icon-notext">Menu</a>';
-				html += '<div class="ui-header-logo"><img src="../images/backmeup_b.png" /></div>';
-				html += '<a class="ui-nodisc-icon ui-btn ui-corner-all ui-icon-search ui-btn-icon-right ui-btn-icon-notext" data-form="ui-icon" title=" Navigation " data-role="button" role="button"> Home </a>';
-				return html;
-			},
-			ThemisNavigationPanelContent : function() {
-				var html = '';
-				html += '<ul data-role="listview">';
-				html += '<li data-icon="delete"><a href="#" data-rel="close">Close menu</a></li>';
-				html += '<li><a href="#" class="backmeuppanellink">Backup erstellen</a></li>';
-				html += '<li><a href="#">Backup Jobs</a></li>';
-				html += '<li><a href="#">Zip Archiv</a></li>';
-				html += '<li><a href="#">Einstellungen</a></li>';
-				html += '<li><a href="#">Logout</a></li>';
-				html += '<li></li>';
-				html += '</ul>';
-				return html;
-			}
+	getText : function(templateId, context) {
+		app.debug.alert("plugin_HtmlTemplates.getText(" + templateId + ", " + context + ")", 14);
+		var text = null;
+		var url = null;
+		if (context != undefined) {
+			url = plugin_HtmlTemplates.config.templates[context][templateId];
+		} else {
+			url = plugin_HtmlTemplates.config.templates[templateId];
+		}
+		
+		if (text = TextLoader(url)) {
+			return text;
+		} else {
+			return false;
 		}
 	},
+
 	functions : {
-		get : function(templateId) {
-			return plugin_HtmlTemplates.templates[templateId];
+		get : function(templateId, context) {
+			app.debug.alert("plugin_HtmlTemplates.functions.get(" + templateId + ", " + context + ")", 20);
+			return plugin_HtmlTemplates.getText(templateId, context);
 		},
-		append : function(selector, templateId) {
-			$(selector).append(plugin_HtmlTemplates.functions.get(templateId));
+		append : function(selector, templateId, context) {
+			app.debug.alert("plugin_HtmlTemplates.functions.append(" + selector + ", " + templateId + ", " + context + ")", 20);
+			$(selector).append(plugin_HtmlTemplates.functions.get(templateId, context));
 		},
-		prepend : function(selector, templateId) {
-			$(selector).prepend(plugin_HtmlTemplates.functions.get(templateId));
+		prepend : function(selector, templateId, context) {
+			app.debug.alert("plugin_HtmlTemplates.functions.prepend(" + selector + ", " + templateId + ", " + context + ")", 20);
+			$(selector).prepend(plugin_HtmlTemplates.functions.get(templateId, context));
 		},
-		overwrite : function(selector, templateId) {
+		overwrite : function(selector, templateId, context) {
+			app.debug.alert("plugin_HtmlTemplates.functions.overwrite(" + selector + ", " + templateId + ", " + context + ")", 20);
 			$(selector).empty();
-			$(selector).prepend(plugin_HtmlTemplates.functions.get(templateId));
+			$(selector).prepend(plugin_HtmlTemplates.functions.get(templateId, context));
 		}
 	}
 };

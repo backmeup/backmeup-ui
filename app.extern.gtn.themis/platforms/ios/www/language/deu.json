@@ -3,17 +3,52 @@
 		"submit":"Absenden",
 		"okay":"Okay",
 		"cancel":"Abbrechen",
-		"reset":"Zur�cksetzen",
+		"reset":"Zurücksetzen",
 		"register":"Registrieren",
 		"login":"Einloggen",
-		"register":"Registrieren"
+		"register":"Registrieren",
+		"verify_email":"E-Mail bestätigen",
+		"resend_verification_key":"Bestätigungs-E-Mail erneut senden",
+		"clear_html5_storage":"Appdaten löschen"
 	},
 	"labels":{
 		"password":"Passwort",
+		"password_rpt":"Passwort widerholen",
 		"username":"Benutzername",
 		"save_username_and_password":"Benutzername und Passwort speichern",
 		"login":"Einloggen",
 		"email":"E-Mail",
-		"register":"Registrieren"
+		"register":"Registrieren",
+		"verification_key":"Bestätigungscode",
+		"verify_email":"E-Mail bestätigen"
+	},
+	"headlines":{
+		"verify_email":"E-Mail Adresse bestätigen",
+		"login":"Einloggen",
+		"register":"Registrieren",
+		"start":"Backmeup & Themis",
+		"bad_login":"Fehler beim Login.",
+		"bad_register":"Fehler bei der Registrierung",
+		"create_backup":"Backup erstellen",
+		"backup_jobs":"Backup Jobs",
+		"zip_archive":"Zip Archiv",
+		"index":"Backmeup & Themis",
+		"settings":"Einstellungen",
+		"clear_html5_storage":"Appdaten löschen",
+		"logout":"Abgemeldet"
+	},
+	"notifications":{
+		"bad_login":"Es ist ein Fehler beim Login aufgetreten. Bitte überprüfen Sie ihren Benutzernamen und ihr Passwort.",
+		"bad_email":"Die E-Mailadresse konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe.",
+		"bad_password":"Das Passwort konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe.",
+		"bad_register":"Fehler bei der Registrierung. Bitte versuchen Sie es erneut.",
+		"bad_verify_email":"Die E-Mail Adresse konnte nicht bestätigt werden. Bitte überprüfen Sie ihren Aktivierungscode.",
+		"resend_verification_mail":"Die Bestätigungs-E-Mail wurde erneut verschickt.",
+		"user_not_activated":"Ihr Benutzer wurde noch nicht aktiviert.",
+		"clear_html5_storage":"Ihre personenbezogenen Appdaten wurden erfolgreich gelöscht.",
+		"varification_key_resend":"Die Aktivierungs E-Mail wurde erneut gesendet."
+	},
+	"texts":{
+		"verify_email":"Eine E-Mail mit einem Bestätigungs-Code wurde an Ihre E-Mail Adresse geschickt. Bitte geben Sie den Bestätigungs-Code ein oder klicken Sie den Bestätigungs-Link um Ihre E-Mail zu verifizieren."
 	}
 }

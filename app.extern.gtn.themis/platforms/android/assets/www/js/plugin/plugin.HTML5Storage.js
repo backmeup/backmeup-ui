@@ -45,6 +45,20 @@ plugin_HTML5Storage = {
 		return el[key[i]] = value;
 	},
 
+	setDeepX : function(el, key, value) {
+		keyS = key.split('.');
+		if (keyS[0]) {
+			if (keyS.length == 1)
+				el[keyS[0]] = value;
+			else {
+				if (el[keyS[0]] == undefined)
+					el[keyS[0]] = {};
+				el[keyS[0]] = this.setDeepX(el[keyS[0]], key.substr(keyS[0].length + 1), value);
+			}
+		}
+		return el;
+	},
+
 	getDeep : function(el, key) {
 		key = key.split('.');
 		var i = 0, n = key.length;
@@ -92,7 +106,7 @@ plugin_HTML5Storage = {
 
 		localStorage : {
 			set : function(key, val) {
-				app.debug.alert('plugin_HTML5Storage.localStorage.set(' + key + ', ' + val + ')', 3);
+				app.debug.alert('plugin_HTML5Storage.localStorage.set(' + key + ', ' + val + ')', 1);
 				window.localStorage.setItem(app.config.name + "." + key, val);
 			},
 			get : function(key) {
@@ -108,11 +122,47 @@ plugin_HTML5Storage = {
 			show : function() {
 				var string = '';
 				$.each(window.localStorage, function(key, value) {
-					// alert(key.substring(0, app.config.name.length));
 					if (key.substring(0, app.config.name.length) == app.config.name)
 						string += key.substring(app.config.name.length + 1) + " = " + value + "\n";
 				});
 				alert(string);
+			},
+			setObject : function(name, object) {
+				app.debug.alert('plugin_HTML5Storage.localStorage.setObject(' + name + ', ' + JSON.stringify(object) + ')', 20);
+				$.each(object, function(key, value) {
+					if (typeof value == "object") {
+						plugin_HTML5Storage.functions.localStorage.setObject((name + "." + key).trim(), value);
+					} else {
+						plugin_HTML5Storage.functions.localStorage.set((name + "." + key).trim(), value);
+					}
+				});
+			},
+			getObject : function(name) {
+				app.debug.alert('plugin_HTML5Storage.localStorage.getObject(' + name + ')', 20);
+				var object = {};
+				for ( var i = 0; i < window.localStorage.length; i++) {
+					if (window.localStorage.key(i).substr(app.config.name.length + 1, name.length) == name) {
+						object = plugin_HTML5Storage.setDeepX(object, window.localStorage.key(i).substr(app.config.name.length + 1), plugin_HTML5Storage.functions.localStorage.get(window.localStorage.key(i).substr(app.config.name.length + 1)));
+					}
+				}
+				if (object[name] != undefined)
+					return object;
+				else {
+					return null;
+				}
+			},
+			removeObject : function(name) {
+				app.debug.alert('plugin_HTML5Storage.localStorage.removeObject(' + name + ')', 20);
+
+				$.each(window.localStorage, function(key, value) {
+					if (key.substr(app.config.name.length + 1, name.length) == name.trim()) {
+						try {
+							window.localStorage.removeItem(key.trim())
+						} catch (err) {
+							alert(err);
+						}
+					}
+				});
 			}
 		},
 		sessionStorage : {

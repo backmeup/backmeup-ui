@@ -1,4 +1,5 @@
 {
 	"name":"native_cordova",
-	"shortname":"cordova"
+	"shortname":"cordova",
+	"cordovaAvailable":null
 }

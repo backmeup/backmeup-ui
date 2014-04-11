@@ -17,6 +17,23 @@ var plugin_LoadExternalScripts = {
 				$("head").append(cssLink);
 			}
 		});
+		$.each(plugin_LoadExternalScripts.config.scripts.javascript, function(key, value) {
+			if (value) {
+				var url = key;
+				$.ajax({
+					url : url,
+					dataType : "script",
+					async : false,
+					success : function(data, textStatus, jqXHR) {
+						;
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						alert("Fatal error in plugin_LoadExternalScripts.js: Can't load the javascript. Url: " + key + " Error: " + textStatus);
+						alert(errorThrown);
+					}
+				});
+			}
+		});
 	},
 
 	// called after all pages are loaded

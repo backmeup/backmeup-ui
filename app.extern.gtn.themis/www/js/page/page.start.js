@@ -7,28 +7,49 @@ var page_start = {
 
 	// load the html structure
 	creator : function(container) {
-		app.debug.alert("page_" + this.config.name + ".creator()", 3);
-		app.template.overwrite("#" + this.config.name, "JQueryMobilePageStructure");
-		container.find('div[data-role=content]').append("test");
-		container.find('div[data-role=content]').append(app.ni.text.text({
-			"id" : "divUsername",
-			"mini" : false,
-			"placeholder" : "Username",
-			"value" : "",
-			"label" : true,
-			"labelText" : "Benutzername",
-			"disabled" : false,
-			"container" : true,
-			"classes" : [],
-			"attibutes" : {
-				"data-html5-username" : "value",
-				"" : ""
+		app.debug.alert("page_" + this.config.name + ".creator()", 10);
+		var success = null;
+		try {
+			if (!app.store.localStorage.get("data-html5-themis-loggedin")) {
+				$(location).attr('href', "login.html");
+			} else if (!app.store.localStorage.get("data-html5-themis-activated")) {
+				app.notify.add.alert(app.lang.string("user_not_activated", "notifications"));
+				//$.mobile.pageContainer.pagecontainer("change", "verify_email.html");
+				 $(location).attr('href', "verify_email.html");
+			} else {
+				app.template.overwrite("#" + this.config.name, "JQueryMobilePageStructure");
+				app.template.append("#" + this.config.name, "JQueryMobileNavigationPanel")
+
+				var header = container.find('div[data-role=header]');
+				var content = container.find('div[data-role=content]');
+				var navPanel = container.find('div#nav-panel');
+
+				navPanel.append(app.template.get("ThemisNavigationPanelContent", "themis"));
+				header.append(app.template.get("ThemisHeaderContent", "themis"));
+
+				content.append(app.ni.element.h1({
+					"text" : app.lang.string("start", "headlines")
+				}));
 			}
-		}));
+			success = true;
+		} catch (err) {
+			app.debug.log("Error in: ");
+			success = false;
+		}
+		return success;
 	},
 
 	// set the jquery events
 	setEvents : function(container) {
+		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
+		var success = null;
+		try {
+			success = true;
+		} catch (err) {
+			app.debug.log("Error in: ");
+			success = false;
+		}
+		return success;
 	},
 
 	events : {
@@ -48,7 +69,7 @@ var page_start = {
 
 		},
 
-		// Triggered on the ÒfromPageÓ we are transitioning away from, before
+		// Triggered on the ï¿½fromPageï¿½ we are transitioning away from, before
 		// the
 		// actual transition animation is kicked off.
 		pagebeforehide : function(event, container) {
@@ -58,9 +79,10 @@ var page_start = {
 		pagebeforeload : function(event, container) {
 		},
 
-		// Triggered on the ÒtoPageÓ we are transitioning to, before the actual
+		// Triggered on the ï¿½toPageï¿½ we are transitioning to, before the actual
 		// transition animation is kicked off.
 		pagebeforeshow : function(event, container) {
+
 		},
 
 		// This event is triggered after the changePage() request has finished
@@ -81,7 +103,7 @@ var page_start = {
 		pagecreate : function(event, container) {
 		},
 
-		// Triggered on the ÒfromPageÓ after the transition animation has
+		// Triggered on the ï¿½fromPageï¿½ after the transition animation has
 		// completed.
 		pagehide : function(event, container) {
 		},
@@ -93,6 +115,7 @@ var page_start = {
 		// Triggered after the page is successfully loaded and inserted into the
 		// DOM.
 		pageload : function(event, container) {
+
 		},
 
 		// Triggered if the page load request failed.
@@ -105,7 +128,7 @@ var page_start = {
 		pageremove : function(event, container) {
 		},
 
-		// Triggered on the ÒtoPageÓ after the transition animation has
+		// Triggered on the ï¿½toPageï¿½ after the transition animation has
 		// completed.
 		pageshow : function(event, container) {
 

@@ -1,5 +1,7 @@
+//plugin_GlobalSettings
 /**
  * Plugin:
+
  * 
  * @version 1.0
  * @namespace plugin_GlobalSettings

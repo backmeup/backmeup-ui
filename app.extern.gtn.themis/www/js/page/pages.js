@@ -156,80 +156,147 @@ var pages = {
 		var success = true;
 
 		// jQuery Mobile Events
-		$(document).on('pagebeforecreate', function(event) {
-			app.debug.alert("pagebeforecreate for each page)", 5);
-
-		});
 
 		// jquery Mobile Events for specific pages
 		$(document).on('pagebeforechange', '.app-page', function(event) {
 			app.debug.alert("pagebeforechange for: " + $(this).attr('id'), 5);
-			window['page_' + $(this).attr('id')].events.pagebeforechange(event, $(this));
+			if (window['page_' + $(this).attr('id')] == undefined) {
+				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
+				$(location).attr('href', "index.html");
+			} else {
+				window['page_' + $(this).attr('id')].events.pagebeforechange(event, $(this));
+			}
 		});
 		$(document).on('pagebeforecreate', '.app-page', function(event) {
 			app.debug.alert("pagebeforecreate for: " + $(this).attr('id'), 5);
-			app.debug.alert('Call: page_' + $(this).attr('id') + "events.pagebeforecreate()", 5);
-			window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
-			app.debug.alert('Call: page_' + $(this).attr('id') + "creator()", 5);
-			window['page_' + $(this).attr('id')].creator($(this));
-			app.debug.alert('Call: page_' + $(this).attr('id') + "setEvents()", 5);
-			window['page_' + $(this).attr('id')].setEvents($(this));
+			if (window['page_' + $(this).attr('id')] == undefined) {
+				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
+				$(location).attr('href', "index.html");
+			} else {
+				window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
+				if (!window['page_' + $(this).attr('id')].creator($(this))) {
+					alert("Fatal error in: " + 'page_' + $(this).attr('id') + ".creator()");
+				}
+				if (!window['page_' + $(this).attr('id')].setEvents($(this))) {
+					alert("Fatal error in: " + 'page_' + $(this).attr('id') + ".setEvents()");
+				}
 
-			// call plugins' page functions
-			app.debug.alert('Call: pages.callPluginsPageFunctions()', 5);
-			pages.callPluginsPageFunctions($(this));
+				// call plugins' page functions
+				app.debug.alert('Call: pages.callPluginsPageFunctions()', 5);
+				pages.callPluginsPageFunctions($(this));
+			}
 		});
 		$(document).on('pagebeforehide', '.app-page', function(event) {
 			app.debug.alert("pagebeforehide for: " + $(this).attr('id'), 5);
-			window['page_' + $(this).attr('id')].events.pagebeforehide(event, $(this));
+			if (window['page_' + $(this).attr('id')] == undefined) {
+				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
+				$(location).attr('href', "index.html");
+			} else {
+				window['page_' + $(this).attr('id')].events.pagebeforehide(event, $(this));
+			}
 		});
 
 		$(document).on('pagebeforeload', '.app-page', function(event) {
 			app.debug.alert("pagebeforeload for: " + $(this).attr('id'), 5);
-			window['page_' + $(this).attr('id')].events.pagebeforeload(event, $(this));
+			if (window['page_' + $(this).attr('id')] == undefined) {
+				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
+				$(location).attr('href', "index.html");
+			} else {
+				window['page_' + $(this).attr('id')].events.pagebeforeload(event, $(this));
+			}
 		});
 		$(document).on('pagebeforeshow', '.app-page', function(event) {
 			app.debug.alert("pagebeforeshow for: " + $(this).attr('id'), 5);
-			window['page_' + $(this).attr('id')].events.pagebeforeshow(event, $(this));
+			if (window['page_' + $(this).attr('id')] == undefined) {
+				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
+				$(location).attr('href', "index.html");
+			} else {
+				window['page_' + $(this).attr('id')].events.pagebeforeshow(event, $(this));
+			}
 		});
 		$(document).on('pagechange', '.app-page', function(event) {
 			app.debug.alert("pagechange for: " + $(this).attr('id'), 5);
-			window['page_' + $(this).attr('id')].events.pagechange(event, $(this));
+			if (window['page_' + $(this).attr('id')] == undefined) {
+				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
+				$(location).attr('href', "index.html");
+			} else {
+				window['page_' + $(this).attr('id')].events.pagechange(event, $(this));
+			}
 		});
 
 		$(document).on('pagechangefailed', '.app-page', function(event) {
 			app.debug.alert("pagechangefailed for: " + $(this).attr('id'), 5);
-			window['page_' + $(this).attr('id')].events.pagechangefailed(event, $(this));
+			if (window['page_' + $(this).attr('id')] == undefined) {
+				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
+				$(location).attr('href', "index.html");
+			} else {
+				window['page_' + $(this).attr('id')].events.pagechangefailed(event, $(this));
+			}
 		});
 		$(document).on('pagecreate', '.app-page', function(event) {
 			app.debug.alert("pagecreate for: " + $(this).attr('id'), 5);
-			window['page_' + $(this).attr('id')].events.pagecreate(event, $(this));
+			if (window['page_' + $(this).attr('id')] == undefined) {
+				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
+				$(location).attr('href', "index.html");
+			} else {
+				window['page_' + $(this).attr('id')].events.pagecreate(event, $(this));
+			}
 		});
 		$(document).on('pagehide', '.app-page', function(event) {
 			app.debug.alert("pagehide for: " + $(this).attr('id'), 5);
-			window['page_' + $(this).attr('id')].events.pagehide(event, $(this));
+			if (window['page_' + $(this).attr('id')] == undefined) {
+				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
+				$(location).attr('href', "index.html");
+			} else {
+				window['page_' + $(this).attr('id')].events.pagehide(event, $(this));
+			}
 		});
 
 		$(document).on('pageinit', '.app-page', function(event) {
 			app.debug.alert("pageinit for: " + $(this).attr('id'), 5);
-			window['page_' + $(this).attr('id')].events.pageinit(event, $(this));
+			if (window['page_' + $(this).attr('id')] == undefined) {
+				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
+				$(location).attr('href', "index.html");
+			} else {
+				window['page_' + $(this).attr('id')].events.pageinit(event, $(this));
+			}
 		});
 		$(document).on('pageload', '.app-page', function(event) {
 			app.debug.alert("pageload for: " + $(this).attr('id'), 5);
-			window['page_' + $(this).attr('id')].events.pageload(event, $(this));
+			if (window['page_' + $(this).attr('id')] == undefined) {
+				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
+				$(location).attr('href', "index.html");
+			} else {
+				window['page_' + $(this).attr('id')].events.pageload(event, $(this));
+			}
 		});
 		$(document).on('pageloadfailed', '.app-page', function(event) {
 			app.debug.alert("pageloadfailed for: " + $(this).attr('id'), 5);
-			window['page_' + $(this).attr('id')].events.pageloadfailed(event, $(this));
+			if (window['page_' + $(this).attr('id')] == undefined) {
+				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
+				$(location).attr('href', "index.html");
+			} else {
+				window['page_' + $(this).attr('id')].events.pageloadfailed(event, $(this));
+			}
 		});
 
 		$(document).on('pageremove', '.app-page', function(event) {
 			app.debug.alert("pageremove for: " + $(this).attr('id'), 5);
-			window['page_' + $(this).attr('id')].events.pageremove(event, $(this));
+			if (window['page_' + $(this).attr('id')] == undefined) {
+				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
+				$(location).attr('href', "index.html");
+			} else {
+				window['page_' + $(this).attr('id')].events.pageremove(event, $(this));
+			}
 		});
 		$(document).on('pageshow', '.app-page', function(event) {
 			app.debug.alert("pageshow for: " + $(this).attr('id'), 5);
-			window['page_' + $(this).attr('id')].events.pageshow(event, $(this));
+			if (window['page_' + $(this).attr('id')] == undefined) {
+				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
+				$(location).attr('href', "index.html");
+			} else {
+				window['page_' + $(this).attr('id')].events.pageshow(event, $(this));
+			}
 		});
 
 		return success;

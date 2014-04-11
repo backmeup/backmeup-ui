@@ -1,7 +1,12 @@
 {
+	"backup_jobs":true,
+	"create_backup":true,
+	"index":true,
 	"login":true,
+	"logout":true,
 	"register":true,
 	"settings":true,
 	"start":true,
-	"startscreen":true
+	"verify_email":true,
+	"zip_archive":true
 }

@@ -1,4 +1,4 @@
-// jsdoc ./ -r -p -d documentation
+// ~/www/js$ jsdoc ./ -r -p -d documentation
 /**
  * Plugin: plugin_TEMPLATE__
  * 
@@ -74,7 +74,7 @@ var plugin_TEMPLATE__ = {
 	// called once
 	// set the jQuery delegates
 	// caller: pages.js
-	pageSpecificEvents : function() {
+	pageSpecificEvents : function(container) {
 		app.debug.alert("plugin_" + this.config.name + ".pageSpecificEvents()", 11);
 		var success = null;
 		try {

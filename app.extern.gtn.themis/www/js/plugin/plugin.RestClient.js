@@ -29,17 +29,16 @@ plugin_RestClient = {
 
 	functions : {
 		getJson : function(service, parameter) {
-			app.debug.alert("plugin_RestClient.functions.getJson()", 5);
-			alert("stop: implementieren");
-			var url = plugin_RestClient.config.url;
-			var path = plugin_RestClient.config.webservices[service];
-
-			path = path.replace("{BACKMEUP}", url);
+			app.debug.alert("plugin_RestClient.functions.getJson(" + service + ", " + JSON.stringify(parameter) + ")", 20);
+			var path = plugin_RestClient.config.webservices[service].url;
 			$.each(parameter, function(key, value) {
 				path = path.replace('{' + key + '}', value);
 			});
-			app.debug.alert("Webservice Uri: " + path, 5);
-			var json = app.wsc.getJson(path.split('?')[0], path.split('?')[1]);
+			var data = path.split('?')[1];
+			if (data == undefined)
+				data = "";
+			var pathX = path.split('?')[0];
+			var json = app.wsc.getJson(pathX, data, plugin_RestClient.config.webservices[service].method, plugin_RestClient.config.webservices[service].timeout);
 			return json;
 		}
 	}

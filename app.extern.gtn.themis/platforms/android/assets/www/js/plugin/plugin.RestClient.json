@@ -1,20 +1,31 @@
 {
 	"name":"RestClient",
 	"shortname":"rc",
-	"url":"www.backmeup.at",
 	"webservices":{
 		"template":{
-			"uri":"string uri",
+			"url":"string url",
 			"method":"string method",
 			"timeout":"int timeout"
 		},
 		"login":{
-			"uri":"https://{BACKMEUP}/users/{username}/login?password={password}",
+			"url":"/users/{username}/login?password={password}",
 			"method":"post",
-			"timeout":5000
+			"timeout":15000
 		},
 		"register":{
-			"uri":"https://{BACKMEUP}/users/{username}/register?password={password}&email={email}"
+			"url":"/users/{username}/register?password={password}&email={email}&keyRing={keyRing}",
+			"method":"post",
+			"timeout":15000
+		},
+		"newVerficiationEmail":{
+			"url":"/users/{username}/newVerificationEmail",
+			"method":"get",
+			"timeout":15000
+		},
+		"verifyEmail":{
+			"url":"/users/{verificationKey}/verifyEmail",
+			"method":"get",
+			"timeout":15000
 		}
 	}
 }

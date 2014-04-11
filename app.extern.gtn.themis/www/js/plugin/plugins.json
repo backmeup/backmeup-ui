@@ -2,6 +2,7 @@
 	"Debug":true,
 	"FormInputDesigner":true,
 	"GlobalSettings":true,
+	"HelperFunctions":true,
 	"HTML5Storage":true,
 	"HtmlTemplates":true,
 	"Informator":true,
@@ -29,6 +30,7 @@
 	"native_splashscreen":true,
 	"native_statusbar":true,
 	"native_vibration":true,
+	"Notification":true,
 	"RestClient":true,
 	"WebServiceClient":true
 }

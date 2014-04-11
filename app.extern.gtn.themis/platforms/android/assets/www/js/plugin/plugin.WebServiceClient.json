@@ -4,9 +4,19 @@
 	"defaultWebServiceTimeoutMs":5000,
 	"defaultWebServiceMethod":"post",
 	"defaultWebServiceType":"text",
-	"preferedServer":null,
+	"preferedServer":{
+		"scheme":null,
+		"scheme_specific_part":null,
+		"host":null,
+		"port":null
+	},
 	"server":{
-		"first":null,
+		"first":{
+			"scheme":"http",
+			"scheme_specific_part":"://",
+			"host":"www.backmeup.at",
+			"port":8080
+		},
 		"second":null,
 		"third":null,
 		"fouth":null,

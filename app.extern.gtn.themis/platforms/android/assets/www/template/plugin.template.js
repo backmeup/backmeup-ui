@@ -1,4 +1,11 @@
-var plugin_native_ = {
+// ~/www/js$ jsdoc ./ -r -p -d documentation
+/**
+ * Plugin: plugin_TEMPLATE__
+ * 
+ * @version 1.0
+ * @namespace plugin_TEMPLATE__
+ */
+var plugin_TEMPLATE__ = {
 	config : null,
 	// called by plugins.js
 	constructor : function() {
@@ -38,7 +45,7 @@ var plugin_native_ = {
 		return success;
 	},
 
-	// called after pluginsLoaded() 
+	// called after pluginsLoaded()
 	// caller: plugins.js
 	definePluginEvents : function() {
 		app.debug.alert("plugin_" + this.config.name + ".definePluginEvents()", 11);
@@ -67,7 +74,7 @@ var plugin_native_ = {
 	// called once
 	// set the jQuery delegates
 	// caller: pages.js
-	pageSpecificEvents : function() {
+	pageSpecificEvents : function(container) {
 		app.debug.alert("plugin_" + this.config.name + ".pageSpecificEvents()", 11);
 		var success = null;
 		try {
@@ -82,6 +89,12 @@ var plugin_native_ = {
 
 	// public functions
 	// called by user
+	/**
+	 * Public functions for plugin_TEMPLATE__
+	 * 
+	 * @namespace plugin_TEMPLATE__.functions
+	 * 
+	 */
 	functions : {
 
 	}

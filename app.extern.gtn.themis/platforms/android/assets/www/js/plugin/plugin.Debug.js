@@ -1,9 +1,9 @@
 /*
  * 1	
- * 2
+ * 2	iterations
  * 3
  * 4
- * 5
+ * 5	jQuery mobile event triggerd
  * 6
  * 7
  * 8
@@ -28,7 +28,7 @@
  * 27
  * 28
  * 29
- * 30
+ * 30	framework initialized
  * 31
  * 32
  * 33
@@ -37,7 +37,23 @@
  * 51
  * 52
  * 53
- * 
+ * ...
+ * 60	only important news to developer
+ * 61
+ * 62
+ * 63
+ * 64
+ * 65
+ * 66
+ * 67
+ * 68
+ * ..
+ * 95
+ * 96
+ * 97
+ * 98
+ * 99
+ * 100	language id debuging
  */
 /**
  * Plugin:
@@ -59,7 +75,7 @@ var plugin_Debug = {
 	 * 
 	 * @private
 	 */
-	logObject : {},
+	logObject : [],
 	// obligate functions
 
 	/**
@@ -77,7 +93,7 @@ var plugin_Debug = {
 	 * @protected
 	 */
 	pluginsLoaded : function() {
-		app.debug.alert(this.config.name + ".pluginsLoaded()", 5);
+		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
 	},
 
 	// called after all pages are loaded
@@ -143,6 +159,14 @@ var plugin_Debug = {
 			}
 			// debug level
 			$('#txtDebugLevel').val(plugin_Debug.config.debugLevel);
+			// log text
+			if (this.config.showLog) {
+				var debugText = "";
+				$.each(this.logObject, function(key, value) {
+					debugText += key + " " + value.replace("\\n", "<br />") + "<br /><br />";
+				});
+				$("#pLog").html(debugText);
+			}
 		}
 	},
 	/**
@@ -175,6 +199,7 @@ var plugin_Debug = {
 		append += '<input type="text" name="txtDebugLevel" id="txtDebugLevel" />';
 		append += '<label for="cbxToggleDebug">Toggle Debug</label>';
 		append += '</fieldset>';
+		append += '<p id="pLog" style="font-size:8px;">Log</p>';
 		append += '</div>';
 		$(container).append(append);
 	},
@@ -198,6 +223,9 @@ var plugin_Debug = {
 			if (plugin_Debug.config.doDebugging && (level >= plugin_Debug.config.debugLevel)) {
 				alert("DebugLevel: " + level + "\n" + text);
 			}
+			if (plugin_Debug.config.logDebug && (level >= plugin_Debug.config.logDebugLevel)) {
+				plugin_Debug.functions.log("DebugLevel: " + level + " > " + text);
+			}
 		},
 		/**
 		 * Add line to log object.
@@ -206,7 +234,8 @@ var plugin_Debug = {
 		 *            text text to log
 		 */
 		log : function(text) {
-			plugin_Debug.logObject[Date.now()] = text;
+			// Date.now()
+			plugin_Debug.logObject.push(Date.now() + " > " + text);
 		},
 		/**
 		 * Shows the log object in an alert window

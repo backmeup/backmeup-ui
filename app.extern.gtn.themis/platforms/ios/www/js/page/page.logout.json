@@ -1,4 +1,5 @@
 {
 	"name":"logout",
-	"shortname":"logout"
+	"shortname":"logout",
+	"useKeepAlive":false
 }

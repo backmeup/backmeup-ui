@@ -16,7 +16,8 @@ var plugin_Notification = {
 		try {
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;
@@ -24,11 +25,13 @@ var plugin_Notification = {
 
 	// called after all plugins are loaded
 	pluginsLoaded : function() {
+		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
 		var success = null;
 		try {
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;
@@ -41,10 +44,10 @@ var plugin_Notification = {
 		var success = null;
 		try {
 
-			// app.store.localStorage.getObject("popup-notifications");
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;
@@ -59,7 +62,8 @@ var plugin_Notification = {
 
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;
@@ -70,11 +74,16 @@ var plugin_Notification = {
 		app.debug.alert("plugin_" + this.config.name + ".afterHtmlInjectedBeforePageComputing()", 11);
 		var success = null;
 		try {
-			$(container).append(app.template.get("JQueryMobilePopupDialog"));
-			$(container).append(app.template.get("JQueryMobilePopupAlert"));
+			// if (!($("#popupDialog").length > 0))
+			app.template.append("#" + $(container).attr("id"), "JQueryMobilePopupDialog");
+			app.template.append("#" + $(container).attr("id"), "JQueryMobilePopupAlert");
+			// $(container).append(app.template.get("JQueryMobilePopupDialog"));
+			// if (!($("#popupAlert").length > 0))
+			// $(container).append(app.template.get("JQueryMobilePopupAlert"));
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;
@@ -86,7 +95,7 @@ var plugin_Notification = {
 		app.debug.alert("plugin_" + this.config.name + ".pageSpecificEvents()", 11);
 		var success = null;
 		try {
-			$(document).on('pageinit', '.app-page', function(event) {
+			$(document).on('pageshow', '.app-page', function(event) {
 				if (!plugin_Notification.notifications)
 					plugin_Notification.notifications = app.store.localStorage.getObject("popup_notifications");
 				app.store.localStorage.removeObject("popup_notifications");
@@ -102,7 +111,8 @@ var plugin_Notification = {
 			});
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;
@@ -116,7 +126,8 @@ var plugin_Notification = {
 				$("#popupAlert div.ui-content h3.ui-title").text(notification.headline);
 				$("#popupAlert div.ui-content p").text(notification.text);
 				$("#popupAlert").popup("open");
-			}, 200);
+				$("#popupAlert").popup("reposition");
+			}, 300);
 			plugin_Notification.callbackFuntion = notification.callback;
 		} else {
 			if (plugin_Notification.notifications != null) {
@@ -133,7 +144,7 @@ var plugin_Notification = {
 						$("#popupAlert div.ui-content h3.ui-title").text(notification.headline);
 						$("#popupAlert div.ui-content p").text(notification.text);
 						$("#popupAlert").popup("open");
-					}, 200);
+					}, 300);
 				}
 			}
 		}
@@ -169,11 +180,15 @@ var plugin_Notification = {
 		dialog : function(text, title) {
 		},
 		add : {
-			alert : function(text, title, headline) {
-				if (title == undefined)
-					title = false;
+			alert : function(text, title, headline, callback) {
+				if (text == undefined)
+					text = false;
 				if (headline == undefined)
 					headline = false;
+				if (title == undefined)
+					title = false;
+				if (callback == undefined)
+					callback = null;
 				if (!plugin_Notification.notifications)
 					plugin_Notification.notifications = app.store.localStorage.getObject("popup_notifications");
 				if (!plugin_Notification.notifications)
@@ -183,7 +198,8 @@ var plugin_Notification = {
 					"type" : "alert",
 					"text" : text,
 					"title" : title,
-					"headline" : headline
+					"headline" : headline,
+					"callback" : callback
 				};
 				app.store.localStorage.setObject("popup_notifications", plugin_Notification.notifications);
 			}

@@ -1,4 +1,5 @@
 {
 	"name":"backup_jobs",
-	"shortname":"backup_jobs"
+	"shortname":"backup_jobs",
+	"useKeepAlive":true
 }

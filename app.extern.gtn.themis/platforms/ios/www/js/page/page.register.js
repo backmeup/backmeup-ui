@@ -53,7 +53,8 @@ var page_register = {
 			}));
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;
@@ -81,7 +82,7 @@ var page_register = {
 							app.store.localStorage.set("data-html5-themis-userid", json.userId);
 							app.store.localStorage.set("data-html5-themis-activated", json.activated);
 							app.store.localStorage.set("data-html5-themis-username", container.find("#txtEmail").val());
-							$(location).attr("href", "verify_email.html");
+							$.mobile.pageContainer.pagecontainer("change", "verify_email.html");
 						} else {
 							app.notify.alert(app.lang.string("bad_register", "notifications"), app.lang.string("register", "headlines"), app.lang.string("bad_register", "headlines"));
 						}
@@ -93,7 +94,8 @@ var page_register = {
 			});
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;

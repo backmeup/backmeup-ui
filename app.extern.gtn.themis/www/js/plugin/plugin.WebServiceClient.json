@@ -3,7 +3,22 @@
 	"shortname":"wsc",
 	"defaultWebServiceTimeoutMs":5000,
 	"defaultWebServiceMethod":"post",
-	"defaultWebServiceType":"text",
+	"defaultWebServiceType":"json",
+	"useKeepAlive":true,
+	"keepAlive":{
+		"keepAliveIntervalInS": 60,
+		"keepAlivePath":"/keepAlive.json",
+		"method":"get",
+		"type":"json",
+		"timeout":"1000",
+		"lastIn10Ms":null,
+		"isAlive":true,
+		"maximumResponseTime":100,
+		"error":{
+			"text":"",
+			"code":0
+		}
+	},
 	"preferedServer":{
 		"scheme":null,
 		"scheme_specific_part":null,

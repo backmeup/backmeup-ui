@@ -1,4 +1,5 @@
 {
 	"name":"register",
-	"shortname":"reg"
+	"shortname":"reg",
+	"useKeepAlive":true
 }

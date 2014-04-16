@@ -2,22 +2,24 @@
  * Plugin:
  * 
  * @version 1.0
- * @namespace 
+ * @namespace
  */
 plugin_Informator = {
 	config : null,
 	constructor : function() {
 	},
 	pluginsLoaded : function() {
+		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
 		var success = null;
-		// load the plugins' configuartion into html5 storage
+
 		try {
+			// load the plugins' configuartion into html5 storage
 			if (this.config.useHtml5Storage && this.config.savePluginConfig) {
 				var global = {};
 				$.each(plugins.pluginNames, function(key, value) {
 					if (global["plugin_" + value] == undefined)
 						global["plugin_" + value] = {};
-					global["plugin_" + value]['config'] = JsonLoader("../js/plugin/plugin." + value + ".json");
+					global["plugin_" + value]['config'] = window['plugin_' + value]['config'];
 				});
 				this.loadConfigurationIntoHtml5Storage(global);
 			}
@@ -33,6 +35,7 @@ plugin_Informator = {
 		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
 		var success = null;
 		try {
+			// load the pages' configuartion into html5 storage
 			if (this.config.useHtml5Storage && this.config.savePageConfig) {
 				var global = {};
 				$.each(pages.pageNames, function(key, value) {
@@ -45,7 +48,8 @@ plugin_Informator = {
 			success = true;
 		} catch (err) {
 			success = false;
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 		}
 		return success;
 	},
@@ -136,10 +140,12 @@ plugin_Informator = {
 	},
 
 	functions : {
-		// auch direkt die datei Šndern
+		// auch direkt die datei ï¿½ndern
 		set : function(key, value) {
 			// change html5 storage
-			app.store.localStorage.set("config." + key, value);
+			if (plugin_Informator.config.useHtml5Storage) {
+				app.store.localStorage.set("config." + key, value);
+			}
 			// change property
 			plugin_Informator.setDeep(window, key, value);
 		}

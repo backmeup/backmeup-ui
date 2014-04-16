@@ -50,7 +50,8 @@ var page_login = {
 			}));
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;
@@ -73,11 +74,12 @@ var page_login = {
 						"password" : container.find("#txtPassword").val()
 					})) != false) {
 						if (json.type == "success") {
+							app.store.localStorage.clear();
 							app.store.localStorage.set("data-html5-themis-loggedin", true);
 							app.store.localStorage.set("data-html5-themis-userid", json.userId);
 							app.store.localStorage.set("data-html5-themis-activated", json.activated);
 							app.store.localStorage.set("data-html5-themis-username", container.find("#txtEmail").val());
-							$.mobile.changePage("start.html");
+							$(location).attr("href", "start.html");
 						} else {
 							alert("Benutzername oder Passwort falsch.");
 						}
@@ -88,7 +90,8 @@ var page_login = {
 			});
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;
@@ -107,7 +110,8 @@ var page_login = {
 			try {
 				success = true;
 			} catch (err) {
-				app.debug.log("Error in: ");
+				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -121,7 +125,8 @@ var page_login = {
 			try {
 				success = true;
 			} catch (err) {
-				app.debug.log("Error in: ");
+				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -136,7 +141,8 @@ var page_login = {
 			try {
 				success = true;
 			} catch (err) {
-				app.debug.log("Error in: ");
+				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -149,7 +155,8 @@ var page_login = {
 			try {
 				success = true;
 			} catch (err) {
-				app.debug.log("Error in: ");
+				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -163,7 +170,8 @@ var page_login = {
 			try {
 				success = true;
 			} catch (err) {
-				app.debug.log("Error in: ");
+				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -178,7 +186,8 @@ var page_login = {
 			try {
 				success = true;
 			} catch (err) {
-				app.debug.log("Error in: ");
+				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -191,7 +200,8 @@ var page_login = {
 			try {
 				success = true;
 			} catch (err) {
-				app.debug.log("Error in: ");
+				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -208,7 +218,8 @@ var page_login = {
 			try {
 				success = true;
 			} catch (err) {
-				app.debug.log("Error in: ");
+				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -222,7 +233,8 @@ var page_login = {
 			try {
 				success = true;
 			} catch (err) {
-				app.debug.log("Error in: ");
+				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -235,7 +247,8 @@ var page_login = {
 			try {
 				success = true;
 			} catch (err) {
-				app.debug.log("Error in: ");
+				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -249,7 +262,8 @@ var page_login = {
 			try {
 				success = true;
 			} catch (err) {
-				app.debug.log("Error in: ");
+				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -262,7 +276,8 @@ var page_login = {
 			try {
 				success = true;
 			} catch (err) {
-				app.debug.log("Error in: ");
+				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -277,7 +292,8 @@ var page_login = {
 			try {
 				success = true;
 			} catch (err) {
-				app.debug.log("Error in: ");
+				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -291,7 +307,8 @@ var page_login = {
 			try {
 				success = true;
 			} catch (err) {
-				app.debug.log("Error in: ");
+				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;

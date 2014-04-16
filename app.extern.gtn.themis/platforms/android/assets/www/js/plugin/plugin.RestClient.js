@@ -13,6 +13,7 @@ plugin_RestClient = {
 
 	// called after all pages are loaded
 	pagesLoaded : function() {
+		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
 		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
 	},
 

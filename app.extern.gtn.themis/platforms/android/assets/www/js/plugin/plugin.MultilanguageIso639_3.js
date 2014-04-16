@@ -10,6 +10,7 @@ plugin_MultilanguageIso639_3 = {
 	constructor : function() {
 	},
 	pluginsLoaded : function() {
+		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
 	},
 
 	// called after all pages are loaded

@@ -9,6 +9,7 @@ plugin_jQueryExtend = {
 	constructor : function() {
 	},
 	pluginsLoaded : function() {
+		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
 		(function($) {
 			// Attrs
 			$.fn.attrs = function(attrs) {

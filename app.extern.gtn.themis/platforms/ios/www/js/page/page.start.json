@@ -1,4 +1,5 @@
 {
 	"name":"start",
-	"shortname":"start"
+	"shortname":"start",
+	"useKeepAlive":true
 }

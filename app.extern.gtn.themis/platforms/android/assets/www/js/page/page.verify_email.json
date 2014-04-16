@@ -1,4 +1,5 @@
 {
 	"name":"verify_email",
-	"shortname":"verify_email"
+	"shortname":"verify_email",
+	"useKeepAlive":true
 }

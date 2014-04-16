@@ -1,4 +1,28 @@
+var pageLoadingTimer = {
+	timerInterval : null,
+	timeIn10Ms : null,
+	startTimer : function() {
+		pageLoadingTimer.timerInterval = window.setInterval("pageLoadingTimer.timerRoutine()", 1);
+	},
+
+	timerRoutine : function() {
+		if (pageLoadingTimer.timeIn10Ms == null)
+			pageLoadingTimer.timeIn10Ms == 0;
+		pageLoadingTimer.timeIn10Ms++;
+	},
+
+	stopTimer : function() {
+		window.clearInterval(pageLoadingTimer.timerInterval);
+		var time = pageLoadingTimer.timeIn10Ms;
+		pageLoadingTimer.timeIn10Ms = null;
+		return time;
+	}
+}
+// pageLoadingTimer.startTimer();
+// alert("Page loading time: " + pageLoadingTimer.stopTimer() + "ms");
+
 $(document).ready(function() {
+
 	var success = true;
 
 	// load plugins
@@ -73,6 +97,9 @@ $(document).ready(function() {
 			success = false;
 		}
 	});
+
+	app.debug.alert("app framework initialized", 30);
+
 	// app.store.localStorage.clear();
 	// app.store.localStorage.show();
 
@@ -112,8 +139,25 @@ function TextLoader(url) {
 	return text;
 }
 
+
+/* on cordova initialisation */
+document.addEventListener("deviceready", onDeviceReady, false);
+
+function onDeviceReady() {
+	app.debug.alert("cordova initialized", 30);
+}
+
 $(document).bind("mobileinit", function() {
+	app.debug.alert("jQuery mobile initialized", 30);
 	$.mobile.ajaxEnabled = false;
+	$.support.cors = true;
+	$.mobile.allowCrossDomainPages = true;
+	$.mobile.page.prototype.options.domCache = false;
+
+	$.mobile.loader.prototype.options.text = "loading";
+	$.mobile.loader.prototype.options.textVisible = false;
+	$.mobile.loader.prototype.options.theme = "a";
+	$.mobile.loader.prototype.options.html = "";
 
 });
 

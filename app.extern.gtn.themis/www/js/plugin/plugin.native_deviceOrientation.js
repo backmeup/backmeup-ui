@@ -12,7 +12,8 @@ var plugin_native_deviceOrientation = {
 		try {
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;
@@ -20,11 +21,13 @@ var plugin_native_deviceOrientation = {
 
 	// called after all plugins are loaded
 	pluginsLoaded : function() {
+		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
 		var success = null;
 		try {
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;
@@ -38,7 +41,8 @@ var plugin_native_deviceOrientation = {
 		try {
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;
@@ -52,7 +56,8 @@ var plugin_native_deviceOrientation = {
 		try {
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;
@@ -65,7 +70,8 @@ var plugin_native_deviceOrientation = {
 		try {
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;
@@ -79,7 +85,8 @@ var plugin_native_deviceOrientation = {
 		try {
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;

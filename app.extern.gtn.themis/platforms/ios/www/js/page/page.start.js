@@ -14,8 +14,8 @@ var page_start = {
 				$(location).attr('href', "login.html");
 			} else if (!app.store.localStorage.get("data-html5-themis-activated")) {
 				app.notify.add.alert(app.lang.string("user_not_activated", "notifications"));
-				$(document).off();
-				$(location).attr('href', "verify_email.html");
+				//$.mobile.pageContainer.pagecontainer("change", "verify_email.html");
+				 $(location).attr('href', "verify_email.html");
 			} else {
 				app.template.overwrite("#" + this.config.name, "JQueryMobilePageStructure");
 				app.template.append("#" + this.config.name, "JQueryMobileNavigationPanel")
@@ -33,7 +33,8 @@ var page_start = {
 			}
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;
@@ -46,7 +47,8 @@ var page_start = {
 		try {
 			success = true;
 		} catch (err) {
-			app.debug.log("Error in: ");
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
 			success = false;
 		}
 		return success;
@@ -60,13 +62,13 @@ var page_start = {
 		// but before the browser history has been modified by the navigation
 		// process.
 		pagebeforechange : function(event, container) {
-					
+
 		},
 
 		// Triggered on the page being initialized, before most plugin
 		// auto-initialization occurs.
 		pagebeforecreate : function(event, container) {
-	
+
 		},
 
 		// Triggered on the �fromPage� we are transitioning away from, before
@@ -82,7 +84,7 @@ var page_start = {
 		// Triggered on the �toPage� we are transitioning to, before the actual
 		// transition animation is kicked off.
 		pagebeforeshow : function(event, container) {
-			
+
 		},
 
 		// This event is triggered after the changePage() request has finished

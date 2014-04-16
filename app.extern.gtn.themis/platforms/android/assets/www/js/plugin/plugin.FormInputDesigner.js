@@ -9,7 +9,7 @@ var plugin_FormInputDesigner = {
 	constructor : function() {
 	},
 	pluginsLoaded : function() {
-
+		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
 	},
 
 	// called after all pages are loaded
@@ -91,7 +91,7 @@ var plugin_FormInputDesigner = {
 	},
 
 	generateInput : function(options, type) {
-		app.debug.alert("plugin_FormInputDesigner.generateInput()", 14);
+		app.debug.alert("plugin_FormInputDesigner.generateInput(" + options + ", " + type + ")", 14);
 		options = plugin_FormInputDesigner.verifyOptions(options);
 		var attributes = plugin_FormInputDesigner.getAttributes(options);
 		var input = '<input type="' + type + '"  ' + attributes + ' />';
@@ -104,7 +104,7 @@ var plugin_FormInputDesigner = {
 	},
 
 	generateOutput : function(options, type) {
-		app.debug.alert("plugin_FormInputDesigner.generateInput()", 14);
+		app.debug.alert("plugin_FormInputDesigner.generateOutput(" + options + ", " + type + ")", 14);
 		options = plugin_FormInputDesigner.verifyOptions(options);
 		var attributes = plugin_FormInputDesigner.getAttributes(options);
 		var output = '<' + type + ' ' + attributes + '>' + options.text + '</' + type + '>';

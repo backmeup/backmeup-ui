@@ -11,6 +11,7 @@ var plugin_LoadExternalScripts = {
 	constructor : function() {
 	},
 	pluginsLoaded : function() {
+		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
 		$.each(plugin_LoadExternalScripts.config.scripts.css, function(key, value) {
 			if (value) {
 				var cssLink = "<link rel='stylesheet' type='text/css' href='" + key + "'>";

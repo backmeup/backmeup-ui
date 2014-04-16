@@ -1,4 +1,5 @@
 {
 	"name":"settings",
-	"shortname":"settings"
+	"shortname":"settings",
+	"useKeepAlive":false
 }

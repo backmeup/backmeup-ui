@@ -9,6 +9,7 @@ var plugin_HtmlTemplates = {
 	constructor : function() {
 	},
 	pluginsLoaded : function() {
+		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
 	},
 
 	// called after all pages are loaded
@@ -36,7 +37,7 @@ var plugin_HtmlTemplates = {
 		} else {
 			url = plugin_HtmlTemplates.config.templates[templateId];
 		}
-		
+
 		if (text = TextLoader(url)) {
 			return text;
 		} else {

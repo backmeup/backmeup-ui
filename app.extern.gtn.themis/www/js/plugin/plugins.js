@@ -2,7 +2,7 @@
  * Plugin Manager
  * 
  * @version 1.0
- * @namespace 
+ * @namespace
  */
 var plugins = {
 	config : null,
@@ -44,7 +44,10 @@ var plugins = {
 		var success = true;
 		$.each(plugins.config, function(key, value) {
 			if (value == true) {
-				var url = "../js/plugin/plugin." + key + ".js";
+				var min = "";
+				if (app.config.min)
+					min = "-min";
+				var url = "../js/plugin/plugin." + key + min + ".js";
 				$.ajax({
 					url : url,
 					async : false,

@@ -23,6 +23,7 @@
 		"verify_email":"E-Mail bestätigen"
 	},
 	"headlines":{
+		"bad_connection":"Schlechte Verbindung",
 		"verify_email":"E-Mail Adresse bestätigen",
 		"login":"Einloggen",
 		"register":"Registrieren",
@@ -38,6 +39,7 @@
 		"logout":"Abgemeldet"
 	},
 	"notifications":{
+		"bad_connection":"Der Verbindungsaufbau zum Themis-Server dauert zu lange. Sie werden zur Startseite weitergeleitet.",
 		"bad_login":"Es ist ein Fehler beim Login aufgetreten. Bitte überprüfen Sie ihren Benutzernamen und ihr Passwort.",
 		"bad_email":"Die E-Mailadresse konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe.",
 		"bad_password":"Das Passwort konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe.",

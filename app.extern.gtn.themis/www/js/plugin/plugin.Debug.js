@@ -235,7 +235,7 @@ var plugin_Debug = {
 		 */
 		log : function(text) {
 			// Date.now()
-			plugin_Debug.logObject.push(Date.now() + " > " + text);
+			plugin_Debug.logObject.push(" > " + text);
 		},
 		/**
 		 * Shows the log object in an alert window

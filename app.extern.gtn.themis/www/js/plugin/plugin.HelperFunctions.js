@@ -133,7 +133,7 @@ var plugin_HelperFunctions = {
 			}
 		},
 		random : {
-			int : function(digits) {
+			integer : function(digits) {
 				return Math.floor((Math.random() * digits) + 1);
 			}
 		}

@@ -20,6 +20,7 @@ var page_index = {
 		var success = null;
 		try {
 			if (app.store.localStorage.get("data-html5-themis-loggedin")) {
+				$(document).off();
 				$(location).attr('href', "start.html");
 			} else {
 				app.debug.alert("page_" + this.config.name + ".creator()", 10);

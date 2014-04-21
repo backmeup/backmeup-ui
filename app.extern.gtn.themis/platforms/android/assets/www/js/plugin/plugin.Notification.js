@@ -119,7 +119,7 @@ var plugin_Notification = {
 	},
 	// private functions
 	popupShow : function(notification) {
-		// alert(JSON.stringify(plugin_Notification.notifications['popup_notifications']));
+		// alert(JSON.stringify(plugin_Notification.notifications));
 		if (notification != undefined) {
 			setTimeout(function() {
 				$("#popupAlert div[data-role=header] h1").text(notification.title);
@@ -167,7 +167,7 @@ var plugin_Notification = {
 			if (title == undefined)
 				title = false;
 			if (callback == undefined)
-				callback = null;
+				callback = false;
 			notification = {
 				"type" : "alert",
 				"text" : text,
@@ -188,7 +188,7 @@ var plugin_Notification = {
 				if (title == undefined)
 					title = false;
 				if (callback == undefined)
-					callback = null;
+					callback = false;
 				if (!plugin_Notification.notifications)
 					plugin_Notification.notifications = app.store.localStorage.getObject("popup_notifications");
 				if (!plugin_Notification.notifications)

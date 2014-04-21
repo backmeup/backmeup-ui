@@ -1,26 +1,3 @@
-var pageLoadingTimer = {
-	timerInterval : null,
-	timeIn10Ms : null,
-	startTimer : function() {
-		pageLoadingTimer.timerInterval = window.setInterval("pageLoadingTimer.timerRoutine()", 1);
-	},
-
-	timerRoutine : function() {
-		if (pageLoadingTimer.timeIn10Ms == null)
-			pageLoadingTimer.timeIn10Ms == 0;
-		pageLoadingTimer.timeIn10Ms++;
-	},
-
-	stopTimer : function() {
-		window.clearInterval(pageLoadingTimer.timerInterval);
-		var time = pageLoadingTimer.timeIn10Ms;
-		pageLoadingTimer.timeIn10Ms = null;
-		return time;
-	}
-}
-// pageLoadingTimer.startTimer();
-// alert("Page loading time: " + pageLoadingTimer.stopTimer() + "ms");
-
 $(document).ready(function() {
 
 	var success = true;
@@ -139,7 +116,6 @@ function TextLoader(url) {
 	return text;
 }
 
-
 /* on cordova initialisation */
 document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -163,10 +139,13 @@ $(document).bind("mobileinit", function() {
 
 var app = {
 	config : {
-		name : "themis"
+		name : "themis",
+		min : false
 	},
 	addObject : function(name, object) {
 		// alert("Add object to app: " + name);
 		app[name] = object;
 	}
 };
+
+

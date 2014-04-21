@@ -169,15 +169,13 @@ var pages = {
 		});
 		$(document).on('pagebeforecreate', '.app-page', function(event) {
 			app.debug.alert("jQuery mobile event: pagebeforecreate for: " + $(this).attr('id'), 5);
+			// app.store.localStorage.log();
 			if (window['page_' + $(this).attr('id')] == undefined) {
 				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file. You'll be redirected to the index.html page.");
 				$(location).attr('href', "index.html");
 			} else {
 				if (plugin_WebServiceClient.config.useKeepAlive) {
 					if (window['page_' + $(this).attr('id')].config.useKeepAlive != undefined) {
-						// page useKeepAlive = true && WebServiceClient
-						// useKeepAlive = true && isAlive = true
-						//alert(window['page_' + $(this).attr('id')].config.useKeepAlive + "" + plugin_WebServiceClient.config.useKeepAlive + "" + plugin_WebServiceClient.config.keepAlive.isAlive)
 						if (window['page_' + $(this).attr('id')].config.useKeepAlive) {
 							if (plugin_WebServiceClient.config.keepAlive.isAlive) {
 								window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
@@ -193,12 +191,15 @@ var pages = {
 								pages.callPluginsPageFunctions($(this));
 							} else {
 								app.debug.alert("Can't load page because keepAlive failed. Check your connection. You'll be redirected to the index.html page.", 60);
+								app.notify.add.alert(app.lang.string("bad_connection", "notifications"), app.lang.string("bad_connection", "headlines"), app.lang.string("bad_connection", "headlines"));
+								app.store.localStorage.clearHtml5();
+								$(document).off();
 								$(location).attr('href', "index.html");
 							}
 						}
 
 						else {
-							//alert("no keep alive on page");
+							// alert("no keep alive on page");
 							window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
 							if (!window['page_' + $(this).attr('id')].creator($(this))) {
 								alert("Fatal error in: " + 'page_' + $(this).attr('id') + ".creator()");
@@ -225,7 +226,7 @@ var pages = {
 						pages.callPluginsPageFunctions($(this));
 					}
 				} else {
-					//alert("plugin keep alive false")
+					// alert("plugin keep alive false")
 					// load the page and don't care about keep alive
 					// 
 					window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));

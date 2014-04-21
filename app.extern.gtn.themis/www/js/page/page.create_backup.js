@@ -28,6 +28,8 @@ var page_create_backup = {
 			var navPanel = container.find('div#nav-panel');
 
 			navPanel.append(app.template.get("ThemisNavigationPanelContent", "themis"));
+			navPanel.find("ul").prepend('<li><a href="usersettings.html" >' + app.store.localStorage.get("data-html5-themis-username") + '</a></li>');
+
 			header.append(app.template.get("ThemisHeaderContent", "themis"));
 			// content
 			content.append(app.ni.element.h1({

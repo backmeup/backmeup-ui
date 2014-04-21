@@ -7,13 +7,13 @@
 	"useKeepAlive":true,
 	"keepAlive":{
 		"keepAliveIntervalInS": 60,
-		"keepAlivePath":"/keepAlive.json",
+		"keepAlivePath":"/datasources",
 		"method":"get",
 		"type":"json",
 		"timeout":"1000",
-		"lastIn10Ms":null,
+		"lastDuration":null,
 		"isAlive":true,
-		"maximumResponseTime":100,
+		"maximumResponseTime":3000,
 		"error":{
 			"text":"",
 			"code":0

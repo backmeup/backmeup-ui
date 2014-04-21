@@ -103,7 +103,7 @@ plugin_WebServiceClient = {
 					json = data;
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
-					app.debug.alert("Error in: plugin_WebServiceClient.getAjax(). Error: " + errorThrown, 13);
+					app.debug.alert("Error in: plugin_WebServiceClient.getAjax(). Error: " + errorThrown, 50);
 					json = false;
 				}
 			});
@@ -116,33 +116,73 @@ plugin_WebServiceClient = {
 		return json;
 	},
 
+	keepAliveStartTime : 0.0,
+
+	keepAliveSuccess : function() {
+		var wsDuration = performance.now() - plugin_WebServiceClient.keepAliveStartTime;
+		if (wsDuration >= plugin_WebServiceClient.config.keepAlive.maximumResponseTime) {
+			app.info.set("plugin_WebServiceClient.config.keepAlive.isAlive", false);
+			app.info.set("plugin_WebServiceClient.config.keepAlive.error.code", 2);
+			app.info.set("plugin_WebServiceClient.config.keepAlive.error.text", "Timeout error");
+		} else {
+			app.info.set("plugin_WebServiceClient.config.keepAlive.lastDuration", wsDuration);
+			app.info.set("plugin_WebServiceClient.config.keepAlive.isAlive", true);
+			app.info.set("plugin_WebServiceClient.config.keepAlive.error.code", 0);
+			app.info.set("plugin_WebServiceClient.config.keepAlive.error.text", "No error");
+		}
+		if (!plugin_WebServiceClient.config.keepAlive.isAlive) {
+			app.debug.alert("KeepAlive request failed.\nReason: " + plugin_WebServiceClient.config.keepAlive.error.text + "\nTime: " + wsDuration, 60);
+		}
+		
+	},
+
+	keepAliveError : function() {
+		var wsDuration = performance.now() - plugin_WebServiceClient.keepAliveStartTime;
+		app.info.set("plugin_WebServiceClient.config.keepAlive.lastDuration", wsDuration);
+		app.info.set("plugin_WebServiceClient.config.keepAlive.isAlive", false);
+		app.info.set("plugin_WebServiceClient.config.keepAlive.error.code", 1);
+		app.info.set("plugin_WebServiceClient.config.keepAlive.error.text", "Webservice Error");
+		if (!plugin_WebServiceClient.config.keepAlive.isAlive) {
+			app.debug.alert("KeepAlive request failed.\nReason: " + plugin_WebServiceClient.config.keepAlive.error.text + "\nTime: " + wsDuration, 60);
+		}
+	},
+
+	keepAliveAjax : function(url, data, type, method, timeout) {
+		app.debug.alert("plugin_WebServiceClient.keepAliveAjax(" + url + ", " + data + ", " + type + ", " + method + ", " + timeout + ")", 14);
+		try {
+			$.ajax({
+				url : url,
+				data : data,// ?key=value
+				dataType : type, // json
+				async : true,
+				method : method, // post
+				timeout : timeout, // 5000
+				success : plugin_WebServiceClient.keepAliveSuccess,
+				error : plugin_WebServiceClient.keepAliveError
+			});
+		} catch (err) {
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
+		}
+	},
+
 	/*
 	 * 
 	 * 0 OK; 1 Webservice failed; 2 Timeout Error
 	 */
-	keepAliveRequest : function(type) {
+	keepAliveRequest : function() {
 		app.debug.alert("plugin_WebServiceClient.newKeepAliveRequest()", 14);
 		var path = plugin_WebServiceClient.config.keepAlive.keepAlivePath;
 		var data = "";
 		var method = plugin_WebServiceClient.config.keepAlive.method;
 		var timeout = plugin_WebServiceClient.config.keepAlive.timeout;
-		var timeIn10Ms = 0;
+		var server = plugin_WebServiceClient.getPreferedServer();
+		var url = server.scheme + server.scheme_specific_part + server.host + ":" + server.port + path;
+		var wsDuration = 0;
 		switch (plugin_WebServiceClient.config.keepAlive.type) {
 		case "json":
-			plugin_WebServiceClient.startTimer();
-			if (plugin_WebServiceClient.functions.getJson(path, data, method, timeout) != false) {
-				timeIn10Ms = plugin_WebServiceClient.stopTimer();
-				app.info.set("plugin_WebServiceClient.config.keepAlive.lastIn10Ms", timeIn10Ms);
-				app.info.set("plugin_WebServiceClient.config.keepAlive.isAlive", true);
-				app.info.set("plugin_WebServiceClient.config.keepAlive.error.code", 0);
-				app.info.set("plugin_WebServiceClient.config.keepAlive.error.text", "No error");
-			} else {
-				timeIn10Ms = plugin_WebServiceClient.stopTimer();
-				app.info.set("plugin_WebServiceClient.config.keepAlive.lastIn10Ms", timeIn10Ms);
-				app.info.set("plugin_WebServiceClient.config.keepAlive.isAlive", false);
-				app.info.set("plugin_WebServiceClient.config.keepAlive.error.code", 1);
-				app.info.set("plugin_WebServiceClient.config.keepAlive.error.text", "Webservice Error");
-			}
+			plugin_WebServiceClient.keepAliveStartTime = performance.now();
+			plugin_WebServiceClient.keepAliveAjax(url, data, "json", method, timeout);
 			break;
 		case "xml":
 			alert("still not implemented");
@@ -156,37 +196,6 @@ plugin_WebServiceClient = {
 		default:
 			alert("keepAliveRequest: no such type: " + plugin_WebServiceClient.config.keepAlive.type);
 		}
-		app.info.set("plugin_WebServiceClient.config.keepAlive.lastIn10Ms", timeIn10Ms);
-		if (timeIn10Ms && (timeIn10Ms * 10 >= plugin_WebServiceClient.config.keepAlive.maximumResponseTime)) {
-			app.info.set("plugin_WebServiceClient.config.keepAlive.isAlive", false);
-			app.info.set("plugin_WebServiceClient.config.keepAlive.error.code", 2);
-			app.info.set("plugin_WebServiceClient.config.keepAlive.error.text", "Timeout error");
-		}
-		if (!plugin_WebServiceClient.config.keepAlive.isAlive) {
-			app.debug.alert("KeepAlive request failed.\nReason: " + plugin_WebServiceClient.config.keepAlive.error.text + "\nTime: " + timeIn10Ms, 60);
-		}
-	},
-
-	// timer
-	timerInterval : null,
-	timeIn10Ms : null,
-	startTimer : function() {
-		// alert("Start timer");
-		plugin_WebServiceClient.timerInterval = window.setInterval("plugin_WebServiceClient.timerRoutine()", 10);
-	},
-
-	timerRoutine : function() {
-		if (plugin_WebServiceClient.timeIn10Ms == null)
-			plugin_WebServiceClient.timeIn10Ms == 0;
-		plugin_WebServiceClient.timeIn10Ms++;
-	},
-
-	stopTimer : function() {
-		// alert("stop timer");
-		window.clearInterval(plugin_WebServiceClient.timerInterval);
-		var time = plugin_WebServiceClient.timeIn10Ms;
-		plugin_WebServiceClient.timeIn10Ms = null;
-		return time;
 	},
 
 	functions : {

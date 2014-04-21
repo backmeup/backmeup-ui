@@ -11,7 +11,8 @@ var page_start = {
 		var success = null;
 		try {
 			if (!app.store.localStorage.get("data-html5-themis-loggedin")) {
-				$(location).attr('href', "login.html");
+				$(document).off();
+				$(location).attr('href', "index.html");
 			} else if (!app.store.localStorage.get("data-html5-themis-activated")) {
 				app.notify.add.alert(app.lang.string("user_not_activated", "notifications"));
 				//$.mobile.pageContainer.pagecontainer("change", "verify_email.html");

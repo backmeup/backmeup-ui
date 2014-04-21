@@ -7,6 +7,7 @@
 	"register":true,
 	"settings":true,
 	"start":true,
+	"usersettings":true,
 	"verify_email":true,
 	"zip_archive":true
 }

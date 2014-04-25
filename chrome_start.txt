@@ -1,0 +1,2 @@
+"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" C:\backmeup-ui\app.extern.gtn.themis\www\index.html --disable-web-security
+

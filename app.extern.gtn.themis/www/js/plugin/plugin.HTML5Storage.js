@@ -22,8 +22,10 @@ plugin_HTML5Storage = {
 		// data-html5-<storage id>
 		$("body").on("click", "a", function(event) {
 			$.each($(this).attrs(), function(key, value) {
-				if (key.substring(0, 11).trim().toLowerCase() == "data-html5-")
-					plugin_HTML5Storage.functions.set(key.substring(11), value)
+				if (key.substring(0, 11).trim().toLowerCase() == "data-html5-") {
+					app.debug.alert("Set html5 data from LINK to localStorage.\n" + key + " = " + value, 60);
+					plugin_HTML5Storage.functions.localStorage.set(key, value);
+				}
 			});
 		});
 	},

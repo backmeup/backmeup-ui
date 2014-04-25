@@ -188,7 +188,7 @@ var plugin_Debug = {
 	appendDebugArea : function(container) {
 		app.debug.alert(this.config.name + ".appendDebugArea()", 5);
 		// get inputs via FormInputDesigner
-		var append = '<hr />';
+		var append = '<div>&nbsp;</div>';
 		append += '<div id="divDebugCheckbox" data-role="fieldcontain">';
 		append += '<fieldset class="debugGroup" data-role="controlgroup">';
 		append += '<legend>Debug Area:</legend>';

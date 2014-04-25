@@ -1,0 +1,5 @@
+{
+	"name":"backup_log",
+	"shortname":"backup_log",
+	"useKeepAlive":true
+}

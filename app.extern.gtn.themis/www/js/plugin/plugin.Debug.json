@@ -3,7 +3,7 @@
 	"shortname":"debug",
 	"debugDevice":true,
 	"debugPanel":true,
-	"doDebugging":true,
+	"doDebugging":false,
 	"debugLevel":50,
 	"useDebugArray":true,
 	"debugArray":[1,2,3,4,5,6],

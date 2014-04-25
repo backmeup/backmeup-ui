@@ -9,6 +9,26 @@ plugin_RestClient = {
 	constructor : function() {
 	},
 	pluginsLoaded : function() {
+		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
+		var success = null;
+		try {
+			// load the webservice definitions
+			$.each(plugin_RestClient.config.wsdFiles, function(path, loadFile) {
+				if (loadFile) {
+					var json = JsonLoader(path);
+					// alert(JSON.stringify(json));
+					$.each(json, function(name, values) {
+						plugin_RestClient.config.webservices[name] = values;
+					});
+				}
+			});
+			success = true;
+		} catch (err) {
+			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.log(JSON.stringify(err, null, 4));
+			success = false;
+		}
+		return success;
 	},
 
 	// called after all pages are loaded
@@ -32,9 +52,11 @@ plugin_RestClient = {
 		getJson : function(service, parameter) {
 			app.debug.alert("plugin_RestClient.functions.getJson(" + service + ", " + JSON.stringify(parameter) + ")", 20);
 			var path = plugin_RestClient.config.webservices[service].url;
-			$.each(parameter, function(key, value) {
-				path = path.replace('{' + key + '}', value);
-			});
+			if (parameter != undefined) {
+				$.each(parameter, function(key, value) {
+					path = path.replace('{' + key + '}', value);
+				});
+			}
 			var data = path.split('?')[1];
 			if (data == undefined)
 				data = "";

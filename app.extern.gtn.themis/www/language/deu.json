@@ -9,7 +9,10 @@
 		"register":"Registrieren",
 		"verify_email":"E-Mail bestätigen",
 		"resend_verification_key":"Bestätigungs-E-Mail erneut senden",
-		"clear_html5_storage":"Appdaten löschen"
+		"clear_html5_storage":"Appdaten löschen",
+		"backup_edit":"Backup editieren",
+		"backup_delete":"Backup löschen",
+		"backup_log":"Backup-Log"
 	},
 	"labels":{
 		"password":"Passwort",
@@ -23,6 +26,12 @@
 		"verify_email":"E-Mail bestätigen"
 	},
 	"headlines":{
+		"backup_log":"Backup-Log",
+		"backup_edit":"Backup bearbeiten",
+		"datasource":"Datenquelle",
+		"datasink":"Speicherziel",
+		"job_status":"Backupstatus",
+		"job_details":"Detailansicht Backup Job",
 		"user_settings":"Benutzer Einstellungen",
 		"bad_connection":"Schlechte Verbindung",
 		"verify_email":"E-Mail Adresse bestätigen",

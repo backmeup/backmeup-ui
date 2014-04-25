@@ -10,10 +10,10 @@
 		"keepAlivePath":"/datasources",
 		"method":"get",
 		"type":"json",
-		"timeout":"6000",
+		"timeout":"12000",
 		"lastDuration":null,
 		"isAlive":true,
-		"maximumResponseTime":6000,
+		"maximumResponseTime":13000,
 		"error":{
 			"text":"",
 			"code":0

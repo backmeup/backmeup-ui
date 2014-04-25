@@ -35,6 +35,15 @@ var page_create_backup = {
 			content.append(app.ni.element.h1({
 				"text" : app.lang.string("create_backup", "headlines")
 			}));
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			success = true;
 		} catch (err) {
 			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);

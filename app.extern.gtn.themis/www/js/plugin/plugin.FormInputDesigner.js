@@ -54,9 +54,11 @@ var plugin_FormInputDesigner = {
 
 	getClasses : function(options) {
 		var classes = "";
-		$.each(options.classes, function(key, value) {
-			classes += value + " ";
-		});
+		if (options.classes != undefined) {
+			$.each(options.classes, function(key, value) {
+				classes += value + " ";
+			});
+		}
 		return classes;
 	},
 
@@ -223,7 +225,19 @@ var plugin_FormInputDesigner = {
 		},
 		checkbox : {},
 		collabsible : {},
-		list : {},
+		list : {
+			thumbnail : function(options) {
+				app.debug.alert("plugin_FormInputDesigner.functions.list.thumbnail()", 20);
+				var thumbnail = '<li>';
+				thumbnail += '<a href="' + options.href + '" ' + plugin_FormInputDesigner.getAttributes(options) + '> <img src="' + options.imageSrc + '" class="ui-li-thumb">';
+				thumbnail += '<h2>' + options.headline + '</h2>';
+				thumbnail += '<p>' + options.text + '</p>';
+				thumbnail += '<p class="ui-li-aside">' + options.title + '</p>';
+				thumbnail += '</a>';
+				thumbnail += '</li>';
+				return thumbnail;
+			}
+		},
 		slider : {},
 		element : {
 			h1 : function(options) {
@@ -233,7 +247,10 @@ var plugin_FormInputDesigner = {
 				return plugin_FormInputDesigner.generateOutput(options, type);
 			},
 			h2 : function(options) {
-
+				app.debug.alert("plugin_FormInputDesigner.functions.element.h1()", 20);
+				var type = "h2";
+				plugin_FormInputDesigner.addClassToOptions(options, "app-h2");
+				return plugin_FormInputDesigner.generateOutput(options, type);
 			},
 			h3 : function(options) {
 

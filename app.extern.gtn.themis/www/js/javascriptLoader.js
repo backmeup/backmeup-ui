@@ -93,7 +93,7 @@ function JsonLoader(url) {
 			json = data;
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert("Fatal Error: Can't load JSON. Url: " + url);
+			alert("Fatal Error: Can't load JSON. Url: " + url + " Status: " + textStatus + " Thrown:" + JSON.stringify(jqXHR));
 		}
 	});
 	return json;
@@ -110,7 +110,7 @@ function TextLoader(url) {
 			text = data;
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert("Fatal Error: Can't load TEXT. Url: " + url);
+			alert("Fatal Error: Can't load TEXT. Url: " + url + " Status: " + textStatus);
 		}
 	});
 	return text;
@@ -147,5 +147,3 @@ var app = {
 		app[name] = object;
 	}
 };
-
-

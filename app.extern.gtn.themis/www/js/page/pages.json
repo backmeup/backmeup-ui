@@ -1,7 +1,10 @@
 {
+	"backup_edit":true,
 	"backup_jobs":true,
+	"backup_log":"log",
 	"create_backup":true,
 	"index":true,
+	"job_details":true,
 	"login":true,
 	"logout":true,
 	"register":true,

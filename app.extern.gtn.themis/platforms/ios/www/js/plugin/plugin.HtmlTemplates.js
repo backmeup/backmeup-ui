@@ -37,8 +37,8 @@ var plugin_HtmlTemplates = {
 		} else {
 			url = plugin_HtmlTemplates.config.templates[templateId];
 		}
-
 		if (text = TextLoader(url)) {
+			app.load.css(url.substr(0, url.lastIndexOf(".")) + ".css");
 			return text;
 		} else {
 			return false;

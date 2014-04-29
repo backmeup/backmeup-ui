@@ -7,6 +7,7 @@
 plugin_MultilanguageIso639_3 = {
 	config : null,
 	dictionary : null,
+	parameter : null,
 	constructor : function() {
 	},
 	pluginsLoaded : function() {
@@ -47,6 +48,18 @@ plugin_MultilanguageIso639_3 = {
 	},
 	// public functions
 	functions : {
+		addParameter : function(key, value) {
+			if (!plugin_MultilanguageIso639_3.parameter) {
+				plugin_MultilanguageIso639_3.parameter = {};
+				if (plugin_HTML5Storage != undefined) {
+					app.store.localStorage.getList("language-");
+				}
+			}
+			plugin_MultilanguageIso639_3.parameter[key] = value;
+			if (plugin_HTML5Storage != undefined) {
+				app.store.localStorage.set("language-" + key, value);
+			}
+		},
 		string : function(id, context, language) {
 			var text = null;
 			if (!plugin_MultilanguageIso639_3.dictionary) {
@@ -62,10 +75,16 @@ plugin_MultilanguageIso639_3 = {
 					text = plugin_MultilanguageIso639_3.dictionary[context][id];
 				}
 			}
-			if (text != undefined)
+			if (text != undefined) {
+				// replace the wildcards
+				if (plugin_MultilanguageIso639_3.parameter != null) {
+					$.each(plugin_MultilanguageIso639_3.parameter, function(key, value) {
+						text = text.replace('%' + key + '%', value);
+					});
+				}
 				return text;
-			else
-				return context + '.' + id;
+			} else
+				return context + '.' + id + " = undefined";
 		}
 	}
 };

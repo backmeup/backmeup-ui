@@ -1,0 +1,32 @@
+{
+	"getDatasources":{
+		"url":"/datasources",
+		"method":"get",
+		"timeout":15000
+	},
+	"datasourceProfiles":{
+		"url":"/datasources/{username}/profiles",
+		"method":"get",
+		"timeout":15000
+	},
+	"deleteDatasourceProfile":{
+		"url":"/datasources/{username}/profiles/{datasourceProfileId}",
+		"method":"delete",
+		"timeout":15000
+	},
+	"datasourceProfileOptions":{
+		"url":"/datasources/{username}/profiles/{profileId}/options",
+		"method":"post",
+		"timeout":15000
+	},
+	"authDatasource":{
+		"url":"/datasources/{username}/{datasourceId}/auth?profileName={profileName}&keyRing={keyRing}",
+		"method":"post",
+		"timeout":15000
+	},
+	"authDatasourcePost":{
+		"url":"/datasources/{username}/{profileId}/auth/post?keyRing={keyRing}",
+		"method":"post",
+		"timeout":15000
+	}
+}

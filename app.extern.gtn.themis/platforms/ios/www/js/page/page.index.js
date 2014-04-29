@@ -20,18 +20,13 @@ var page_index = {
 		var success = null;
 		try {
 			if (app.store.localStorage.get("data-html5-themis-loggedin")) {
+				$(document).off();
 				$(location).attr('href', "start.html");
 			} else {
 				app.debug.alert("page_" + this.config.name + ".creator()", 10);
-				app.template.overwrite("#" + this.config.name, "JQueryMobilePageStructure");
-				app.template.append("#" + this.config.name, "JQueryMobileNavigationPanel");
-
 				var header = container.find('div[data-role=header]');
 				var content = container.find('div[data-role=content]');
 				var navPanel = container.find('div#nav-panel');
-
-				navPanel.append(app.template.get("ThemisNavigationPanelContent", "themis"));
-				header.append(app.template.get("ThemisHeaderContent", "themis"));
 				
 				content.append(app.ni.element.h1({
 					"text" : app.lang.string("index", "headlines")

@@ -198,6 +198,15 @@ plugin_HTML5Storage = {
 						}
 					}
 				});
+			},
+			getList : function(identifier) {
+				var list = {};
+				$.each(window.localStorage, function(key, value) {
+					if (key.substr(app.config.name.length + 1, identifier.length) == identifier) {
+						list[key.substr(app.config.name.length + 1)] = plugin_HTML5Storage.functions.localStorage.get(key.substr(app.config.name.length + 1));
+					}
+				});
+				return list;
 			}
 		},
 		sessionStorage : {

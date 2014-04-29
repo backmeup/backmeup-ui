@@ -49,6 +49,13 @@ var plugin_FormInputDesigner = {
 				attributes += ' ' + key + '="' + value + '"';
 			});
 		}
+		if (options.styles != undefined) {
+			var styles = '';
+			$.each(options.styles, function(key, value) {
+				styles += ' ' + key + ':' + value + ';';
+			});
+			attributes += ' style="' + styles + '"';
+		}
 		return attributes;
 	},
 
@@ -109,10 +116,15 @@ var plugin_FormInputDesigner = {
 		app.debug.alert("plugin_FormInputDesigner.generateOutput(" + options + ", " + type + ")", 14);
 		options = plugin_FormInputDesigner.verifyOptions(options);
 		var attributes = plugin_FormInputDesigner.getAttributes(options);
+		if (options.text == undefined)
+			options.text = "";
 		var output = '<' + type + ' ' + attributes + '>' + options.text + '</' + type + '>';
 		return output;
 	},
 	verifyOptions : function(options) {
+		if (options == undefined) {
+			options = {};
+		}
 		return options;
 	},
 	// public functions
@@ -120,90 +132,105 @@ var plugin_FormInputDesigner = {
 		text : {
 			text : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.text.text()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "text";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-text");
 				return plugin_FormInputDesigner.generateInput(options, type);
 			},
 			search : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.text.search()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "search";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-search");
 				return plugin_FormInputDesigner.generateInput(options, type);
 			},
 			textarea : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.text.textarea()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "text";
 				// options.classes.push("app-form-input-text");
 				// return plugin_FormInputDesigner.generateInput(options, type);
 			},
 			number : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.text.number()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "number";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-number");
 				return plugin_FormInputDesigner.generateInput(options, type);
 			},
 			date : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.text.date()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "date";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-date");
 				return plugin_FormInputDesigner.generateInput(options, type);
 			},
 			month : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.text.month()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "month";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-month");
 				return plugin_FormInputDesigner.generateInput(options, type);
 			},
 			week : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.text.week()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "week";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-week");
 				return plugin_FormInputDesigner.generateInput(options, type);
 			},
 			time : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.text.time()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "time";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-time");
 				return plugin_FormInputDesigner.generateInput(options, type);
 			},
 			datetime : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.text.datetime()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "datetime";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-datetime");
 				return plugin_FormInputDesigner.generateInput(options, type);
 			},
 			telephone : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.text.telephone()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "telephone";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-telephone");
 				return plugin_FormInputDesigner.generateInput(options, type);
 			},
 			email : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.text.email()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "email";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-email");
 				return plugin_FormInputDesigner.generateInput(options, type);
 			},
 			url : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.text.url()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "url";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-url");
 				return plugin_FormInputDesigner.generateInput(options, type);
 			},
 			password : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.text.password()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "password";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-password");
 				return plugin_FormInputDesigner.generateInput(options, type);
 			},
 			color : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.text.color()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "color";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-color");
 				return plugin_FormInputDesigner.generateInput(options, type);
 			},
 			file : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.text.file()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "file";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-file");
 				return plugin_FormInputDesigner.generateInput(options, type);
@@ -212,12 +239,14 @@ var plugin_FormInputDesigner = {
 		button : {
 			button : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.button.button()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "button";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-button");
 				return plugin_FormInputDesigner.generateInput(options, type);
 			},
 			submit : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.button.submit()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "submit";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-submit");
 				return plugin_FormInputDesigner.generateInput(options, type);
@@ -228,6 +257,7 @@ var plugin_FormInputDesigner = {
 		list : {
 			thumbnail : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.list.thumbnail()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var thumbnail = '<li>';
 				thumbnail += '<a href="' + options.href + '" ' + plugin_FormInputDesigner.getAttributes(options) + '> <img src="' + options.imageSrc + '" class="ui-li-thumb">';
 				thumbnail += '<h2>' + options.headline + '</h2>';
@@ -235,19 +265,67 @@ var plugin_FormInputDesigner = {
 				thumbnail += '<p class="ui-li-aside">' + options.title + '</p>';
 				thumbnail += '</a>';
 				thumbnail += '</li>';
-				return thumbnail;
+				return $(thumbnail);
 			}
 		},
 		slider : {},
+		navigation : {
+			navbar : function(options) {
+				app.debug.alert("plugin_FormInputDesigner.functions.navigation.navbar()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
+				var attributes = plugin_FormInputDesigner.getAttributes(options);
+				var navbar = $('<div data-role="navbar" ' + attributes + '></div>');
+				return navbar;
+			},
+			panel : function(options) {
+				app.debug.alert("plugin_FormInputDesigner.functions.navigation.panel()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
+				var attributes = plugin_FormInputDesigner.getAttributes(options);
+				var navbar = $('<div data-role="panel" ' + attributes + '></div>');
+				return navbar;
+			}
+		},
+		table : {
+			table : function(options) {
+				app.debug.alert("plugin_FormInputDesigner.functions.table.table()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
+				var attributes = plugin_FormInputDesigner.getAttributes(options);
+				var table = '<table ' + attributes + '><thead></thead><tbody></tbody></table>';
+				return $(table);
+			},
+			th : function(options) {
+				app.debug.alert("plugin_FormInputDesigner.functions.table.th()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
+				var type = "th";
+				plugin_FormInputDesigner.addClassToOptions(options, "app-th");
+				return plugin_FormInputDesigner.generateOutput(options, type);
+			},
+			tr : function(options) {
+				app.debug.alert("plugin_FormInputDesigner.functions.table.tr()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
+				var type = "tr";
+				plugin_FormInputDesigner.addClassToOptions(options, "app-tr");
+				return $(plugin_FormInputDesigner.generateOutput(options, type));
+			},
+			td : function(options) {
+				app.debug.alert("plugin_FormInputDesigner.functions.table.td()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
+				var type = "td";
+				plugin_FormInputDesigner.addClassToOptions(options, "app-td");
+				return $(plugin_FormInputDesigner.generateOutput(options, type));
+			}
+		},
 		element : {
 			h1 : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.element.h1()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "h1";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-h1");
 				return plugin_FormInputDesigner.generateOutput(options, type);
 			},
 			h2 : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.element.h1()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "h2";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-h2");
 				return plugin_FormInputDesigner.generateOutput(options, type);
@@ -266,12 +344,14 @@ var plugin_FormInputDesigner = {
 			},
 			p : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.element.p()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "p";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-p");
 				return plugin_FormInputDesigner.generateOutput(options, type);
 			},
 			a : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.element.a()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "a";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-a");
 				return plugin_FormInputDesigner.generateOutput(options, type);
@@ -280,10 +360,18 @@ var plugin_FormInputDesigner = {
 
 			},
 			ul : function(options) {
-
+				app.debug.alert("plugin_FormInputDesigner.functions.element.ul()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
+				var type = "ul";
+				plugin_FormInputDesigner.addClassToOptions(options, "app-ul");
+				return $(plugin_FormInputDesigner.generateOutput(options, type));
 			},
 			li : function(options) {
-
+				app.debug.alert("plugin_FormInputDesigner.functions.element.li()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
+				var type = "li";
+				plugin_FormInputDesigner.addClassToOptions(options, "app-li");
+				return $(plugin_FormInputDesigner.generateOutput(options, type));
 			}
 		}
 	}

@@ -8,7 +8,8 @@
 			"../css/custom.css":true
 		},
 		"javascript":{
-			"../ext/MD5.js":true
+			"../ext/MD5.js":true,
+			"../ext/DATE.js":true
 		}
 	}
 }

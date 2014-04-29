@@ -10,28 +10,55 @@ var page_start = {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 		var success = null;
 		try {
-			if (!app.store.localStorage.get("data-html5-themis-loggedin")) {
-				$(document).off();
-				$(location).attr('href', "index.html");
-			} else if (!app.store.localStorage.get("data-html5-themis-activated")) {
-				app.notify.add.alert(app.lang.string("user_not_activated", "notifications"));
-				//$.mobile.pageContainer.pagecontainer("change", "verify_email.html");
-				 $(location).attr('href', "verify_email.html");
-			} else {
-				app.template.overwrite("#" + this.config.name, "JQueryMobilePageStructure");
-				app.template.append("#" + this.config.name, "JQueryMobileNavigationPanel")
+			var header = container.find('div[data-role=header]');
+			var content = container.find('div[data-role=content]');
+			var navPanel = container.find('div#nav-panel');
 
-				var header = container.find('div[data-role=header]');
-				var content = container.find('div[data-role=content]');
-				var navPanel = container.find('div#nav-panel');
+			content.append(app.ni.element.h1({
+				"text" : app.lang.string("start", "headlines")
+			}));
 
-				navPanel.append(app.template.get("ThemisNavigationPanelContent", "themis"));
-				header.append(app.template.get("ThemisHeaderContent", "themis"));
+			content.append(app.ni.element.h2({
+				"text" : "Aktuell implementiert"
+			}));
 
-				content.append(app.ni.element.h1({
-					"text" : app.lang.string("start", "headlines")
-				}));
-			}
+			content.append(app.ni.element.p({
+				"text" : "+ Rgistrieren"
+			}));
+
+			content.append(app.ni.element.p({
+				"text" : "+ E-Mail verifizieren"
+			}));
+			content.append(app.ni.element.p({
+				"text" : "+ Login"
+			}));
+			content.append(app.ni.element.p({
+				"text" : "+ Logout"
+			}));
+			content.append(app.ni.element.p({
+				"text" : "+ Backups angzeigen"
+			}));
+			content.append(app.ni.element.p({
+				"text" : "- Backup Details"
+			}));
+			content.append(app.ni.element.p({
+				"text" : "+ Backup-Log"
+			}));
+
+			content.append(app.ni.element.h2({
+				"text" : "ToDo"
+			}));
+
+			content.append(app.ni.element.p({
+				"text" : "Backup erstellen"
+			}));
+			content.append(app.ni.element.p({
+				"text" : "Zip Archiv"
+			}));
+			content.append(app.ni.element.p({
+				"text" : "Backups durchsuchen"
+			}));
+
 			success = true;
 		} catch (err) {
 			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);

@@ -1,10 +1,13 @@
 {
+	"Actions":true,
 	"Debug":true,
 	"FormInputDesigner":true,
+	"GlobalPage":true,
 	"GlobalSettings":true,
 	"HelperFunctions":true,
 	"HTML5Storage":true,
 	"HtmlTemplates":true,
+	"ImageProvider":true,
 	"Informator":true,
 	"jQueryExtend":true,
 	"KeyValueStack":true,

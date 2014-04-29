@@ -1,5 +1,6 @@
 {
 	"name":"settings",
 	"shortname":"settings",
-	"useKeepAlive":false
+	"useKeepAlive":false,
+	"loginObligate":false
 }

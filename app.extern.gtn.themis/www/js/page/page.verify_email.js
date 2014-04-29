@@ -19,15 +19,9 @@ var page_verify_email = {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 		var success = null;
 		try {
-			app.template.overwrite("#" + this.config.name, "JQueryMobilePageStructure");
-			app.template.append("#" + this.config.name, "JQueryMobileNavigationPanel")
-
 			var header = container.find('div[data-role=header]');
 			var content = container.find('div[data-role=content]');
 			var navPanel = container.find('div#nav-panel');
-
-			navPanel.append(app.template.get("ThemisNavigationPanelContent", "themis"));
-			header.append(app.template.get("ThemisHeaderContent", "themis"));
 
 			content.append(app.ni.element.h1({
 				"text" : app.lang.string("verify_email", "headlines"),

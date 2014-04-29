@@ -1,5 +1,6 @@
 {
 	"name":"index",
 	"shortname":"index",
-	"useKeepAlive":false
+	"useKeepAlive":false,
+	"loginObligate":false
 }

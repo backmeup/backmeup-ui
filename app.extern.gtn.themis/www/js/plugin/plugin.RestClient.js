@@ -62,6 +62,16 @@ plugin_RestClient = {
 				data = "";
 			var pathX = path.split('?')[0];
 			var json = app.wsc.getJson(pathX, data, plugin_RestClient.config.webservices[service].method, plugin_RestClient.config.webservices[service].timeout);
+
+			// add language wildcards
+			if (plugin_MultilanguageIso639_3 != undefined) {
+				if (json.language != undefined) {
+					$.each(json.language, function(key, value) {
+						app.lang.addParameter(key, value);
+					});
+				}
+			}
+
 			return json;
 		}
 	}

@@ -9,6 +9,10 @@
 		"themis":{
 			"ThemisHeaderContent":"../template/ThemisHeaderContent.html",
 			"ThemisNavigationPanelContent":"../template/ThemisNavigationPanelContent.html"
+		},
+		"responsive":{
+			"grid-33-33-33":"../template/app.responsive.grid.33.33.33.html",
+			"listA":"../template/app.responsive.list.A.html"
 		}
 	}
 }

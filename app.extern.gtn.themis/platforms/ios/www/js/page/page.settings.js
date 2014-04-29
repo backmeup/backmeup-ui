@@ -20,15 +20,9 @@ var page_settings = {
 		var success = null;
 		try {
 			app.debug.alert("page_" + this.config.name + ".creator()", 10);
-			app.template.overwrite("#" + this.config.name, "JQueryMobilePageStructure");
-			app.template.append("#" + this.config.name, "JQueryMobileNavigationPanel");
-
 			var header = container.find('div[data-role=header]');
 			var content = container.find('div[data-role=content]');
 			var navPanel = container.find('div#nav-panel');
-
-			navPanel.append(app.template.get("ThemisNavigationPanelContent", "themis"));
-			header.append(app.template.get("ThemisHeaderContent", "themis"));
 
 			content.append(app.ni.element.h1({
 				"text" : app.lang.string("settings", "headlines")
@@ -87,7 +81,7 @@ var page_settings = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -102,7 +96,7 @@ var page_settings = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -118,7 +112,7 @@ var page_settings = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -132,7 +126,7 @@ var page_settings = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -147,7 +141,7 @@ var page_settings = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -163,7 +157,7 @@ var page_settings = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -177,7 +171,7 @@ var page_settings = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -195,7 +189,7 @@ var page_settings = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -210,7 +204,7 @@ var page_settings = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -224,7 +218,7 @@ var page_settings = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -239,7 +233,7 @@ var page_settings = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -253,7 +247,7 @@ var page_settings = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -269,7 +263,7 @@ var page_settings = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -284,7 +278,7 @@ var page_settings = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;

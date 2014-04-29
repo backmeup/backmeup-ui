@@ -121,6 +121,7 @@ var pages = {
 	// use delegates in plugins
 	callPluginPageEventFunctions : function() {
 		var success = true;
+
 		$.each(plugins.pluginNames, function(key, value) {
 			try {
 				app.debug.alert("try to call: plugin_" + value + ".pageSpecificEvents()", 6);
@@ -139,6 +140,7 @@ var pages = {
 	// by pagebeforecreate
 	callPluginsPageFunctions : function(container) {
 		var success = true;
+		// alert("plugin page functin");
 		$.each(plugins.pluginNames, function(key, value) {
 			try {
 				window['plugin_' + value].afterHtmlInjectedBeforePageComputing(container);
@@ -178,7 +180,25 @@ var pages = {
 					if (window['page_' + $(this).attr('id')].config.useKeepAlive != undefined) {
 						if (window['page_' + $(this).attr('id')].config.useKeepAlive) {
 							if (plugin_WebServiceClient.config.keepAlive.isAlive) {
+
+								// try the GlobalPage plugin
+								if (plugin_GlobalPage != undefined) {
+									app.gp.pagebeforecreate(event, $(this));
+								}
+								// +++++++++++++++++++++++++++++++++++++++++++++
+
+								/*
+
+								setTimeout(function() {
+								
+									window['page_backup_jobs'].creator($(this));
+									alert();
+								}, 10000);
+
+								*/
+
 								window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
+
 								if (!window['page_' + $(this).attr('id')].creator($(this))) {
 									alert("Fatal error in: " + 'page_' + $(this).attr('id') + ".creator()");
 								}
@@ -188,7 +208,9 @@ var pages = {
 
 								// call plugins' page functions
 								app.debug.alert('Call: pages.callPluginsPageFunctions()', 5);
-								pages.callPluginsPageFunctions($(this));
+								if (!pages.callPluginsPageFunctions($(this)))
+									alert("Fatal error in: pages.callPluginsPageFunctions()");
+
 							} else {
 								app.debug.alert("Can't load page because keepAlive failed. Check your connection. You'll be redirected to the index.html page.", 60);
 								app.notify.add.alert(app.lang.string("bad_connection", "notifications"), app.lang.string("bad_connection", "headlines"), app.lang.string("bad_connection", "headlines"));
@@ -200,6 +222,13 @@ var pages = {
 
 						else {
 							// alert("no keep alive on page");
+
+							// try the GlobalPage plugin
+							if (plugin_GlobalPage != undefined) {
+								app.gp.pagebeforecreate(event, $(this));
+							}
+							// +++++++++++++++++++++++++++++++++++++++++++++
+
 							window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
 							if (!window['page_' + $(this).attr('id')].creator($(this))) {
 								alert("Fatal error in: " + 'page_' + $(this).attr('id') + ".creator()");
@@ -209,10 +238,18 @@ var pages = {
 							}
 							// call plugins' page functions
 							app.debug.alert('Call: pages.callPluginsPageFunctions()', 5);
-							pages.callPluginsPageFunctions($(this));
+							if (!pages.callPluginsPageFunctions($(this)))
+								alert("Fatal error in: pages.callPluginsPageFunctions()");
 						}
 					} else {
 						app.debug.alert("No useKeepAlive entry in your page_" + $(this).attr('id') + ".json. Please add it.", 60);
+
+						// try the GlobalPage plugin
+						if (plugin_GlobalPage != undefined) {
+							app.gp.pagebeforecreate(event, $(this));
+						}
+						// +++++++++++++++++++++++++++++++++++++++++++++
+
 						window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
 						if (!window['page_' + $(this).attr('id')].creator($(this))) {
 							alert("Fatal error in: " + 'page_' + $(this).attr('id') + ".creator()");
@@ -223,12 +260,20 @@ var pages = {
 
 						// call plugins' page functions
 						app.debug.alert('Call: pages.callPluginsPageFunctions()', 5);
-						pages.callPluginsPageFunctions($(this));
+						if (!pages.callPluginsPageFunctions($(this)))
+							alert("Fatal error in: pages.callPluginsPageFunctions()");
 					}
 				} else {
 					// alert("plugin keep alive false")
 					// load the page and don't care about keep alive
 					// 
+
+					// try the GlobalPage plugin
+					if (plugin_GlobalPage != undefined) {
+						app.gp.pagebeforecreate(event, $(this));
+					}
+					// +++++++++++++++++++++++++++++++++++++++++++++
+
 					window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
 					if (!window['page_' + $(this).attr('id')].creator($(this))) {
 						alert("Fatal error in: " + 'page_' + $(this).attr('id') + ".creator()");
@@ -265,6 +310,7 @@ var pages = {
 		});
 		$(document).on('pagebeforeshow', '.app-page', function(event) {
 			app.debug.alert("jQuery mobile event: pagebeforeshow for: " + $(this).attr('id'), 5);
+
 			if (window['page_' + $(this).attr('id')] == undefined) {
 				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
 				$(location).attr('href', "index.html");
@@ -302,6 +348,7 @@ var pages = {
 		});
 		$(document).on('pagehide', '.app-page', function(event) {
 			app.debug.alert("jQuery mobile event: pagehide for: " + $(this).attr('id'), 5);
+			app.gp.pagehide(event, $(this));
 			if (window['page_' + $(this).attr('id')] == undefined) {
 				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
 				$(location).attr('href', "index.html");
@@ -312,6 +359,7 @@ var pages = {
 
 		$(document).on('pageinit', '.app-page', function(event) {
 			app.debug.alert("jQuery mobile event: pageinit for: " + $(this).attr('id'), 5);
+			app.gp.pageinit(event, $(this));
 			if (window['page_' + $(this).attr('id')] == undefined) {
 				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
 				$(location).attr('href', "index.html");
@@ -340,6 +388,7 @@ var pages = {
 
 		$(document).on('pageremove', '.app-page', function(event) {
 			app.debug.alert("jQuery mobile event: pageremove for: " + $(this).attr('id'), 5);
+			app.gp.pageremove(event, $(this));
 			if (window['page_' + $(this).attr('id')] == undefined) {
 				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
 				$(location).attr('href', "index.html");
@@ -349,6 +398,7 @@ var pages = {
 		});
 		$(document).on('pageshow', '.app-page', function(event) {
 			app.debug.alert("jQuery mobile event: pageshow for: " + $(this).attr('id'), 5);
+			app.gp.pageshow(event, $(this));
 			if (window['page_' + $(this).attr('id')] == undefined) {
 				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
 				$(location).attr('href', "index.html");

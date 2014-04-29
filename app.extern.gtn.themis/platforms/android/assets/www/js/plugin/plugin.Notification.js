@@ -59,7 +59,20 @@ var plugin_Notification = {
 		app.debug.alert("plugin_" + this.config.name + ".definePluginEvents()", 11);
 		var success = null;
 		try {
-
+			$(document).on('pageshow', '.app-page', function(event) {
+				if (!plugin_Notification.notifications)
+					plugin_Notification.notifications = app.store.localStorage.getObject("popup_notifications");
+				app.store.localStorage.removeObject("popup_notifications");
+				plugin_Notification.popupShow();
+			});
+			$(document).on("click", "#btnPopupAlert", function() {
+				$("#popupAlert").popup("close");
+				if (plugin_Notification.callbackFuntion) {
+					plugin_Notification.callbackFuntion($("#popupAlert"));
+					plugin_Notification.callbackFuntion == null;
+				}
+				plugin_Notification.popupShow();
+			});
 			success = true;
 		} catch (err) {
 			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
@@ -74,12 +87,15 @@ var plugin_Notification = {
 		app.debug.alert("plugin_" + this.config.name + ".afterHtmlInjectedBeforePageComputing()", 11);
 		var success = null;
 		try {
-			// if (!($("#popupDialog").length > 0))
+			//alert('insert popups');
+			// alert($("body #popupDialog").length);
+			$("body #popupDialog").remove();
+			$("body #popupAlert").remove();
+			// if (($("body #popupDialog").length == 0))
 			app.template.append("#" + $(container).attr("id"), "JQueryMobilePopupDialog");
+			// if (($("body #popupAlert").length == 0))
 			app.template.append("#" + $(container).attr("id"), "JQueryMobilePopupAlert");
-			// $(container).append(app.template.get("JQueryMobilePopupDialog"));
-			// if (!($("#popupAlert").length > 0))
-			// $(container).append(app.template.get("JQueryMobilePopupAlert"));
+
 			success = true;
 		} catch (err) {
 			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
@@ -95,20 +111,7 @@ var plugin_Notification = {
 		app.debug.alert("plugin_" + this.config.name + ".pageSpecificEvents()", 11);
 		var success = null;
 		try {
-			$(document).on('pageshow', '.app-page', function(event) {
-				if (!plugin_Notification.notifications)
-					plugin_Notification.notifications = app.store.localStorage.getObject("popup_notifications");
-				app.store.localStorage.removeObject("popup_notifications");
-				plugin_Notification.popupShow();
-			});
-			$(document).on("click", "#btnPopupAlert", function() {
-				$("#popupAlert").popup("close");
-				if (plugin_Notification.callbackFuntion) {
-					plugin_Notification.callbackFuntion();
-					plugin_Notification.callbackFuntion == null;
-				}
-				plugin_Notification.popupShow();
-			});
+
 			success = true;
 		} catch (err) {
 			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
@@ -124,7 +127,11 @@ var plugin_Notification = {
 			setTimeout(function() {
 				$("#popupAlert div[data-role=header] h1").text(notification.title);
 				$("#popupAlert div.ui-content h3.ui-title").text(notification.headline);
-				$("#popupAlert div.ui-content p").text(notification.text);
+				if (typeof notification.text == "object") {
+					$("#popupAlert div.ui-content p").replaceWith(notification.text);
+				} else {
+					$("#popupAlert div.ui-content p").text(notification.text);
+				}
 				$("#popupAlert").popup("open");
 				$("#popupAlert").popup("reposition");
 			}, 300);

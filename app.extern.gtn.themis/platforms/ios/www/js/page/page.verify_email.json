@@ -1,5 +1,6 @@
 {
 	"name":"verify_email",
 	"shortname":"verify_email",
-	"useKeepAlive":true
+	"useKeepAlive":true,
+	"loginObligate":true
 }

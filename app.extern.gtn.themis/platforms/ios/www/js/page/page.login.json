@@ -1,5 +1,6 @@
 {
 	"name":"login",
 	"shortname":"login",
-	"useKeepAlive":true
+	"useKeepAlive":true,
+	"loginObligate":false
 }

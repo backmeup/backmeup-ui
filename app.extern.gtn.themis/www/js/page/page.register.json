@@ -1,5 +1,6 @@
 {
 	"name":"register",
 	"shortname":"reg",
-	"useKeepAlive":true
+	"useKeepAlive":true,
+	"loginObligate":false
 }

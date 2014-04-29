@@ -10,15 +10,9 @@ var page_login = {
 		var success = null;
 		try {
 			app.debug.alert("page_" + this.config.name + ".creator()", 10);
-			app.template.overwrite("#" + this.config.name, "JQueryMobilePageStructure");
-			app.template.append("#" + this.config.name, "JQueryMobileNavigationPanel")
-
 			var header = container.find('div[data-role=header]');
 			var content = container.find('div[data-role=content]');
 			var navPanel = container.find('div#nav-panel');
-
-			navPanel.append(app.template.get("ThemisNavigationPanelContent", "themis"));
-			header.append(app.template.get("ThemisHeaderContent", "themis"));
 			// content
 			content.append(app.ni.element.h1({
 				"text" : app.lang.string("login", "headlines")

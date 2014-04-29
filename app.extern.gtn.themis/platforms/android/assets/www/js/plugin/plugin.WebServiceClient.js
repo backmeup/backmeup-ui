@@ -14,10 +14,12 @@ plugin_WebServiceClient = {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
 		var success = null;
 		try {
+			// first keep alive
 			if (plugin_WebServiceClient.config.useKeepAlive) {
 				plugin_WebServiceClient.keepAliveRequest();
 				plugin_WebServiceClient.interval = window.setInterval("plugin_WebServiceClient.keepAliveRequest()", plugin_WebServiceClient.config.keepAlive.keepAliveIntervalInS * 1000);
 			}
+
 			success = true;
 		} catch (err) {
 			success = false;
@@ -118,7 +120,8 @@ plugin_WebServiceClient = {
 
 	keepAliveStartTime : 0.0,
 
-	keepAliveSuccess : function() {
+	keepAliveSuccess : function(data, textStatus, jqXHR) {
+		app.debug.alert("plugin_WebServiceClient.keepAliveSuccess()", 14);
 		var wsDuration = performance.now() - plugin_WebServiceClient.keepAliveStartTime;
 		if (wsDuration >= plugin_WebServiceClient.config.keepAlive.maximumResponseTime) {
 			app.info.set("plugin_WebServiceClient.config.keepAlive.isAlive", false);
@@ -133,17 +136,18 @@ plugin_WebServiceClient = {
 		if (!plugin_WebServiceClient.config.keepAlive.isAlive) {
 			app.debug.alert("KeepAlive request failed.\nReason: " + plugin_WebServiceClient.config.keepAlive.error.text + "\nTime: " + wsDuration, 60);
 		}
-		
+
 	},
 
-	keepAliveError : function() {
+	keepAliveError : function(jqXHR, textStatus, errorThrown) {
+		app.debug.alert("plugin_WebServiceClient.keepAliveError()", 14);
 		var wsDuration = performance.now() - plugin_WebServiceClient.keepAliveStartTime;
 		app.info.set("plugin_WebServiceClient.config.keepAlive.lastDuration", wsDuration);
 		app.info.set("plugin_WebServiceClient.config.keepAlive.isAlive", false);
 		app.info.set("plugin_WebServiceClient.config.keepAlive.error.code", 1);
 		app.info.set("plugin_WebServiceClient.config.keepAlive.error.text", "Webservice Error");
 		if (!plugin_WebServiceClient.config.keepAlive.isAlive) {
-			app.debug.alert("KeepAlive request failed.\nReason: " + plugin_WebServiceClient.config.keepAlive.error.text + "\nTime: " + wsDuration, 60);
+			app.debug.alert("KeepAlive request failed.\nReason: " + plugin_WebServiceClient.config.keepAlive.error.text + "\nTime: " + wsDuration + "\n\n" + JSON.stringify(errorThrown, null, 4), 60);
 		}
 	},
 

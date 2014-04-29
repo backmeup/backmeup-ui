@@ -93,7 +93,7 @@ function JsonLoader(url) {
 			json = data;
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert("Fatal Error: Can't load JSON. Url: " + url);
+			alert("Fatal Error: Can't load JSON. Url: " + url + " Status: " + textStatus + " Thrown:" + JSON.stringify(jqXHR));
 		}
 	});
 	return json;
@@ -110,7 +110,7 @@ function TextLoader(url) {
 			text = data;
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert("Fatal Error: Can't load TEXT. Url: " + url);
+			alert("Fatal Error: Can't load TEXT. Url: " + url + " Status: " + textStatus);
 		}
 	});
 	return text;
@@ -125,7 +125,7 @@ function onDeviceReady() {
 
 $(document).bind("mobileinit", function() {
 	app.debug.alert("jQuery mobile initialized", 30);
-	$.mobile.ajaxEnabled = false;
+	$.mobile.ajaxEnabled = true;
 	$.support.cors = true;
 	$.mobile.allowCrossDomainPages = true;
 	$.mobile.page.prototype.options.domCache = false;
@@ -140,7 +140,8 @@ $(document).bind("mobileinit", function() {
 var app = {
 	config : {
 		name : "themis",
-		min : true
+		min : false,
+		jQueryMobile : true
 	},
 	addObject : function(name, object) {
 		// alert("Add object to app: " + name);

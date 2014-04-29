@@ -12,7 +12,13 @@
 		"clear_html5_storage":"Appdaten löschen",
 		"backup_edit":"Backup editieren",
 		"backup_delete":"Backup löschen",
-		"backup_log":"Backup-Log"
+		"backup_log":"Backup-Log",
+		"columntoggle":"Spalten",
+		"menu":"Menü",
+		"top":"Top",
+		"search":"Suchen",
+		"back":"Zurück",
+		"menu_close":"Menü schließen"
 	},
 	"labels":{
 		"password":"Passwort",
@@ -26,6 +32,8 @@
 		"verify_email":"E-Mail bestätigen"
 	},
 	"headlines":{
+		"existing_datasources":"Vorhandene Datenquellen",
+		"new_datasource":"Neue Datenquelle erstellen",
 		"backup_log":"Backup-Log",
 		"backup_edit":"Backup bearbeiten",
 		"datasource":"Datenquelle",
@@ -46,7 +54,16 @@
 		"index":"Backmeup & Themis",
 		"settings":"Einstellungen",
 		"clear_html5_storage":"Appdaten löschen",
-		"logout":"Abgemeldet"
+		"logout":"Abgemeldet",
+		"message":"Text",
+		"timestamp":"Zeit",
+		"index":"Index",
+		"type":"Art",
+		"search":"Suchen",
+		"search_backup":"Backups durchsuchen",
+		"select_datasource":"Datenquelle auswählen",
+		"select_datasink":"Speicherziel auswählen",
+		"backup_options":"Backupoptionen"
 	},
 	"notifications":{
 		"bad_connection":"Der Verbindungsaufbau zum Themis-Server dauert zu lange. Sie werden zur Startseite weitergeleitet.",
@@ -54,13 +71,20 @@
 		"bad_email":"Die E-Mailadresse konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe.",
 		"bad_password":"Das Passwort konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe.",
 		"bad_register":"Fehler bei der Registrierung. Bitte versuchen Sie es erneut.",
-		"bad_verify_email":"Die E-Mail Adresse konnte nicht bestätigt werden. Bitte überprüfen Sie ihren Aktivierungscode.",
+		"bad_verify_email":"Die E-Mail Adresse %mail% konnte nicht bestätigt werden. Bitte überprüfen Sie ihren Aktivierungscode.",
 		"resend_verification_mail":"Die Bestätigungs-E-Mail wurde erneut verschickt.",
 		"user_not_activated":"Ihr Benutzer wurde noch nicht aktiviert.",
 		"clear_html5_storage":"Ihre personenbezogenen Appdaten wurden erfolgreich gelöscht.",
 		"varification_key_resend":"Die Aktivierungs E-Mail wurde erneut gesendet."
 	},
 	"texts":{
-		"verify_email":"Eine E-Mail mit einem Bestätigungs-Code wurde an Ihre E-Mail Adresse geschickt. Bitte geben Sie den Bestätigungs-Code ein oder klicken Sie den Bestätigungs-Link um Ihre E-Mail zu verifizieren."
+		"verify_email":"Eine E-Mail mit einem Bestätigungs-Code wurde an Ihre E-Mail Adresse geschickt. Bitte geben Sie den Bestätigungs-Code ein oder klicken Sie den Bestätigungs-Link um Ihre E-Mail zu verifizieren.",
+		"select_datasource":"Bitte wählen Sie ein bestehendes Datenquellen-Profil (aus einem vorangegangenem Backup) oder wählen Sie eine neue Datenquelle aus der Liste unten.",
+		"":""
+		
+	},
+	"themisIds":{
+		"info":"Info",
+		"job_failed":"Fehler"
 	}
 }

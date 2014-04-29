@@ -1,5 +1,6 @@
 {
 	"name":"start",
 	"shortname":"start",
-	"useKeepAlive":true
+	"useKeepAlive":true,
+	"loginObligate":true
 }

@@ -22,8 +22,10 @@ plugin_HTML5Storage = {
 		// data-html5-<storage id>
 		$("body").on("click", "a", function(event) {
 			$.each($(this).attrs(), function(key, value) {
-				if (key.substring(0, 11).trim().toLowerCase() == "data-html5-")
-					plugin_HTML5Storage.functions.set(key.substring(11), value)
+				if (key.substring(0, 11).trim().toLowerCase() == "data-html5-") {
+					app.debug.alert("Set html5 data from LINK to localStorage.\n" + key + " = " + value, 60);
+					plugin_HTML5Storage.functions.localStorage.set(key, value);
+				}
 			});
 		});
 	},
@@ -117,18 +119,44 @@ plugin_HTML5Storage = {
 			clear : function() {
 				window.localStorage.clear();
 			},
+			clearHtml5 : function() {
+				$.each(window.localStorage, function(key, value) {
+					if (key.substr(app.config.name.length + 1, 10) == "data-html5") {
+						try {
+							window.localStorage.removeItem(key.trim())
+						} catch (err) {
+							alert(err);
+						}
+					}
+				});
+			},
 			removeItem : function(key) {
 				window.localStorage.removeItem(app.config.name + "." + key);
 			},
 			show : function() {
 				var string = '';
+				var i = 0;
 				$.each(window.localStorage, function(key, value) {
-					if (key.substring(0, app.config.name.length) == app.config.name)
+					if (key.substring(0, app.config.name.length) == app.config.name) {
 						string += key.substring(app.config.name.length + 1) + " = " + value + "\n";
+						i++;
+					}
+					if (i % 20 == 0) {
+						alert(string);
+						string = "";
+					}
 				});
-				alert(string);
+
+			},
+			log : function() {
+				$.each(window.localStorage, function(key, value) {
+					if (key.substring(0, app.config.name.length) == app.config.name) {
+						app.debug.log(key.substring(app.config.name.length + 1) + " = " + value);
+					}
+				});
 			},
 			setObject : function(name, object) {
+				// alert("set: " + name);
 				app.debug.alert('plugin_HTML5Storage.localStorage.setObject(' + name + ', ' + JSON.stringify(object) + ')', 20);
 				$.each(object, function(key, value) {
 					if (typeof value == "object") {
@@ -137,15 +165,21 @@ plugin_HTML5Storage = {
 						plugin_HTML5Storage.functions.localStorage.set((name + "." + key).trim(), value);
 					}
 				});
+				// app.store.localStorage.show();
 			},
 			getObject : function(name) {
-				app.debug.alert('plugin_HTML5Storage.localStorage.getObject(' + name + ')', 20);
+				// alert("get: " + name);
+				app.debug.alert('plugin_HTML5Storage.localStorage.getObject("' + name + '")', 20);
 				var object = {};
-				for ( var i = 0; i < window.localStorage.length; i++) {
-					if (window.localStorage.key(i).substr(app.config.name.length + 1, name.length) == name) {
-						object = plugin_HTML5Storage.setDeepX(object, window.localStorage.key(i).substr(app.config.name.length + 1), plugin_HTML5Storage.functions.localStorage.get(window.localStorage.key(i).substr(app.config.name.length + 1)));
+				$.each(window.localStorage, function(key, value) {
+
+					if (key.substr(app.config.name.length + 1, name.length).trim() == name.trim()) {
+						// alert(key.substr(app.config.name.length + 1,
+						// name.length).trim() + " = " + value);
+						object = plugin_HTML5Storage.setDeepX(object, key.substr(app.config.name.length + 1), plugin_HTML5Storage.functions.localStorage.get(key.substr(app.config.name.length + 1)));
 					}
-				}
+				});
+
 				if (object[name] != undefined)
 					return object;
 				else {
@@ -153,8 +187,8 @@ plugin_HTML5Storage = {
 				}
 			},
 			removeObject : function(name) {
+				// alert("remove:" + name);
 				app.debug.alert('plugin_HTML5Storage.localStorage.removeObject(' + name + ')', 20);
-
 				$.each(window.localStorage, function(key, value) {
 					if (key.substr(app.config.name.length + 1, name.length) == name.trim()) {
 						try {
@@ -164,6 +198,15 @@ plugin_HTML5Storage = {
 						}
 					}
 				});
+			},
+			getList : function(identifier) {
+				var list = {};
+				$.each(window.localStorage, function(key, value) {
+					if (key.substr(app.config.name.length + 1, identifier.length) == identifier) {
+						list[key.substr(app.config.name.length + 1)] = plugin_HTML5Storage.functions.localStorage.get(key.substr(app.config.name.length + 1));
+					}
+				});
+				return list;
 			}
 		},
 		sessionStorage : {

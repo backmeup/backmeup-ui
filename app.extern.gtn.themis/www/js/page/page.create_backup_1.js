@@ -110,9 +110,10 @@ var page_create_backup_1 = {
 				if ((json = app.rc.getJson("authDatasource", {
 					"username" : app.store.localStorage.get("data-html5-themis-username"),
 					"datasourceId" : app.store.localStorage.get("data-html5-datasourceid"),
-					"keyRing" : "",
-					"profileName" : ""
+					"keyRing" : app.store.localStorage.get("data-html5-keyring"),
+					"profileName" : "Test by app"
 				})) != false) {
+					alert(JSON.stringify(json));
 				} else {
 					alert("ws error");
 				}

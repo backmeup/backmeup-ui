@@ -32,7 +32,7 @@ plugin_MultilanguageIso639_3 = {
 
 	// private functions
 	loadLanguageIntoDict : function(language) {
-		var langUri = "../language/" + language + ".json";
+		var langUri = "../files/language/" + language + ".json";
 		$.ajax({
 			dataType : "json",
 			url : langUri,

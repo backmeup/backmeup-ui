@@ -2,8 +2,17 @@ $(document).ready(function() {
 
 	var success = true;
 
+	var min = "";
+	if (app.config.min)
+		min = "-min";
+
 	// load plugins
-	var url = "../js/plugin/plugins.js";
+	var url;
+	if (app.config.onefile) {
+		url = "../js/plugin/app" + min + ".js";
+	} else {
+		url = "../js/plugin/plugins" + min + ".js";
+	}
 	$.ajax({
 		url : url,
 		dataType : "script",
@@ -12,7 +21,7 @@ $(document).ready(function() {
 			;
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert("Fatal error in javascriptLoader.js: Can't load the plugins. Url: " + url + " Error: " + textStatus);
+			alert("Fatal error in javascriptLoader.js: Can't load file. Url: " + url + " Error: " + textStatus);
 			alert(errorThrown);
 			success = false;
 		}
@@ -22,7 +31,8 @@ $(document).ready(function() {
 		return false;
 
 	// load pages
-	var url = "../js/page/pages.js";
+	var url;
+	url = "../js/page/pages.js";
 	$.ajax({
 		url : url,
 		dataType : "script",
@@ -50,9 +60,10 @@ $(document).ready(function() {
 				;// cordova not found
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert("Fatal error in javascriptLoader.js: Can't load the plugins. Url: " + url + " Error: " + textStatus);
-			alert(errorThrown);
-			success = false;
+			// alert("Fatal error in javascriptLoader.js: Can't load the
+			// plugins. Url: " + url + " Error: " + textStatus);
+			// alert("Error" + errorThrown);
+			// success = false;
 		}
 	});
 
@@ -69,7 +80,7 @@ $(document).ready(function() {
 			;
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert("Fatal error in javascriptLoader.js: Can't load the plugins. Url: " + url + " Error: " + textStatus);
+			alert("Fatal error in javascriptLoader.js: Can't load jQuery mobile. Url: " + url + " Error: " + textStatus);
 			alert(errorThrown);
 			success = false;
 		}
@@ -140,6 +151,7 @@ $(document).bind("mobileinit", function() {
 var app = {
 	config : {
 		name : "themis",
+		onefile : false,
 		min : false,
 		jQueryMobile : true
 	},

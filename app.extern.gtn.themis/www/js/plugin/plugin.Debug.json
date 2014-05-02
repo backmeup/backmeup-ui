@@ -1,7 +1,7 @@
 {
 	"name":"Debug",
 	"shortname":"debug",
-	"debugDevice":false,
+	"debugDevice":true,
 	"debugPanel":true,
 	"doDebugging":false,
 	"debugLevel":50,

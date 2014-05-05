@@ -28,7 +28,11 @@ $(document).ready(function() {
 
 	// load pages
 	var url;
-	url = "../js/page/pages.js";
+	if (app.config.min) {
+		url = "../js/page/all.js";
+	} else {
+		url = "../js/page/pages.js";
+	}
 	$.ajax({
 		url : url,
 		dataType : "script",
@@ -41,7 +45,7 @@ $(document).ready(function() {
 			alert(errorThrown);
 		}
 	});
-
+	pages.constructor();
 	if (!success)
 		return false;
 

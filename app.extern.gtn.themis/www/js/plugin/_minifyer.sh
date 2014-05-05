@@ -8,8 +8,13 @@ rm *-min.js
 rm *-min.css
 rm *.json.js
 
+# __________________
+# css
 yuicompressor -v -o '.css$:-min.css' *.css
+cat *-min.css > all.css
 
+# __________________
+# js
 cat *.js > app.js
 
 # minify the plugin.*.js files
@@ -21,7 +26,8 @@ sed -E -i '' 's/(app.debug.alert\(){1}(.){0,60}(,){1}([0-9]){1,3}(\))(;){0,1}//g
 # combine all plugin files
 cat *-min.js > app-min.js
 
-
+# __________________
+# json
 # copy json to javascript file (add .js)
 for i in `ls *.json`; do cp $i `echo $i.js`; done
 
@@ -35,7 +41,7 @@ yuicompressor -v -o '.json.js$:-min.json.js' *.json.js
 cat *-min.json.js > app.config-min.js
 
 # create a config file
-cat plugin.*.json.js > app.config.js
+cat plugin.*.json.js page.*.json.js > app.config.js
 
 # combine plugin and config files
 cat app*-min.js > all.js

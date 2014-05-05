@@ -4864,7 +4864,6 @@ var plugins = {
 			if (value == true) {
 				if (app.config.min) {
 					// alert("load: " + key);
-
 					success = plugins.onPluginLoaded(key);
 				} else {
 					var url = "../js/plugin/plugin." + key + ".js";

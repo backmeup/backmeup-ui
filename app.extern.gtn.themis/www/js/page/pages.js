@@ -31,20 +31,24 @@ var pages = {
 
 	loadPageConfig : function() {
 		var success = null;
-		var url = "../js/page/pages.json";
-		$.ajax({
-			url : url,
-			async : false,
-			dataType : "json",
-			success : function(json) {
-				pages.config = json;
-				success = true;
-			},
-			error : function(jqXHR, textStatus, errorThrown) {
-				alert("Fatal error in pages.js: Can't load page. Url: " + url + " Error: " + textStatus);
-				success = false;
-			}
-		});
+		if (app.config.min) {
+			pages.config = config_json;
+		} else {
+			var url = "../js/page/pages.json";
+			$.ajax({
+				url : url,
+				async : false,
+				dataType : "json",
+				success : function(json) {
+					pages.config = json;
+					success = true;
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+					alert("Fatal error in pages.js: Can't load page. Url: " + url + " Error: " + textStatus);
+					success = false;
+				}
+			});
+		}
 		return success;
 	},
 
@@ -52,61 +56,76 @@ var pages = {
 		return true;
 	},
 
+	onPageLoaded : function(key) {
+		var success = true;
+		if (window['page_' + key] == undefined) {
+			alert("Fatal error: Page class is not defined: page_" + key);
+			success = false;
+			return;
+		}
+
+		try {
+			if (app.config.min) {
+				window['page_' + key].config = window['config_' + key];
+			} else {
+				window['page_' + key].config = JsonLoader("../js/page/page." + key + ".json");
+			}
+			if (window['page_' + key].config.name == undefined) {
+				alert("Fatal error: The property 'name' is not defined in JSON file: ../js/page." + key + ".json")
+				return false;
+			}
+			if (window['page_' + key].config.shortname == undefined) {
+				alert("Fatal error: The property 'shortname' is not defined in JSON file: ../js/page." + key + ".json")
+				return false;
+			}
+		} catch (err) {
+			alert("Fatal error: The page has no 'config' property: " + key);
+			success = false;
+			return;
+		}
+
+		try {
+			window['page_' + key].constructor();
+		} catch (err) {
+			alert("Fatal error: The page has no constructor(): " + key);
+			success = false;
+			return;
+		}
+
+		try {
+			app.addObject(window['page_' + key].config.name, window['page_' + key].functions);
+			app.addObject(window['page_' + key].config.shortname, window['page_' + key].functions);
+		} catch (err) {
+			alert("Fatal error: The plugin has no functions{}: " + key);
+			success = false;
+			return;
+		}
+
+		pages.pageNames.push(key);
+
+		return success;
+	},
+
 	loadPages : function() {
 		var success = true;
 		$.each(pages.config, function(key, value) {
-			var url = "../js/page/page." + key + ".js";
-			$.ajax({
-				url : url,
-				async : false,
-				dataType : "script",
-				success : function(json) {
-					if (window['page_' + key] == undefined) {
-						alert("Fatal error: Page class is not defined: page_" + key);
+			if (app.config.min) {
+				success = pages.onPageLoaded(key);
+			} else {
+				var url = "../js/page/page." + key + ".js";
+				$.ajax({
+					url : url,
+					async : false,
+					dataType : "script",
+					success : function(json) {
+						success = pages.onPageLoaded(key);
+					},
+					error : function() {
+						alert("Fatal Error: Can't load page: " + url);
 						success = false;
-						return;
 					}
-
-					try {
-						window['page_' + key].config = JsonLoader("../js/page/page." + key + ".json");
-						if (window['page_' + key].config.name == undefined) {
-							alert("Fatal error: The property 'name' is not defined in JSON file: ../js/page." + key + ".json")
-							return false;
-						}
-						if (window['page_' + key].config.shortname == undefined) {
-							alert("Fatal error: The property 'shortname' is not defined in JSON file: ../js/page." + key + ".json")
-							return false;
-						}
-					} catch (err) {
-						alert("Fatal error: The page has no 'config' property: " + key);
-						success = false;
-						return;
-					}
-
-					try {
-						window['page_' + key].constructor();
-					} catch (err) {
-						alert("Fatal error: The page has no constructor(): " + key);
-						success = false;
-						return;
-					}
-
-					try {
-						app.addObject(window['page_' + key].config.name, window['page_' + key].functions);
-						app.addObject(window['page_' + key].config.shortname, window['page_' + key].functions);
-					} catch (err) {
-						alert("Fatal error: The plugin has no functions{}: " + key);
-						success = false;
-						return;
-					}
-
-					pages.pageNames.push(key);
-				},
-				error : function() {
-					alert("Fatal Error: Can't load page: " + url);
-					success = false;
-				}
-			});
+				});
+			}
 			if (!success)
 				return false;
 		});
@@ -188,14 +207,13 @@ var pages = {
 								// +++++++++++++++++++++++++++++++++++++++++++++
 
 								/*
-
-								setTimeout(function() {
-								
-									window['page_backup_jobs'].creator($(this));
-									alert();
-								}, 10000);
-
-								*/
+								 * 
+								 * setTimeout(function() {
+								 * 
+								 * window['page_backup_jobs'].creator($(this));
+								 * alert(); }, 10000);
+								 * 
+								 */
 
 								window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
 
@@ -409,5 +427,3 @@ var pages = {
 		return success;
 	}
 };
-
-pages.constructor();

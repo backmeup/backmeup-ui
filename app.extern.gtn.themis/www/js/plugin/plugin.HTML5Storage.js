@@ -5,7 +5,7 @@
  * @version 1.0
  * @namespace
  */
-plugin_HTML5Storage = {
+var plugin_HTML5Storage = {
 	config : null,
 	constructor : function() {
 	},

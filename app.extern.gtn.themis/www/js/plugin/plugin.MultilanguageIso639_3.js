@@ -4,7 +4,7 @@
  * @version 1.0
  * @namespace
  */
-plugin_MultilanguageIso639_3 = {
+var plugin_MultilanguageIso639_3 = {
 	config : null,
 	dictionary : null,
 	parameter : null,

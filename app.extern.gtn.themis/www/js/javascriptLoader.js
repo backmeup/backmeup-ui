@@ -2,16 +2,12 @@ $(document).ready(function() {
 
 	var success = true;
 
-	var min = "";
-	if (app.config.min)
-		min = "-min";
-
 	// load plugins
 	var url;
-	if (app.config.onefile) {
-		url = "../js/plugin/app" + min + ".js";
+	if (app.config.min) {
+		url = "../js/plugin/all.js";
 	} else {
-		url = "../js/plugin/plugins" + min + ".js";
+		url = "../js/plugin/plugins.js";
 	}
 	$.ajax({
 		url : url,
@@ -26,7 +22,7 @@ $(document).ready(function() {
 			success = false;
 		}
 	});
-
+	plugins.constructor();
 	if (!success)
 		return false;
 
@@ -151,8 +147,7 @@ $(document).bind("mobileinit", function() {
 var app = {
 	config : {
 		name : "themis",
-		onefile : false,
-		min : false,
+		min : true,
 		jQueryMobile : true
 	},
 	addObject : function(name, object) {

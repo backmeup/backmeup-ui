@@ -4,7 +4,7 @@
  * @version 1.0
  * @namespace
  */
-plugin_Informator = {
+var plugin_Informator = {
 	config : null,
 	constructor : function() {
 	},

@@ -4,7 +4,7 @@
  * @version 1.0
  * @namespace
  */
-plugin_WebServiceClient = {
+var plugin_WebServiceClient = {
 	config : null,
 	interval : null,
 	constructor : function() {

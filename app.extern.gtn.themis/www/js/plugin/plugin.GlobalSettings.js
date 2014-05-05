@@ -6,7 +6,7 @@
  * @version 1.0
  * @namespace plugin_GlobalSettings
  */
-plugin_GlobalSettings = {
+var plugin_GlobalSettings = {
 	config : null,
 	constructor : function() {
 

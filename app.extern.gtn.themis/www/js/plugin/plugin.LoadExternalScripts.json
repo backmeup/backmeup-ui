@@ -5,7 +5,12 @@
 		"css":{
 			"../ext/jquery.mobile-1.4.2.min.css":true,
 			"../css/fonts.css":true,
-			"../css/custom.css":true
+			"../css/global.css":true,
+			"../css/platform.android.css":true,
+			"../css/platform.desktop.css":true,
+			"../css/platform.ios.css":true,
+			"../css/platform.mobile.css":true,
+			"../css/platform.cordova.css":true
 		},
 		"javascript":{
 			"../ext/MD5.js":true,

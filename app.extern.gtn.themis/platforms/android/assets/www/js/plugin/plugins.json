@@ -1,6 +1,7 @@
 {
 	"Actions":true,
 	"Debug":true,
+	"Detector":true,
 	"FormInputDesigner":true,
 	"GlobalPage":true,
 	"GlobalSettings":true,

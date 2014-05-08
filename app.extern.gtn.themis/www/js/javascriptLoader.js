@@ -56,10 +56,12 @@ $(document).ready(function() {
 		dataType : "script",
 		async : false,
 		success : function(data, textStatus, jqXHR) {
+			app.config.apacheCordova = true;
 			if (jqXHR.status == 200)
-				;// cordova not found
+				app.config.apacheCordova = false;
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
+			app.config.apacheCordova = false;
 			// alert("Fatal error in javascriptLoader.js: Can't load the
 			// plugins. Url: " + url + " Error: " + textStatus);
 			// alert("Error" + errorThrown);
@@ -132,6 +134,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
 	app.debug.alert("cordova initialized", 30);
+	app.config.apacheCordova = true;
 }
 
 $(document).bind("mobileinit", function() {
@@ -145,14 +148,19 @@ $(document).bind("mobileinit", function() {
 	$.mobile.loader.prototype.options.textVisible = false;
 	$.mobile.loader.prototype.options.theme = "a";
 	$.mobile.loader.prototype.options.html = "";
-
 });
 
+/*
+$(window).load(function() {
+	//alert("loaded in: " + performance.now() );
+});
+*/
 var app = {
 	config : {
 		name : "themis",
-		min : true,
-		jQueryMobile : true
+		min : false,
+		useJQueryMobile : true,
+		apacheCordova : null
 	},
 	addObject : function(name, object) {
 		// alert("Add object to app: " + name);

@@ -69,7 +69,7 @@ var page_register = {
 						"username" : container.find("#txtEmail").val(),
 						"password" : container.find("#txtPassword").val(),
 						"email" : container.find("#txtEmail").val(),
-						"keyRing" : MD5(container.find("#txtEmail").val())
+						"keyRing" : container.find("#txtPassword").val()
 					})) != false) {
 						if (json.username && json.verificationKey) {
 							app.store.localStorage.set("data-html5-themis-loggedin", true);

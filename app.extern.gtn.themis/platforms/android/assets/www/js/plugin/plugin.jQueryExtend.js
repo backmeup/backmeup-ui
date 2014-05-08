@@ -4,7 +4,7 @@
  * @version 1.0
  * @namespace 
  */
-plugin_jQueryExtend = {
+var plugin_jQueryExtend = {
 	config : null,
 	constructor : function() {
 	},

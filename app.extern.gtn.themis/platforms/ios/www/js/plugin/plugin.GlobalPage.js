@@ -138,6 +138,13 @@ var plugin_GlobalPage = {
 					// app.template.append("#" + container.attr("id"),
 					// "JQueryMobileNavigationPanel")
 
+					// add css classes
+					// alert(JSON.stringify(app.detect.classes.array()));
+					$.each(app.detect.classes.array(), function(key, name) {
+						if (!$('body').hasClass(name))
+							$('body').addClass(name);
+					});
+
 					var header = container.find('div[data-role=header]');
 					var content = container.find('div[data-role=content]');
 					var footer = container.find('div[data-role=footer]');
@@ -154,7 +161,7 @@ var plugin_GlobalPage = {
 					});
 					navPanel.append(app.template.get("ThemisNavigationPanelContent", "themis"));
 					navPanel.find("ul").prepend('<li><a href="usersettings.html" >' + app.store.localStorage.get("data-html5-themis-username") + '</a></li>');
-					navPanel.addClass("ios7-header");
+
 					container.prepend(navPanel);
 
 					// #page panel
@@ -186,7 +193,7 @@ var plugin_GlobalPage = {
 						}
 					})));
 					pagePanel.append(ul);
-					pagePanel.addClass("ios7-header");
+
 					container.prepend(pagePanel);
 
 					header.attr("data-position", "fixed");
@@ -391,13 +398,6 @@ var plugin_GlobalPage = {
 			app.debug.alert("plugin.GlobalPage: page_" + $(container).attr('id') + ".pageinit()", 14);
 			var success = null;
 			try {
-				/* iOS 7 Statusbar Issue */
-				if (navigator.userAgent.match(/(iPad|iPhone);.*CPU.*OS 7_\d/i)) {
-					app.debug.alert("Oh, it's a iOS 7 device :-)", 14);
-					app.load.css("../css/ios.css");
-					$("div.app-header").addClass("ios7-header");
-					$('body').append('<div id="ios7statusbar"/>xxx</div>');
-				}
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);

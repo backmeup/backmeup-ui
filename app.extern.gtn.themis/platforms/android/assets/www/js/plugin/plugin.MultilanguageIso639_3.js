@@ -4,7 +4,7 @@
  * @version 1.0
  * @namespace
  */
-plugin_MultilanguageIso639_3 = {
+var plugin_MultilanguageIso639_3 = {
 	config : null,
 	dictionary : null,
 	parameter : null,
@@ -32,7 +32,7 @@ plugin_MultilanguageIso639_3 = {
 
 	// private functions
 	loadLanguageIntoDict : function(language) {
-		var langUri = "../language/" + language + ".json";
+		var langUri = "../files/language/" + language + ".json";
 		$.ajax({
 			dataType : "json",
 			url : langUri,

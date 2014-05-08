@@ -19,78 +19,87 @@ var page_create_backup_1 = {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 		var success = null;
 		try {
-			app.debug.alert("page_" + this.config.name + ".creator()", 10);
-			var header = container.find('div[data-role=header]');
-			var content = container.find('div[data-role=content]');
-			var navPanel = container.find('div#nav-panel');
-			var pagePanel = container.find('div#page-panel');
-
-			// content
-			content.append(app.ni.element.h1({
-				"text" : app.lang.string("create_backup", "headlines")
-			}));
-
-			content.append(app.ni.element.h2({
-				"text" : app.lang.string("select_datasource", "headlines")
-			}));
-			content.append(app.ni.element.p({
-				"text" : app.lang.string("select_datasource", "texts")
-			}));
-
-			// datasource profiles
-			content.append(app.ni.element.h2({
-				"text" : app.lang.string("existing_datasources", "headlines")
-			}));
-			var list = $(app.template.get("listA", "responsive"));
-
-			if ((datasourceProfiles = app.rc.getJson("datasourceProfiles", {
+			var dfdDatasourceProfiles = $.Deferred();
+			var dfdGetDatasources = $.Deferred();
+			app.rc.getJson("datasourceProfiles", {
 				"username" : app.store.localStorage.get("data-html5-themis-username")
-			})) != false) {
-				// alert(JSON.stringify(datasources));
-				$.each(datasourceProfiles.sourceProfiles, function(key, value) {
-					list.append(app.ni.list.thumbnail({
-						href : "#",
-						imageSrc : app.img.getUrlById(value.pluginName),
-						title : "Id: " + value.datasourceProfileId,
-						headline : value.title,
-						text : value.pluginName,
-						attributes : {
-							"data-html5-datasourceprofileid" : value.datasourceProfileId
-						}
-					}));
-				});
-			} else {
-				alert("ws error");
-			}
-			content.append(list);
+			}, dfdDatasourceProfiles);
+			app.rc.getJson("getDatasources", null, dfdGetDatasources);
 
-			// datasources
-			content.append(app.ni.element.h2({
-				"text" : app.lang.string("new_datasource", "headlines"),
-				"styles" : {
-					"clear" : "both"
+			$.when(dfdGetDatasources, dfdDatasourceProfiles).done(function(datasources, datasourceProfiles) {
+
+				var header = $('div[data-role=header]');
+				var content = $('div[data-role=content]');
+				var navPanel = $('div#nav-panel');
+				var pagePanel = $('div#page-panel');
+
+				// content
+				content.append(app.ni.element.h1({
+					"text" : app.lang.string("create_backup", "headlines")
+				}));
+
+				content.append(app.ni.element.h2({
+					"text" : app.lang.string("select_datasource", "headlines")
+				}));
+				content.append(app.ni.element.p({
+					"text" : app.lang.string("select_datasource", "texts")
+				}));
+
+				// datasource profiles
+				content.append(app.ni.element.h2({
+					"text" : app.lang.string("existing_datasources", "headlines")
+				}));
+				var list = $(app.template.get("listA", "responsive"));
+
+				if (datasourceProfiles != false) {
+					// alert(JSON.stringify(datasources));
+					$.each(datasourceProfiles.sourceProfiles, function(key, value) {
+						list.append(app.ni.list.thumbnail({
+							href : "#",
+							imageSrc : app.img.getUrlById(value.pluginName),
+							title : "Id: " + value.datasourceProfileId,
+							headline : value.title,
+							text : value.pluginName,
+							attributes : {
+								"data-html5-datasourceprofileid" : value.datasourceProfileId
+							}
+						}));
+					});
+				} else {
+					alert("ws error");
 				}
-			}));
-			list = $(app.template.get("listA", "responsive"));
-			if ((datasources = app.rc.getJson("getDatasources")) != false) {
-				// alert(JSON.stringify(datasources));
-				$.each(datasources.sources, function(key, value) {
-					list.append(app.ni.list.thumbnail({
-						href : "#",
-						imageSrc : app.img.getUrlById(value.datasourceId),
-						title : "???",
-						headline : value.title,
-						text : value.datasourceId,
-						attributes : {
-							"data-html5-datasourceid" : value.datasourceId
-						},
-						classes : [ "app-new-datasource" ]
-					}));
-				});
-			} else {
-				alert("ws error");
-			}
-			content.append(list);
+				content.append(list);
+
+				// datasources
+				content.append(app.ni.element.h2({
+					"text" : app.lang.string("new_datasource", "headlines"),
+					"styles" : {
+						"clear" : "both"
+					}
+				}));
+				list = $(app.template.get("listA", "responsive"));
+				if (datasources != false) {
+					// alert(JSON.stringify(datasources));
+					$.each(datasources.sources, function(key, value) {
+						list.append(app.ni.list.thumbnail({
+							href : "#",
+							imageSrc : app.img.getUrlById(value.datasourceId),
+							title : "???",
+							headline : value.title,
+							text : value.datasourceId,
+							attributes : {
+								"data-html5-datasourceid" : value.datasourceId
+							},
+							classes : [ "app-new-datasource" ]
+						}));
+					});
+				} else {
+					alert("ws error");
+				}
+
+				content.append(list);
+				app.help.jQM.enhance(content);
+			});
 
 			success = true;
 		} catch (err) {

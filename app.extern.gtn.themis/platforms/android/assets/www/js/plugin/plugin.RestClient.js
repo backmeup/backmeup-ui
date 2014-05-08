@@ -4,7 +4,7 @@
  * @version 1.0
  * @namespace
  */
-plugin_RestClient = {
+var plugin_RestClient = {
 	config : null,
 	constructor : function() {
 	},
@@ -49,9 +49,10 @@ plugin_RestClient = {
 	},
 
 	functions : {
-		getJson : function(service, parameter) {
+		getJson : function(service, parameter, dfd) {
 			app.debug.alert("plugin_RestClient.functions.getJson(" + service + ", " + JSON.stringify(parameter) + ")", 20);
 			var path = plugin_RestClient.config.webservices[service].url;
+
 			if (parameter != undefined) {
 				$.each(parameter, function(key, value) {
 					path = path.replace('{' + key + '}', value);
@@ -61,7 +62,7 @@ plugin_RestClient = {
 			if (data == undefined)
 				data = "";
 			var pathX = path.split('?')[0];
-			var json = app.wsc.getJson(pathX, data, plugin_RestClient.config.webservices[service].method, plugin_RestClient.config.webservices[service].timeout);
+			var json = app.wsc.getJson(pathX, data, plugin_RestClient.config.webservices[service].method, plugin_RestClient.config.webservices[service].timeout, dfd);
 
 			// add language wildcards
 			if (plugin_MultilanguageIso639_3 != undefined) {

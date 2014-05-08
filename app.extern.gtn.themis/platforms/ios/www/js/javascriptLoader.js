@@ -3,7 +3,12 @@ $(document).ready(function() {
 	var success = true;
 
 	// load plugins
-	var url = "../js/plugin/plugins.js";
+	var url;
+	if (app.config.min) {
+		url = "../js/plugin/all.js";
+	} else {
+		url = "../js/plugin/plugins.js";
+	}
 	$.ajax({
 		url : url,
 		dataType : "script",
@@ -12,17 +17,22 @@ $(document).ready(function() {
 			;
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert("Fatal error in javascriptLoader.js: Can't load the plugins. Url: " + url + " Error: " + textStatus);
+			alert("Fatal error in javascriptLoader.js: Can't load file. Url: " + url + " Error: " + textStatus);
 			alert(errorThrown);
 			success = false;
 		}
 	});
-
+	plugins.constructor();
 	if (!success)
 		return false;
 
 	// load pages
-	var url = "../js/page/pages.js";
+	var url;
+	if (app.config.min) {
+		url = "../js/page/all.js";
+	} else {
+		url = "../js/page/pages.js";
+	}
 	$.ajax({
 		url : url,
 		dataType : "script",
@@ -35,7 +45,7 @@ $(document).ready(function() {
 			alert(errorThrown);
 		}
 	});
-
+	pages.constructor();
 	if (!success)
 		return false;
 
@@ -46,13 +56,16 @@ $(document).ready(function() {
 		dataType : "script",
 		async : false,
 		success : function(data, textStatus, jqXHR) {
+			app.config.apacheCordova = true;
 			if (jqXHR.status == 200)
-				;// cordova not found
+				app.config.apacheCordova = false;
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert("Fatal error in javascriptLoader.js: Can't load the plugins. Url: " + url + " Error: " + textStatus);
-			alert(errorThrown);
-			success = false;
+			app.config.apacheCordova = false;
+			// alert("Fatal error in javascriptLoader.js: Can't load the
+			// plugins. Url: " + url + " Error: " + textStatus);
+			// alert("Error" + errorThrown);
+			// success = false;
 		}
 	});
 
@@ -69,7 +82,7 @@ $(document).ready(function() {
 			;
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert("Fatal error in javascriptLoader.js: Can't load the plugins. Url: " + url + " Error: " + textStatus);
+			alert("Fatal error in javascriptLoader.js: Can't load jQuery mobile. Url: " + url + " Error: " + textStatus);
 			alert(errorThrown);
 			success = false;
 		}
@@ -121,6 +134,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
 	app.debug.alert("cordova initialized", 30);
+	app.config.apacheCordova = true;
 }
 
 $(document).bind("mobileinit", function() {
@@ -134,14 +148,19 @@ $(document).bind("mobileinit", function() {
 	$.mobile.loader.prototype.options.textVisible = false;
 	$.mobile.loader.prototype.options.theme = "a";
 	$.mobile.loader.prototype.options.html = "";
-
 });
 
+/*
+$(window).load(function() {
+	//alert("loaded in: " + performance.now() );
+});
+*/
 var app = {
 	config : {
 		name : "themis",
 		min : false,
-		jQueryMobile : true
+		useJQueryMobile : true,
+		apacheCordova : null
 	},
 	addObject : function(name, object) {
 		// alert("Add object to app: " + name);

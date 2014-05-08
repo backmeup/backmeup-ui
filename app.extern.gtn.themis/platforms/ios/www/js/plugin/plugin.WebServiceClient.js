@@ -4,7 +4,7 @@
  * @version 1.0
  * @namespace
  */
-plugin_WebServiceClient = {
+var plugin_WebServiceClient = {
 	config : null,
 	interval : null,
 	constructor : function() {
@@ -89,24 +89,38 @@ plugin_WebServiceClient = {
 		app.info.set("plugin_WebServiceClient.config.preferedServer.port", plugin_WebServiceClient.config.server.first.port);
 	},
 
-	getAjax : function(url, data, type, method, timeout) {
+	getAjax : function(url, data, type, method, timeout, dfd) {
 		app.debug.alert("plugin_WebServiceClient.getAjax(" + url + ", " + data + ", " + type + ", " + method + ", " + timeout + ")", 14);
 		app.debug.alert("Call webservice: " + url + "?" + data, 60);
 		var json = null;
+		var async = false;
+		if (dfd != undefined && dfd != null) {
+			async = true;
+			json = false;
+		}
+
 		try {
 			$.ajax({
 				url : url,
 				data : data,// ?key=value
 				dataType : type, // json
-				async : false,
+				async : async, // false
 				method : method, // post
 				timeout : timeout, // 5000
 				success : function(data, textStatus, jqXHR) {
+					
 					json = data;
+					if (dfd != undefined && dfd != null) {
+						//alert("ws success -- resolve dfd");
+						dfd.resolve(json);
+					}
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
 					app.debug.alert("Error in: plugin_WebServiceClient.getAjax(). Error: " + errorThrown, 50);
 					json = false;
+					if (dfd != undefined && dfd != null) {
+						dfd.reject(json);
+					}
 				}
 			});
 		} catch (err) {
@@ -209,11 +223,11 @@ plugin_WebServiceClient = {
 			return xml;
 		},
 
-		getJson : function(path, data, method, timeout) {
+		getJson : function(path, data, method, timeout, dfd) {
 			app.debug.alert("plugin_WebServiceClient.functions.getJson(" + path + ", " + data + ", " + method + ", " + timeout + ")", 20);
 			var server = plugin_WebServiceClient.getPreferedServer();
 			var url = server.scheme + server.scheme_specific_part + server.host + ":" + server.port + path;
-			var json = plugin_WebServiceClient.getAjax(url, data, "json", method, timeout);
+			var json = plugin_WebServiceClient.getAjax(url, data, "json", method, timeout, dfd);
 			return json;
 		},
 

@@ -136,6 +136,19 @@ var plugin_HelperFunctions = {
 			integer : function(digits) {
 				return Math.floor((Math.random() * digits) + 1);
 			}
+		},
+		jQM : {
+			enhance : function(object) {
+				// http://stackoverflow.com/questions/14550396/jquery-mobile-markup-enhancement-of-dynamically-added-content
+				object.find('[data-role=listview]').listview().listview('refresh');
+				object.find('[type=button]').button();
+				object.find('[data-role=navbar]').navbar();
+				object.find('[type=text]').textinput();
+				object.find('[type=range]').slider();
+				object.find('[type=radio]').checkboxradio();
+				object.find('select').selectmenu();
+
+			}
 		}
 	}
 };

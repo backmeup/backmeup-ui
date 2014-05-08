@@ -72,6 +72,7 @@ var page_login = {
 							app.store.localStorage.set("data-html5-themis-loggedin", true);
 							app.store.localStorage.set("data-html5-themis-userid", json.userId);
 							app.store.localStorage.set("data-html5-themis-activated", json.activated);
+							app.store.localStorage.set("data-html5-themis-keyring", container.find("#txtPassword").val());
 							app.store.localStorage.set("data-html5-themis-username", container.find("#txtEmail").val());
 							$(location).attr("href", "start.html");
 						} else {

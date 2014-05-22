@@ -89,14 +89,15 @@ var plugin_WebServiceClient = {
 		app.info.set("plugin_WebServiceClient.config.preferedServer.port", plugin_WebServiceClient.config.server.first.port);
 	},
 
-	getAjax : function(url, data, type, method, timeout, dfd) {
-		app.debug.alert("plugin_WebServiceClient.getAjax(" + url + ", " + data + ", " + type + ", " + method + ", " + timeout + ")", 14);
+	getAjax : function(url, data, type, method, timeout, async) {
+		app.debug.alert("plugin_WebServiceClient.getAjax(" + url + ", " + data + ", " + type + ", " + method + ", " + timeout + ", " + async + ")", 14);
 		app.debug.alert("Call webservice: " + url + "?" + data, 60);
 		var json = null;
-		var async = false;
-		if (dfd != undefined && dfd != null) {
-			async = true;
-			json = false;
+
+		var dfd = null;
+		if (async) {
+			dfd = $.Deferred();
+			json = dfd.promise();
 		}
 
 		try {
@@ -108,10 +109,9 @@ var plugin_WebServiceClient = {
 				method : method, // post
 				timeout : timeout, // 5000
 				success : function(data, textStatus, jqXHR) {
-					
 					json = data;
 					if (dfd != undefined && dfd != null) {
-						//alert("ws success -- resolve dfd");
+						// alert("ws success -- resolve dfd");
 						dfd.resolve(json);
 					}
 				},
@@ -119,7 +119,18 @@ var plugin_WebServiceClient = {
 					app.debug.alert("Error in: plugin_WebServiceClient.getAjax(). Error: " + errorThrown, 50);
 					json = false;
 					if (dfd != undefined && dfd != null) {
-						dfd.reject(json);
+						// alert("now, reject it");
+						dfd.reject({
+							"call" : {
+								"url" : url,
+								"data" : data,
+								"type" : type,
+								"async" : async,
+								"mehtod" : method,
+								"timeout" : timeout
+							},
+							"jqXHR" : JSON.parse(JSON.stringify(jqXHR))
+						});
 					}
 				}
 			});
@@ -136,7 +147,7 @@ var plugin_WebServiceClient = {
 
 	keepAliveSuccess : function(data, textStatus, jqXHR) {
 		app.debug.alert("plugin_WebServiceClient.keepAliveSuccess()", 14);
-		var wsDuration = performance.now() - plugin_WebServiceClient.keepAliveStartTime;
+		var wsDuration = Date.now() - plugin_WebServiceClient.keepAliveStartTime;
 		if (wsDuration >= plugin_WebServiceClient.config.keepAlive.maximumResponseTime) {
 			app.info.set("plugin_WebServiceClient.config.keepAlive.isAlive", false);
 			app.info.set("plugin_WebServiceClient.config.keepAlive.error.code", 2);
@@ -155,7 +166,7 @@ var plugin_WebServiceClient = {
 
 	keepAliveError : function(jqXHR, textStatus, errorThrown) {
 		app.debug.alert("plugin_WebServiceClient.keepAliveError()", 14);
-		var wsDuration = performance.now() - plugin_WebServiceClient.keepAliveStartTime;
+		var wsDuration = Date.now() - plugin_WebServiceClient.keepAliveStartTime;
 		app.info.set("plugin_WebServiceClient.config.keepAlive.lastDuration", wsDuration);
 		app.info.set("plugin_WebServiceClient.config.keepAlive.isAlive", false);
 		app.info.set("plugin_WebServiceClient.config.keepAlive.error.code", 1);
@@ -189,7 +200,7 @@ var plugin_WebServiceClient = {
 	 * 0 OK; 1 Webservice failed; 2 Timeout Error
 	 */
 	keepAliveRequest : function() {
-		app.debug.alert("plugin_WebServiceClient.newKeepAliveRequest()", 14);
+		app.debug.alert("plugin_WebServiceClient.keepAliveRequest()", 14);
 		var path = plugin_WebServiceClient.config.keepAlive.keepAlivePath;
 		var data = "";
 		var method = plugin_WebServiceClient.config.keepAlive.method;
@@ -199,7 +210,7 @@ var plugin_WebServiceClient = {
 		var wsDuration = 0;
 		switch (plugin_WebServiceClient.config.keepAlive.type) {
 		case "json":
-			plugin_WebServiceClient.keepAliveStartTime = performance.now();
+			plugin_WebServiceClient.keepAliveStartTime = Date.now();
 			plugin_WebServiceClient.keepAliveAjax(url, data, "json", method, timeout);
 			break;
 		case "xml":
@@ -223,11 +234,16 @@ var plugin_WebServiceClient = {
 			return xml;
 		},
 
-		getJson : function(path, data, method, timeout, dfd) {
-			app.debug.alert("plugin_WebServiceClient.functions.getJson(" + path + ", " + data + ", " + method + ", " + timeout + ")", 20);
-			var server = plugin_WebServiceClient.getPreferedServer();
-			var url = server.scheme + server.scheme_specific_part + server.host + ":" + server.port + path;
-			var json = plugin_WebServiceClient.getAjax(url, data, "json", method, timeout, dfd);
+		getJson : function(path, data, method, timeout, async, local) {
+			app.debug.alert("plugin_WebServiceClient.functions.getJson(" + path + ", " + data + ", " + method + ", " + timeout + ", " + async + ", " + local + ")", 20);
+			var url = null;
+			if (local === true)
+				url = path;
+			else {
+				var server = plugin_WebServiceClient.getPreferedServer();
+				url = server.scheme + server.scheme_specific_part + server.host + ":" + server.port + path;
+			}
+			var json = plugin_WebServiceClient.getAjax(url, data, "json", method, timeout, async);
 			return json;
 		},
 

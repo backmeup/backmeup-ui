@@ -124,6 +124,13 @@ var plugin_Debug = {
 			$("body").on("click", "#btnRefresh", function() {
 				location.reload();
 			});
+			$("body").on("click", "#btnShowLog", function() {
+				var text = "";
+				$.each(plugin_Debug.logObject, function(key, value) {
+					text += value + "<br />\n";
+				});
+				app.notify.alert(text, "Log", "Log");
+			});
 			$("body").on("click", "#btnDeleteHtml5Storage", function() {
 				app.store.localStorage.clear();
 				location.reload();
@@ -159,14 +166,7 @@ var plugin_Debug = {
 			}
 			// debug level
 			$('#txtDebugLevel').val(plugin_Debug.config.debugLevel);
-			// log text
-			if (this.config.showLog) {
-				var debugText = "";
-				$.each(this.logObject, function(key, value) {
-					debugText += key + " " + value.replace("\\n", "<br />") + "<br /><br />";
-				});
-				$("#pLog").html(debugText);
-			}
+			
 		}
 	},
 	/**
@@ -193,13 +193,13 @@ var plugin_Debug = {
 		append += '<fieldset class="debugGroup" data-role="controlgroup">';
 		append += '<legend>Debug Area:</legend>';
 		append += '<input type="button" name="btnRefresh" id="btnRefresh" class="custom" value="Refresh Page"/>';
+		append += '<input type="button" name="btnShowLog" id="btnShowLog" class="custom" value="Show Log"/>';
 		append += '<input type="checkbox" name="cbxToggleDebug" id="cbxToggleDebug" class="custom" />';
 		append += '<input type="button" name="btnDeleteHtml5Storage" id="btnDeleteHtml5Storage" class="custom" value="Delete Html5 Storage"/>';
 		append += '<p>Debug Level</p>';
 		append += '<input type="text" name="txtDebugLevel" id="txtDebugLevel" />';
 		append += '<label for="cbxToggleDebug">Toggle Debug</label>';
 		append += '</fieldset>';
-		append += '<p id="pLog" style="font-size:8px;">Log</p>';
 		append += '</div>';
 		$(container).append(append);
 	},
@@ -224,7 +224,7 @@ var plugin_Debug = {
 				alert("DebugLevel: " + level + "\n" + text);
 			}
 			if (plugin_Debug.config.logDebug && (level >= plugin_Debug.config.logDebugLevel)) {
-				plugin_Debug.functions.log("DebugLevel: " + level + " > " + text);
+				plugin_Debug.functions.log("DebugLevel: " + level + " - " + text);
 			}
 		},
 		/**
@@ -235,7 +235,7 @@ var plugin_Debug = {
 		 */
 		log : function(text) {
 			// Date.now()
-			plugin_Debug.logObject.push(" > " + text);
+			plugin_Debug.logObject.push(" - " + text);
 		},
 		/**
 		 * Shows the log object in an alert window

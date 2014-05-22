@@ -92,6 +92,7 @@ $(document).ready(function() {
 
 	// app.store.localStorage.clear();
 	// app.store.localStorage.show();
+	//app.notify.add.alert("dasd", "sadsad", "asdsad");
 
 });
 
@@ -151,15 +152,13 @@ $(document).bind("mobileinit", function() {
 });
 
 /*
-$(window).load(function() {
-	//alert("loaded in: " + performance.now() );
-});
-*/
+ * $(window).load(function() { //alert("loaded in: " + performance.now() ); });
+ */
 var app = {
 	config : {
 		name : "themis",
-		min : false,
-		useJQueryMobile : true,
+		min : true,
+		useJQueryMobile : false,
 		apacheCordova : null
 	},
 	addObject : function(name, object) {

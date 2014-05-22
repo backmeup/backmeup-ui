@@ -135,8 +135,8 @@ var plugin_GlobalPage = {
 
 				if ((window['page_' + container.attr("id")].config.loginObligate && app.store.localStorage.get("data-html5-themis-loggedin")) || (!window['page_' + container.attr("id")].config.loginObligate && !app.store.localStorage.get("data-html5-themis-loggedin")) || (!window['page_' + container.attr("id")].config.loginObligate && app.store.localStorage.get("data-html5-themis-loggedin"))) {
 					app.template.overwrite("#" + container.attr("id"), "JQueryMobilePageStructure");
-					// app.template.append("#" + container.attr("id"),
-					// "JQueryMobileNavigationPanel")
+
+					
 
 					// add css classes
 					// alert(JSON.stringify(app.detect.classes.array()));

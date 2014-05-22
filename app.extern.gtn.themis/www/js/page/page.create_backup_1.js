@@ -19,15 +19,18 @@ var page_create_backup_1 = {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 		var success = null;
 		try {
-			var dfdDatasourceProfiles = $.Deferred();
-			var dfdGetDatasources = $.Deferred();
-			app.rc.getJson("datasourceProfiles", {
+			app.template.append("div[data-role=content]", "app-loader-bubble");
+
+			var promise = app.rc.getJson([ [ "datasourceProfiles", {
 				"username" : app.store.localStorage.get("data-html5-themis-username")
-			}, dfdDatasourceProfiles);
-			app.rc.getJson("getDatasources", null, dfdGetDatasources);
+			} ], [ "getDatasources", null ] ], true);
 
-			$.when(dfdGetDatasources, dfdDatasourceProfiles).done(function(datasources, datasourceProfiles) {
+			// when data received
+			promise.done(function(resultObject) {
+				//alert("ws done");
+				var datasources = resultObject["getDatasources"], datasourceProfiles = resultObject["datasourceProfiles"];
 
+				$(".app-loader").remove();
 				var header = $('div[data-role=header]');
 				var content = $('div[data-role=content]');
 				var navPanel = $('div#nav-panel');

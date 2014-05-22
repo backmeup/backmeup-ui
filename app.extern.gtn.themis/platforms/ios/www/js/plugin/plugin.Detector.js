@@ -7,7 +7,7 @@
  */
 var plugin_Detector = {
 	config : null,
-	cssClasses : [],
+	cssClasses : {},
 	// called by plugins.js
 	constructor : function() {
 		var success = null;
@@ -26,11 +26,10 @@ var plugin_Detector = {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
 		var success = null;
 		try {
-			if (app.detect.mobile.any())
-				plugin_Detector.isMobileDevice();
+			plugin_Detector.functions.classes.generate();
+			app.debug.alert("Css Classes in body Tag: " + plugin_Detector.functions.classes.classNames(), 60);
+			app.debug.alert(navigator.userAgent, 60);
 
-			if (app.detect.desktop.any())
-				plugin_Detector.isDesktop();
 			success = true;
 		} catch (err) {
 			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
@@ -46,6 +45,7 @@ var plugin_Detector = {
 		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
 		var success = null;
 		try {
+
 			success = true;
 		} catch (err) {
 			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
@@ -95,10 +95,10 @@ var plugin_Detector = {
 		try {
 			if (plugin_Detector.config.addCssClassesToBodyTag) {
 				// add css classes
-				// alert(JSON.stringify(app.detect.classes.array()));
+
 				$.each(app.detect.classes.array(), function(key, name) {
-					if (!$('body').hasClass(name))
-						$('body').addClass(name);
+					if (!$('body').hasClass(key))
+						$('body').addClass(key);
 				});
 			}
 			success = true;
@@ -126,32 +126,17 @@ var plugin_Detector = {
 	},
 	// private functions
 	jQueryMobileAndCordovaLoaded : function() {
-		plugin_Detector.cssClasses.push("app-jQueryMobile-and-Cordova");
+		plugin_Detector.cssClasses["app-jQueryMobile-and-Cordova"] = null;
 	},
 
 	jQueryMobileLoaded : function() {
-		plugin_Detector.cssClasses.push("app-jQueryMobile");
+		plugin_Detector.cssClasses["app-jQueryMobile"] = null;
 	},
 
 	cordovaLoaded : function() {
-		plugin_Detector.cssClasses.push("app-Cordova");
+		plugin_Detector.cssClasses["app-Cordova"] = null;
 	},
 
-	isDesktop : function() {
-		plugin_Detector.cssClasses.push("app-desktop");
-	},
-
-	isMobileDevice : function() {
-		plugin_Detector.cssClasses.push("app-mobile");
-	},
-
-	isIOsDevice : function() {
-		plugin_Detector.cssClasses.push("app-ios");
-	},
-
-	isAndroidDevice : function() {
-		plugin_Detector.cssClasses.push("app-android");
-	},
 	// public functions
 	// called by user
 	/**
@@ -161,50 +146,325 @@ var plugin_Detector = {
 	 * 
 	 */
 	functions : {
+
 		classes : {
 			classNames : function() {
 				var classes = "";
-				$.each(plugin_Detector.cssClasses, function(key, name) {
-					classes += name + " ";
+				$.each(plugin_Detector.cssClasses, function(key, value) {
+					classes += key + " ";
 				});
 				return classes;
+			},
+			generate : function() {
+				if (className = plugin_Detector.functions.isMobile())
+					plugin_Detector.cssClasses[className] = null;
+
+				if (className = plugin_Detector.functions.isDesktop())
+					plugin_Detector.cssClasses[className] = null;
+
+				// iterate the mobile devices
+				$.each(plugin_Detector.functions.mobile, function(key, value) {
+					if (typeof value == 'function') {
+						if (className = plugin_Detector.functions.mobile[key]())
+							plugin_Detector.cssClasses[className] = null;
+					} else if (typeof value == 'object') {
+						$.each(plugin_Detector.functions.mobile[key], function(key1, value1) {
+							if (typeof value1 == 'function') {
+								if (className = plugin_Detector.functions.mobile[key][key1]())
+									plugin_Detector.cssClasses[className] = null;
+							} else if (typeof value1 == 'object') {
+								$.each(plugin_Detector.functions.mobile[key][key1], function(key2, value2) {
+									if (typeof value2 == 'function') {
+										if (className = plugin_Detector.functions.mobile[key][key1][key2]())
+											plugin_Detector.cssClasses[className] = null;
+									}
+								});
+							}
+						});
+					}
+				});
+				// iterate the desktop devices
+				$.each(plugin_Detector.functions.desktop, function(key, value) {
+					if (typeof value == 'function') {
+						if (className = plugin_Detector.functions.desktop[key]())
+							plugin_Detector.cssClasses[className] = null;
+					} else if (typeof value == 'object') {
+						$.each(plugin_Detector.functions.desktop[key], function(key1, value1) {
+							if (typeof value1 == 'function') {
+								if (className = plugin_Detector.functions.desktop[key][key1]())
+									plugin_Detector.cssClasses[className] = null;
+							} else if (typeof value1 == 'object') {
+								$.each(plugin_Detector.functions.desktop[key][key1], function(key2, value2) {
+									if (typeof value2 == 'function') {
+										if (className = plugin_Detector.functions.desktop[key][key1][key2]())
+											plugin_Detector.cssClasses[className] = null;
+									}
+								});
+							}
+						});
+					}
+
+				});
+				// iterate the media devices
+				$.each(plugin_Detector.functions.media, function(key, value) {
+					if (typeof value == 'function') {
+						if (className = plugin_Detector.functions.media[key]())
+							plugin_Detector.cssClasses[className] = null;
+					} else if (typeof value == 'object') {
+						$.each(plugin_Detector.functions.media[key], function(key1, value1) {
+							if (typeof value1 == 'function') {
+								if (className = plugin_Detector.functions.media[key][key1]())
+									plugin_Detector.cssClasses[className] = null;
+							} else if (typeof value1 == 'object') {
+								$.each(plugin_Detector.functions.media[key][key1], function(key2, value2) {
+									if (typeof value2 == 'function') {
+										if (className = plugin_Detector.functions.media[key][key1][key2]())
+											plugin_Detector.cssClasses[className] = null;
+									}
+								});
+							}
+						});
+					}
+
+				});
+				// iterate the browsers
+				$.each(plugin_Detector.functions.browser, function(key, value) {
+					if (typeof value == 'function') {
+						if (className = plugin_Detector.functions.browser[key]())
+							plugin_Detector.cssClasses[className] = null;
+					} else if (typeof value == 'object') {
+						$.each(plugin_Detector.functions.browser[key], function(key1, value1) {
+							if (typeof value1 == 'function') {
+								if (className = plugin_Detector.functions.browser[key][key1]())
+									plugin_Detector.cssClasses[className] = null;
+							} else if (typeof value1 == 'object') {
+								$.each(plugin_Detector.functions.browser[key][key1], function(key2, value2) {
+									if (typeof value2 == 'function') {
+										if (className = plugin_Detector.functions.browser[key][key1][key2]())
+											plugin_Detector.cssClasses[className] = null;
+									}
+								});
+							}
+						});
+					}
+
+				});
 			},
 			array : function() {
 				return plugin_Detector.cssClasses;
 			}
 		},
+		isMobile : function() {
+			if (plugin_Detector.functions.mobile.isApple() || plugin_Detector.functions.mobile.isBlackberry() || plugin_Detector.functions.mobile.isCannonical() || plugin_Detector.functions.mobile.isGoogle() || plugin_Detector.functions.mobile.isMicrosoft() || plugin_Detector.functions.mobile.isMozilla())
+				return "app-mobile";
+			else
+				return false;
+		},
+
 		mobile : {
-			Android : function() {
-				return navigator.userAgent.match(/Android/i);
+			isApple : function() {
+				if (plugin_Detector.functions.mobile.apple.iOS())
+					return "app-mobile-apple";
+				else
+					return false;
 			},
-			BlackBerry : function() {
-				return navigator.userAgent.match(/BlackBerry/i);
+			apple : {
+				iOS : function() {
+					if (navigator.userAgent.match(/iPhone|iPad|iPod/i))
+						return "app-ios";
+					else
+						return false;
+				},
+				iPhone : function() {
+					if (navigator.userAgent.match(/iPhone/i))
+						return "app-ios";
+					else
+						return false;
+				},
+				iPad : function() {
+					if (navigator.userAgent.match(/iPad/i))
+						return "app-ios";
+					else
+						return false;
+				},
+				iPod : function() {
+					if (navigator.userAgent.match(/iPod/i))
+						return "app-ios";
+					else
+						return false;
+				},
+				version : {
+					iOS3 : function() {
+						if (navigator.userAgent.match(/OS 3_/i))
+							return "app-ios-version-3";
+						else
+							return false;
+					},
+					iOS4 : function() {
+						if (navigator.userAgent.match(/OS 4_/i))
+							return "app-ios-version-4";
+						else
+							return false;
+					},
+					iOS5 : function() {
+						if (navigator.userAgent.match(/OS 5_/i))
+							return "app-ios-version-5";
+						else
+							return false;
+					},
+					iOS6 : function() {
+						if (navigator.userAgent.match(/OS 6_/i))
+							return "app-ios-version-6";
+						else
+							return false;
+					},
+					iOS7 : function() {
+						if (navigator.userAgent.match(/OS 7_/i))
+							return "app-ios-version-7";
+						else
+							return false;
+					}
+				}
 			},
-			iOS : function() {
-				return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+			isGoogle : function() {
+				if (plugin_Detector.functions.mobile.google.Android())
+					return "app-mobile-android";
+				else
+					return false;
 			},
-			Opera : function() {
-				return navigator.userAgent.match(/Opera Mini/i);
+			google : {
+				Android : function() {
+					if (navigator.userAgent.match(/Android/i))
+						return "app-android";
+					else
+						return false;
+				},
+				version : {}
 			},
-			Windows : function() {
-				return navigator.userAgent.match(/IEMobile/i);
+			isMicrosoft : function() {
+				if (plugin_Detector.functions.mobile.microsoft.Windows())
+					return "app-mobile-microsoft";
 			},
-			any : function() {
-				return (app.detect.mobile.Android() || app.detect.mobile.BlackBerry() || app.detect.mobile.iOS() || app.detect.mobile.Opera() || app.detect.mobile.Windows());
-			}
+			microsoft : {
+				Windows : function() {
+					if (navigator.userAgent.match(/IEMobile/i))
+						return "app-windows-mobile";
+					else
+						return false;
+				},
+				version : {}
+			},
+			isBlackberry : function() {
+				if (plugin_Detector.functions.mobile.blackberry.blackberry())
+					return "app-mobile-blackberry";
+				else
+					return false;
+			},
+			blackberry : {
+				blackberry : function() {
+					if (navigator.userAgent.match(/BlackBerry/i))
+						return "app-blackberry";
+					else
+						return false;
+				},
+				version : {}
+			},
+			isMozilla : function() {
+				if (plugin_Detector.functions.mobile.mozilla.firefoxOS())
+					return "app-mobile-mozilla";
+				else
+					return false;
+			},
+			mozilla : {
+				firefoxOS : function() {
+				}
+			},
+			isCannonical : function() {
+				if (plugin_Detector.functions.mobile.canonical.ubuntu())
+					return "app-mobile-cannonical";
+				else
+					return false;
+			},
+			canonical : {
+				ubuntu : function() {
+				}
+			},
+		},
+		isDesktop : function() {
+			if (plugin_Detector.functions.desktop.isApple() || plugin_Detector.functions.desktop.isCannonicla() || plugin_Detector.functions.desktop.isMicrosoft())
+				return "app-dektop";
+			else
+				return false;
 		},
 		desktop : {
-			Mac : function() {
-				return navigator.userAgent.match(/Macintosh/i);
+			isApple : function() {
+				if (plugin_Detector.functions.desktop.apple.Macintosh())
+					return "app-desktop-apple";
+				else
+					return false;
 			},
-			Windows : function() {
-				return navigator.userAgent.match(/Windows/i);
+			apple : {
+				Macintosh : function() {
+					if (navigator.userAgent.match(/Macintosh/i))
+						return "app-desktop-apple-macintish";
+					else
+						return false;
+				},
+				version : {}
 			},
-			any : function() {
-				return app.detect.desktop.Mac() || app.detect.desktop.Windows();
+			isMicrosoft : function() {
+				if (plugin_Detector.functions.desktop.microsoft.Windows())
+					return "app-desktop-microsoft";
+				else
+					return false;
+			},
+			microsoft : {
+				Windows : function() {
+					return navigator.userAgent.match(/Windows/i);
+				},
+				version : {}
+			},
+			isCannonicla : function() {
+				if (plugin_Detector.functions.desktop.cannonical.Ubuntu())
+					return "app-desktop-cannonical";
+				else
+					return false;
+			},
+			cannonical : {
+				Ubuntu : function() {
+					return false;
+				},
+				version : {}
+			},
+
+		},
+		browser : {
+			microsoft : {
+				version : {}
+			},
+			apple : {
+				version : {}
+			},
+			cannonical : {
+				version : {}
+			},
+			mozilla : {
+				version : {}
+			},
+			google : {
+				version : {}
 			}
 		},
-		browser : {},
-		media : {}
+		media : {
+			sony : {
+				version : {}
+			},
+			microsoft : {
+				version : {}
+			},
+			nintendo : {
+				version : {}
+			}
+		}
 	}
 };

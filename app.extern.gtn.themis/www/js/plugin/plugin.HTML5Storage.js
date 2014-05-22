@@ -111,6 +111,7 @@ var plugin_HTML5Storage = {
 			set : function(key, val) {
 				app.debug.alert('plugin_HTML5Storage.localStorage.set(' + key + ', ' + val + ')', 1);
 				window.localStorage.setItem(app.config.name + "." + key, val);
+				return true;
 			},
 			get : function(key) {
 				app.debug.alert('plugin_HTML5Storage.localStorage.get(' + key + ')', 3);
@@ -118,6 +119,7 @@ var plugin_HTML5Storage = {
 			},
 			clear : function() {
 				window.localStorage.clear();
+				return true;
 			},
 			clearHtml5 : function() {
 				$.each(window.localStorage, function(key, value) {
@@ -129,6 +131,7 @@ var plugin_HTML5Storage = {
 						}
 					}
 				});
+				return true;
 			},
 			removeItem : function(key) {
 				window.localStorage.removeItem(app.config.name + "." + key);
@@ -156,16 +159,17 @@ var plugin_HTML5Storage = {
 				});
 			},
 			setObject : function(name, object) {
-				// alert("set: " + name);
+				// alert(JSON.stringify(object));
 				app.debug.alert('plugin_HTML5Storage.localStorage.setObject(' + name + ', ' + JSON.stringify(object) + ')', 20);
 				$.each(object, function(key, value) {
-					if (typeof value == "object") {
+					if (typeof value == "object" && value != null) {
 						plugin_HTML5Storage.functions.localStorage.setObject((name + "." + key).trim(), value);
 					} else {
 						plugin_HTML5Storage.functions.localStorage.set((name + "." + key).trim(), value);
 					}
 				});
 				// app.store.localStorage.show();
+				return true;
 			},
 			getObject : function(name) {
 				// alert("get: " + name);
@@ -181,7 +185,7 @@ var plugin_HTML5Storage = {
 				});
 
 				if (object[name] != undefined)
-					return object;
+					return object[name];
 				else {
 					return null;
 				}
@@ -189,15 +193,18 @@ var plugin_HTML5Storage = {
 			removeObject : function(name) {
 				// alert("remove:" + name);
 				app.debug.alert('plugin_HTML5Storage.localStorage.removeObject(' + name + ')', 20);
+				var success = true;
 				$.each(window.localStorage, function(key, value) {
 					if (key.substr(app.config.name.length + 1, name.length) == name.trim()) {
 						try {
 							window.localStorage.removeItem(key.trim())
 						} catch (err) {
 							alert(err);
+							success = false;
 						}
 					}
 				});
+				return success;
 			},
 			getList : function(identifier) {
 				var list = {};

@@ -60,8 +60,10 @@ var plugin_Notification = {
 		var success = null;
 		try {
 			$(document).on('pageshow', '.app-page', function(event) {
-				if (!plugin_Notification.notifications)
+				if (!plugin_Notification.notifications) {
 					plugin_Notification.notifications = app.store.localStorage.getObject("popup_notifications");
+				}
+				// alert(JSON.stringify(plugin_Notification.notifications));
 				app.store.localStorage.removeObject("popup_notifications");
 				plugin_Notification.popupShow();
 			});
@@ -87,7 +89,7 @@ var plugin_Notification = {
 		app.debug.alert("plugin_" + this.config.name + ".afterHtmlInjectedBeforePageComputing()", 11);
 		var success = null;
 		try {
-			//alert('insert popups');
+			// alert('insert popups');
 			// alert($("body #popupDialog").length);
 			$("body #popupDialog").remove();
 			$("body #popupAlert").remove();
@@ -130,7 +132,7 @@ var plugin_Notification = {
 				if (typeof notification.text == "object") {
 					$("#popupAlert div.ui-content p").replaceWith(notification.text);
 				} else {
-					$("#popupAlert div.ui-content p").text(notification.text);
+					$("#popupAlert div.ui-content p").html(notification.text);
 				}
 				$("#popupAlert").popup("open");
 				$("#popupAlert").popup("reposition");
@@ -138,18 +140,17 @@ var plugin_Notification = {
 			plugin_Notification.callbackFuntion = notification.callback;
 		} else {
 			if (plugin_Notification.notifications != null) {
-				if (Object.keys(plugin_Notification.notifications['popup_notifications']).length == 0)
+				if (Object.keys(plugin_Notification.notifications).length == 0)
 					plugin_Notification.notifications = null;
 				else {
-					var firstKey = Object.keys(plugin_Notification.notifications['popup_notifications'])[0];
-					// alert(firstKey);
-					var notification = plugin_Notification.notifications['popup_notifications'][firstKey];
+					// todo more popups
+					var notification = plugin_Notification.notifications['1'];
 					// alert(JSON.stringify(notification));
-					delete plugin_Notification.notifications['popup_notifications'][firstKey];
+					delete plugin_Notification.notifications['1'];
 					setTimeout(function() {
 						$("#popupAlert div[data-role=header] h1").text(notification.title);
 						$("#popupAlert div.ui-content h3.ui-title").text(notification.headline);
-						$("#popupAlert div.ui-content p").text(notification.text);
+						$("#popupAlert div.ui-content p").html(notification.text);
 						$("#popupAlert").popup("open");
 					}, 300);
 				}

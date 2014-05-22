@@ -1,1 +1,27 @@
-body.app-desktop{}
+/* body tag of page */
+body.app-desktop {
+}
+
+/* jQuery Mobile header */
+body.app-desktop div.app-header {
+	position: static;
+	background-color: yellow;
+}
+
+/* jQuery Mobile footer = body menu */
+body.app-desktop div.app-footer {
+	position: static;
+	background-color: blue;
+}
+
+/* jQuery Mobile panel = global menu */
+body.app-desktop div#page-panel {
+	position: static;
+	background-color: green;
+}
+
+/* jQuery Mobile panel = page specific menu */
+body.app-desktop div#nav-panel {
+	position: static;
+	background-color: red;
+}

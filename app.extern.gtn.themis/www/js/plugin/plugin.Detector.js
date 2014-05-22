@@ -392,7 +392,7 @@ var plugin_Detector = {
 		},
 		isDesktop : function() {
 			if (plugin_Detector.functions.desktop.isApple() || plugin_Detector.functions.desktop.isCannonicla() || plugin_Detector.functions.desktop.isMicrosoft())
-				return "app-dektop";
+				return "app-desktop";
 			else
 				return false;
 		},

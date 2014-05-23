@@ -157,7 +157,7 @@ var plugin_GlobalPage = {
 							"data-display" : "overlay"
 						}
 					});
-					if (app.detect.isDesktop) {
+					if (app.detect.isDesktop()) {
 						navPanel.removeAttr("data-role");
 					}
 					navPanel.append(app.template.get("ThemisNavigationPanelContent", "themis"));
@@ -174,7 +174,7 @@ var plugin_GlobalPage = {
 							"data-position" : "right"
 						}
 					});
-					if (app.detect.isDesktop) {
+					if (app.detect.isDesktop()) {
 						pagePanel.removeAttr("data-role");
 					}
 					var ul = app.ni.element.ul({

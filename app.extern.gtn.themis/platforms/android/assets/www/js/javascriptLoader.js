@@ -73,26 +73,28 @@ $(document).ready(function() {
 		return false;
 
 	// load jQuery mobile
-	var url = "../ext/jquery.mobile-1.4.2.min.js";
-	$.ajax({
-		url : url,
-		dataType : "script",
-		async : false,
-		success : function(data, textStatus, jqXHR) {
-			;
-		},
-		error : function(jqXHR, textStatus, errorThrown) {
-			alert("Fatal error in javascriptLoader.js: Can't load jQuery mobile. Url: " + url + " Error: " + textStatus);
-			alert(errorThrown);
-			success = false;
-		}
-	});
+	if (app.config.useJQueryMobile) {
+		var url = "../ext/jquery.mobile-1.4.2.min.js";
+		$.ajax({
+			url : url,
+			dataType : "script",
+			async : false,
+			success : function(data, textStatus, jqXHR) {
+				;
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				alert("Fatal error in javascriptLoader.js: Can't load jQuery mobile. Url: " + url + " Error: " + textStatus);
+				alert(errorThrown);
+				success = false;
+			}
+		});
+	}
 
 	app.debug.alert("app framework initialized", 30);
 
 	// app.store.localStorage.clear();
 	// app.store.localStorage.show();
-	//app.notify.add.alert("dasd", "sadsad", "asdsad");
+	// app.notify.add.alert("dasd", "sadsad", "asdsad");
 
 });
 
@@ -157,8 +159,8 @@ $(document).bind("mobileinit", function() {
 var app = {
 	config : {
 		name : "themis",
-		min : true,
-		useJQueryMobile : false,
+		min : false,
+		useJQueryMobile : true,
 		apacheCordova : null
 	},
 	addObject : function(name, object) {

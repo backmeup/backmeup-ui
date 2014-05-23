@@ -1,0 +1,24 @@
+/* body tag of page */
+body.app-mobile {
+	
+}
+
+/* jQuery Mobile header */
+body.app-mobile div.app-header {
+	
+}
+
+/* jQuery Mobile footer = body menu */
+body.app-mobile div.app-footer {
+	
+}
+
+/* jQuery Mobile panel = global menu */
+body.app-mobile div#page-panel {
+	
+}
+
+/* jQuery Mobile panel = page specific menu */
+body.app-mobile div#nav-panel {
+	
+}

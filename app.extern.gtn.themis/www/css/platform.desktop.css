@@ -66,6 +66,10 @@ body.app-desktop #spmenue{
 body.app-desktop #gp_footer2{
 	display:none;
 }
+body.app-desktop #app-footer{
+	display:none;
+}
+
 body.app-desktop div#gp_header{
 	height:28px;
 	width:100%;

@@ -163,7 +163,9 @@ var plugin_GlobalPage = {
 					}
 					
 					navPanel.append(app.template.get("ThemisNavigationPanelContent", "themis"));
-					navPanel.find("ul").prepend('<li><a href="usersettings.html" >' + app.store.localStorage.get("data-html5-themis-username") + '</a></li>');
+					var usern=app.store.localStorage.get("data-html5-themis-username");
+					if (usern == null) usern = "bitte anmelden";
+					navPanel.find("ul").prepend('<li><a href="usersettings.html" >' + usern + '</a></li>');
 
 					container.prepend(navPanel);
 
@@ -274,6 +276,7 @@ var plugin_GlobalPage = {
 					footer.append(navbar);
 					footer.addClass("app-footer");
 					footer.attr("data-position", "fixed");
+					footer.attr("id", "app-footer");
 
 					$(document).on("click", "#btnNavSearch", function() {
 						var search = $("<div></div>");

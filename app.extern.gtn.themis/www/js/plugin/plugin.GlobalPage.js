@@ -159,7 +159,9 @@ var plugin_GlobalPage = {
 					});
 					if (app.detect.isDesktop()) {
 						navPanel.removeAttr("data-role");
+						navPanel.append('<div id="gp_header"><img src="../images/backmeupklein.png"></div>');
 					}
+					
 					navPanel.append(app.template.get("ThemisNavigationPanelContent", "themis"));
 					navPanel.find("ul").prepend('<li><a href="usersettings.html" >' + app.store.localStorage.get("data-html5-themis-username") + '</a></li>');
 
@@ -180,10 +182,12 @@ var plugin_GlobalPage = {
 					var ul = app.ni.element.ul({
 						"attributes" : {
 							"data-role" : "listview"
+						
 						}
 					});
 					ul.append(app.ni.element.p({
-						"text" : "Seitenspezifisches Menü"
+						"text" : "Seitenspezifisches Menü",
+						"id" : "spmenue"
 					}));
 					ul.append(app.ni.element.li({
 						"attributes" : {
@@ -201,23 +205,28 @@ var plugin_GlobalPage = {
 					container.prepend(pagePanel);
 
 					header.attr("data-position", "fixed");
+					header.attr("id", "app-header");
 					header.addClass("app-header");
 					// header content
+					
 					header.append(app.ni.element.a({
 						"attributes" : {
-							"href" : "#nav-panel"
+							"href" : "#nav-panel",
+							"id" : "gm_menulink"
 						},
 						"text" : "Menu",
 						"classes" : [ "ui-btn", "ui-corner-all", "ui-btn-icon-left", "ui-btn-icon-notext" ]
 					}));
 
 					header.append(app.ni.element.h2({
-						"text" : "backmeup"
+						"text" : app.store.localStorage.get("data-html5-themis-username"),
+						"id" : "gp_footer2"
 					}));
 
 					header.append(app.ni.element.a({
 						"href" : "#nav-panel",
 						"text" : "Search",
+						"id" : "gp_search_btn",
 						"classes" : [ "ui-btn", "ui-corner-all", "ui-btn-icon-left", "ui-btn-icon-notext", "ui-icon-search" ]
 					}));
 

@@ -4,8 +4,9 @@ body.app-mobile {
 }
 
 /* jQuery Mobile header */
-body.app-mobile div.app-header {
-	
+body.app-mobile div#app-header {
+	background-image: url("../images/footer_bg.jpg");
+	background-color: rgb(0, 94, 165);
 }
 
 /* jQuery Mobile footer = body menu */

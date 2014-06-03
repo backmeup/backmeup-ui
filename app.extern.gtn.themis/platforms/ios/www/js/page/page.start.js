@@ -18,45 +18,12 @@ var page_start = {
 				"text" : app.lang.string("start", "headlines")
 			}));
 
-			content.append(app.ni.element.h2({
-				"text" : "Aktuell implementiert"
-			}));
-
-			content.append(app.ni.element.p({
-				"text" : "+ Rgistrieren"
-			}));
-
-			content.append(app.ni.element.p({
-				"text" : "+ E-Mail verifizieren"
-			}));
-			content.append(app.ni.element.p({
-				"text" : "+ Login"
-			}));
-			content.append(app.ni.element.p({
-				"text" : "+ Logout"
-			}));
-			content.append(app.ni.element.p({
-				"text" : "+ Backups angzeigen"
-			}));
-			content.append(app.ni.element.p({
-				"text" : "- Backup Details"
-			}));
-			content.append(app.ni.element.p({
-				"text" : "+ Backup-Log"
-			}));
-
-			content.append(app.ni.element.h2({
-				"text" : "ToDo"
-			}));
-
-			content.append(app.ni.element.p({
-				"text" : "Backup erstellen"
-			}));
-			content.append(app.ni.element.p({
-				"text" : "Zip Archiv"
-			}));
-			content.append(app.ni.element.p({
-				"text" : "Backups durchsuchen"
+			content.append(app.ni.text.text({
+				"id" : "txtEmail",
+				"placeholder" : "" ,
+				"label" : true,
+				"labelText" : "Suche:",
+				"container" : true
 			}));
 
 			success = true;

@@ -37,12 +37,13 @@ var page_backup_jobs = {
 					$.each(json.backupJobs, function(key, value) {
 
 						//alert(JSON.stringify(value));
+						var datum = new Date(value.createDate);
 						var thumbnail = $(app.ni.list.thumbnail({
 							href : "job_details.html",
 							imageSrc : "../images/logo.facebook.jpg",
 							title : "Id: " + (value.datasources[0]).datasourceId,
 							headline : value.jobTitle,
-							text : "irgend eine info",
+							text : datum.toUTCString(),
 							attributes : {
 								"data-html5-backupjobid" : value.backupJobId,
 								"data-html5-datasinkid" : value.datasink.datasinkId,

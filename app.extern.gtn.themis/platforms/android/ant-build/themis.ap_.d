@@ -298,6 +298,9 @@
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/files/language/fra.json \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/files/language/swe.json \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/images/backmeup_b.png \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/images/backmeup_c.png \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/images/backmeupklein.png \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/images/footer_bg.jpg \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/images/logo.dropbox.jpg \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/images/logo.facebook.jpg \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/images/logo.googledrive.jpg \

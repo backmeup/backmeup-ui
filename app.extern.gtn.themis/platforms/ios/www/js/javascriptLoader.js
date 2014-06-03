@@ -159,7 +159,7 @@ $(document).bind("mobileinit", function() {
 var app = {
 	config : {
 		name : "themis",
-		min : false,
+		min : true,
 		useJQueryMobile : true,
 		apacheCordova : null
 	},

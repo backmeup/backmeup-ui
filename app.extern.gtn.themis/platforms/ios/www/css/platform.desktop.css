@@ -1,20 +1,24 @@
 /* body tag of page */
 body.app-desktop {
-	
+	background-image: url("../images/bg.png");
+}
+
+body.app-desktop  div[data-role=page] {
+	background: none;
+}
+
+body.app-desktop  div[data-role=content] {
+	width: 1000px;
+	position: relative;
+	left: 50%;
+	margin-left: -500px;
 }
 
 /* jQuery Mobile header */
 body.app-desktop div#app-header {
-	
-}
-
-/* jQuery Mobile panel = global menu */
-body.app-desktop div#page-panel {
-	display: none;
-	width: 100%;
-	text-align: center;
-	padding: 0 0 0 0;
-	margin: 0 0 0 0;
+	background-image: url("../images/bg_head.jpg");
+	border: none;
+	height: 170px;
 }
 
 /* jQuery Mobile panel = page specific menu */
@@ -35,20 +39,48 @@ body.app-desktop div#nav-panel>ul {
 body.app-desktop div#nav-panel>ul>li {
 	display: inline-block;
 	list-style: none;
-	padding: 10px 15px 10px 15px;
+	padding: 20px 15px 20px 15px;
+}
+
+body.app-desktop div#nav-panel>ul>li>a {
+	font-weight: normal;
+	margin-top: 10px;
+}
+
+/* jQuery Mobile panel = global menu */
+body.app-desktop div#page-panel {
+	display: none;
+	padding: 0 0 0 0;
+	margin: 0 0 0 -350px;
+	position: absolute;
+	width: 700px;
+	left: 50%;
+	z-index: 10000;
 }
 
 /**/
 body.app-desktop div#page-panel>ul {
 	padding: 0 0 0 0;
 	margin: 0 0 0 0;
+	width: 100%;
+	text-align: center;
+	display: block;
 }
 
 /**/
 body.app-desktop div#page-panel>ul>li {
-	padding: 0 0 0 0;
-	margin: 0 0 0 0;
+	display: block;
+	margin: 3px 0 3px 0;
 	list-style: none;
+	border: 1px solid #000;
+	display: block;
+	background-color: #BBB;
+}
+
+body.app-desktop div#page-panel>ul>li>a {
+	margin: 12px 0 12px 0;
+	display: block;
+	
 }
 
 /* 
@@ -56,12 +88,11 @@ body.app-desktop div#page-panel>ul>li {
  * jQuery Mobile footer = body menu 
  */
 body.app-desktop div.app-footer {
-	background: rgb(50, 50, 255);
-	background: linear-gradient(to right, #1E5799 0%, #0065AA 40%, #0065AA 60%, #004F82 100%) repeat scroll 0px 0px transparent;
+	height: 50px;
+	background-color: red;
 }
 
 body.app-desktop div.app-footer div[data-role=navbar] {
-	
+	display: none;
+	visibility: hidden;
 }
-
-

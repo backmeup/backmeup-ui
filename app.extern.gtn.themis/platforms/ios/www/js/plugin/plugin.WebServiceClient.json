@@ -19,6 +19,11 @@
 			"code":0
 		}
 	},
+	"useHeaderToken":true,
+	"headerToken":{
+		"key":"Themis-Token",
+		"value":"data-html5-themis-token"
+	},
 	"preferedServer":{
 		"scheme":null,
 		"scheme_specific_part":null,

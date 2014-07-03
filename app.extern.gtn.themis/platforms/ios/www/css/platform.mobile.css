@@ -1,13 +1,15 @@
 /* body tag of page */
 body.app-mobile {
-	
+
 }
 
 /* jQuery Mobile header */
 body.app-mobile div#app-header {
 	
-}
 
+
+}
+body.app-mobile  div[data-role=content]{
 }
 
 /* jQuery Mobile panel = global menu */
@@ -86,7 +88,7 @@ body.app-mobile #ftrBtnNavBackmeuup:BEFORE {
 	content: "";
 	top: 100%;
 	margin-top: -123px;
-	left: 16%;
+	left: 12%;
 	margin-left: -70px;
 	position: fixed;
 	background-repeat: no-repeat;

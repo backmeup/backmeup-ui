@@ -244,7 +244,7 @@ var plugin_GlobalPage = {
 							"data-ajax" : "false",
 						}
 					})));
-					
+
 					ul.append(app.ni.element.li().append(app.ni.element.a({
 						"text" : app.lang.string("home", "actions"),
 						"attributes" : {
@@ -252,7 +252,7 @@ var plugin_GlobalPage = {
 							"data-ajax" : "false",
 						}
 					})));
-					
+
 					ul.append(app.ni.element.li().append(app.ni.element.a({
 						"text" : app.lang.string("zip_archive2", "actions"),
 						"attributes" : {
@@ -263,32 +263,29 @@ var plugin_GlobalPage = {
 
 					pagePanel.append(ul);
 
-					container.prepend(pagePanel);
-					container.prepend(navPanel);
+					header.after(pagePanel);
+					header.after(navPanel);
 
-					header.attr("data-position", "fixed");
+					//header.attr("data-position", "fixed");
 					header.attr("id", "app-header");
 					header.addClass("app-header");
 					// header content
 
-					header.append(app.ni.element.a({
-						"attributes" : {
-							"href" : "#nav-panel"
-						},
-						"text" : "Menu",
-						"classes" : [ "ui-btn", "ui-corner-all", "ui-btn-icon-left", "ui-btn-icon-notext" ]
-					}));
-
-					header.append(app.ni.element.h2({
-						"text" : app.store.localStorage.get("data-html5-themis-username")
-					}));
-
-					header.append(app.ni.element.a({
-						"href" : "#nav-panel",
-						"text" : "Search",
-						"classes" : [ "ui-btn", "ui-corner-all", "ui-btn-icon-left", "ui-btn-icon-notext", "ui-icon-search" ]
-					}));
-
+					/*
+					 * header.append(app.ni.element.a({ "attributes" : { "href" :
+					 * "#nav-panel" }, "text" : "Menu", "classes" : [ "ui-btn",
+					 * "ui-corner-all", "ui-btn-icon-left", "ui-btn-icon-notext" ]
+					 * }));
+					 * 
+					 * header.append(app.ni.element.h2({ "text" :
+					 * app.store.localStorage.get("data-html5-themis-username")
+					 * }));
+					 * 
+					 * header.append(app.ni.element.a({ "href" : "#nav-panel",
+					 * "text" : "Search", "classes" : [ "ui-btn",
+					 * "ui-corner-all", "ui-btn-icon-left",
+					 * "ui-btn-icon-notext", "ui-icon-search" ] }));
+					 */
 					/*
 					 * footer navigation bar - navigation for apps
 					 */
@@ -360,12 +357,14 @@ var plugin_GlobalPage = {
 						navPanel.removeAttr("data-role");
 						navPanel.find("ul").removeAttr("data-role");
 
-						header.removeAttr("data-role");
-						header.css("display", "none");
+						// header.removeAttr("data-role");
+						// header.css("display", "none");
 
-						footer.removeAttr("data-role");
-						footer.css("display", "none");
+						//footer.removeAttr("data-role");
+						//footer.css("display", "none");
 
+						footer.removeAttr("data-position");
+						
 						$("#navBtnNavMore").mouseenter(function() {
 							$("#page-panel").slideDown();
 						});
@@ -375,6 +374,8 @@ var plugin_GlobalPage = {
 						});
 					}
 
+					
+					
 					/*
 					 * mobile specific operations
 					 */
@@ -521,6 +522,7 @@ var plugin_GlobalPage = {
 			app.debug.alert("plugin.GlobalPage: page_" + $(container).attr('id') + ".pageinit()", 14);
 			var success = null;
 			try {
+				
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
@@ -581,6 +583,7 @@ var plugin_GlobalPage = {
 			app.debug.alert("plugin.GlobalPage: page_" + $(container).attr('id') + ".pageshow()", 14);
 			var success = null;
 			try {
+				
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);

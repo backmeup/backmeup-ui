@@ -108,6 +108,11 @@ var plugin_WebServiceClient = {
 				async : async, // false
 				method : method, // post
 				timeout : timeout, // 5000
+				beforeSend : function(jqXHR, settings) {
+					if (plugin_WebServiceClient.config.useHeaderToken) {
+						jqXHR.setRequestHeader(plugin_WebServiceClient.config.headerToken.key, app.store.localStorage.get(plugin_WebServiceClient.config.headerToken));
+					}
+				},
 				success : function(data, textStatus, jqXHR) {
 					json = data;
 					if (dfd != undefined && dfd != null) {

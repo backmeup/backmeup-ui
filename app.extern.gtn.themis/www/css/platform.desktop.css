@@ -1,92 +1,67 @@
 /* body tag of page */
 body.app-desktop {
+	
 }
 
 /* jQuery Mobile header */
-body.app-desktop div.app-header {
-	position: static;
-
-}
-
-/* jQuery Mobile footer = body menu */
-body.app-desktop div.app-footer {
-	position: static;
-	background-color: blue;
+body.app-desktop div#app-header {
+	
 }
 
 /* jQuery Mobile panel = global menu */
 body.app-desktop div#page-panel {
-	position: static;
-
-	display:none;
+	display: none;
+	width: 100%;
+	text-align: center;
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
 }
 
 /* jQuery Mobile panel = page specific menu */
 body.app-desktop div#nav-panel {
-	position: static;
-	background-color: red;
+	
+}
+
+/**/
+body.app-desktop div#nav-panel>ul {
+	display: block;
+	width: 100%;
+	background-color: #EEE;
+	text-align: center;
+	margin: 0;
+}
+
+/**/
+body.app-desktop div#nav-panel>ul>li {
+	display: inline-block;
+	list-style: none;
+	padding: 10px 15px 10px 15px;
+}
+
+/**/
+body.app-desktop div#page-panel>ul {
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+}
+
+/**/
+body.app-desktop div#page-panel>ul>li {
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+	list-style: none;
+}
+
+/* 
+ * FOOTER + FOOTER MENU
+ * jQuery Mobile footer = body menu 
+ */
+body.app-desktop div.app-footer {
+	background: rgb(50, 50, 255);
+	background: linear-gradient(to right, #1E5799 0%, #0065AA 40%, #0065AA 60%, #004F82 100%) repeat scroll 0px 0px transparent;
+}
+
+body.app-desktop div.app-footer div[data-role=navbar] {
+	
 }
 
 
-
-
-
-body.app-desktop div#nav-panel ul.ui-listview li{
-	display:inline;width:200px;
-}
-
-body.app-desktop div#nav-panel ul.ui-listview li#gm_close_menu, 
-body.app-desktop div#nav-panel ul.ui-listview li#gm_create_backup,
-body.app-desktop p#gm_header_global_menu,
-body.app-desktop a#gm_menulink
-{
-	display:none;
-}
-
-body.app-desktop div#nav-panel ul#global_menu li
-{
-  float:left;
-	width:200px;
-}
-
-
-body.app-desktop #index {padding-top:0px !important;}
-
- 
-body.app-desktop a#gp_search_btn{
-	display:none;
-}
-body.app-desktop .app-header{
-	padding-top:0px;
-}
-body.app-desktop #spmenue{
-	display:none;
-}
-
-body.app-desktop #gp_footer2{
-	display:none;
-}
-body.app-desktop #app-footer{
-	display:none;
-}
-
-body.app-desktop div#gp_header{
-	height:28px;
-	width:100%;
-	background-color:purple;
-
-	background-image: url("../images/footer_bg.jpg");
-	background-color: rgb(0, 94, 165);
-	padding: 10px;
-}
-
-body.app-desktop .ui-content{
-	clear:both;
-}
-
-body.app-desktop #app-header{
-	background-color:#F6F6F6;
-}
-.ui-bar-a, .ui-page-theme-a .ui-bar-inherit, html .ui-bar-a .ui-bar-inherit, html .ui-body-a .ui-bar-inherit, html body .ui-group-theme-a .ui-bar-inherit {
-
-}

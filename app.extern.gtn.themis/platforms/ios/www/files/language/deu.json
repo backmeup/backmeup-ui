@@ -1,5 +1,8 @@
 {
 	"actions":{
+		"administrate":"Verwalten",
+		"backmeup":"Backmeup!",
+		"more":"...Mehr",
 		"submit":"Absenden",
 		"okay":"Okay",
 		"cancel":"Abbrechen",
@@ -18,7 +21,10 @@
 		"top":"Top",
 		"search":"Suchen",
 		"back":"Zurück",
-		"menu_close":"Menü schließen"
+		"menu_close":"Menü schließen",
+		"settings":"Einstellungen",
+		"share":"Teilen",
+		"zip_archive":"Zip Archiv"
 	},
 	"labels":{
 		"password":"Passwort",

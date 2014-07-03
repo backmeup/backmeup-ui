@@ -7,7 +7,7 @@
 	"useKeepAlive":true,
 	"keepAlive":{
 		"keepAliveIntervalInS": 20,
-		"keepAlivePath":"/datasources",
+		"keepAlivePath":"/backmeup-service-rest/users",
 		"method":"get",
 		"type":"json",
 		"timeout":"12000",
@@ -29,7 +29,7 @@
 		"first":{
 			"scheme":"http",
 			"scheme_specific_part":"://",
-			"host":"www.backmeup.at",
+			"host":"themis-dev01.backmeup.at",
 			"port":8080
 		},
 		"second":null,

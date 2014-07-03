@@ -142,34 +142,66 @@ var plugin_GlobalPage = {
 						if (!$('body').hasClass(name))
 							$('body').addClass(name);
 					});
-
+					/*
+					 * jQuery header object
+					 */
 					var header = container.find('div[data-role=header]');
+					/*
+					 * jQuery content object
+					 */
 					var content = container.find('div[data-role=content]');
+					/*
+					 * jQuery footer object
+					 */
 					var footer = container.find('div[data-role=footer]');
 
 					$('#' + container.attr("id")).attr("data-dom-cache", "false");
 
-					// #nav-panel
-					$("body #nav-panel").length
+					/*
+					 * jQuery nav-panel object - top menu
+					 */
 					var navPanel = app.ni.navigation.panel({
 						"id" : "nav-panel",
 						"attributes" : {
 							"data-display" : "overlay"
 						}
 					});
-					if (app.detect.isDesktop()) {
-						navPanel.removeAttr("data-role");
-						navPanel.append('<div id="gp_header"><img src="../images/backmeupklein.png"></div>');
-					}
-					
-					navPanel.append(app.template.get("ThemisNavigationPanelContent", "themis"));
-					var usern=app.store.localStorage.get("data-html5-themis-username");
-					if (usern == null) usern = "bitte anmelden";
-					navPanel.find("ul").prepend('<li><a href="usersettings.html" >' + usern + '</a></li>');
 
-					container.prepend(navPanel);
+					var ul = app.ni.element.ul({
+						"attributes" : {
+							"data-role" : "listview"
+						}
+					});
+					ul.append(app.ni.element.li().append(app.ni.element.a({
+						"id" : "navBtnNavSearch",
+						"text" : app.lang.string("search", "actions")
+					})));
+					ul.append(app.ni.element.li().append(app.ni.element.a({
+						"id" : "navBtnNavBack",
+						"text" : app.lang.string("share", "actions")
+					})));
 
-					// #page panel
+					ul.append(app.ni.element.li().append(app.ni.element.a({
+						"id" : "navBtnNavBackmeup",
+						"text" : app.lang.string("backmeup", "actions")
+					})));
+					ul.append(app.ni.element.li().append(app.ni.element.a({
+						"id" : "navBtnNavSearch",
+						"text" : app.lang.string("administrate", "actions")
+					})));
+
+					ul.append(app.ni.element.li().append(app.ni.element.a({
+						"id" : "navBtnNavMore",
+						"text" : app.lang.string("more", "actions")
+					})));
+					navPanel.append(ul);
+
+					// var usern =
+					// app.store.localStorage.get("data-html5-themis-username");
+
+					/*
+					 * page-panel - hidden navigation - drop down or slider
+					 */
 					$("body #page-panel").length
 					var pagePanel = app.ni.navigation.panel({
 						"id" : "page-panel",
@@ -178,19 +210,13 @@ var plugin_GlobalPage = {
 							"data-position" : "right"
 						}
 					});
-					if (app.detect.isDesktop()) {
-						pagePanel.removeAttr("data-role");
-					}
-					var ul = app.ni.element.ul({
+
+					ul = app.ni.element.ul({
 						"attributes" : {
 							"data-role" : "listview"
-						
+
 						}
 					});
-					ul.append(app.ni.element.p({
-						"text" : "Seitenspezifisches Menü",
-						"id" : "spmenue"
-					}));
 					ul.append(app.ni.element.li({
 						"attributes" : {
 							"data-icon" : "delete"
@@ -202,83 +228,155 @@ var plugin_GlobalPage = {
 							"data-rel" : "close"
 						}
 					})));
+
+					ul.append(app.ni.element.li().append(app.ni.element.a({
+						"text" : app.lang.string("zip_archive", "actions"),
+						"attributes" : {
+							"href" : "#",
+							"data-ajax" : "false",
+						}
+					})));
+
+					ul.append(app.ni.element.li().append(app.ni.element.a({
+						"text" : app.lang.string("settings", "actions"),
+						"attributes" : {
+							"href" : "settings.html",
+							"data-ajax" : "false",
+						}
+					})));
+
+					ul.append(app.ni.element.li().append(app.ni.element.a({
+						"text" : app.lang.string("zip_archive2", "actions"),
+						"attributes" : {
+							"href" : "#",
+							"data-ajax" : "false",
+						}
+					})));
+
 					pagePanel.append(ul);
 
 					container.prepend(pagePanel);
+					container.prepend(navPanel);
 
 					header.attr("data-position", "fixed");
 					header.attr("id", "app-header");
 					header.addClass("app-header");
 					// header content
-					
+
 					header.append(app.ni.element.a({
 						"attributes" : {
-							"href" : "#nav-panel",
-							"id" : "gm_menulink"
+							"href" : "#nav-panel"
 						},
 						"text" : "Menu",
 						"classes" : [ "ui-btn", "ui-corner-all", "ui-btn-icon-left", "ui-btn-icon-notext" ]
 					}));
 
 					header.append(app.ni.element.h2({
-						"text" : app.store.localStorage.get("data-html5-themis-username"),
-						"id" : "gp_footer2"
+						"text" : app.store.localStorage.get("data-html5-themis-username")
 					}));
 
 					header.append(app.ni.element.a({
 						"href" : "#nav-panel",
 						"text" : "Search",
-						"id" : "gp_search_btn",
 						"classes" : [ "ui-btn", "ui-corner-all", "ui-btn-icon-left", "ui-btn-icon-notext", "ui-icon-search" ]
 					}));
 
-					// header navigation bar
+					/*
+					 * footer navigation bar - navigation for apps
+					 */
 					var navbar = app.ni.navigation.navbar({
-						"id" : "navHeader"
+						"id" : "navHeader",
+						"classes" : [ 'ui-state-persist' ]
 					});
 
 					var ul = app.ni.element.ul();
 					ul.append(app.ni.element.li().append(app.ni.element.a({
-						"id" : "btnNavBack",
-						"text" : app.lang.string("back", "actions"),
+						"id" : "ftrBtnNavBackmeuup",
+						"text" : "&nbsp;",
 						"attributes" : {
-							"data-rel" : "back",
-							"data-icon" : "arrow-l"
+							"href" : "#" + container.attr("id")
 						}
 					})));
 					ul.append(app.ni.element.li().append(app.ni.element.a({
-						"id" : "btnNavMenu",
-						"text" : app.lang.string("menu", "actions"),
-						"attributes" : {
-							"href" : "#page-panel",
-							"data-icon" : "grid"
-						}
-					})));
-					ul.append(app.ni.element.li().append(app.ni.element.a({
-						"id" : "btnNavTop",
-						"text" : app.lang.string("top", "actions"),
-						"attributes" : {
-							"href" : "#" + container.attr("id"),
-							"data-ajax" : "false",
-							"data-icon" : "arrow-u"
-						}
-					})));
-					ul.append(app.ni.element.li().append(app.ni.element.a({
-						"id" : "btnNavSearch",
+						"id" : "ftrBtnNavSearch",
 						"text" : app.lang.string("search", "actions"),
 						"attributes" : {
 							"data-icon" : "search"
 						}
 					})));
 
+					ul.append(app.ni.element.li({
+						"id" : "ftrLiNavShare"
+					}).append(app.ni.element.a({
+						"id" : "ftrBtnNavShare",
+						"text" : app.lang.string("share", "actions"),
+						"attributes" : {
+							"data-icon" : "forward"
+						}
+					})));
+
+					ul.append(app.ni.element.li({
+						"id" : "ftrLiNavAdministrate"
+					}).append(app.ni.element.a({
+						"id" : "ftrBtnNavAdministrate",
+						"text" : app.lang.string("administrate", "actions"),
+						"attributes" : {
+							"data-icon" : "gear"
+						}
+					})));
+
+					ul.append(app.ni.element.li().append(app.ni.element.a({
+						"id" : "ftrBtnNavMore",
+						"text" : app.lang.string("more", "actions"),
+						"attributes" : {
+							"href" : "#page-panel",
+							"data-icon" : "grid"
+						}
+					})));
+
 					navbar.append(ul);
+					// navPanel.append(ul);
 
 					footer.append(navbar);
 					footer.addClass("app-footer");
 					footer.attr("data-position", "fixed");
 					footer.attr("id", "app-footer");
 
-					$(document).on("click", "#btnNavSearch", function() {
+					/*
+					 * desktop specific operations
+					 */
+					if (app.detect.isDesktop()) {
+						pagePanel.removeAttr("data-role");
+						pagePanel.find("ul").removeAttr("data-role");
+
+						navPanel.removeAttr("data-role");
+						navPanel.find("ul").removeAttr("data-role");
+
+						header.removeAttr("data-role");
+						header.css("display", "none");
+
+						footer.removeAttr("data-role");
+						footer.css("display", "none");
+
+						$("#navBtnNavMore").mouseenter(function() {
+							$("#page-panel").slideDown();
+						});
+
+						$("#page-panel").mouseleave(function() {
+							$(this).slideUp();
+						});
+					}
+
+					/*
+					 * mobile specific operations
+					 */
+					if (app.detect.isMobile()) {
+						header.removeAttr("data-role");
+						header.css("display", "none");
+
+					}
+
+					$(document).on("click", "#ftrBtnNavSearch", function() {
 						var search = $("<div></div>");
 						search.append(app.ni.text.search({
 							"id" : "txtNavSearch"

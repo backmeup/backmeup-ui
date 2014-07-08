@@ -19,6 +19,7 @@ var page_create_backup_1 = {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 		var success = null;
 		try {
+			
 			app.template.append("div[data-role=content]", "app-loader-bubble");
 
 			var promise = app.rc.getJson([ [ "datasourceProfiles", {

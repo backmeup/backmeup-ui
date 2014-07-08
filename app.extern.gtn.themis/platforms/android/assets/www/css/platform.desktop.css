@@ -1,92 +1,101 @@
 /* body tag of page */
 body.app-desktop {
+	background-image: url("../images/bg.png");
+}
+
+body.app-desktop  div[data-role=page] {
+	background: none;
+}
+
+body.app-desktop  div[data-role=content] {
+	width: 1000px;
+	position: relative;
+	left: 50%;
+	margin-left: -500px;
+	min-height: inherit;
 }
 
 /* jQuery Mobile header */
-body.app-desktop div.app-header {
-	position: static;
-
-}
-
-/* jQuery Mobile footer = body menu */
-body.app-desktop div.app-footer {
-	position: static;
-	background-color: blue;
-}
-
-/* jQuery Mobile panel = global menu */
-body.app-desktop div#page-panel {
-	position: static;
-
-	display:none;
+body.app-desktop div#app-header {
+	background-image: url("../images/bg_head.jpg");
+	border: none;
+	height: 170px;
 }
 
 /* jQuery Mobile panel = page specific menu */
 body.app-desktop div#nav-panel {
-	position: static;
-	background-color: red;
+	
 }
 
-
-
-
-
-body.app-desktop div#nav-panel ul.ui-listview li{
-	display:inline;width:200px;
+/**/
+body.app-desktop div#nav-panel>ul {
+	display: block;
+	width: 100%;
+	background-color: #EEE;
+	text-align: center;
+	margin: 0;
 }
 
-body.app-desktop div#nav-panel ul.ui-listview li#gm_close_menu, 
-body.app-desktop div#nav-panel ul.ui-listview li#gm_create_backup,
-body.app-desktop p#gm_header_global_menu,
-body.app-desktop a#gm_menulink
-{
-	display:none;
+/**/
+body.app-desktop div#nav-panel>ul>li {
+	display: inline-block;
+	list-style: none;
+	padding: 20px 15px 20px 15px;
 }
 
-body.app-desktop div#nav-panel ul#global_menu li
-{
-  float:left;
-	width:200px;
+body.app-desktop div#nav-panel>ul>li>a {
+	font-weight: normal;
+	margin-top: 10px;
 }
 
-
-body.app-desktop #index {padding-top:0px !important;}
-
- 
-body.app-desktop a#gp_search_btn{
-	display:none;
-}
-body.app-desktop .app-header{
-	padding-top:0px;
-}
-body.app-desktop #spmenue{
-	display:none;
+/* jQuery Mobile panel = global menu */
+body.app-desktop div#page-panel {
+	display: none;
+	padding: 0 0 0 0;
+	margin: 0 0 0 -350px;
+	position: absolute;
+	width: 700px;
+	left: 50%;
+	z-index: 10000;
 }
 
-body.app-desktop #gp_footer2{
-	display:none;
-}
-body.app-desktop #app-footer{
-	display:none;
-}
-
-body.app-desktop div#gp_header{
-	height:28px;
-	width:100%;
-	background-color:purple;
-
-	background-image: url("../images/footer_bg.jpg");
-	background-color: rgb(0, 94, 165);
-	padding: 10px;
+/**/
+body.app-desktop div#page-panel>ul {
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+	width: 100%;
+	text-align: center;
+	display: block;
 }
 
-body.app-desktop .ui-content{
-	clear:both;
+/**/
+body.app-desktop div#page-panel>ul>li {
+	display: block;
+	margin: 3px 0 3px 0;
+	list-style: none;
+	border: 1px solid #000;
+	display: block;
+	background-color: #BBB;
 }
 
-body.app-desktop #app-header{
-	background-color:#F6F6F6;
+body.app-desktop div#page-panel>ul>li>a {
+	margin: 12px 0 12px 0;
+	display: block;
+	
 }
-.ui-bar-a, .ui-page-theme-a .ui-bar-inherit, html .ui-bar-a .ui-bar-inherit, html .ui-body-a .ui-bar-inherit, html body .ui-group-theme-a .ui-bar-inherit {
 
+/* 
+ * FOOTER + FOOTER MENU
+ * jQuery Mobile footer = body menu 
+ */
+body.app-desktop div.app-footer {
+	height: 30px;
+	background: rgb(50, 50, 255);
+	background: linear-gradient(to right, #1E5799 0%, #0065AA 40%, #0065AA 60%, #004F82 100%) repeat scroll 0px 0px transparent;
+
+}
+
+body.app-desktop div.app-footer div[data-role=navbar] {
+	display: none;
+	visibility: hidden;
 }

@@ -1,17 +1,15 @@
 /* body tag of page */
 body.app-mobile {
-	
+
 }
 
 /* jQuery Mobile header */
 body.app-mobile div#app-header {
-	background-image: url("../images/footer_bg.jpg");
-	background-color: rgb(0, 94, 165);
-}
-
-/* jQuery Mobile footer = body menu */
-body.app-mobile div.app-footer {
 	
+
+
+}
+body.app-mobile  div[data-role=content]{
 }
 
 /* jQuery Mobile panel = global menu */
@@ -22,4 +20,105 @@ body.app-mobile div#page-panel {
 /* jQuery Mobile panel = page specific menu */
 body.app-mobile div#nav-panel {
 	
+}
+
+/* 
+ * FOOTER + FOOTER MENU
+ * jQuery Mobile footer = body menu 
+ */
+body.app-mobile div.app-footer {
+	background: rgb(50, 50, 255);
+	background: linear-gradient(to right, #1E5799 0%, #0065AA 40%, #0065AA 60%, #004F82 100%) repeat scroll 0px 0px transparent;
+}
+
+body.app-mobile div.app-footer div[data-role=navbar] {
+	
+}
+
+body.app-mobile div.app-footer div[data-role=navbar] ul {
+	
+}
+
+body.app-mobile div.app-footer div[data-role=navbar] ul li {
+	width: 33%;
+}
+
+body.app-mobile div.app-footer div[data-role=navbar] ul li a {
+	background: none;
+	border: none;
+	text-shadow: none;
+	color: #EEE;
+	font-weight: normal;
+}
+
+body.app-mobile #ftrBtnNavSearch {
+	
+}
+
+body.app-mobile #ftrBtnNavBackmeuup {
+	z-index: 10000;
+	position: relative;
+	margin-top: -50px;
+	height: 90px;
+}
+
+body.app-mobile #ftrLiNavShare {
+	display: none;
+	visibility: hidden;
+}
+
+body.app-mobile #ftrBtnNavShare {
+	
+}
+
+body.app-mobile #ftrLiNavAdministrate {
+	display: none;
+	visibility: hidden;
+}
+
+body.app-mobile #ftrBtnNavAdministrate {
+	
+}
+
+body.app-mobile #ftrBtnNavMore {
+	
+}
+
+body.app-mobile #ftrBtnNavBackmeuup:BEFORE {
+	content: "";
+	top: 100%;
+	margin-top: -123px;
+	left: 12%;
+	margin-left: -70px;
+	position: fixed;
+	background-repeat: no-repeat;
+	background-image: url("../images/backmeupfooter_n.png");
+	background-position: center;
+	height: 140px;
+	width: 140px;
+	z-index: 10001;
+}
+
+@MEDIA ( min-width :500px) {
+	body.app-mobile #ftrLiNavShare {
+		display: list-item;
+		visibility: visible;
+	}
+	body.app-mobile div.app-footer div[data-role=navbar] ul li {
+		width: 25%;
+	}
+}
+
+@MEDIA ( min-width :900px) {
+	body.app-mobile #ftrLiNavShare {
+		display: list-item;
+		visibility: visible;
+	}
+	body.app-mobile #ftrLiNavAdministrate {
+		display: list-item;
+		visibility: visible;
+	}
+	body.app-mobile div.app-footer div[data-role=navbar] ul li {
+		width: 20%;
+	}
 }

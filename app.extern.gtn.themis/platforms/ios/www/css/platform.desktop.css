@@ -12,6 +12,7 @@ body.app-desktop  div[data-role=content] {
 	position: relative;
 	left: 50%;
 	margin-left: -500px;
+	min-height: inherit;
 }
 
 /* jQuery Mobile header */
@@ -88,8 +89,10 @@ body.app-desktop div#page-panel>ul>li>a {
  * jQuery Mobile footer = body menu 
  */
 body.app-desktop div.app-footer {
-	height: 50px;
-	background-color: red;
+	height: 30px;
+	background: rgb(50, 50, 255);
+	background: linear-gradient(to right, #1E5799 0%, #0065AA 40%, #0065AA 60%, #004F82 100%) repeat scroll 0px 0px transparent;
+
 }
 
 body.app-desktop div.app-footer div[data-role=navbar] {

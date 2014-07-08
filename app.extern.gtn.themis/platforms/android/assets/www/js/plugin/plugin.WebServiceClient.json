@@ -7,7 +7,7 @@
 	"useKeepAlive":true,
 	"keepAlive":{
 		"keepAliveIntervalInS": 20,
-		"keepAlivePath":"/datasources",
+		"keepAlivePath":"/backmeup-service-rest/users",
 		"method":"get",
 		"type":"json",
 		"timeout":"12000",
@@ -19,6 +19,11 @@
 			"code":0
 		}
 	},
+	"useHeaderToken":true,
+	"headerToken":{
+		"key":"Themis-Token",
+		"value":"data-html5-themis-token"
+	},
 	"preferedServer":{
 		"scheme":null,
 		"scheme_specific_part":null,
@@ -29,7 +34,7 @@
 		"first":{
 			"scheme":"http",
 			"scheme_specific_part":"://",
-			"host":"www.backmeup.at",
+			"host":"themis-dev01.backmeup.at",
 			"port":8080
 		},
 		"second":null,

@@ -363,6 +363,8 @@ var plugin_GlobalPage = {
 						//footer.removeAttr("data-role");
 						//footer.css("display", "none");
 
+						footer.removeAttr("data-position");
+						
 						$("#navBtnNavMore").mouseenter(function() {
 							$("#page-panel").slideDown();
 						});
@@ -372,6 +374,8 @@ var plugin_GlobalPage = {
 						});
 					}
 
+					
+					
 					/*
 					 * mobile specific operations
 					 */
@@ -518,6 +522,7 @@ var plugin_GlobalPage = {
 			app.debug.alert("plugin.GlobalPage: page_" + $(container).attr('id') + ".pageinit()", 14);
 			var success = null;
 			try {
+				
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
@@ -578,6 +583,7 @@ var plugin_GlobalPage = {
 			app.debug.alert("plugin.GlobalPage: page_" + $(container).attr('id') + ".pageshow()", 14);
 			var success = null;
 			try {
+				
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);

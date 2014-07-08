@@ -1,4 +1,5 @@
 {
 	"name":"GlobalPage",
-	"shortname":"gp"
+	"shortname":"gp",
+	"pathToImplementation":"../files/globalPage.js"
 }

@@ -123,8 +123,10 @@ var plugin_Notification = {
 		return success;
 	},
 	// private functions
-	popupShow : function(notification) {
+	popupShow : function(notification, delay) {
 		// alert(JSON.stringify(plugin_Notification.notifications));
+		if (delay == undefined || delay == null)
+			delay = 300;
 		if (notification != undefined) {
 			setTimeout(function() {
 				$("#popupAlert div[data-role=header] h1").text(notification.title);
@@ -136,7 +138,7 @@ var plugin_Notification = {
 				}
 				$("#popupAlert").popup("open");
 				$("#popupAlert").popup("reposition");
-			}, 300);
+			}, delay);
 			plugin_Notification.callbackFuntion = notification.callback;
 		} else {
 			if (plugin_Notification.notifications != null) {
@@ -152,7 +154,7 @@ var plugin_Notification = {
 						$("#popupAlert div.ui-content h3.ui-title").text(notification.headline);
 						$("#popupAlert div.ui-content p").html(notification.text);
 						$("#popupAlert").popup("open");
-					}, 300);
+					}, delay);
 				}
 			}
 		}
@@ -167,7 +169,7 @@ var plugin_Notification = {
 	 * 
 	 */
 	functions : {
-		alert : function(text, title, headline, callback) {
+		alert : function(text, title, headline, callback, delay) {
 			if (text == undefined)
 				text = false;
 			if (headline == undefined)
@@ -183,7 +185,7 @@ var plugin_Notification = {
 				"headline" : headline,
 				"callback" : callback
 			};
-			plugin_Notification.popupShow(notification);
+			plugin_Notification.popupShow(notification, delay);
 		},
 		dialog : function(text, title) {
 		},

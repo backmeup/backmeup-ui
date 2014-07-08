@@ -10,11 +10,13 @@
 			"../css/platform.desktop.css":true,
 			"../css/platform.ios.css":true,
 			"../css/platform.mobile.css":true,
-			"../css/platform.cordova.css":true
+			"../css/platform.cordova.css":true,
+			"../template/app.responsive.grid.33.33.33.css":"true"
 		},
 		"javascript":{
 			"../ext/MD5.js":true,
-			"../ext/DATE.js":true
+			"../ext/DATE.js":true,
+			"../ext/aerogear.min.js":true
 		}
 	}
 }

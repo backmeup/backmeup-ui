@@ -205,6 +205,7 @@ var globalPage = {
 		footer.append(navbar);
 		footer.addClass("app-footer");
 		footer.attr("data-position", "fixed");
+		footer.attr("data-tap-toggle", "false");
 		footer.attr("id", "app-footer");
 
 		/*
@@ -242,7 +243,9 @@ var globalPage = {
 			header.css("display", "none");
 
 		}
-
+		$(document).on("click", "#ftrBtnNavBackmeuup", function() {
+			alert("back me up!!");
+		});
 		$(document).on("click", "#ftrBtnNavSearch", function() {
 			var search = $("<div></div>");
 			search.append(app.ni.text.search({

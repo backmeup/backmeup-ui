@@ -1,15 +1,15 @@
 /* body tag of page */
 body.app-mobile {
-
+	
 }
 
 /* jQuery Mobile header */
 body.app-mobile div#app-header {
 	
-
-
 }
-body.app-mobile  div[data-role=content]{
+
+body.app-mobile  div[data-role=content] {
+	
 }
 
 /* jQuery Mobile panel = global menu */
@@ -39,8 +39,18 @@ body.app-mobile div.app-footer div[data-role=navbar] ul {
 	
 }
 
-body.app-mobile div.app-footer div[data-role=navbar] ul li {
+body.app-mobile  div.app-footer div[data-role=navbar] ul li {
 	width: 33%;
+}
+
+body.app-mobile  div.app-footer div[data-role=navbar] ul li#ftrLiNavShare {
+	display: none;
+	visibility: hidden;
+}
+
+body.app-mobile  div.app-footer div[data-role=navbar] ul li#ftrLiNavAdministrate {
+	display: none;
+	visibility: hidden;
 }
 
 body.app-mobile div.app-footer div[data-role=navbar] ul li a {
@@ -51,40 +61,22 @@ body.app-mobile div.app-footer div[data-role=navbar] ul li a {
 	font-weight: normal;
 }
 
-body.app-mobile #ftrBtnNavSearch {
+body.app-mobile div.app-footer div[data-role=navbar] ul li a:HOVER {
+	background: radial-gradient(ellipse at center, rgba(64, 150, 238, 1) 0%, rgba(96, 171, 248, 0) 26%, rgba(122, 188, 255, 0) 36%, rgba(255, 255, 255, 0) 89%); /* W3C */
+}
+
+body.app-mobile  div.app-footer div[data-role=navbar] ul li a#ftrBtnNavSearch {
 	
 }
 
-body.app-mobile #ftrBtnNavBackmeuup {
+body.app-mobile  div.app-footer div[data-role=navbar] ul li a#ftrBtnNavBackmeuup {
 	z-index: 10000;
 	position: relative;
 	margin-top: -50px;
 	height: 90px;
 }
 
-body.app-mobile #ftrLiNavShare {
-	display: none;
-	visibility: hidden;
-}
-
-body.app-mobile #ftrBtnNavShare {
-	
-}
-
-body.app-mobile #ftrLiNavAdministrate {
-	display: none;
-	visibility: hidden;
-}
-
-body.app-mobile #ftrBtnNavAdministrate {
-	
-}
-
-body.app-mobile #ftrBtnNavMore {
-	
-}
-
-body.app-mobile #ftrBtnNavBackmeuup:BEFORE {
+body.app-mobile  div.app-footer div[data-role=navbar] ul li a#ftrBtnNavBackmeuup:BEFORE {
 	content: "";
 	top: 100%;
 	margin-top: -123px;
@@ -99,26 +91,38 @@ body.app-mobile #ftrBtnNavBackmeuup:BEFORE {
 	z-index: 10001;
 }
 
+body.app-mobile  div.app-footer div[data-role=navbar] ul li a#ftrBtnNavShare {
+	
+}
+
+body.app-mobile  div.app-footer div[data-role=navbar] ul li a#ftrBtnNavAdministrate {
+	
+}
+
+body.app-mobile  div.app-footer div[data-role=navbar] ul li a#ftrBtnNavMore {
+	
+}
+
 @MEDIA ( min-width :500px) {
-	body.app-mobile #ftrLiNavShare {
-		display: list-item;
-		visibility: visible;
-	}
 	body.app-mobile div.app-footer div[data-role=navbar] ul li {
 		width: 25%;
+	}
+	body.app-mobile  div.app-footer div[data-role=navbar] ul li#ftrLiNavShare {
+		display: list-item;
+		visibility: visible;
 	}
 }
 
 @MEDIA ( min-width :900px) {
-	body.app-mobile #ftrLiNavShare {
-		display: list-item;
-		visibility: visible;
-	}
-	body.app-mobile #ftrLiNavAdministrate {
-		display: list-item;
-		visibility: visible;
-	}
 	body.app-mobile div.app-footer div[data-role=navbar] ul li {
 		width: 20%;
+	}
+	body.app-mobile  div.app-footer div[data-role=navbar] ul li#ftrLiNavShare {
+		display: list-item;
+		visibility: visible;
+	}
+	body.app-mobile  div.app-footer div[data-role=navbar] ul li#ftrLiNavAdministrate {
+		display: list-item;
+		visibility: visible;
 	}
 }

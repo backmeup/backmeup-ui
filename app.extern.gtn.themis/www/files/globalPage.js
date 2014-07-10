@@ -135,6 +135,34 @@ var globalPage = {
 				"data-ajax" : "false",
 			}
 		})));
+		
+		
+		ul.append(app.ni.element.li().append(app.ni.element.a({
+			"id":"pageLogin",
+			"text" : app.lang.string("login", "actions"),
+			"attributes" : {
+				"href" : "login.html",
+				"data-ajax" : "false",
+			}
+		})));
+		
+		ul.append(app.ni.element.li().append(app.ni.element.a({
+			"id":"pageLogout",
+			"text" : app.lang.string("logout", "actions"),
+			"attributes" : {
+				"href" : "static-index.html",
+				"data-ajax" : "false",
+			}
+		})));
+		
+		ul.append(app.ni.element.li().append(app.ni.element.a({
+			"id":"pageRegister",
+			"text" : app.lang.string("register", "actions"),
+			"attributes" : {
+				"href" : "register.html",
+				"data-ajax" : "false",
+			}
+		})));
 
 		pagePanel.append(ul);
 

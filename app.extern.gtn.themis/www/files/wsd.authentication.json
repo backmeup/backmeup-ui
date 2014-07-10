@@ -1,0 +1,12 @@
+{
+	"template":{
+		"url":"string url",
+		"method":"string method",
+		"timeout":"int timeout"
+	},
+	"authenticate":{
+		"url":"/backmeup-service-rest/authenticate?username={username}&password={password}",
+		"method":"get",
+		"timeout":"3000"
+	}
+}

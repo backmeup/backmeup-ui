@@ -18,10 +18,10 @@ var page_login = {
 				"text" : app.lang.string("login", "headlines")
 			}));
 			content.append(app.ni.text.text({
-				"id" : "txtEmail",
-				"placeholder" : app.lang.string("email", "labels"),
+				"id" : "txtUsername",
+				"placeholder" : app.lang.string("username", "labels"),
 				"label" : true,
-				"labelText" : app.lang.string("email", "labels"),
+				"labelText" : app.lang.string("username", "labels"),
 				"container" : true
 			}));
 			content.append(app.ni.text.password({
@@ -58,22 +58,20 @@ var page_login = {
 		try {
 			$(container).on("click", "#btnLogin", function() {
 				app.debug.alert("page_" + page_register.config.name + " #btnRegister click", 25);
-				if (!app.help.validate.email(container.find("#txtEmail").val())) {
-					app.notify.alert(app.lang.string("bad_email", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_login", "headlines"))
+				if (!app.help.validate.username(container.find("#txtEmail").val())) {
+					app.notify.alert(app.lang.string("bad_username", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_username", "headlines"))
 				} else if (!app.help.validate.password(container.find("#txtPassword").val(), container.find("#txtPasswordRpt").val())) {
 					app.notify.alert(app.lang.string("bad_password", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_login", "headlines"))
 				} else {
-					if ((json = app.rc.getJson("login", {
-						"username" : container.find("#txtEmail").val(),
+					if ((json = app.rc.getJson("authenticate", {
+						"username" : container.find("#txtUsername").val(),
 						"password" : container.find("#txtPassword").val()
 					})) != false) {
-						if (json.type == "success") {
+						if (json.accessToken != undefined) {
 							app.store.localStorage.clearHtml5();
 							app.store.localStorage.set("data-html5-themis-loggedin", true);
-							app.store.localStorage.set("data-html5-themis-userid", json.userId);
-							app.store.localStorage.set("data-html5-themis-activated", json.activated);
-							app.store.localStorage.set("data-html5-themis-keyring", container.find("#txtPassword").val());
 							app.store.localStorage.set("data-html5-themis-username", container.find("#txtEmail").val());
+							app.store.localStorage.set("data-html5-themis-token", json.accessToken);
 							$(location).attr("href", "start.html");
 						} else {
 							alert("Benutzername oder Passwort falsch.");

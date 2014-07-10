@@ -100,17 +100,31 @@ var plugin_WebServiceClient = {
 			json = dfd.promise();
 		}
 
+		if (method.toLowerCase() == "post") {
+			// dirty
+			// alert(data);
+			var obj = {};
+			var pairs = data.split('&');
+			for (i in pairs) {
+				var split = pairs[i].split('=');
+				obj[decodeURIComponent(split[0])] = decodeURIComponent(split[1]);
+			}
+			data = JSON.stringify(obj || {});
+			// alert(data);
+		}
+		
 		try {
 			$.ajax({
 				url : url,
 				data : data,// ?key=value
 				dataType : type, // json
+				contentType : "application/json; charset=utf-8",
 				async : async, // false
 				method : method, // post
 				timeout : timeout, // 5000
 				beforeSend : function(jqXHR, settings) {
 					if (plugin_WebServiceClient.config.useHeaderToken) {
-						jqXHR.setRequestHeader(plugin_WebServiceClient.config.headerToken.key, app.store.localStorage.get(plugin_WebServiceClient.config.headerToken));
+						jqXHR.setRequestHeader(plugin_WebServiceClient.config.headerToken.key, app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value));
 					}
 				},
 				success : function(data, textStatus, jqXHR) {

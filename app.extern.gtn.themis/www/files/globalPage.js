@@ -55,25 +55,40 @@ var globalPage = {
 		});
 		ul.append(app.ni.element.li().append(app.ni.element.a({
 			"id" : "navBtnNavSearch",
-			"text" : app.lang.string("search", "actions")
+			"text" : app.lang.string("search", "actions"),
+			"attributes" : {
+				"href" : "#"
+			}
 		})));
 		ul.append(app.ni.element.li().append(app.ni.element.a({
-			"id" : "navBtnNavBack",
-			"text" : app.lang.string("share", "actions")
+			"id" : "navBtnNavShare",
+			"text" : app.lang.string("share", "actions"),
+			"attributes" : {
+				"href" : "#"
+			}
 		})));
 
 		ul.append(app.ni.element.li().append(app.ni.element.a({
 			"id" : "navBtnNavBackmeup",
-			"text" : app.lang.string("backmeup", "actions")
+			"text" : app.lang.string("backmeup", "actions"),
+			"attributes" : {
+				"href" : "create_backup_1.html"
+			}
 		})));
 		ul.append(app.ni.element.li().append(app.ni.element.a({
-			"id" : "navBtnNavSearch",
-			"text" : app.lang.string("administrate", "actions")
+			"id" : "navBtnNavAdministrate",
+			"text" : app.lang.string("administrate", "actions"),
+			"attributes" : {
+				"href" : "#"
+			}
 		})));
 
 		ul.append(app.ni.element.li().append(app.ni.element.a({
 			"id" : "navBtnNavMore",
-			"text" : app.lang.string("more", "actions")
+			"text" : app.lang.string("more", "actions"),
+			"attributes" : {
+				"href" : "#"
+			}
 		})));
 		navPanel.append(ul);
 
@@ -105,6 +120,7 @@ var globalPage = {
 		})));
 
 		ul.append(app.ni.element.li().append(app.ni.element.a({
+			"id":"navPageZipArchive",
 			"text" : app.lang.string("zip_archive", "actions"),
 			"attributes" : {
 				"href" : "#",
@@ -113,6 +129,7 @@ var globalPage = {
 		})));
 
 		ul.append(app.ni.element.li().append(app.ni.element.a({
+			"id":"navPageSettings",
 			"text" : app.lang.string("settings", "actions"),
 			"attributes" : {
 				"href" : "settings.html",
@@ -121,6 +138,7 @@ var globalPage = {
 		})));
 
 		ul.append(app.ni.element.li().append(app.ni.element.a({
+			"id":"navPageHome",
 			"text" : app.lang.string("home", "actions"),
 			"attributes" : {
 				"href" : "start.html",
@@ -128,35 +146,28 @@ var globalPage = {
 			}
 		})));
 
+
+
 		ul.append(app.ni.element.li().append(app.ni.element.a({
-			"text" : app.lang.string("zip_archive2", "actions"),
-			"attributes" : {
-				"href" : "#",
-				"data-ajax" : "false",
-			}
-		})));
-		
-		
-		ul.append(app.ni.element.li().append(app.ni.element.a({
-			"id":"pageLogin",
+			"id" : "navPageLogin",
 			"text" : app.lang.string("login", "actions"),
 			"attributes" : {
 				"href" : "login.html",
 				"data-ajax" : "false",
 			}
 		})));
-		
+
 		ul.append(app.ni.element.li().append(app.ni.element.a({
-			"id":"pageLogout",
+			"id" : "navPageLogout",
 			"text" : app.lang.string("logout", "actions"),
 			"attributes" : {
 				"href" : "static-index.html",
 				"data-ajax" : "false",
 			}
 		})));
-		
+
 		ul.append(app.ni.element.li().append(app.ni.element.a({
-			"id":"pageRegister",
+			"id" : "navPageRegister",
 			"text" : app.lang.string("register", "actions"),
 			"attributes" : {
 				"href" : "register.html",
@@ -274,7 +285,7 @@ var globalPage = {
 		$(document).on("click", "#ftrBtnNavBackmeuup", function() {
 			alert("back me up!!");
 		});
-		$(document).on("click", "#ftrBtnNavSearch", function() {
+		$(document).on("click", "#ftrBtnNavSearch, #navBtnNavSearch", function() {
 			var search = $("<div></div>");
 			search.append(app.ni.text.search({
 				"id" : "txtNavSearch"

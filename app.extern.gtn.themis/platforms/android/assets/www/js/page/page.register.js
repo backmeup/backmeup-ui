@@ -96,11 +96,11 @@ var page_register = {
 						"email" : container.find("#txtEmail").val()
 					})) != false) {
 						if (json.userId) {
-							app.store.localStorage.set("data-html5-themis-loggedin", true);
+							app.store.localStorage.set("data-html5-themis-loggedin", false);
 							app.store.localStorage.set("data-html5-themis-userid", json.userId);
 							app.store.localStorage.set("data-html5-themis-activated", json.activated);
 							app.store.localStorage.set("data-html5-themis-username", container.find("#txtUsername").val());
-							$(location).attr("href", "start.html");
+							$(location).attr("href", "login.html");
 						} else {
 							app.notify.alert(app.lang.string("bad_register", "notifications"), app.lang.string("register", "headlines"), app.lang.string("bad_register", "headlines"));
 						}

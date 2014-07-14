@@ -95,3 +95,80 @@ var promise = app.rc.getJson([ [ "datasourceProfiles", {
 				content.append(list);
 				app.help.jQM.enhance(content);
 			});
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			var table = app.ni.table.table({
+					"id" : "tblBackuplog",
+					"attributes" : {
+						"data-role" : "table",
+						"data-mode" : "columntoggle",
+						"data-column-btn-text" : app.lang.string("columntoggle", "actions")
+					},
+					"classes" : [ "ui-responsive", "table-stroke" ],
+					"styles" : {
+						"table-layout" : "auto",
+						"width" : "100%"
+					}
+				});
+
+				var row = app.ni.table.tr();
+
+				row.append(app.ni.table.th({
+					"text" : app.lang.string("index", "headlines"),
+					"attributes" : {
+						"data-priority" : "4"
+					}
+				}));
+
+				row.append(app.ni.table.th({
+					"text" : app.lang.string("timestamp", "headlines"),
+					"attributes" : {
+						"data-priority" : "3"
+					}
+				}));
+
+				row.append(app.ni.table.th({
+					"text" : app.lang.string("type", "headlines"),
+					"attributes" : {
+						"data-priority" : "2"
+					}
+				}));
+
+				row.append(app.ni.table.th({
+					"text" : app.lang.string("message", "headlines"),
+					"attributes" : {
+						"data-priority" : "1"
+					}
+				}));
+
+				table.find("thead").append(row);
+
+				$.each(jobstatus.backupStatus, function(key, value) {
+					var row = app.ni.table.tr();
+					row.append(app.ni.table.td({
+						"text" : key
+					}));
+					row.append(app.ni.table.td({
+						"text" : date('d:m:Y - g:i a', parseInt((value.timeStamp / 1000)))
+					}));
+					row.append(app.ni.table.td({
+						"text" : app.lang.string(value.type, "themisIds")
+					}));
+					row.append(app.ni.table.td({
+						"text" : value.message,
+						"styles" : {
+							"word-break" : "break-word"
+						}
+					}));
+					table.find("tbody").append(row);
+
+				});
+				content.append(table);

@@ -64,7 +64,6 @@ var plugin_MultilanguageIso639_3 = {
 			var text = null;
 			if (!plugin_MultilanguageIso639_3.dictionary) {
 				plugin_MultilanguageIso639_3.loadLanguageIntoDict(plugin_MultilanguageIso639_3.config.defaultLanguage)
-
 			}
 			if (context == undefined) {
 				text = plugin_MultilanguageIso639_3.dictionary[id];
@@ -85,6 +84,22 @@ var plugin_MultilanguageIso639_3 = {
 				return text;
 			} else
 				return context + '.' + id + " = undefined";
+		},
+		list : function(language) {
+			var list = "";
+			if (!plugin_MultilanguageIso639_3.dictionary) {
+				plugin_MultilanguageIso639_3.loadLanguageIntoDict(plugin_MultilanguageIso639_3.config.defaultLanguage)
+			}
+			$.each(plugin_MultilanguageIso639_3.dictionary, function(key, value) {
+				if (typeof value == "object") {
+					$.each(value, function(key, value) {
+						list += value + "\n";
+					});
+				} else {
+					list += value + "\n";
+				}
+			});
+			return list;
 		}
 	}
 };

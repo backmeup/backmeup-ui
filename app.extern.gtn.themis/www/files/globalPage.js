@@ -23,7 +23,8 @@ var globalPage = {
 				"id" : "ftrBtnNavShare",
 				"text" : app.lang.string("share", "actions"),
 				"attributes" : {
-					"data-icon" : "forward"
+					"data-icon" : "forward",
+					"href" : "share_backup.html"
 				},
 				"classes" : [ 'ui-nodisc-icon' ]
 			})));
@@ -77,7 +78,7 @@ var globalPage = {
 				"id" : "navBtnNavShare",
 				"text" : app.lang.string("share", "actions"),
 				"attributes" : {
-					"href" : "#"
+					"href" : "share_backup.html"
 				}
 			})));
 

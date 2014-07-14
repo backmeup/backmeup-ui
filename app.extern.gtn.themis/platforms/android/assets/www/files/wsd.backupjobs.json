@@ -9,8 +9,18 @@
 		"method":"get",
 		"timeout":"3000"
 	},
-	"getBackupjobs":{
-		"url":"/backmeup-service-rest/backupjobs?jobStatus={jobStatus}&expand={expand}",
+	"getQueuedBackupjobs":{
+		"url":"/backmeup-service-rest/backupjobs?jobStatus=queued&expand={expand}",
+		"method":"get",
+		"timeout":"3000"
+	},
+	"getRunningBackupjobs":{
+		"url":"/backmeup-service-rest/backupjobs?jobStatus=running&expand={expand}",
+		"method":"get",
+		"timeout":"3000"
+	},
+	"getSuccessfulBackupjobs":{
+		"url":"/backmeup-service-rest/backupjobs?jobStatus=successful&expand={expand}",
 		"method":"get",
 		"timeout":"3000"
 	},

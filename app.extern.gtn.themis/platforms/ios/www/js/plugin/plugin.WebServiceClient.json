@@ -1,7 +1,7 @@
 {
 	"name":"WebServiceClient",
 	"shortname":"wsc",
-	"defaultWebServiceTimeoutMs":5000,
+	"defaultWebServiceTimeoutMs":16000,
 	"defaultWebServiceMethod":"post",
 	"defaultWebServiceType":"json",
 	"defaultWebServiceContentType":"application/json; charset=utf-8",
@@ -14,7 +14,7 @@
 		"timeout":"12000",
 		"lastDuration":null,
 		"isAlive":true,
-		"maximumResponseTime":13000,
+		"maximumResponseTime":15000,
 		"error":{
 			"text":"",
 			"code":0
@@ -36,7 +36,7 @@
 			"scheme":"http",
 			"scheme_specific_part":"://",
 			"host":"themis-dev01.backmeup.at",
-			"port":8080
+			"port":80
 		},
 		"second":null,
 		"third":null,

@@ -22,10 +22,102 @@ var page_backup_edit = {
 			var header = container.find('div[data-role=header]');
 			var content = container.find('div[data-role=content]');
 			var navPanel = container.find('div#nav-panel');
-			
-			content.append(app.ni.element.h1({
-				"text" : app.lang.string("backup_edit", "headlines")
-			}));
+
+			app.template.append("div[data-role=content]", "app-loader-bubble");
+
+			var promise = app.rc.getJson("getBackupjob", {
+				"jobId" : app.store.localStorage.get("data-html5-themis-backupid"),
+				"expandUser" : false,
+				"expandToken" : false,
+				"expandProfiles" : false,
+				"expandProtocol" : false
+			}, true);
+
+			promise.done(function(resultObject) {
+				//alert(JSON.stringify(resultObject));
+
+				content.append(app.ni.element.h1({
+					"text" : app.lang.string("backup_edit", "headlines") + " - " + resultObject.jobTitle
+				}));
+
+				content.append(app.ni.element.h2({
+					"text" : app.lang.string("backup_job_status", "headlines")
+				}));
+
+				content.append(app.ni.element.p({
+					"text" : resultObject.jobStatus
+				}));
+
+				content.append(app.ni.element.h2({
+					"text" : app.lang.string("backup_hold", "headlines")
+				}));
+
+				content.append(app.ni.element.p({
+					"text" : resultObject.onHold
+				}));
+
+				content.append(app.ni.element.h2({
+					"text" : app.lang.string("backup_schedule", "headlines")
+				}));
+
+				content.append(app.ni.element.p({
+					"text" : resultObject.schedule
+				}));
+
+				content.append(app.ni.element.h2({
+					"text" : app.lang.string("backup_created", "headlines")
+				}));
+
+				content.append(app.ni.element.p({
+					"text" : date('F j, Y, g:i a', resultObject.created)
+				}));
+
+				content.append(app.ni.element.h2({
+					"text" : app.lang.string("backup_modified", "headlines")
+				}));
+
+				content.append(app.ni.element.p({
+					"text" : date('F j, Y, g:i a', resultObject.modified)
+				}));
+
+				content.append(app.ni.element.h2({
+					"text" : app.lang.string("backup_start", "headlines")
+				}));
+
+				content.append(app.ni.element.p({
+					"text" : date('F j, Y, g:i a', resultObject.start)
+				}));
+
+				content.append(app.ni.element.h2({
+					"text" : app.lang.string("backup_next", "headlines")
+				}));
+
+				content.append(app.ni.element.p({
+					"text" : date('F j, Y, g:i a', resultObject.next)
+				}));
+
+				content.append(app.ni.element.h2({
+					"text" : app.lang.string("backup_delay", "headlines")
+				}));
+
+				content.append(app.ni.element.p({
+					"text" : resultObject.delay
+				}));
+				
+				content.append(app.ni.element.a({
+					"id" : "btnNewBackup",
+					"text" : app.lang.string("backup_log", "actions"),
+					"attributes" : {
+						"href" : "backup_log.html"
+					},
+					"classes" : [ 'ui-btn' ]
+				}));
+
+				$(".app-loader").remove();
+
+				app.help.jQM.enhance(content);
+			});
+
 			success = true;
 		} catch (err) {
 			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);

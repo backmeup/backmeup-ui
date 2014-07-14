@@ -25,7 +25,7 @@ var page_backup_jobs = {
 			var content = $('div[data-role=content]');
 			var navPanel = $('div#nav-panel');
 			var pagePanel = $('div#page-panel');
-			
+
 			app.template.append("div[data-role=content]", "app-loader-bubble");
 
 			/*
@@ -49,6 +49,17 @@ var page_backup_jobs = {
 					"text" : app.lang.string("backup_jobs", "headlines")
 				}));
 
+				content.append(app.ni.element.a({
+					"id" : "btnNewBackup",
+					"text" : app.lang.string("create_backup", "actions"),
+					"attributes" : {
+						"href" : "create_backup_1.html"
+					},
+					"classes" : [ 'ui-btn' ]
+				}));
+				
+				
+
 				content.append(app.ni.element.h2({
 					"text" : app.lang.string("backup_jobs_successful", "headlines"),
 					"styles" : {
@@ -61,14 +72,14 @@ var page_backup_jobs = {
 				$.each(successfulBackupjobs, function(index, jobJson) {
 					// alert(JSON.stringify(jobJson));
 					list.append(app.ni.list.thumbnail({
-						href : "#",
+						href : "backup_edit.html",
 						imageSrc : "",
 						title : "Id: " + jobJson.jobId,
 						headline : jobJson.jobTitle,
 						text : jobJson.jobTitle,
 						classes : [ 'job' ],
 						attributes : {
-							"data-html5-oAuthUrl" : ""
+							"data-html5-themis-backupid" : jobJson.jobId
 						}
 					}));
 				});
@@ -86,14 +97,14 @@ var page_backup_jobs = {
 				$.each(queuedBackupjobs, function(index, jobJson) {
 					// alert(JSON.stringify(jobJson));
 					list.append(app.ni.list.thumbnail({
-						href : "#",
+						href : "backup_edit.html",
 						imageSrc : "",
 						title : "Id: " + jobJson.jobId,
 						headline : jobJson.jobTitle,
 						text : jobJson.jobTitle,
 						classes : [ 'job' ],
 						attributes : {
-							"data-html5-oAuthUrl" : ""
+							"data-html5-themis-backupid" : jobJson.jobId
 						}
 					}));
 				});
@@ -111,14 +122,14 @@ var page_backup_jobs = {
 				$.each(runningBackupjobs, function(index, jobJson) {
 					// alert(JSON.stringify(jobJson));
 					list.append(app.ni.list.thumbnail({
-						href : "#",
+						href : "backup_edit.html",
 						imageSrc : "",
 						title : "Id: " + jobJson.jobId,
 						headline : jobJson.jobTitle,
 						text : jobJson.jobTitle,
 						classes : [ 'job' ],
 						attributes : {
-							"data-html5-oAuthUrl" : ""
+							"data-html5-themis-backupid" : jobJson.jobId
 						}
 					}));
 				});

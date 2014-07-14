@@ -7,15 +7,7 @@ var globalPage = {
 			});
 
 			var ul = app.ni.element.ul();
-			ul.append(app.ni.element.li().append(app.ni.element.a({
-				"id" : "ftrBtnNavBackmeuup",
-				"text" : app.lang.string("backmeup", "actions"),
-				"attributes" : {
-					"href" : 'create_backup_1.html',
-					"data-icon" : "refresh"
-				},
-				"classes" : [ 'ui-nodisc-icon' ]
-			})));
+
 			ul.append(app.ni.element.li().append(app.ni.element.a({
 				"id" : "ftrBtnNavSearch",
 				"text" : app.lang.string("search", "actions"),
@@ -31,7 +23,8 @@ var globalPage = {
 				"id" : "ftrBtnNavShare",
 				"text" : app.lang.string("share", "actions"),
 				"attributes" : {
-					"data-icon" : "forward"
+					"data-icon" : "forward",
+					"href" : "share_backup.html"
 				},
 				"classes" : [ 'ui-nodisc-icon' ]
 			})));
@@ -85,17 +78,10 @@ var globalPage = {
 				"id" : "navBtnNavShare",
 				"text" : app.lang.string("share", "actions"),
 				"attributes" : {
-					"href" : "#"
+					"href" : "share_backup.html"
 				}
 			})));
 
-			ul.append(app.ni.element.li().append(app.ni.element.a({
-				"id" : "navBtnNavBackmeup",
-				"text" : app.lang.string("backmeup", "actions"),
-				"attributes" : {
-					"href" : "create_backup_1.html"
-				}
-			})));
 			ul.append(app.ni.element.li().append(app.ni.element.a({
 				"id" : "navBtnNavAdministrate",
 				"text" : app.lang.string("administrate", "actions"),
@@ -297,11 +283,11 @@ var globalPage = {
 
 			footer.removeAttr("data-position");
 
-			$("#navBtnNavMore").mouseenter(function() {
+			$(document).on("mouseenter", "#navBtnNavMore", function() {
 				$("#page-panel").slideDown();
 			});
 
-			$("#page-panel").mouseleave(function() {
+			$(document).on("mouseleave", "#page-panel", function() {
 				$(this).slideUp();
 			});
 		}

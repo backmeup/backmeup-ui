@@ -122,7 +122,7 @@ function onDeviceReady() {
 
 $(document).bind("mobileinit", function() {
 	app.debug.alert("jQuery mobile initialized", 30);
-	$.mobile.ajaxEnabled = true;
+	$.mobile.ajaxEnabled = false;
 	$.support.cors = true;
 	$.mobile.allowCrossDomainPages = true;
 	$.mobile.page.prototype.options.domCache = false;
@@ -141,7 +141,7 @@ $(document).bind("mobileinit", function() {
 var app = {
 	config : {
 		name : "themis",
-		min : false,
+		min : true,
 		useJQueryMobile : true,
 		apacheCordova : null
 	},

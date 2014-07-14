@@ -25,87 +25,42 @@ var page_backup_log = {
 			var content = container.find('div[data-role=content]');
 			var navPanel = container.find('div#nav-panel');
 
-			content.append(app.ni.element.h1({
-				"text" : app.lang.string("backup_log", "headlines")
-			}));
-			
-		
+			app.template.append("div[data-role=content]", "app-loader-bubble");
 
-			var jobstatus = app.rc.getJson("jobStatus", {
-				"username" : app.store.localStorage.get("data-html5-themis-username"),
-				"jobId" : app.store.localStorage.get("data-html5-backupjobid"),
-				"fromDate" : 0,
-				"toDate" : Date.now(),
+			var promise = app.rc.getJson("getBackupjob", {
+				"jobId" : app.store.localStorage.get("data-html5-themis-backupid"),
+				"expandUser" : false,
+				"expandToken" : false,
+				"expandProfiles" : false,
+				"expandProtocol" : true
+			}, true);
+
+			promise.done(function(resultObject) {
+				//alert(JSON.stringify(resultObject));
+
+				content.append(app.ni.element.h1({
+					"text" : app.lang.string("backup_log", "headlines")
+				}));
+				
+				content.append(app.ni.element.a({
+					"id" : "btnBackupDetails",
+					"text" : app.lang.string("backup_edit", "actions"),
+					"attributes" : {
+						"href" : "backup_edit.html"
+					},
+					"classes" : [ 'ui-btn' ]
+				}));
+				
+				$(".app-loader").remove();
+				app.help.jQM.enhance(content);
 			});
 
-			var table = app.ni.table.table({
-				"id" : "tblBackuplog",
-				"attributes" : {
-					"data-role" : "table",
-					"data-mode" : "columntoggle",
-					"data-column-btn-text" : app.lang.string("columntoggle", "actions")
-				},
-				"classes" : [ "ui-responsive", "table-stroke" ],
-				"styles" : {
-					"table-layout" : "auto",
-					"width" : "100%"
-				}
+			promise.fail(function(error) {
+				$(".app-loader").remove();
+				alert("ws error: " + error);
 			});
 
-			var row = app.ni.table.tr();
-
-			row.append(app.ni.table.th({
-				"text" : app.lang.string("index", "headlines"),
-				"attributes" : {
-					"data-priority" : "4"
-				}
-			}));
-
-			row.append(app.ni.table.th({
-				"text" : app.lang.string("timestamp", "headlines"),
-				"attributes" : {
-					"data-priority" : "3"
-				}
-			}));
-
-			row.append(app.ni.table.th({
-				"text" : app.lang.string("type", "headlines"),
-				"attributes" : {
-					"data-priority" : "2"
-				}
-			}));
-
-			row.append(app.ni.table.th({
-				"text" : app.lang.string("message", "headlines"),
-				"attributes" : {
-					"data-priority" : "1"
-				}
-			}));
-
-			table.find("thead").append(row);
-
-			$.each(jobstatus.backupStatus, function(key, value) {
-				var row = app.ni.table.tr();
-				row.append(app.ni.table.td({
-					"text" : key
-				}));
-				row.append(app.ni.table.td({
-					"text" : date('d:m:Y - g:i a', parseInt((value.timeStamp / 1000)))
-				}));
-				row.append(app.ni.table.td({
-					"text" : app.lang.string(value.type, "themisIds")
-				}));
-				row.append(app.ni.table.td({
-					"text" : value.message,
-					"styles" : {
-						"word-break" : "break-word"
-					}
-				}));
-				table.find("tbody").append(row);
-
-			});
-			content.append(table);
-
+			success = true;
 			success = true;
 		} catch (err) {
 			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);

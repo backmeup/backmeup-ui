@@ -13,6 +13,7 @@
 	"logout":true,
 	"register":true,
 	"settings":true,
+	"share_backup":true,
 	"start":true,
 	"usersettings":true,
 	"verify_email":true,

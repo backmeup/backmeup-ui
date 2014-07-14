@@ -17,54 +17,47 @@ var page_create_backup_2_newSink = {
 	// load the html structure
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
-		var success = null;
-		try {
-			if (app.detect.isDesktop()) {
-				var url = window.location.href;
-				var error = /\?error=(.+)$/.exec(url);
-				var access_token = /\?oauth_token=(.+)$/.exec(url);
-				if (access_token) {
-					var access_token = (access_token + "").split("=");
-					access_token = access_token[1] + "";
-					access_token = access_token.split("&");
-				} else if (error) {
-					// alert("oauth error" + error);
-				}
+		if (app.detect.isDesktop()) {
+			var url = window.location.href;
+			var error = /\?error=(.+)$/.exec(url);
+			var access_token = /\?oauth_token=(.+)$/.exec(url);
+			if (access_token) {
+				var access_token = (access_token + "").split("=");
+				access_token = access_token[1] + "";
+				access_token = access_token.split("&");
 				app.store.localStorage.set("data-html5-themis-oAuthToken", access_token[0]);
+			} else if (error) {
+				 alert("oauth error" + error);
 			}
-			var header = $('div[data-role=header]');
-			var content = $('div[data-role=content]');
-			var navPanel = $('div#nav-panel');
-			var pagePanel = $('div#page-panel');
-			// datasources
-			content.append(app.ni.element.h1({
-				"text" : app.lang.string("new_datasink", "headlines"),
-				"styles" : {
-					"clear" : "both"
-				}
-			}));
-			content.append(app.ni.text.text({
-				"id" : "txtTitle",
-				"placeholder" : app.lang.string("title", "labels"),
-				"label" : true,
-				"labelText" : app.lang.string("title", "labels"),
-				"container" : true
-			}));
-			content.append(app.ni.button.button({
-				"id" : "btnCreate",
-				"placeholder" : app.lang.string("create_sink", "labels"),
-				"label" : true,
-				"labelText" : app.lang.string("create_sink", "labels"),
-				"container" : true,
-				"value" : app.lang.string("create_sink", "actions")
-			}));
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
+
 		}
-		return success;
+		var header = $('div[data-role=header]');
+		var content = $('div[data-role=content]');
+		var navPanel = $('div#nav-panel');
+		var pagePanel = $('div#page-panel');
+		// datasources
+		content.append(app.ni.element.h1({
+			"text" : app.lang.string("new_datasink", "headlines"),
+			"styles" : {
+				"clear" : "both"
+			}
+		}));
+		content.append(app.ni.text.text({
+			"id" : "txtTitle",
+			"placeholder" : app.lang.string("title", "labels"),
+			"label" : true,
+			"labelText" : app.lang.string("title", "labels"),
+			"container" : true
+		}));
+		content.append(app.ni.button.button({
+			"id" : "btnCreate",
+			"placeholder" : app.lang.string("create_sink", "labels"),
+			"label" : true,
+			"labelText" : app.lang.string("create_sink", "labels"),
+			"container" : true,
+			"value" : app.lang.string("create_sink", "actions")
+		}));
+		return true;
 	},
 
 	// set the jquery events
@@ -75,7 +68,7 @@ var page_create_backup_2_newSink = {
 			$(container).on("click", "#btnCreate", function() {
 				app.template.append("div[data-role=content]", "app-loader-bubble");
 				var configType = app.store.localStorage.get("data-html5-configtype");
-				//alert(configType);
+				// alert(configType);
 				configType = "output";
 				if (configType == "output") {
 					var promise = app.rc.getJson("createSinkProfile", {
@@ -86,7 +79,7 @@ var page_create_backup_2_newSink = {
 					}, true);
 
 					promise.done(function(resultObject) {
-						//alert(JSON.stringify(resultObject));
+						// alert(JSON.stringify(resultObject));
 						app.store.localStorage.set("data-html5-themis-sink-profileid", resultObject.profileId);
 						$(".app-loader").remove();
 						$(location).attr("href", "create_backup_3.html");
@@ -97,7 +90,6 @@ var page_create_backup_2_newSink = {
 					});
 
 				} else if (configType == "oauth") {
-					
 
 					var promise = app.rc.getJson("createSourceProfile", {
 						"pluginId" : app.store.localStorage.get("data-html5-themis-pluginId"),

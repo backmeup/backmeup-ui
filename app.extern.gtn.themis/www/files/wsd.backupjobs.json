@@ -14,6 +14,11 @@
 		"method":"get",
 		"timeout":"3000"
 	},
+	"getBackupjob":{
+		"url":"/backmeup-service-rest/backupjobs/{jobId}?expandUser={expandUser}&expandToken={expandToken}&expandProfiles={expandProfiles}&expandProtocol={expandProtocol}",
+		"method":"get",
+		"timeout":"3000"
+	},
 	"createBackupjob":{
 		"url":"/backmeup-service-rest/backupjobs?jobTitle={jobTitle}&schedule={schedule}&start={start}&source={source}&actions={actions}&sink={sink}",
 		"method":"post",

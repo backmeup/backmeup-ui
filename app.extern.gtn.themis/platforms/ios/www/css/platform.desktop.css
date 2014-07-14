@@ -12,7 +12,9 @@ body.app-desktop  div[data-role=content] {
 	position: relative;
 	left: 50%;
 	margin-left: -500px;
+	padding-top: 80px;
 	min-height: inherit;
+	background: url("../Images/shadowtop.png") no-repeat scroll center top rgba(0, 0, 0, 0);
 }
 
 /* jQuery Mobile header */
@@ -24,16 +26,17 @@ body.app-desktop div#app-header {
 
 /* jQuery Mobile panel = page specific menu */
 body.app-desktop div#nav-panel {
-	
+
 }
 
 /**/
 body.app-desktop div#nav-panel>ul {
 	display: block;
 	width: 100%;
-	background-color: #EEE;
+	background-color: #dbdbdb;
 	text-align: center;
 	margin: 0;
+	padding: 0;
 }
 
 /**/
@@ -46,6 +49,14 @@ body.app-desktop div#nav-panel>ul>li {
 body.app-desktop div#nav-panel>ul>li>a {
 	font-weight: normal;
 	margin-top: 10px;
+	font-size: 1.18571429rem;
+	text-transform: uppercase;
+	color: #777777;
+	text-decoration: none;
+}
+
+body.app-desktop div#nav-panel>ul>li>a:hover, body.app-desktop div#nav-panel>ul>li>a:focus, body.app-desktop div#nav-panel>ul>li>a:active {
+	color: #4a4949;
 }
 
 /* jQuery Mobile panel = global menu */
@@ -57,11 +68,13 @@ body.app-desktop div#page-panel {
 	width: 700px;
 	left: 50%;
 	z-index: 10000;
+	background-color: #dbdbdb;
+
 }
 
 /**/
 body.app-desktop div#page-panel>ul {
-	padding: 0 0 0 0;
+	padding: 12px 0 0 0;
 	margin: 0 0 0 0;
 	width: 100%;
 	text-align: center;
@@ -71,17 +84,36 @@ body.app-desktop div#page-panel>ul {
 /**/
 body.app-desktop div#page-panel>ul>li {
 	display: block;
-	margin: 3px 0 3px 0;
+	margin: 3px 0 12px 0;
 	list-style: none;
-	border: 1px solid #000;
+	border: 0;
 	display: block;
-	background-color: #BBB;
+	background-color: transparent;
 }
 
 body.app-desktop div#page-panel>ul>li>a {
 	margin: 12px 0 12px 0;
 	display: block;
-	
+	font-weight: normal;
+	color: #777777;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+body.app-desktop div#page-panel>ul>li>a:hover, body.app-desktop div#page-panel>ul>li>a:focus {
+	color: #4a4949;
+}
+
+/* index static content */
+
+.image_float_left {
+	float: left;
+	margin-right: 15px;
+}
+
+.image_float_right {
+	float: right;
+	margin-left: 15px;
 }
 
 /* 

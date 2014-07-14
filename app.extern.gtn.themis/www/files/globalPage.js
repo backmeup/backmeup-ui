@@ -143,7 +143,7 @@ var globalPage = {
 				"text" : app.lang.string("backup_jobs", "actions"),
 				"attributes" : {
 					"href" : "backup_jobs.html",
-					"data-ajax" : "false",
+
 				}
 			})));
 
@@ -152,7 +152,7 @@ var globalPage = {
 				"text" : app.lang.string("zip_archive", "actions"),
 				"attributes" : {
 					"href" : "zip_archive.html",
-					"data-ajax" : "false",
+
 				}
 			})));
 
@@ -161,7 +161,7 @@ var globalPage = {
 				"text" : app.lang.string("settings", "actions"),
 				"attributes" : {
 					"href" : "settings.html",
-					"data-ajax" : "false",
+
 				}
 			})));
 
@@ -169,8 +169,8 @@ var globalPage = {
 				"id" : "navPageHome",
 				"text" : app.lang.string("home", "actions"),
 				"attributes" : {
-					"href" : "start.html",
-					"data-ajax" : "false",
+					"href" : "static-index.html",
+
 				}
 			})));
 
@@ -180,7 +180,7 @@ var globalPage = {
 					"text" : app.lang.string("login", "actions"),
 					"attributes" : {
 						"href" : "login.html",
-						"data-ajax" : "false",
+
 					}
 				})));
 
@@ -190,7 +190,7 @@ var globalPage = {
 					"text" : app.lang.string("logout", "actions"),
 					"attributes" : {
 						"href" : "#",
-						"data-ajax" : "false",
+
 					}
 				})));
 
@@ -200,7 +200,7 @@ var globalPage = {
 					"text" : app.lang.string("register", "actions"),
 					"attributes" : {
 						"href" : "register.html",
-						"data-ajax" : "false",
+
 					}
 				})));
 

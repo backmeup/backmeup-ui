@@ -61,10 +61,12 @@ body.app-mobile div.app-footer div[data-role=navbar] ul li a {
 	font-weight: normal;
 	font-size: 10px;
 	letter-spacing: 0.04rem;
+	padding-top: 2.9em;
+
 }
 
 body.app-mobile div.app-footer div[data-role=navbar] ul li .ui-btn-icon-top:after {
-	top: .2625em;
+
 }
 
 body.app-mobile div.app-footer div[data-role=navbar] ul li a:HOVER {
@@ -103,6 +105,22 @@ body.app-mobile  div.app-footer div[data-role=navbar] ul li a#ftrBtnNavMore {
 		display: list-item;
 		visibility: visible;
 	} */
+}
+
+
+@MEDIA ( min-width :645px) {
+	body.app-mobile div.app-footer div[data-role=navbar] ul li a {
+		padding-top: 53px;
+	
+	}
+	
+	body.app-mobile div.app-footer div[data-role=navbar] ul li .ui-btn-icon-top:after {
+		top: 0.5em;
+		height: 40px;
+		width: 40px;
+		margin-left: -20px;
+		background-size: 30px 30px;
+	}
 }
 
 @MEDIA ( min-width :900px) {

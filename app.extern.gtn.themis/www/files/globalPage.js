@@ -13,14 +13,16 @@ var globalPage = {
 				"attributes" : {
 					"href" : 'create_backup_1.html',
 					"data-icon" : "refresh"
-				}
+				},
+				"classes" : [ 'ui-nodisc-icon' ]
 			})));
 			ul.append(app.ni.element.li().append(app.ni.element.a({
 				"id" : "ftrBtnNavSearch",
 				"text" : app.lang.string("search", "actions"),
 				"attributes" : {
 					"data-icon" : "search"
-				}
+				},
+				"classes" : [ 'ui-nodisc-icon' ]
 			})));
 
 			ul.append(app.ni.element.li({
@@ -30,7 +32,8 @@ var globalPage = {
 				"text" : app.lang.string("share", "actions"),
 				"attributes" : {
 					"data-icon" : "forward"
-				}
+				},
+				"classes" : [ 'ui-nodisc-icon' ]
 			})));
 
 			ul.append(app.ni.element.li({
@@ -41,7 +44,8 @@ var globalPage = {
 				"attributes" : {
 					"data-icon" : "gear",
 					"href" : "backup_jobs.html",
-				}
+				},
+				"classes" : [ 'ui-nodisc-icon' ]
 			})));
 
 			ul.append(app.ni.element.li().append(app.ni.element.a({
@@ -50,7 +54,8 @@ var globalPage = {
 				"attributes" : {
 					"href" : "#page-panel",
 					"data-icon" : "grid"
-				}
+				},
+				"classes" : [ 'ui-nodisc-icon' ]
 			})));
 
 			navbar.append(ul);

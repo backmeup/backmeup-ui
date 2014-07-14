@@ -4,9 +4,24 @@
 		"method":"string method",
 		"timeout":"int timeout"
 	},
+	"getAllBackupjobs":{
+		"url":"/backmeup-service-rest/backupjobs/",
+		"method":"get",
+		"timeout":"3000"
+	},
 	"getBackupjobs":{
 		"url":"/backmeup-service-rest/backupjobs?jobStatus={jobStatus}&expand={expand}",
 		"method":"get",
+		"timeout":"3000"
+	},
+	"getBackupjob":{
+		"url":"/backmeup-service-rest/backupjobs/{jobId}?expandUser={expandUser}&expandToken={expandToken}&expandProfiles={expandProfiles}&expandProtocol={expandProtocol}",
+		"method":"get",
+		"timeout":"3000"
+	},
+	"createBackupjob":{
+		"url":"/backmeup-service-rest/backupjobs?jobTitle={jobTitle}&schedule={schedule}&start={start}&source={source}&actions={actions}&sink={sink}",
+		"method":"post",
 		"timeout":"3000"
 	}
 }

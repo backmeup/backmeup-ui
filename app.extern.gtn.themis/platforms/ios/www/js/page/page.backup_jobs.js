@@ -29,13 +29,13 @@ var page_backup_jobs = {
 				"text" : app.lang.string("backup_jobs", "headlines")
 			}));
 
-			var promise = app.rc.getJson("getAllBackupjobs", {
-				"jobStatus" : "running",
-				"expand" : "false"
+			var promise = app.rc.getJson("getBackupjobs", {
+				"jobStatus" : "queued",
+				"expand" : "true"
 			}, true);
 
 			promise.done(function(resultObject) {
-				// alert(JSON.stringify(resultObject));
+				 alert(JSON.stringify(resultObject));
 				var list = $(app.template.get("listA", "responsive"));
 				$.each(resultObject, function(index, pluginJson) {
 					// alert(JSON.stringify(pluginJson));

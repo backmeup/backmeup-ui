@@ -29,7 +29,10 @@ var page_backup_jobs = {
 				"text" : app.lang.string("backup_jobs", "headlines")
 			}));
 
-			var promise = app.rc.getJson("getSources", null, true);
+			var promise = app.rc.getJson("getAllBackupjobs", {
+				"jobStatus" : "running",
+				"expand" : "false"
+			}, true);
 
 			promise.done(function(resultObject) {
 				// alert(JSON.stringify(resultObject));

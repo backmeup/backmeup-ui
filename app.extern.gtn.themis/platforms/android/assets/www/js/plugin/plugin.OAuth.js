@@ -104,6 +104,7 @@ var plugin_OAuth = {
 	 */
 	functions : {
 		dropbox : function(url) {
+			
 			var dfd = $.Deferred();
 
 			if (app.detect.isDesktop()) {

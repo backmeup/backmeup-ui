@@ -74,25 +74,49 @@ var page_create_backup_2_newSink = {
 		try {
 			$(container).on("click", "#btnCreate", function() {
 				app.template.append("div[data-role=content]", "app-loader-bubble");
+				var configType = app.store.localStorage.get("data-html5-configtype");
+				//alert(configType);
+				configType = "output";
+				if (configType == "output") {
+					var promise = app.rc.getJson("createSinkProfile", {
+						"pluginId" : app.store.localStorage.get("data-html5-themis-pluginid"),
+						"title" : container.find("#txtTitle").val(),
+						"configProperties" : {},
+						"options" : [ "" ]
+					}, true);
 
-				var promise = app.rc.getJson("createSourceProfile", {
-					"pluginId" : app.store.localStorage.get("data-html5-themis-pluginId"),
-					"title" : container.find("#txtTitle").val(),
-					"configProperties" : {
-						"token" : app.store.localStorage.get("data-html5-themis-oAuthToken")
-					},
-					"options" : [ "/Documents", "/Photos" ]
-				}, true);
+					promise.done(function(resultObject) {
+						//alert(JSON.stringify(resultObject));
+						app.store.localStorage.set("data-html5-themis-sink-profileid", resultObject.profileId);
+						$(".app-loader").remove();
+						$(location).attr("href", "create_backup_3.html");
+					});
 
-				promise.done(function(resultObject) {
-					$(".app-loader").remove();
-					$(location).attr("href", "create_backup_3.html");
-				});
-				
-				promise.fail(function(error) {
-					alert("webservice error: " + error);
-				});
+					promise.fail(function(error) {
+						alert("webservice error: " + error);
+					});
 
+				} else if (configType == "oauth") {
+					
+
+					var promise = app.rc.getJson("createSourceProfile", {
+						"pluginId" : app.store.localStorage.get("data-html5-themis-pluginId"),
+						"title" : container.find("#txtTitle").val(),
+						"configProperties" : {
+							"token" : app.store.localStorage.get("data-html5-themis-oAuthToken")
+						},
+						"options" : [ "/Documents", "/Photos" ]
+					}, true);
+
+					promise.done(function(resultObject) {
+						$(".app-loader").remove();
+						$(location).attr("href", "create_backup_3.html");
+					});
+
+					promise.fail(function(error) {
+						alert("webservice error: " + error);
+					});
+				}
 
 			});
 			success = true;

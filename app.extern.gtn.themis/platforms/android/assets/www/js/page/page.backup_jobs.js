@@ -20,7 +20,7 @@ var page_backup_jobs = {
 		var success = null;
 		try {
 			app.debug.alert("page_" + this.config.name + ".creator()", 10);
-			
+
 			var header = container.find('div[data-role=header]');
 			var content = container.find('div[data-role=content]');
 			var navPanel = container.find('div#nav-panel');
@@ -29,36 +29,34 @@ var page_backup_jobs = {
 				"text" : app.lang.string("backup_jobs", "headlines")
 			}));
 
-			if ((json = app.rc.getJson("jobs", {
-				"username" : app.store.localStorage.get("data-html5-themis-username")
-			})) != false) {
-				if (json.backupJobs != undefined) {
-					var list = $(app.template.get("listA", "responsive"));
-					$.each(json.backupJobs, function(key, value) {
+			var promise = app.rc.getJson("getSources", null, true);
 
-						//alert(JSON.stringify(value));
-						var datum = new Date(value.createDate);
-						var thumbnail = $(app.ni.list.thumbnail({
-							href : "job_details.html",
-							imageSrc : "../images/logo.facebook.jpg",
-							title : "Id: " + (value.datasources[0]).datasourceId,
-							headline : value.jobTitle,
-							text : datum.toUTCString(),
-							attributes : {
-								"data-html5-backupjobid" : value.backupJobId,
-								"data-html5-datasinkid" : value.datasink.datasinkId,
-								"data-html5-datasourceid" : (value.datasources[0]).datasourceId
-							}
-						}));
-						list.append(thumbnail);
-					});
-					content.append(list);
-				} else {
-					alert("no backup jobs?");
-				}
-			} else {
-				app.notify.alert(app.lang.string("bad_login", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_login", "headlines"))
-			}
+			promise.done(function(resultObject) {
+				// alert(JSON.stringify(resultObject));
+				var list = $(app.template.get("listA", "responsive"));
+				$.each(resultObject, function(index, pluginJson) {
+					// alert(JSON.stringify(pluginJson));
+					list.append(app.ni.list.thumbnail({
+						href : "#",
+						imageSrc : pluginJson.imageURL,
+						title : "Id: " + pluginJson.datasourceProfileId,
+						headline : pluginJson.title,
+						text : pluginJson.pluginName,
+						classes : [ 'source', 'configtype-' + pluginJson.config.configType ],
+						attributes : {
+							"data-html5-oAuthUrl" : pluginJson.config.redirectURL,
+							"data-html5-pluginId" : pluginJson.pluginId
+						}
+					}));
+				});
+				$(".app-loader").remove();
+				content.append(list);
+				app.help.jQM.enhance(content);
+			});
+
+			promise.fail(function(error) {
+				alert("ws error: " + error);
+			});
 
 			success = true;
 		} catch (err) {

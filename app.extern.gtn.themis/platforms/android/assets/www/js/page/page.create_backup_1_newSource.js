@@ -73,25 +73,31 @@ var page_create_backup_1_newSource = {
 		var success = null;
 		try {
 			$(container).on("click", "#btnCreate", function() {
-				app.template.append("div[data-role=content]", "app-loader-bubble");
+				var configType = app.store.localStorage.get("data-html5-configType");
+				alert(configType);
+				if (configType == "local") {
+					alert(local);
+				} else if (configType == "oauth") {
+					app.template.append("div[data-role=content]", "app-loader-bubble");
 
-				var promise = app.rc.getJson("createSourceProfile", {
-					"pluginId" : app.store.localStorage.get("data-html5-themis-pluginId"),
-					"title" : container.find("#txtTitle").val(),
-					"configProperties" : {
-						"token" : app.store.localStorage.get("data-html5-themis-oAuthToken")
-					},
-					"options" : [ "/Documents", "/Photos" ]
-				}, true);
+					var promise = app.rc.getJson("createSourceProfile", {
+						"pluginId" : app.store.localStorage.get("data-html5-themis-pluginId"),
+						"title" : container.find("#txtTitle").val(),
+						"configProperties" : {
+							"token" : app.store.localStorage.get("data-html5-themis-oAuthToken")
+						},
+						"options" : [ "/Documents", "/Photos" ]
+					}, true);
 
-				promise.done(function(resultObject) {
-					$(".app-loader").remove();
-					$(location).attr("href", "create_backup_2.html");
-				});
+					promise.done(function(resultObject) {
+						$(".app-loader").remove();
+						$(location).attr("href", "create_backup_2.html");
+					});
 
-				promise.fail(function(error) {
-					alert("webservice error: " + error);
-				});
+					promise.fail(function(error) {
+						alert("webservice error: " + error);
+					});
+				}
 
 			});
 			success = true;

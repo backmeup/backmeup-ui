@@ -3,5 +3,10 @@
 		"url":"string url",
 		"method":"string method",
 		"timeout":"int timeout"
+	},
+	"getBackupjobs":{
+		"url":"/backmeup-service-rest/backupjobs?jobStatus={jobStatus}&expand={expand}",
+		"method":"get",
+		"timeout":"3000"
 	}
 }

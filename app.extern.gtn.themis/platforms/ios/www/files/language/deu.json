@@ -2,6 +2,9 @@
 	"actions":{
 		"administrate":"Verwalten",
 		"backmeup":"Backmeup!",
+		"create_backup":"Backupjob erstellen",
+		"create_source":"Datenquelle erstellen",
+		"create_sink":"Datensenke erstellen",
 		"home":"Startseite",
 		"more":"...Mehr",
 		"login":"Einloggen",
@@ -31,8 +34,13 @@
 		"zip_archive":"Zip Archiv"
 	},
 	"labels":{
+		"title":"Titel",
+		"create_backup":"Backupjob erstellen",
+		"create_source":"Datenquelle erstellen",
+		"create_sink":"Datensenke erstellen",
 		"firstname":"Vorname",
 		"lastname":"Nachname",
+		"job_title":"Backup Name",
 		"password":"Passwort",
 		"password_rpt":"Passwort widerholen",
 		"username":"Benutzername",
@@ -46,6 +54,12 @@
 	"headlines":{
 		"existing_datasources":"Vorhandene Datenquellen",
 		"new_datasource":"Neue Datenquelle erstellen",
+		"new_backup":"Neues Backup erstellen",
+		"existing_datasinks":"Vorhandene Datensenken",
+		"chosen_datasource":"Gewählte Datenquelle",
+		"chosen_datasink":"Gewählte Datensenke",
+		"job_settings":"Weitere Backup Einstellmöglichkeiten",
+		"new_datasink":"Neue Datensenke erstellen",
 		"backup_log":"Backup-Log",
 		"backup_edit":"Backup bearbeiten",
 		"datasource":"Datenquelle",

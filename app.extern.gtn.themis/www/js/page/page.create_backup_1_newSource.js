@@ -74,24 +74,52 @@ var page_create_backup_1_newSource = {
 		try {
 			$(container).on("click", "#btnCreate", function() {
 				app.template.append("div[data-role=content]", "app-loader-bubble");
+				var configType = app.store.localStorage.get("data-html5-configtype");
+				//alert(configType);
+				if (configType == "input") {
+					var promise = app.rc.getJson("createSourceProfile", {
+						"pluginId" : app.store.localStorage.get("data-html5-themis-pluginid"),
+						"title" : container.find("#txtTitle").val(),
+						"configProperties" : {
+							"text" : "true",
+							"image" : "true",
+							"pdf" : "true",
+							"binary" : "true"
+						},
+						"options" : [ "" ]
+					}, true);
 
-				var promise = app.rc.getJson("createSourceProfile", {
-					"pluginId" : app.store.localStorage.get("data-html5-themis-pluginId"),
-					"title" : container.find("#txtTitle").val(),
-					"configProperties" : {
-						"token" : app.store.localStorage.get("data-html5-themis-oAuthToken")
-					},
-					"options" : [ "/Documents", "/Photos" ]
-				}, true);
+					promise.done(function(resultObject) {
+						//alert(JSON.stringify(resultObject));
+						app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
+						$(".app-loader").remove();
+						$(location).attr("href", "create_backup_2.html");
+					});
 
-				promise.done(function(resultObject) {
-					$(".app-loader").remove();
-					$(location).attr("href", "create_backup_2.html");
-				});
+					promise.fail(function(error) {
+						alert("webservice error: " + error);
+					});
 
-				promise.fail(function(error) {
-					alert("webservice error: " + error);
-				});
+				} else if (configType == "oauth") {
+
+					var promise = app.rc.getJson("createSourceProfile", {
+						"pluginId" : app.store.localStorage.get("data-html5-themis-pluginid"),
+						"title" : container.find("#txtTitle").val(),
+						"configProperties" : {
+							"token" : app.store.localStorage.get("data-html5-themis-oAuthToken")
+						},
+						"options" : [ "/Documents", "/Photos" ]
+					}, true);
+
+					promise.done(function(resultObject) {
+						$(".app-loader").remove();
+						$(location).attr("href", "create_backup_2.html");
+					});
+
+					promise.fail(function(error) {
+						alert("webservice error: " + error);
+					});
+				}
 
 			});
 			success = true;

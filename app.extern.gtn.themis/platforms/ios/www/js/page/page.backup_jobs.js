@@ -20,7 +20,7 @@ var page_backup_jobs = {
 		var success = null;
 		try {
 			app.debug.alert("page_" + this.config.name + ".creator()", 10);
-			
+
 			var header = container.find('div[data-role=header]');
 			var content = container.find('div[data-role=content]');
 			var navPanel = container.find('div#nav-panel');
@@ -29,7 +29,37 @@ var page_backup_jobs = {
 				"text" : app.lang.string("backup_jobs", "headlines")
 			}));
 
-			
+			var promise = app.rc.getJson("getAllBackupjobs", {
+				"jobStatus" : "running",
+				"expand" : "false"
+			}, true);
+
+			promise.done(function(resultObject) {
+				// alert(JSON.stringify(resultObject));
+				var list = $(app.template.get("listA", "responsive"));
+				$.each(resultObject, function(index, pluginJson) {
+					// alert(JSON.stringify(pluginJson));
+					list.append(app.ni.list.thumbnail({
+						href : "#",
+						imageSrc : pluginJson.imageURL,
+						title : "Id: " + pluginJson.datasourceProfileId,
+						headline : pluginJson.title,
+						text : pluginJson.pluginName,
+						classes : [ 'source', 'configtype-' + pluginJson.config.configType ],
+						attributes : {
+							"data-html5-oAuthUrl" : pluginJson.config.redirectURL,
+							"data-html5-pluginId" : pluginJson.pluginId
+						}
+					}));
+				});
+				$(".app-loader").remove();
+				content.append(list);
+				app.help.jQM.enhance(content);
+			});
+
+			promise.fail(function(error) {
+				alert("ws error: " + error);
+			});
 
 			success = true;
 		} catch (err) {

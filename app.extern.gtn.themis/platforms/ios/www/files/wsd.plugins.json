@@ -20,22 +20,22 @@
 		"timeout":"3000"
 	},
 	"getActions":{
-		"url":"/backmeup-service-rest/plugins?types=action",
+		"url":"/backmeup-service-rest/plugins?types=action&expandProfiles={expandProfiles}",
 		"method":"get",
 		"timeout":"3000"
 	},
 	"getAll":{
-		"url":"/backmeup-service-rest/plugins?types=all",
+		"url":"/backmeup-service-rest/plugins?types=all&expandProfiles={expandProfiles}",
 		"method":"get",
 		"timeout":"3000"
 	},
 	"getSinks":{
-		"url":"/backmeup-service-rest/plugins?types=sink",
+		"url":"/backmeup-service-rest/plugins?types=sink&expandProfiles={expandProfiles}",
 		"method":"get",
 		"timeout":"3000"
 	},
 	"getSources":{
-		"url":"/backmeup-service-rest/plugins?types=source",
+		"url":"/backmeup-service-rest/plugins?types=source&expandProfiles={expandProfiles}",
 		"method":"get",
 		"timeout":"3000"
 	}

@@ -24,22 +24,24 @@ var page_create_backup_1 = {
 			var navPanel = $('div#nav-panel');
 			var pagePanel = $('div#page-panel');
 			// datasources
-			content.append(app.ni.element.h1({
-				"text" : app.lang.string("new_datasource", "headlines"),
-				"styles" : {
-					"clear" : "both"
-				}
-			}));
 
 			app.template.append("div[data-role=content]", "app-loader-bubble");
 
-			var promise = app.rc.getJson("getSources", null, true);
+			var promise = app.rc.getJson("getSources", {
+				"expandProfiles" : true
+			}, true);
 
 			promise.done(function(resultObject) {
+				content.append(app.ni.element.h1({
+					"text" : app.lang.string("new_datasource", "headlines"),
+					"styles" : {
+						"clear" : "both"
+					}
+				}));
 				// alert(JSON.stringify(resultObject));
 				var list = $(app.template.get("listA", "responsive"));
 				$.each(resultObject, function(index, pluginJson) {
-					// alert(JSON.stringify(pluginJson));
+					 //alert(JSON.stringify(pluginJson));
 					list.append(app.ni.list.thumbnail({
 						href : "#",
 						imageSrc : pluginJson.imageURL,
@@ -49,12 +51,20 @@ var page_create_backup_1 = {
 						classes : [ 'source', 'configtype-' + pluginJson.config.configType ],
 						attributes : {
 							"data-html5-oAuthUrl" : pluginJson.config.redirectURL,
-							"data-html5-pluginId" : pluginJson.pluginId
+							"data-html5-themis-pluginid" : pluginJson.pluginId,
+							"data-html5-configType" : pluginJson.config.configType
 						}
 					}));
 				});
-				$(".app-loader").remove();
 				content.append(list);
+				content.append(app.ni.element.h1({
+					"text" : app.lang.string("existing_datasources", "headlines"),
+					"styles" : {
+						"clear" : "both"
+					}
+				}));
+				$(".app-loader").remove();
+				
 				app.help.jQM.enhance(content);
 			});
 
@@ -72,15 +82,22 @@ var page_create_backup_1 = {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 		var success = null;
 		try {
+			$(document).on("click", ".configtype-input", function(event) {
+				$(location).attr("href", "create_backup_1_newSource.html");
+			});
+
 			$(document).on("click", ".configtype-oauth", function(event) {
 				// alert($(this).attr("data-html5-oAuthUrl"));
 
 				var url = $(this).attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback", "http://localhost:8888/ios/www/page/create_backup_1_newSource.html");
+
 				var promise = app.oa.dropbox(url);
-				app.store.localStorage.set("data-html5-themis-pluginId", $(this).attr("data-html5-pluginId"));
+
+				// app.store.localStorage.set("data-html5-themis-pluginid",
+				// $(this).attr("data-html5-pluginId"));
 
 				promise.done(function(accessToken) {
-					//alert(accessToken);
+					// alert(accessToken);
 					app.store.localStorage.set("data-html5-themis-oAuthToken", accessToken);
 					$(location).attr("href", "create_backup_1_newSource.html");
 

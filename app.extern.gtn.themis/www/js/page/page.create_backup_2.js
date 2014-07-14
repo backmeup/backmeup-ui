@@ -24,18 +24,20 @@ var page_create_backup_2 = {
 			var navPanel = $('div#nav-panel');
 			var pagePanel = $('div#page-panel');
 			// datasources
-			content.append(app.ni.element.h1({
-				"text" : app.lang.string("new_datasink", "headlines"),
-				"styles" : {
-					"clear" : "both"
-				}
-			}));
 
 			app.template.append("div[data-role=content]", "app-loader-bubble");
 
-			var promise = app.rc.getJson("getSinks", null, true);
+			var promise = app.rc.getJson("getSinks", {
+				"expandProfiles" : true
+			}, true);
 
 			promise.done(function(resultObject) {
+				content.append(app.ni.element.h1({
+					"text" : app.lang.string("new_datasink", "headlines"),
+					"styles" : {
+						"clear" : "both"
+					}
+				}));
 				// alert(JSON.stringify(resultObject));
 				var list = $(app.template.get("listA", "responsive"));
 				$.each(resultObject, function(index, pluginJson) {
@@ -46,15 +48,25 @@ var page_create_backup_2 = {
 						title : "Id: " + pluginJson.datasourceProfileId,
 						headline : pluginJson.title,
 						text : pluginJson.pluginName,
-						classes : [ 'source', 'configtype-' + pluginJson.config.configType ],
+						classes : [ 'sink', 'configtype-' + pluginJson.config.configType ],
 						attributes : {
 							"data-html5-oAuthUrl" : pluginJson.config.redirectURL,
-							"data-html5-pluginId" : pluginJson.pluginId
+							"data-html5-themis-pluginid" : pluginJson.pluginId,
+							"data-html5-configType" : pluginJson.config.configType
 						}
 					}));
 				});
-				$(".app-loader").remove();
+
 				content.append(list);
+
+				content.append(app.ni.element.h1({
+					"text" : app.lang.string("existing_datasinks", "headlines"),
+					"styles" : {
+						"clear" : "both"
+					}
+				}));
+				$(".app-loader").remove();
+
 				app.help.jQM.enhance(content);
 			});
 
@@ -72,6 +84,12 @@ var page_create_backup_2 = {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 		var success = null;
 		try {
+			// just another dirty part
+			$(document).on("click", 'a[data-html5-themis-pluginid="org.backmeup.dummy"]', function(event) {
+				event.stopImmediatePropagation();
+				$(location).attr("href", "create_backup_2_newSink.html");
+			});
+
 			$(document).on("click", ".configtype-oauth", function(event) {
 				// alert($(this).attr("data-html5-oAuthUrl"));
 
@@ -80,7 +98,7 @@ var page_create_backup_2 = {
 				app.store.localStorage.set("data-html5-themis-pluginId", $(this).attr("data-html5-pluginId"));
 
 				promise.done(function(accessToken) {
-					//alert(accessToken);
+					// alert(accessToken);
 					app.store.localStorage.set("data-html5-themis-oAuthToken", accessToken);
 					$(location).attr("href", "create_backup_2_newSink.html");
 

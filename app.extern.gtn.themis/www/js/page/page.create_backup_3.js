@@ -25,33 +25,46 @@ var page_create_backup_3 = {
 			var pagePanel = $('div#page-panel');
 			// datasources
 			content.append(app.ni.element.h1({
-				"text" : app.lang.string("new_backup", "headlines"),
-				"styles" : {
-					"clear" : "both"
-				}
+				"text" : app.lang.string("new_backup", "headlines")
 			}));
-			
+
 			content.append(app.ni.element.h2({
-				"text" : app.lang.string("chosen_datasource", "headlines"),
-				"styles" : {
-					"clear" : "both"
-				}
+				"text" : app.lang.string("chosen_datasource", "headlines")
 			}));
-			
+
+			content.append(app.ni.element.p({
+				"text" : app.store.localStorage.get("data-html5-themis-source-profileid")
+			}));
+
 			content.append(app.ni.element.h2({
-				"text" : app.lang.string("chosen_datasink", "headlines"),
-				"styles" : {
-					"clear" : "both"
-				}
+				"text" : app.lang.string("chosen_datasink", "headlines")
 			}));
-			
+
+			content.append(app.ni.element.p({
+				"text" : app.store.localStorage.get("data-html5-themis-sink-profileid")
+			}));
+
 			content.append(app.ni.element.h2({
-				"text" : app.lang.string("backup_settings", "headlines"),
-				"styles" : {
-					"clear" : "both"
-				}
+				"text" : app.lang.string("job_settings", "headlines")
 			}));
-			
+
+			content.append(app.ni.text.text({
+				"id" : "txtTitle",
+				"placeholder" : app.lang.string("job_title", "labels"),
+				"label" : true,
+				"labelText" : app.lang.string("job_title", "labels"),
+				"container" : true
+			}));
+
+			content.append(app.ni.button.button({
+				"id" : "btnCreateBackup",
+				"placeholder" : app.lang.string("create_backup", "labels"),
+				"label" : true,
+				"labelText" : app.lang.string("create_backup", "labels"),
+				"container" : true,
+				"value" : app.lang.string("create_backup", "actions")
+			}));
+
 			success = true;
 		} catch (err) {
 			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
@@ -66,6 +79,27 @@ var page_create_backup_3 = {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 		var success = null;
 		try {
+			$(container).on("click", "#btnCreateBackup", function() {
+				app.template.append("div[data-role=content]", "app-loader-bubble");
+				var promise = app.rc.getJson("createBackupjob", {
+					"jobTitle" : container.find("#txtTitle").val(),
+					"schedule" : "weekly",
+					"start" : Date.now(),
+					"source" : app.store.localStorage.get("data-html5-themis-source-profileid"),
+					"actions" : [],
+					"sink" : app.store.localStorage.get("data-html5-themis-sink-profileid")
+				}, true);
+
+				promise.done(function(resultObject) {
+					//alert(JSON.stringify(resultObject));
+					$(".app-loader").remove();
+					$(location).attr("href", "backup_jobs.html");
+				});
+
+				promise.fail(function(error) {
+					alert("webservice error: " + error);
+				});
+			});
 			success = true;
 		} catch (err) {
 			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
@@ -90,7 +124,7 @@ var page_create_backup_3 = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -105,7 +139,7 @@ var page_create_backup_3 = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -121,7 +155,7 @@ var page_create_backup_3 = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -135,7 +169,7 @@ var page_create_backup_3 = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -150,7 +184,7 @@ var page_create_backup_3 = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -166,7 +200,7 @@ var page_create_backup_3 = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -180,7 +214,7 @@ var page_create_backup_3 = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -198,7 +232,7 @@ var page_create_backup_3 = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -213,7 +247,7 @@ var page_create_backup_3 = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -227,7 +261,7 @@ var page_create_backup_3 = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -242,7 +276,7 @@ var page_create_backup_3 = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -256,7 +290,7 @@ var page_create_backup_3 = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -272,7 +306,7 @@ var page_create_backup_3 = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -287,7 +321,7 @@ var page_create_backup_3 = {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;

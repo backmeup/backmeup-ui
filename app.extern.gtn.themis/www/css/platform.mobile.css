@@ -63,6 +63,10 @@ body.app-mobile div.app-footer div[data-role=navbar] ul li a {
 	letter-spacing: 0.04rem;
 }
 
+body.app-mobile div.app-footer div[data-role=navbar] ul li .ui-btn-icon-top:after {
+	top: .2625em;
+}
+
 body.app-mobile div.app-footer div[data-role=navbar] ul li a:HOVER {
 	background: radial-gradient(ellipse at center, rgba(64, 150, 238, 1) 0%, rgba(96, 171, 248, 0) 26%, rgba(122, 188, 255, 0) 36%, rgba(255, 255, 255, 0) 89%); /* W3C */
 }
@@ -113,4 +117,8 @@ body.app-mobile  div.app-footer div[data-role=navbar] ul li a#ftrBtnNavMore {
 		display: list-item;
 		visibility: visible;
 	} */
+	
+	body.app-mobile div.app-footer div[data-role=navbar] ul li a {
+		font-size: 12.5px;
+	}
 }

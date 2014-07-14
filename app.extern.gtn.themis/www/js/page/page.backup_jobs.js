@@ -29,36 +29,7 @@ var page_backup_jobs = {
 				"text" : app.lang.string("backup_jobs", "headlines")
 			}));
 
-			if ((json = app.rc.getJson("jobs", {
-				"username" : app.store.localStorage.get("data-html5-themis-username")
-			})) != false) {
-				if (json.backupJobs != undefined) {
-					var list = $(app.template.get("listA", "responsive"));
-					$.each(json.backupJobs, function(key, value) {
-
-						//alert(JSON.stringify(value));
-						var datum = new Date(value.createDate);
-						var thumbnail = $(app.ni.list.thumbnail({
-							href : "job_details.html",
-							imageSrc : "../images/logo.facebook.jpg",
-							title : "Id: " + (value.datasources[0]).datasourceId,
-							headline : value.jobTitle,
-							text : datum.toUTCString(),
-							attributes : {
-								"data-html5-backupjobid" : value.backupJobId,
-								"data-html5-datasinkid" : value.datasink.datasinkId,
-								"data-html5-datasourceid" : (value.datasources[0]).datasourceId
-							}
-						}));
-						list.append(thumbnail);
-					});
-					content.append(list);
-				} else {
-					alert("no backup jobs?");
-				}
-			} else {
-				app.notify.alert(app.lang.string("bad_login", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_login", "headlines"))
-			}
+			
 
 			success = true;
 		} catch (err) {

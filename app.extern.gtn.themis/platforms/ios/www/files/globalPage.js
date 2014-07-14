@@ -39,7 +39,8 @@ var globalPage = {
 				"id" : "ftrBtnNavAdministrate",
 				"text" : app.lang.string("administrate", "actions"),
 				"attributes" : {
-					"data-icon" : "gear"
+					"data-icon" : "gear",
+					"href" : "backup_jobs.html",
 				}
 			})));
 
@@ -94,7 +95,7 @@ var globalPage = {
 				"id" : "navBtnNavAdministrate",
 				"text" : app.lang.string("administrate", "actions"),
 				"attributes" : {
-					"href" : "#"
+					"href" : "backup_jobs.html"
 				}
 			})));
 
@@ -123,6 +124,7 @@ var globalPage = {
 
 				}
 			});
+
 			if (!app.detect.isDesktop())
 				ul.append(app.ni.element.li({
 					"attributes" : {
@@ -137,10 +139,19 @@ var globalPage = {
 				})));
 
 			ul.append(app.ni.element.li().append(app.ni.element.a({
+				"id" : "navPageBackupJobs",
+				"text" : app.lang.string("backup_jobs", "actions"),
+				"attributes" : {
+					"href" : "backup_jobs.html",
+					"data-ajax" : "false",
+				}
+			})));
+
+			ul.append(app.ni.element.li().append(app.ni.element.a({
 				"id" : "navPageZipArchive",
 				"text" : app.lang.string("zip_archive", "actions"),
 				"attributes" : {
-					"href" : "#",
+					"href" : "zip_archive.html",
 					"data-ajax" : "false",
 				}
 			})));

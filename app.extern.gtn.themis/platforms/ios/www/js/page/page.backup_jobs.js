@@ -21,43 +21,115 @@ var page_backup_jobs = {
 		try {
 			app.debug.alert("page_" + this.config.name + ".creator()", 10);
 
-			var header = container.find('div[data-role=header]');
-			var content = container.find('div[data-role=content]');
-			var navPanel = container.find('div#nav-panel');
+			var header = $('div[data-role=header]');
+			var content = $('div[data-role=content]');
+			var navPanel = $('div#nav-panel');
+			var pagePanel = $('div#page-panel');
+			
+			app.template.append("div[data-role=content]", "app-loader-bubble");
 
-			content.append(app.ni.element.h1({
-				"text" : app.lang.string("backup_jobs", "headlines")
-			}));
+			/*
+			 * var promise = app.rc.getJson("getSuccessfulBackupjobs", {
+			 * "expand" : "true" }, true);
+			 */
 
-			var promise = app.rc.getJson("getBackupjobs", {
-				"jobStatus" : "queued",
+			var promise = app.rc.getJson([ [ "getRunningBackupjobs", {
 				"expand" : "true"
-			}, true);
+			} ], [ "getSuccessfulBackupjobs", {
+				"expand" : "true"
+			} ], [ "getQueuedBackupjobs", {
+				"expand" : "true"
+			} ] ], true);
 
 			promise.done(function(resultObject) {
-				 alert(JSON.stringify(resultObject));
+
+				var runningBackupjobs = resultObject["getRunningBackupjobs"], successfulBackupjobs = resultObject["getSuccessfulBackupjobs"], queuedBackupjobs = resultObject["getQueuedBackupjobs"];
+
+				content.append(app.ni.element.h1({
+					"text" : app.lang.string("backup_jobs", "headlines")
+				}));
+
+				content.append(app.ni.element.h2({
+					"text" : app.lang.string("backup_jobs_successful", "headlines"),
+					"styles" : {
+						"clear" : "both"
+					}
+				}));
+
+				// alert(JSON.stringify(resultObject));
 				var list = $(app.template.get("listA", "responsive"));
-				$.each(resultObject, function(index, pluginJson) {
-					// alert(JSON.stringify(pluginJson));
+				$.each(successfulBackupjobs, function(index, jobJson) {
+					// alert(JSON.stringify(jobJson));
 					list.append(app.ni.list.thumbnail({
 						href : "#",
-						imageSrc : pluginJson.imageURL,
-						title : "Id: " + pluginJson.datasourceProfileId,
-						headline : pluginJson.title,
-						text : pluginJson.pluginName,
-						classes : [ 'source', 'configtype-' + pluginJson.config.configType ],
+						imageSrc : "",
+						title : "Id: " + jobJson.jobId,
+						headline : jobJson.jobTitle,
+						text : jobJson.jobTitle,
+						classes : [ 'job' ],
 						attributes : {
-							"data-html5-oAuthUrl" : pluginJson.config.redirectURL,
-							"data-html5-pluginId" : pluginJson.pluginId
+							"data-html5-oAuthUrl" : ""
 						}
 					}));
 				});
 				$(".app-loader").remove();
 				content.append(list);
+
+				content.append(app.ni.element.h2({
+					"text" : app.lang.string("backup_jobs_queued", "headlines"),
+					"styles" : {
+						"clear" : "both"
+					}
+				}));
+
+				list = $(app.template.get("listA", "responsive"));
+				$.each(queuedBackupjobs, function(index, jobJson) {
+					// alert(JSON.stringify(jobJson));
+					list.append(app.ni.list.thumbnail({
+						href : "#",
+						imageSrc : "",
+						title : "Id: " + jobJson.jobId,
+						headline : jobJson.jobTitle,
+						text : jobJson.jobTitle,
+						classes : [ 'job' ],
+						attributes : {
+							"data-html5-oAuthUrl" : ""
+						}
+					}));
+				});
+				$(".app-loader").remove();
+				content.append(list);
+
+				content.append(app.ni.element.h2({
+					"text" : app.lang.string("backup_jobs_running", "headlines"),
+					"styles" : {
+						"clear" : "both"
+					}
+				}));
+
+				list = $(app.template.get("listA", "responsive"));
+				$.each(runningBackupjobs, function(index, jobJson) {
+					// alert(JSON.stringify(jobJson));
+					list.append(app.ni.list.thumbnail({
+						href : "#",
+						imageSrc : "",
+						title : "Id: " + jobJson.jobId,
+						headline : jobJson.jobTitle,
+						text : jobJson.jobTitle,
+						classes : [ 'job' ],
+						attributes : {
+							"data-html5-oAuthUrl" : ""
+						}
+					}));
+				});
+				$(".app-loader").remove();
+				content.append(list);
+				$(".app-loader").remove();
 				app.help.jQM.enhance(content);
 			});
 
 			promise.fail(function(error) {
+				$(".app-loader").remove();
 				alert("ws error: " + error);
 			});
 

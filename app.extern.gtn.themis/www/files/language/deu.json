@@ -1,6 +1,6 @@
 {
 	"actions":{
-		"administrate":"Verwalten",
+		"administrate":"Backups",
 		"backmeup":"Backup",
 		"create_backup":"Backupjob erstellen",
 		"create_source":"Datenquelle erstellen",
@@ -52,6 +52,9 @@
 		"verify_email":"E-Mail bestätigen"
 	},
 	"headlines":{
+		"backup_jobs_successful":"Erfolgreiche Backup jobs",
+		"backup_jobs_queued":"Warteschlange",
+		"backup_jobs_running":"Laufende backup jobs",
 		"existing_datasources":"Vorhandene Datenquellen",
 		"new_datasource":"Neue Datenquelle erstellen",
 		"new_backup":"Neues Backup erstellen",

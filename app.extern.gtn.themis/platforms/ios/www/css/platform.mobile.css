@@ -40,10 +40,10 @@ body.app-mobile div.app-footer div[data-role=navbar] ul {
 }
 
 body.app-mobile  div.app-footer div[data-role=navbar] ul li {
-	width: 33%;
+	width: 20%;
 }
 
-body.app-mobile  div.app-footer div[data-role=navbar] ul li#ftrLiNavShare {
+/* body.app-mobile  div.app-footer div[data-role=navbar] ul li#ftrLiNavShare {
 	display: none;
 	visibility: hidden;
 }
@@ -51,7 +51,7 @@ body.app-mobile  div.app-footer div[data-role=navbar] ul li#ftrLiNavShare {
 body.app-mobile  div.app-footer div[data-role=navbar] ul li#ftrLiNavAdministrate {
 	display: none;
 	visibility: hidden;
-}
+} */
 
 body.app-mobile div.app-footer div[data-role=navbar] ul li a {
 	background: none;
@@ -59,6 +59,12 @@ body.app-mobile div.app-footer div[data-role=navbar] ul li a {
 	text-shadow: none;
 	color: #EEE;
 	font-weight: normal;
+	font-size: 10px;
+	letter-spacing: 0.04rem;
+}
+
+body.app-mobile div.app-footer div[data-role=navbar] ul li .ui-btn-icon-top:after {
+	top: .2625em;
 }
 
 body.app-mobile div.app-footer div[data-role=navbar] ul li a:HOVER {
@@ -93,22 +99,26 @@ body.app-mobile  div.app-footer div[data-role=navbar] ul li a#ftrBtnNavMore {
 	body.app-mobile div.app-footer div[data-role=navbar] ul li {
 		width: 25%;
 	}
-	body.app-mobile  div.app-footer div[data-role=navbar] ul li#ftrLiNavShare {
+	/* body.app-mobile  div.app-footer div[data-role=navbar] ul li#ftrLiNavShare {
 		display: list-item;
 		visibility: visible;
-	}
+	} */
 }
 
 @MEDIA ( min-width :900px) {
 	body.app-mobile div.app-footer div[data-role=navbar] ul li {
 		width: 20%;
 	}
-	body.app-mobile  div.app-footer div[data-role=navbar] ul li#ftrLiNavShare {
+	/* body.app-mobile  div.app-footer div[data-role=navbar] ul li#ftrLiNavShare {
 		display: list-item;
 		visibility: visible;
 	}
 	body.app-mobile  div.app-footer div[data-role=navbar] ul li#ftrLiNavAdministrate {
 		display: list-item;
 		visibility: visible;
+	} */
+	
+	body.app-mobile div.app-footer div[data-role=navbar] ul li a {
+		font-size: 12.5px;
 	}
 }

@@ -28,6 +28,8 @@ var page_backup_log = {
 			content.append(app.ni.element.h1({
 				"text" : app.lang.string("backup_log", "headlines")
 			}));
+			
+		
 
 			var jobstatus = app.rc.getJson("jobStatus", {
 				"username" : app.store.localStorage.get("data-html5-themis-username"),

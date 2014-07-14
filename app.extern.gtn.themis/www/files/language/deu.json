@@ -1,7 +1,7 @@
 {
 	"actions":{
 		"administrate":"Verwalten",
-		"backmeup":"Backmeup!",
+		"backmeup":"Backup",
 		"create_backup":"Backupjob erstellen",
 		"create_source":"Datenquelle erstellen",
 		"create_sink":"Datensenke erstellen",

@@ -102,17 +102,22 @@ var plugin_WebServiceClient = {
 
 		if (method.toLowerCase() == "post") {
 			// dirty
-			// alert(data);
+			alert(data);
 			var obj = {};
 			var pairs = data.split('&');
 			for (i in pairs) {
 				var split = pairs[i].split('=');
-				obj[decodeURIComponent(split[0])] = decodeURIComponent(split[1]);
+				if (split[1].substr(0, 1) == "{" || split[1].substr(0, 1) == "[") {
+					alert(split[1]);
+					split[1] = JSON.parse(split[1]);
+					alert(JSON.stringify(split[1]));
+				}
+				obj[split[0]] = split[1];
 			}
-			data = JSON.stringify(obj || {});
-			// alert(data);
+			data = JSON.stringify(obj);
+			alert(data);
 		}
-		
+
 		try {
 			$.ajax({
 				url : url,

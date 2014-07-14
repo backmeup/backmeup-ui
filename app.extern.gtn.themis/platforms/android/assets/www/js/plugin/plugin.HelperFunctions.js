@@ -130,6 +130,9 @@ var plugin_HelperFunctions = {
 					}
 				}
 				return success;
+			},
+			username : function(usernam) {
+				return true;
 			}
 		},
 		random : {

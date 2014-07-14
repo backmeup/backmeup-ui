@@ -1,0 +1,12 @@
+{
+	"template":{
+		"url":"string url",
+		"method":"string method",
+		"timeout":"int timeout"
+	},
+	"register":{
+		"url":"/backmeup-service-rest/users?username={username}&firstname={firstname}&lastname={lastname}&email={email}&password={password}",
+		"method":"post",
+		"timeout":"3000"
+	}
+}

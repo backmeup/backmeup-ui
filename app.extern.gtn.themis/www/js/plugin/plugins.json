@@ -35,6 +35,8 @@
 	"native_statusbar":false,
 	"native_vibration":false,
 	"Notification":true,
+	"OAuth":true,
 	"RestClient":true,
+	"Session":true,
 	"WebServiceClient":true
 }

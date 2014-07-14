@@ -19,6 +19,39 @@ var page_create_backup_3 = {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 		var success = null;
 		try {
+			var header = $('div[data-role=header]');
+			var content = $('div[data-role=content]');
+			var navPanel = $('div#nav-panel');
+			var pagePanel = $('div#page-panel');
+			// datasources
+			content.append(app.ni.element.h1({
+				"text" : app.lang.string("new_backup", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
+			}));
+			
+			content.append(app.ni.element.h2({
+				"text" : app.lang.string("chosen_datasource", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
+			}));
+			
+			content.append(app.ni.element.h2({
+				"text" : app.lang.string("chosen_datasink", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
+			}));
+			
+			content.append(app.ni.element.h2({
+				"text" : app.lang.string("backup_settings", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
+			}));
+			
 			success = true;
 		} catch (err) {
 			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);

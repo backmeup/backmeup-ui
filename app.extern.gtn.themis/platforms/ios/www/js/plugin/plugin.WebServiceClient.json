@@ -4,7 +4,8 @@
 	"defaultWebServiceTimeoutMs":5000,
 	"defaultWebServiceMethod":"post",
 	"defaultWebServiceType":"json",
-	"useKeepAlive":true,
+	"defaultWebServiceContentType":"application/json; charset=utf-8",
+	"useKeepAlive":false,
 	"keepAlive":{
 		"keepAliveIntervalInS": 20,
 		"keepAlivePath":"/backmeup-service-rest/users",
@@ -21,7 +22,7 @@
 	},
 	"useHeaderToken":true,
 	"headerToken":{
-		"key":"Themis-Token",
+		"key":"Authorization",
 		"value":"data-html5-themis-token"
 	},
 	"preferedServer":{

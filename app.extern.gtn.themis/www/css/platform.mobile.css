@@ -70,25 +70,11 @@ body.app-mobile  div.app-footer div[data-role=navbar] ul li a#ftrBtnNavSearch {
 }
 
 body.app-mobile  div.app-footer div[data-role=navbar] ul li a#ftrBtnNavBackmeuup {
-	z-index: 10000;
-	position: relative;
-	margin-top: -50px;
-	height: 90px;
+	
 }
 
 body.app-mobile  div.app-footer div[data-role=navbar] ul li a#ftrBtnNavBackmeuup:BEFORE {
-	content: "";
-	top: 100%;
-	margin-top: -123px;
-	left: 12%;
-	margin-left: -70px;
-	position: fixed;
-	background-repeat: no-repeat;
-	background-image: url("../images/backmeupfooter_n.png");
-	background-position: center;
-	height: 140px;
-	width: 140px;
-	z-index: 10001;
+	
 }
 
 body.app-mobile  div.app-footer div[data-role=navbar] ul li a#ftrBtnNavShare {

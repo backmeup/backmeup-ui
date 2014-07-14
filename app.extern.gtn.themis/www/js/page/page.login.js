@@ -70,6 +70,7 @@ var page_login = {
 						if (json.accessToken != undefined) {
 							app.store.localStorage.clearHtml5();
 							app.store.localStorage.set("data-html5-themis-loggedin", true);
+							app.sess.loggedIn("true");
 							app.store.localStorage.set("data-html5-themis-username", container.find("#txtEmail").val());
 							app.store.localStorage.set("data-html5-themis-token", json.accessToken);
 							$(location).attr("href", "start.html");

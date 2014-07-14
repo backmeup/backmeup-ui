@@ -103,8 +103,35 @@ var plugin_OAuth = {
 	 * 
 	 */
 	functions : {
-		oAuth : function() {
-			//"https://github.com/mdellanoce/google-api-oauth-phonegap/blob/v0.0.1/www/js/index.js";
+		dropbox : function(url) {
+			var dfd = $.Deferred();
+
+			if (app.detect.isDesktop()) {
+				//alert(url);
+				$(location).attr("href", url);
+			} else {
+				var loginWindow = window.open(url, '_blank', 'location=yes');
+				var eventCount = 0;
+				$(loginWindow).on('loadstart', function(e) {
+					eventCount++;
+					if (eventCount > 2) {
+						var url = e.originalEvent.url;
+						var error = /\?error=(.+)$/.exec(url);
+						var access_token = /\?oauth_token=(.+)$/.exec(url);
+						if (access_token) {
+							loginWindow.close();
+							var access_token = (access_token + "").split("=");
+							access_token = access_token[1] + "";
+							access_token = access_token.split("&");
+							dfd.resolve(access_token[0]);
+						} else if (error) {
+							loginWindow.close();
+							dfd.reject(error);
+						}
+					}
+				});
+			}
+			return dfd.promise();
 		}
 	}
 };

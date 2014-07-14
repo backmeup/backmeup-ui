@@ -9,12 +9,35 @@ var page_register = {
 	creator : function(container) {
 		var success = null;
 		try {
+			//app.template.append("div[data-role=content]", "app-loader-bubble");
+			
 			app.debug.alert("page_" + this.config.name + ".creator()", 10);
 			var header = container.find('div[data-role=header]');
 			var content = container.find('div[data-role=content]');
 			var navPanel = container.find('div#nav-panel');
 			content.append(app.ni.element.h1({
 				"text" : app.lang.string("register", "headlines")
+			}));
+			content.append(app.ni.text.text({
+				"id" : "txtFirstname",
+				"placeholder" : app.lang.string("firstname", "labels"),
+				"label" : true,
+				"labelText" : app.lang.string("firstname", "labels"),
+				"container" : true
+			}));
+			content.append(app.ni.text.text({
+				"id" : "txtLastname",
+				"placeholder" : app.lang.string("lastname", "labels"),
+				"label" : true,
+				"labelText" : app.lang.string("lastname", "labels"),
+				"container" : true
+			}));
+			content.append(app.ni.text.text({
+				"id" : "txtUsername",
+				"placeholder" : app.lang.string("username", "labels"),
+				"label" : true,
+				"labelText" : app.lang.string("username", "labels"),
+				"container" : true
 			}));
 			content.append(app.ni.text.text({
 				"id" : "txtEmail",
@@ -66,17 +89,18 @@ var page_register = {
 					app.notify.alert(app.lang.string("bad_password", "notifications"), app.lang.string("register", "headlines"), app.lang.string("register", "headlines"));
 				} else {
 					if ((json = app.rc.getJson("register", {
-						"username" : container.find("#txtEmail").val(),
+						"firstname" : container.find("#txtFirstname").val(),
+						"lastname" : container.find("#txtLastname").val(),
+						"username" : container.find("#txtUsername").val(),
 						"password" : container.find("#txtPassword").val(),
-						"email" : container.find("#txtEmail").val(),
-						"keyRing" : container.find("#txtPassword").val()
+						"email" : container.find("#txtEmail").val()
 					})) != false) {
-						if (json.username && json.verificationKey) {
+						if (json.userId) {
 							app.store.localStorage.set("data-html5-themis-loggedin", true);
 							app.store.localStorage.set("data-html5-themis-userid", json.userId);
 							app.store.localStorage.set("data-html5-themis-activated", json.activated);
-							app.store.localStorage.set("data-html5-themis-username", container.find("#txtEmail").val());
-							$.mobile.pageContainer.pagecontainer("change", "verify_email.html");
+							app.store.localStorage.set("data-html5-themis-username", container.find("#txtUsername").val());
+							$(location).attr("href", "start.html");
 						} else {
 							app.notify.alert(app.lang.string("bad_register", "notifications"), app.lang.string("register", "headlines"), app.lang.string("bad_register", "headlines"));
 						}

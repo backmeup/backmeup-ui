@@ -9,6 +9,8 @@ var page_register = {
 	creator : function(container) {
 		var success = null;
 		try {
+			//app.template.append("div[data-role=content]", "app-loader-bubble");
+			
 			app.debug.alert("page_" + this.config.name + ".creator()", 10);
 			var header = container.find('div[data-role=header]');
 			var content = container.find('div[data-role=content]');

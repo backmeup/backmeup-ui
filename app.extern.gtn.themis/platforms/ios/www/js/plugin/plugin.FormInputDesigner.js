@@ -259,7 +259,7 @@ var plugin_FormInputDesigner = {
 				app.debug.alert("plugin_FormInputDesigner.functions.list.thumbnail()", 20);
 				options = plugin_FormInputDesigner.verifyOptions(options);
 				var thumbnail = '<li>';
-				thumbnail += '<a href="' + options.href + '" ' + plugin_FormInputDesigner.getAttributes(options) + '> <img src="' + options.imageSrc + '" class="ui-li-thumb">';
+				thumbnail += '<a href="' + options.href + '" ' + plugin_FormInputDesigner.getAttributes(options) + '> <img src="' + options.imageSrc + '" class="ui-li-thumb ' + plugin_FormInputDesigner.getClasses(options) + '">';
 				thumbnail += '<h2>' + options.headline + '</h2>';
 				thumbnail += '<p>' + options.text + '</p>';
 				thumbnail += '<p class="ui-li-aside">' + options.title + '</p>';

@@ -19,45 +19,44 @@ var page_create_backup_2 = {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 		var success = null;
 		try {
-			app.debug.alert("page_" + this.config.name + ".creator()", 10);
-			var header = container.find('div[data-role=header]');
-			var content = container.find('div[data-role=content]');
-			var navPanel = container.find('div#nav-panel');
-			var pagePanel = container.find('div#page-panel');
-
-			// content
+			var header = $('div[data-role=header]');
+			var content = $('div[data-role=content]');
+			var navPanel = $('div#nav-panel');
+			var pagePanel = $('div#page-panel');
+			// datasources
 			content.append(app.ni.element.h1({
-				"text" : app.lang.string("create_backup", "headlines")
+				"text" : app.lang.string("new_datasink", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
 			}));
 
-			content.append(app.ni.element.h2({
-				"text" : app.lang.string("select_datasink", "headlines")
-			}));
-			content.append(app.ni.element.p({
-				"text" : app.lang.string("select_datasink", "texts")
-			}));
+			app.template.append("div[data-role=content]", "app-loader-bubble");
 
-			var list = $(app.template.get("listA", "responsive"));
+			var promise = app.rc.getJson("getSinks", null, true);
 
-			if ((datasinks = app.rc.getJson("getDatasinks")) != false) {
-				// alert(JSON.stringify(datasources));
-				$.each(datasinks.sinks, function(key, value) {
+			promise.done(function(resultObject) {
+				// alert(JSON.stringify(resultObject));
+				var list = $(app.template.get("listA", "responsive"));
+				$.each(resultObject, function(index, pluginJson) {
+					// alert(JSON.stringify(pluginJson));
 					list.append(app.ni.list.thumbnail({
 						href : "#",
-						imageSrc : value.imageURL,
-						title : "???",
-						headline : value.title,
-						text : value.datasourceId,
+						imageSrc : pluginJson.imageURL,
+						title : "Id: " + pluginJson.datasourceProfileId,
+						headline : pluginJson.title,
+						text : pluginJson.pluginName,
+						classes : [ 'source', 'configtype-' + pluginJson.config.configType ],
 						attributes : {
-							"data-html5-datasinkid" : value.datasourceId
+							"data-html5-oAuthUrl" : pluginJson.config.redirectURL,
+							"data-html5-pluginId" : pluginJson.pluginId
 						}
 					}));
 				});
-			} else {
-				alert("ws error");
-			}
-
-			content.append(list);
+				$(".app-loader").remove();
+				content.append(list);
+				app.help.jQM.enhance(content);
+			});
 
 			success = true;
 		} catch (err) {
@@ -73,6 +72,24 @@ var page_create_backup_2 = {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 		var success = null;
 		try {
+			$(document).on("click", ".configtype-oauth", function(event) {
+				// alert($(this).attr("data-html5-oAuthUrl"));
+
+				var url = $(this).attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback", "http://localhost:8888/ios/www/page/create_backup_2_newSink.html");
+				var promise = app.oa.dropbox(url);
+				app.store.localStorage.set("data-html5-themis-pluginId", $(this).attr("data-html5-pluginId"));
+
+				promise.done(function(accessToken) {
+					//alert(accessToken);
+					app.store.localStorage.set("data-html5-themis-oAuthToken", accessToken);
+					$(location).attr("href", "create_backup_2_newSink.html");
+
+				});
+
+				promise.fail(function(error) {
+					alert("oAuth error: " + error);
+				});
+			});
 			success = true;
 		} catch (err) {
 			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);

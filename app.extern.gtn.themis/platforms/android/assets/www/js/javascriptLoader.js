@@ -49,28 +49,8 @@ $(document).ready(function() {
 	if (!success)
 		return false;
 
-	// load cordova
-	var url = "../cordova.js";
-	$.ajax({
-		url : url,
-		dataType : "script",
-		async : false,
-		success : function(data, textStatus, jqXHR) {
-			app.config.apacheCordova = true;
-			if (jqXHR.status == 200)
-				app.config.apacheCordova = false;
-		},
-		error : function(jqXHR, textStatus, errorThrown) {
-			app.config.apacheCordova = false;
-			// alert("Fatal error in javascriptLoader.js: Can't load the
-			// plugins. Url: " + url + " Error: " + textStatus);
-			// alert("Error" + errorThrown);
-			// success = false;
-		}
-	});
 
-	if (!success)
-		return false;
+
 
 	// load jQuery mobile
 	if (app.config.useJQueryMobile) {
@@ -151,7 +131,7 @@ $(document).bind("mobileinit", function() {
 	$.mobile.loader.prototype.options.textVisible = false;
 	$.mobile.loader.prototype.options.theme = "a";
 	$.mobile.loader.prototype.options.html = "";
-	
+
 	$.mobile.defaultPageTransition = 'none';
 });
 

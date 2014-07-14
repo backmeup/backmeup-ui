@@ -142,7 +142,6 @@ var plugin_RestClient = {
 					dfd.reject(errorObject);
 				});
 
-
 				return dfd.promise();
 			}
 
@@ -189,6 +188,9 @@ var plugin_RestClient = {
 				// replace the parameters in path string
 				if (parameter != undefined) {
 					$.each(parameter, function(key, value) {
+						if (typeof value == "object") {
+							value = JSON.stringify(value);
+						}
 						path = path.replace('{' + key + '}', value);
 					});
 				}
@@ -205,7 +207,7 @@ var plugin_RestClient = {
 				// response
 
 				promise.done(function(json) {
-					//alert("async webservice call done", 60);
+					// alert("async webservice call done", 60);
 					if (plugin_MultilanguageIso639_3 != undefined) {
 						if (json.language != undefined) {
 							$.each(json.language, function(key, value) {

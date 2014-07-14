@@ -19,88 +19,41 @@ var page_create_backup_1 = {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 		var success = null;
 		try {
-			
+			var header = $('div[data-role=header]');
+			var content = $('div[data-role=content]');
+			var navPanel = $('div#nav-panel');
+			var pagePanel = $('div#page-panel');
+			// datasources
+			content.append(app.ni.element.h1({
+				"text" : app.lang.string("new_datasource", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
+			}));
+
 			app.template.append("div[data-role=content]", "app-loader-bubble");
 
-			var promise = app.rc.getJson([ [ "datasourceProfiles", {
-				"username" : app.store.localStorage.get("data-html5-themis-username")
-			} ], [ "getDatasources", null ] ], true);
+			var promise = app.rc.getJson("getSources", null, true);
 
-			// when data received
 			promise.done(function(resultObject) {
-				//alert("ws done");
-				var datasources = resultObject["getDatasources"], datasourceProfiles = resultObject["datasourceProfiles"];
-
-				$(".app-loader").remove();
-				var header = $('div[data-role=header]');
-				var content = $('div[data-role=content]');
-				var navPanel = $('div#nav-panel');
-				var pagePanel = $('div#page-panel');
-
-				// content
-				content.append(app.ni.element.h1({
-					"text" : app.lang.string("create_backup", "headlines")
-				}));
-
-				content.append(app.ni.element.h2({
-					"text" : app.lang.string("select_datasource", "headlines")
-				}));
-				content.append(app.ni.element.p({
-					"text" : app.lang.string("select_datasource", "texts")
-				}));
-
-				// datasource profiles
-				content.append(app.ni.element.h2({
-					"text" : app.lang.string("existing_datasources", "headlines")
-				}));
+				// alert(JSON.stringify(resultObject));
 				var list = $(app.template.get("listA", "responsive"));
-
-				if (datasourceProfiles != false) {
-					// alert(JSON.stringify(datasources));
-					$.each(datasourceProfiles.sourceProfiles, function(key, value) {
-						list.append(app.ni.list.thumbnail({
-							href : "#",
-							imageSrc : app.img.getUrlById(value.pluginName),
-							title : "Id: " + value.datasourceProfileId,
-							headline : value.title,
-							text : value.pluginName,
-							attributes : {
-								"data-html5-datasourceprofileid" : value.datasourceProfileId
-							}
-						}));
-					});
-				} else {
-					alert("ws error");
-				}
-				content.append(list);
-
-				// datasources
-				content.append(app.ni.element.h2({
-					"text" : app.lang.string("new_datasource", "headlines"),
-					"styles" : {
-						"clear" : "both"
-					}
-				}));
-				list = $(app.template.get("listA", "responsive"));
-				if (datasources != false) {
-					// alert(JSON.stringify(datasources));
-					$.each(datasources.sources, function(key, value) {
-						list.append(app.ni.list.thumbnail({
-							href : "#",
-							imageSrc : app.img.getUrlById(value.datasourceId),
-							title : "???",
-							headline : value.title,
-							text : value.datasourceId,
-							attributes : {
-								"data-html5-datasourceid" : value.datasourceId
-							},
-							classes : [ "app-new-datasource" ]
-						}));
-					});
-				} else {
-					alert("ws error");
-				}
-
+				$.each(resultObject, function(index, pluginJson) {
+					// alert(JSON.stringify(pluginJson));
+					list.append(app.ni.list.thumbnail({
+						href : "#",
+						imageSrc : pluginJson.imageURL,
+						title : "Id: " + pluginJson.datasourceProfileId,
+						headline : pluginJson.title,
+						text : pluginJson.pluginName,
+						classes : [ 'source', 'configtype-' + pluginJson.config.configType ],
+						attributes : {
+							"data-html5-oAuthUrl" : pluginJson.config.redirectURL,
+							"data-html5-pluginId" : pluginJson.pluginId
+						}
+					}));
+				});
+				$(".app-loader").remove();
 				content.append(list);
 				app.help.jQM.enhance(content);
 			});
@@ -119,17 +72,23 @@ var page_create_backup_1 = {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 		var success = null;
 		try {
-			$(document).on("click", ".app-new-datasource", function(event) {
-				if ((json = app.rc.getJson("authDatasource", {
-					"username" : app.store.localStorage.get("data-html5-themis-username"),
-					"datasourceId" : app.store.localStorage.get("data-html5-datasourceid"),
-					"keyRing" : app.store.localStorage.get("data-html5-keyring"),
-					"profileName" : "Test by app"
-				})) != false) {
-					alert(JSON.stringify(json));
-				} else {
-					alert("ws error");
-				}
+			$(document).on("click", ".configtype-oauth", function(event) {
+				// alert($(this).attr("data-html5-oAuthUrl"));
+
+				var url = $(this).attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback", "http://localhost:8888/ios/www/page/create_backup_1_newSource.html");
+				var promise = app.oa.dropbox(url);
+				app.store.localStorage.set("data-html5-themis-pluginId", $(this).attr("data-html5-pluginId"));
+
+				promise.done(function(accessToken) {
+					//alert(accessToken);
+					app.store.localStorage.set("data-html5-themis-oAuthToken", accessToken);
+					$(location).attr("href", "create_backup_1_newSource.html");
+
+				});
+
+				promise.fail(function(error) {
+					alert("oAuth error: " + error);
+				});
 			});
 			success = true;
 		} catch (err) {

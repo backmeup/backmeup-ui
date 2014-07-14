@@ -100,17 +100,36 @@ var plugin_WebServiceClient = {
 			json = dfd.promise();
 		}
 
+		if (method.toLowerCase() == "post") {
+			// dirty
+			alert(data);
+			var obj = {};
+			var pairs = data.split('&');
+			for (i in pairs) {
+				var split = pairs[i].split('=');
+				if (split[1].substr(0, 1) == "{" || split[1].substr(0, 1) == "[") {
+					alert(split[1]);
+					split[1] = JSON.parse(split[1]);
+					alert(JSON.stringify(split[1]));
+				}
+				obj[split[0]] = split[1];
+			}
+			data = JSON.stringify(obj);
+			alert(data);
+		}
+
 		try {
 			$.ajax({
 				url : url,
 				data : data,// ?key=value
 				dataType : type, // json
+				contentType : "application/json; charset=utf-8",
 				async : async, // false
 				method : method, // post
 				timeout : timeout, // 5000
 				beforeSend : function(jqXHR, settings) {
 					if (plugin_WebServiceClient.config.useHeaderToken) {
-						jqXHR.setRequestHeader(plugin_WebServiceClient.config.headerToken.key, app.store.localStorage.get(plugin_WebServiceClient.config.headerToken));
+						jqXHR.setRequestHeader(plugin_WebServiceClient.config.headerToken.key, app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value));
 					}
 				},
 				success : function(data, textStatus, jqXHR) {

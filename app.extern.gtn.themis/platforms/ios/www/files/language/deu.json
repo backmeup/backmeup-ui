@@ -4,6 +4,8 @@
 		"backmeup":"Backmeup!",
 		"home":"Startseite",
 		"more":"...Mehr",
+		"login":"Einloggen",
+		"logout":"Ausloggen",
 		"submit":"Absenden",
 		"okay":"Okay",
 		"cancel":"Abbrechen",
@@ -28,6 +30,8 @@
 		"zip_archive":"Zip Archiv"
 	},
 	"labels":{
+		"firstname":"Vorname",
+		"lastname":"Nachname",
 		"password":"Passwort",
 		"password_rpt":"Passwort widerholen",
 		"username":"Benutzername",

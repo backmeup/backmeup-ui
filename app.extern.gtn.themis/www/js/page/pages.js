@@ -3,34 +3,19 @@ var pages = {
 	pageNames : [],
 	constructor : function() {
 		pages.loadPageConfig();
-		if (!pages.verifyPageNames())
-			alert("Fatal error: pages.verifyPageNames()");
-		else if (!pages.loadPages())
-			alert("Fatal error: pages.loadPages()");
-		else if (!pages.setEvents())
-			alert("Fatal error: pages.setEvents()");
-		else if (!pages.callPluginsPagesLoaded())
-			alert("Fatal error: pages.callPluginsPagesLoaded()");
+		pages.verifyPageNames();
+		pages.loadPages();
+		pages.setEvents();
+		pages.callPluginsPagesLoaded();
 	},
 
 	callPluginsPagesLoaded : function() {
-		var success = null;
 		$.each(plugins.pluginNames, function(key, value) {
-			try {
-				window['plugin_' + value].pagesLoaded();
-				success = true;
-				return;
-			} catch (err) {
-				alert("Fatal error: Cant call plugin_" + value + ".pagesLoaded()");
-				success = false;
-				return;
-			}
+			window['plugin_' + value].pagesLoaded();
 		});
-		return success;
 	},
 
 	loadPageConfig : function() {
-		var success = null;
 		if (app.config.min) {
 			pages.config = config_json;
 		} else {
@@ -41,69 +26,45 @@ var pages = {
 				dataType : "json",
 				success : function(json) {
 					pages.config = json;
-					success = true;
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
 					alert("Fatal error in pages.js: Can't load page. Url: " + url + " Error: " + textStatus);
-					success = false;
 				}
 			});
 		}
-		return success;
 	},
 
 	verifyPageNames : function() {
-		return true;
 	},
 
 	onPageLoaded : function(key) {
-		var success = true;
 		if (window['page_' + key] == undefined) {
 			alert("Fatal error: Page class is not defined: page_" + key);
-			success = false;
 			return;
 		}
 
-		try {
-			if (app.config.min) {
-				window['page_' + key].config = window['config_' + key];
-			} else {
-				window['page_' + key].config = JsonLoader("../js/page/page." + key + ".json");
-			}
-			if (window['page_' + key].config.name == undefined) {
-				alert("Fatal error: The property 'name' is not defined in JSON file: ../js/page." + key + ".json")
-				return false;
-			}
-			if (window['page_' + key].config.shortname == undefined) {
-				alert("Fatal error: The property 'shortname' is not defined in JSON file: ../js/page." + key + ".json")
-				return false;
-			}
-		} catch (err) {
-			alert("Fatal error: The page has no 'config' property: " + key);
-			success = false;
-			return;
+		if (app.config.min) {
+			window['page_' + key].config = window['config_' + key];
+		} else {
+			window['page_' + key].config = JsonLoader("../js/page/page." + key + ".json");
 		}
 
-		try {
-			window['page_' + key].constructor();
-		} catch (err) {
-			alert("Fatal error: The page has no constructor(): " + key);
-			success = false;
-			return;
+		if (window['page_' + key].config.name == undefined) {
+			alert("Fatal error: The property 'name' is not defined in JSON file: ../js/page." + key + ".json")
+			return false;
+		}
+		if (window['page_' + key].config.shortname == undefined) {
+			alert("Fatal error: The property 'shortname' is not defined in JSON file: ../js/page." + key + ".json")
+			return false;
 		}
 
-		try {
-			app.addObject(window['page_' + key].config.name, window['page_' + key].functions);
-			app.addObject(window['page_' + key].config.shortname, window['page_' + key].functions);
-		} catch (err) {
-			alert("Fatal error: The plugin has no functions{}: " + key);
-			success = false;
-			return;
-		}
+		window['page_' + key].constructor();
+
+		app.addObject(window['page_' + key].config.name, window['page_' + key].functions);
+		app.addObject(window['page_' + key].config.shortname, window['page_' + key].functions);
 
 		pages.pageNames.push(key);
 
-		return success;
 	},
 
 	loadPages : function() {
@@ -122,37 +83,23 @@ var pages = {
 					},
 					error : function() {
 						alert("Fatal Error: Can't load page: " + url);
-						success = false;
 					}
 				});
 			}
-			if (!success)
-				return false;
 		});
 		// set the plugins' events for pages
-		if (!pages.callPluginPageEventFunctions())
-			success = false;
-		return success;
+		pages.callPluginPageEventFunctions();
 	},
 
 	// call plugins' page functions
 	// is called only once
 	// use delegates in plugins
 	callPluginPageEventFunctions : function() {
-		var success = true;
 
 		$.each(plugins.pluginNames, function(key, value) {
-			try {
-				app.debug.alert("try to call: plugin_" + value + ".pageSpecificEvents()", 6);
-				window['plugin_' + value].pageSpecificEvents();
-			} catch (err) {
-				alert("Fatal error: Cant invoke plugin_" + value + ".pageSpecificEvents(). Error: " + err.message);
-				success = false;
-			}
-			if (!success)
-				return false;
+			app.debug.alert("try to call: plugin_" + value + ".pageSpecificEvents()", 6);
+			window['plugin_' + value].pageSpecificEvents();
 		});
-		return success;
 	},
 
 	// call plugins' page functions
@@ -161,20 +108,11 @@ var pages = {
 		var success = true;
 		// alert("plugin page functin");
 		$.each(plugins.pluginNames, function(key, value) {
-			try {
-				window['plugin_' + value].afterHtmlInjectedBeforePageComputing(container);
-			} catch (err) {
-				alert("Fatal error: Cant invoke plugin_" + value + ".afterHtmlInjectedBeforePageComputing(). Error: " + err.message);
-				success = false;
-			}
-			if (!success)
-				return false;
+			window['plugin_' + value].afterHtmlInjectedBeforePageComputing(container);
 		});
-		return success;
 	},
 
 	setEvents : function() {
-		var success = true;
 
 		// jQuery Mobile Events
 
@@ -205,10 +143,9 @@ var pages = {
 			if ($(this).attr('data-type') == "static" || $(this).attr('data-type') == "static-inline") {
 				app.debug.alert("this is a static page", 9);
 				if (plugin_GlobalPage != undefined) {
-					//alert();
+					// alert();
 					app.gp.pagebeforecreate(event, $(this));
-					if (!pages.callPluginsPageFunctions($(this)))
-						alert("Fatal error in: pages.callPluginsPageFunctions()");
+					pages.callPluginsPageFunctions($(this));
 				}
 			} else if (window['page_' + $(this).attr('id')] == undefined) {
 				alert("-Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file. You'll be redirected to the index.html page.");
@@ -236,17 +173,14 @@ var pages = {
 
 								window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
 
-								if (!window['page_' + $(this).attr('id')].creator($(this))) {
-									alert("Fatal error in: " + 'page_' + $(this).attr('id') + ".creator()");
-								}
-								if (!window['page_' + $(this).attr('id')].setEvents($(this))) {
-									alert("Fatal error in: " + 'page_' + $(this).attr('id') + ".setEvents()");
-								}
+								window['page_' + $(this).attr('id')].creator($(this));
+								
+								window['page_' + $(this).attr('id')].setEvents($(this));
+								
 
 								// call plugins' page functions
 								app.debug.alert('Call: pages.callPluginsPageFunctions()', 5);
-								if (!pages.callPluginsPageFunctions($(this)))
-									alert("Fatal error in: pages.callPluginsPageFunctions()");
+								pages.callPluginsPageFunctions($(this));
 
 							} else {
 								app.debug.alert("Can't load page because keepAlive failed. Check your connection. You'll be redirected to the index.html page.", 60);
@@ -267,16 +201,11 @@ var pages = {
 							// +++++++++++++++++++++++++++++++++++++++++++++
 
 							window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
-							if (!window['page_' + $(this).attr('id')].creator($(this))) {
-								alert("Fatal error in: " + 'page_' + $(this).attr('id') + ".creator()");
-							}
-							if (!window['page_' + $(this).attr('id')].setEvents($(this))) {
-								alert("Fatal error in: " + 'page_' + $(this).attr('id') + ".setEvents()");
-							}
+							window['page_' + $(this).attr('id')].creator($(this));
+							window['page_' + $(this).attr('id')].setEvents($(this));
 							// call plugins' page functions
 							app.debug.alert('Call: pages.callPluginsPageFunctions()', 5);
-							if (!pages.callPluginsPageFunctions($(this)))
-								alert("Fatal error in: pages.callPluginsPageFunctions()");
+							pages.callPluginsPageFunctions($(this));
 						}
 					} else {
 						app.debug.alert("No useKeepAlive entry in your page_" + $(this).attr('id') + ".json. Please add it.", 60);
@@ -288,17 +217,12 @@ var pages = {
 						// +++++++++++++++++++++++++++++++++++++++++++++
 
 						window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
-						if (!window['page_' + $(this).attr('id')].creator($(this))) {
-							alert("Fatal error in: " + 'page_' + $(this).attr('id') + ".creator()");
-						}
-						if (!window['page_' + $(this).attr('id')].setEvents($(this))) {
-							alert("Fatal error in: " + 'page_' + $(this).attr('id') + ".setEvents()");
-						}
+						window['page_' + $(this).attr('id')].creator($(this));
+						window['page_' + $(this).attr('id')].setEvents($(this));
 
 						// call plugins' page functions
 						app.debug.alert('Call: pages.callPluginsPageFunctions()', 5);
-						if (!pages.callPluginsPageFunctions($(this)))
-							alert("Fatal error in: pages.callPluginsPageFunctions()");
+						pages.callPluginsPageFunctions($(this));
 					}
 				} else {
 					// alert("plugin keep alive false")
@@ -312,12 +236,8 @@ var pages = {
 					// +++++++++++++++++++++++++++++++++++++++++++++
 
 					window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
-					if (!window['page_' + $(this).attr('id')].creator($(this))) {
-						alert("Fatal error in: " + 'page_' + $(this).attr('id') + ".creator()");
-					}
-					if (!window['page_' + $(this).attr('id')].setEvents($(this))) {
-						alert("Fatal error in: " + 'page_' + $(this).attr('id') + ".setEvents()");
-					}
+					window['page_' + $(this).attr('id')].creator($(this));
+					window['page_' + $(this).attr('id')].setEvents($(this));
 
 					// call plugins' page functions
 					app.debug.alert('Call: pages.callPluginsPageFunctions()', 5);
@@ -511,6 +431,5 @@ var pages = {
 				window['page_' + $(this).attr('id')].events.pageshow(event, $(this));
 			}
 		});
-		return success;
 	}
 };

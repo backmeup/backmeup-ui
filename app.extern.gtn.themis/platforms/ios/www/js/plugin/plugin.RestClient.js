@@ -10,7 +10,7 @@ var plugin_RestClient = {
 	},
 	pluginsLoaded : function() {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
-		var success = null;
+		
 		try {
 			// load the webservice definitions
 			$.each(plugin_RestClient.config.wsdFiles, function(path, loadFile) {

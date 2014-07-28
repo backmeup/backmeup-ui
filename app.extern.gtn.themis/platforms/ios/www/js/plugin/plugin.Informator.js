@@ -10,7 +10,7 @@ var plugin_Informator = {
 	},
 	pluginsLoaded : function() {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
-		var success = null;
+		
 
 		try {
 			// load the plugins' configuartion into html5 storage
@@ -33,7 +33,7 @@ var plugin_Informator = {
 	// called after all pages are loaded
 	pagesLoaded : function() {
 		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
-		var success = null;
+		
 		try {
 			// load the pages' configuartion into html5 storage
 			if (this.config.useHtml5Storage && this.config.savePageConfig) {
@@ -56,7 +56,7 @@ var plugin_Informator = {
 	},
 
 	definePluginEvents : function() {
-		var success = null;
+		
 		try {
 
 			success = true;
@@ -69,7 +69,7 @@ var plugin_Informator = {
 	// called by pages.js
 	afterHtmlInjectedBeforePageComputing : function(container) {
 		app.debug.alert("Plugin: " + this.config.name + ".afterHtmlInjectedBeforePageComputing()", 5);
-		var success = null;
+		
 		try {
 			success = true;
 		} catch (err) {
@@ -79,7 +79,7 @@ var plugin_Informator = {
 	},
 	pageSpecificEvents : function(container) {
 		app.debug.alert("Plugin: " + this.config.name + ".pageSpecificEvents()", 5);
-		var success = null;
+		
 		try {
 			success = true;
 		} catch (err) {
@@ -110,7 +110,7 @@ var plugin_Informator = {
 	loadConfigurationIntoHtml5Storage : function(configurationObject, start) {
 		// 1: if property is in html5 storage then use this value
 		// 2: else use property from json file
-		var success = null;
+		
 		try {
 			if (!configurationObject || configurationObject == undefined)
 				return;

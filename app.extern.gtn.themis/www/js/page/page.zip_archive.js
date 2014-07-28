@@ -3,21 +3,13 @@ var page_zip_archive = {
 
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
-		var success = null;
-		try {
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+		
 	},
 
 	// load the html structure
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
-		var success = null;
+		
 		try {
 			app.debug.alert("page_" + this.config.name + ".creator()", 10);
 			var header = container.find('div[data-role=header]');
@@ -41,15 +33,7 @@ var page_zip_archive = {
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
-		var success = null;
-		try {
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+		
 
 	},
 
@@ -62,7 +46,7 @@ var page_zip_archive = {
 		// process.
 		pagebeforechange : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforechange()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -77,7 +61,7 @@ var page_zip_archive = {
 		// auto-initialization occurs.
 		pagebeforecreate : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforecreate()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -93,7 +77,7 @@ var page_zip_archive = {
 		// actual transition animation is kicked off.
 		pagebeforehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforehide()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -107,7 +91,7 @@ var page_zip_archive = {
 		// Triggered before any load request is made.
 		pagebeforeload : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeload()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -122,7 +106,7 @@ var page_zip_archive = {
 		// transition animation is kicked off.
 		pagebeforeshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeshow()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -138,7 +122,7 @@ var page_zip_archive = {
 		// completed.
 		pagechange : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagechange()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -152,7 +136,7 @@ var page_zip_archive = {
 		// Triggered when the changePage() request fails to load the page.
 		pagechangefailed : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagechangefailed()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -170,7 +154,7 @@ var page_zip_archive = {
 		// markup.
 		pagecreate : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagecreate()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -185,7 +169,7 @@ var page_zip_archive = {
 		// completed.
 		pagehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagehide()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -199,7 +183,7 @@ var page_zip_archive = {
 		// Triggered on the page being initialized, after initialization occurs.
 		pageinit : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageinit()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -214,7 +198,7 @@ var page_zip_archive = {
 		// DOM.
 		pageload : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageload()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -228,7 +212,7 @@ var page_zip_archive = {
 		// Triggered if the page load request failed.
 		pageloadfailed : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageloadfailed()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -244,7 +228,7 @@ var page_zip_archive = {
 		// from the DOM.
 		pageremove : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageremove()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -259,7 +243,7 @@ var page_zip_archive = {
 		// completed.
 		pageshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageshow()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {

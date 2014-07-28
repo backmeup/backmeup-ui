@@ -7,7 +7,7 @@ var page_register = {
 
 	// load the html structure
 	creator : function(container) {
-		var success = null;
+		
 		try {
 			//app.template.append("div[data-role=content]", "app-loader-bubble");
 			
@@ -79,7 +79,7 @@ var page_register = {
 
 	// set the jquery events
 	setEvents : function(container) {
-		var success = null;
+		
 		try {
 			$(container).on("click", "#btnRegister", function() {
 				app.debug.alert("page_" + page_register.config.name + " #btnRegister click", 25);

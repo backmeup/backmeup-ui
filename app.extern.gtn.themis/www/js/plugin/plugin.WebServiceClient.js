@@ -12,7 +12,7 @@ var plugin_WebServiceClient = {
 	},
 	pluginsLoaded : function() {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
-		var success = null;
+		
 		try {
 			// first keep alive
 			if (plugin_WebServiceClient.config.useKeepAlive) {
@@ -29,7 +29,7 @@ var plugin_WebServiceClient = {
 
 	// called after all pages are loaded
 	pagesLoaded : function() {
-		var success = null;
+		
 		try {
 			app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
 			success = true;
@@ -40,7 +40,7 @@ var plugin_WebServiceClient = {
 	},
 
 	definePluginEvents : function() {
-		var success = null;
+		
 		try {
 			success = true;
 		} catch (err) {
@@ -51,7 +51,7 @@ var plugin_WebServiceClient = {
 
 	// called by pages.js
 	afterHtmlInjectedBeforePageComputing : function(container) {
-		var success = null;
+		
 		try {
 			app.debug.alert("Plugin: " + this.config.name + ".afterHtmlInjectedBeforePageComputing()", 5);
 			success = true;
@@ -62,7 +62,7 @@ var plugin_WebServiceClient = {
 	},
 
 	pageSpecificEvents : function(container) {
-		var success = null;
+		
 		try {
 			app.debug.alert("Plugin: " + this.config.name + ".pageSpecificEvents()", 5);
 			success = true;
@@ -282,7 +282,7 @@ var plugin_WebServiceClient = {
 		// prefered server
 		askForPreferedServer : function() {
 			var preferedServer = null;
-			var success = null;
+			
 			plugin_WebServiceClient.config.preferedServer = preferedServer;
 			return success;
 		},

@@ -3,15 +3,7 @@ var page_create_backup_1_newSource = {
 
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
-		var success = null;
-		try {
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+		
 	},
 
 	// load the html structure
@@ -63,7 +55,7 @@ var page_create_backup_1_newSource = {
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
-		var success = null;
+		
 		try {
 			$(container).on("click", "#btnCreate", function() {
 				app.template.append("div[data-role=content]", "app-loader-bubble");
@@ -134,7 +126,7 @@ var page_create_backup_1_newSource = {
 		// process.
 		pagebeforechange : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforechange()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -149,7 +141,7 @@ var page_create_backup_1_newSource = {
 		// auto-initialization occurs.
 		pagebeforecreate : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforecreate()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -165,7 +157,7 @@ var page_create_backup_1_newSource = {
 		// actual transition animation is kicked off.
 		pagebeforehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforehide()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -179,7 +171,7 @@ var page_create_backup_1_newSource = {
 		// Triggered before any load request is made.
 		pagebeforeload : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeload()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -194,7 +186,7 @@ var page_create_backup_1_newSource = {
 		// transition animation is kicked off.
 		pagebeforeshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeshow()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -210,7 +202,7 @@ var page_create_backup_1_newSource = {
 		// completed.
 		pagechange : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagechange()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -224,7 +216,7 @@ var page_create_backup_1_newSource = {
 		// Triggered when the changePage() request fails to load the page.
 		pagechangefailed : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagechangefailed()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -242,7 +234,7 @@ var page_create_backup_1_newSource = {
 		// markup.
 		pagecreate : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagecreate()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -257,7 +249,7 @@ var page_create_backup_1_newSource = {
 		// completed.
 		pagehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagehide()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -271,7 +263,7 @@ var page_create_backup_1_newSource = {
 		// Triggered on the page being initialized, after initialization occurs.
 		pageinit : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageinit()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -286,7 +278,7 @@ var page_create_backup_1_newSource = {
 		// DOM.
 		pageload : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageload()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -300,7 +292,7 @@ var page_create_backup_1_newSource = {
 		// Triggered if the page load request failed.
 		pageloadfailed : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageloadfailed()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -316,7 +308,7 @@ var page_create_backup_1_newSource = {
 		// from the DOM.
 		pageremove : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageremove()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {
@@ -331,7 +323,7 @@ var page_create_backup_1_newSource = {
 		// completed.
 		pageshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageshow()", 12);
-			var success = null;
+			
 			try {
 				success = true;
 			} catch (err) {

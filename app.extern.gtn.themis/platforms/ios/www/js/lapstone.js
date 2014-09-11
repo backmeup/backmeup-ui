@@ -1,5 +1,18 @@
-$(document).ready(function() {
+// app.store.localStorage.clear();
+var app = {
+	config : {
+		name : "app",
+		min : false,
+		useJQueryMobile : true,
+		apacheCordova : null
+	},
+	addObject : function(name, object) {
+		// alert("Add object to app: " + name);
+		app[name] = object;
+	}
+};
 
+function loadPlugins() {
 	var success = true;
 
 	// load plugins
@@ -9,6 +22,7 @@ $(document).ready(function() {
 	} else {
 		url = "../js/plugin/plugins.js";
 	}
+
 	$.ajax({
 		url : url,
 		dataType : "script",
@@ -23,9 +37,12 @@ $(document).ready(function() {
 		}
 	});
 	plugins.constructor();
-	if (!success)
-		return false;
 
+	return success;
+}
+
+function loadPages() {
+	var success = true;
 	// load pages
 	var url;
 	if (app.config.min) {
@@ -33,6 +50,7 @@ $(document).ready(function() {
 	} else {
 		url = "../js/page/pages.js";
 	}
+
 	$.ajax({
 		url : url,
 		dataType : "script",
@@ -43,14 +61,22 @@ $(document).ready(function() {
 		error : function(jqXHR, textStatus, errorThrown) {
 			alert("Fatal error in javascriptLoader.js: Can't load the pages. Url: " + url + " Error: " + textStatus);
 			alert(errorThrown);
+			success = false;
 		}
 	});
+
 	pages.constructor();
-	if (!success)
-		return false;
 
+	return success;
+}
 
+$(document).ready(function() {
 
+	var success = true;
+	success = loadPlugins();
+	success = loadPages();
+
+	
 
 	// load jQuery mobile
 	if (app.config.useJQueryMobile) {
@@ -72,7 +98,7 @@ $(document).ready(function() {
 
 	app.debug.alert("app framework initialized", 30);
 
-	// app.store.localStorage.clear();
+	 // app.store.localStorage.clear();
 	// app.store.localStorage.show();
 	// app.notify.add.alert("dasd", "sadsad", "asdsad");
 
@@ -122,7 +148,7 @@ function onDeviceReady() {
 
 $(document).bind("mobileinit", function() {
 	app.debug.alert("jQuery mobile initialized", 30);
-	$.mobile.ajaxEnabled = false;
+	$.mobile.ajaxEnabled = true;
 	$.support.cors = true;
 	$.mobile.allowCrossDomainPages = true;
 	$.mobile.page.prototype.options.domCache = false;
@@ -134,19 +160,3 @@ $(document).bind("mobileinit", function() {
 
 	$.mobile.defaultPageTransition = 'none';
 });
-
-/*
- * $(window).load(function() { //alert("loaded in: " + performance.now() ); });
- */
-var app = {
-	config : {
-		name : "themis",
-		min : false,
-		useJQueryMobile : true,
-		apacheCordova : null
-	},
-	addObject : function(name, object) {
-		// alert("Add object to app: " + name);
-		app[name] = object;
-	}
-};

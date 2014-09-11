@@ -1,0 +1,32 @@
+{
+	"search":{
+		"url":"/backups/{username}/search?keyRing={keyRing}&query={query}",
+		"method":"post",
+		"timeout":15000
+	},
+	"getSearch":{
+		"url":"/backups/{username}/{searchId}/query?source={source}&type={type}&job={job}",
+		"method":"get",
+		"timeout":15000
+	},
+	"validateDatasource":{
+		"url":"/datasources/{username}/validate/{profileId}?keyRing={keyRing}",
+		"method":"post",
+		"timeout":15000
+	},
+	"validateDatasink":{
+		"url":"/datasinks/{username}/validate/{profileId}?keyRing={keyRing}",
+		"method":"post",
+		"timeout":15000
+	},
+	"sendMail":{
+		"url":"/mails/send/{format}?to={to}&subject={subject}?message={message}",
+		"method":"post",
+		"timeout":15000
+	},
+	"getFileThumbnail":{
+		"url":"/thumbnails/{username}/{fileID}",
+		"method":"get",
+		"timeout":15000
+	}
+}

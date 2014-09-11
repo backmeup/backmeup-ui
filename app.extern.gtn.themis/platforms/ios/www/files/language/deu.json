@@ -1,6 +1,7 @@
 {
 	"actions":{
 		"administrate":"Backups",
+		"new_source_profile":"Neues Profil anlegen",
 		"backmeup":"Backup",
 		"create_backup":"Backupjob erstellen",
 		"create_source":"Datenquelle erstellen",
@@ -11,6 +12,7 @@
 		"logout":"Ausloggen",
 		"submit":"Absenden",
 		"okay":"Okay",
+		"ok":"Okay",
 		"cancel":"Abbrechen",
 		"reset":"Zurücksetzen",
 		"register":"Registrieren",
@@ -63,6 +65,7 @@
 		"backup_start":"Anlegedatum",
 		"backup_next":"Nächste Ausführung",
 		"backup_delay":"Verzögerung",
+		"choose_profile":"Wähle dein Profil",
 		"existing_datasources":"Vorhandene Datenquellen",
 		"new_datasource":"Neue Datenquelle erstellen",
 		"new_backup":"Neues Backup erstellen",

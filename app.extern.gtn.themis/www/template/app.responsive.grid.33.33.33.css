@@ -4,7 +4,7 @@
     border-color: #ddd;
 }
 .app-responsive-grid-33-33-33 p {
-
+    color: #777;
     line-height: 140%
 }
 /* Stack all blocks to start */
@@ -30,6 +30,10 @@
     .app-responsive-grid-33-33-33 .ui-block-c {
       float: left;
       width: 49.95%;
+    }
+    .app-responsive-grid-33-33-33 .ui-block-b p,
+    .app-responsive-grid-33-33-33 .ui-block-c p {
+      font-size: .8em;
     }
     .app-responsive-grid-33-33-33 > div + div .ui-body {
         border-top-width: 1px;

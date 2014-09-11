@@ -101,11 +101,7 @@ var plugins = {
 
 	callPluginsLoadedEvent : function() {
 		$.each(plugins.pluginNames, function(key, value) {
-			try {
-				window['plugin_' + value].pluginsLoaded();
-			} catch (err) {
-				alert("Notify: The plugin has no pluginsLoaded() event handler: plugin_" + value);
-			}
+			window['plugin_' + value].pluginsLoaded();
 		});
 	},
 

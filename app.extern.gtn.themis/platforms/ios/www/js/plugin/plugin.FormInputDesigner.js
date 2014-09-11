@@ -118,7 +118,15 @@ var plugin_FormInputDesigner = {
 		var attributes = plugin_FormInputDesigner.getAttributes(options);
 		if (options.text == undefined)
 			options.text = "";
-		var output = '<' + type + ' ' + attributes + '>' + options.text + '</' + type + '>';
+		switch (type) {
+		case 'img':
+			var output = '<' + type + ' ' + attributes + '/>';
+			break;
+		default:
+			var output = '<' + type + ' ' + attributes + '>' + options.text + '</' + type + '>';
+			break;
+		}
+
 		return output;
 	},
 	verifyOptions : function(options) {
@@ -342,6 +350,13 @@ var plugin_FormInputDesigner = {
 			h6 : function(options) {
 
 			},
+			img : function(options) {
+				app.debug.alert("plugin_FormInputDesigner.functions.element.img()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
+				var type = "img";
+				plugin_FormInputDesigner.addClassToOptions(options, "app-p");
+				return plugin_FormInputDesigner.generateOutput(options, type);
+			},
 			p : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.element.p()", 20);
 				options = plugin_FormInputDesigner.verifyOptions(options);
@@ -371,6 +386,13 @@ var plugin_FormInputDesigner = {
 				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "li";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-li");
+				return $(plugin_FormInputDesigner.generateOutput(options, type));
+			},
+			div : function(options) {
+				app.debug.alert("plugin_FormInputDesigner.functions.element.div()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
+				var type = "div";
+				plugin_FormInputDesigner.addClassToOptions(options, "app-div");
 				return $(plugin_FormInputDesigner.generateOutput(options, type));
 			}
 		}

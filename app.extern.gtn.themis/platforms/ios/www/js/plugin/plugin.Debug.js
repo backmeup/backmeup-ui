@@ -156,7 +156,7 @@ var plugin_Debug = {
 			app.debug.alert("Plugin: " + this.config.name + ".afterHtmlInjectedBeforePageComputing()", 5);
 			// show debug panel?
 			if (plugin_Debug.config.debugPanel) {
-				plugin_Debug.appendDebugArea(container.find('div[data-role=content]'));
+				plugin_Debug.appendDebugArea();
 			}
 			// do debuging checkbox
 			if (this.config.doDebugging) {
@@ -189,7 +189,7 @@ var plugin_Debug = {
 		app.debug.alert(this.config.name + ".appendDebugArea()", 5);
 		// get inputs via FormInputDesigner
 		var append = '<div>&nbsp;</div>';
-		append += '<div id="divDebugCheckbox" data-role="fieldcontain">';
+		append += '<div id="divDebugCheckbox" data-role="fieldcontain" style="position: fixed; z-index:9999;">';
 		append += '<fieldset class="debugGroup" data-role="controlgroup">';
 		append += '<legend>Debug Area:</legend>';
 		append += '<input type="button" name="btnRefresh" id="btnRefresh" class="custom" value="Refresh Page"/>';
@@ -201,7 +201,8 @@ var plugin_Debug = {
 		append += '<label for="cbxToggleDebug">Toggle Debug</label>';
 		append += '</fieldset>';
 		append += '</div>';
-		$(container).append(append);
+		//alert(append);
+		$('body').append(append);
 	},
 
 	// public functions

@@ -1,0 +1,27 @@
+{
+	"getDatasinks":{
+		"url":"/datasinks",
+		"method":"get",
+		"timeout":15000
+	},
+	"getUsersDatasinks":{
+		"url":"/datasinks/{username}/profiles",
+		"method":"get",
+		"timeout":15000
+	},
+	"deleteDatasink":{
+		"url":"/datasinks/{username}/profiles/{profileId}",
+		"method":"delete",
+		"timeout":15000
+	},
+	"authDatasink":{
+		"url":"/datasinks/{username}/{datasinkId}/auth?profileName={profileName}&keyRing={keyRing}",
+		"method":"post",
+		"timeout":15000
+	},
+	"authDatasinkPost":{
+		"url":"/datasinks/{username}/{profileId}/auth/post?keyRing={keyRing}",
+		"method":"post",
+		"timeout":15000
+	}
+}

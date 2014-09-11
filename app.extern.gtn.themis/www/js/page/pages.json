@@ -12,6 +12,7 @@
 	"login":true,
 	"logout":true,
 	"register":true,
+	"search":true,
 	"settings":true,
 	"share_backup":true,
 	"start":true,

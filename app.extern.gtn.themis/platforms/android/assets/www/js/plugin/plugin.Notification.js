@@ -12,20 +12,38 @@ var plugin_Notification = {
 
 	// called by plugins.js
 	constructor : function() {
-		
+
 	},
 
 	// called after all plugins are loaded
 	pluginsLoaded : function() {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
-		
+		if (plugin_Notification.config.enablePushNotifications)
+			setTimeout(function() {
+				alert(JSON.stringify(plugin_Notification.config.pushConfig));
+
+				var promise = app.rc.getJson([ [ "licence.registerDevice", {
+					"deviceId" : "aa",
+					"subjectId" : "suRegisterDevice"
+				} ], [ "licence.registerUser", {
+					"userId" : "suRegisterUser",
+					"email" : "aa",
+					"password" : "aa",
+					"firstname" : "aa",
+					"lastname" : "aa",
+					"subjectId" : "aa"
+				} ] ], true);
+
+				if (window.push != undefined)
+					push.register(plugin_Notification.functions.push_onNotification, plugin_Notification.functions.push_successHandler, plugin_Notification.functions.push_errorHandler, plugin_Notification.config.pushConfig);
+			}, 100);
 	},
 
 	// called after all pages are loaded
 	// caller pages.js
 	pagesLoaded : function() {
 		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
-		
+
 		try {
 
 			success = true;
@@ -41,7 +59,7 @@ var plugin_Notification = {
 	// caller: plugins.js
 	definePluginEvents : function() {
 		app.debug.alert("plugin_" + this.config.name + ".definePluginEvents()", 11);
-		
+
 		try {
 			$(document).on('pageshow', '.app-page', function(event) {
 				if (!plugin_Notification.notifications) {
@@ -71,7 +89,7 @@ var plugin_Notification = {
 	// called for each page after createPage();
 	afterHtmlInjectedBeforePageComputing : function(container) {
 		app.debug.alert("plugin_" + this.config.name + ".afterHtmlInjectedBeforePageComputing()", 11);
-		
+
 		try {
 			// alert('insert popups');
 			// alert($("body #popupDialog").length);
@@ -95,7 +113,7 @@ var plugin_Notification = {
 	// caller: pages.js
 	pageSpecificEvents : function(container) {
 		app.debug.alert("plugin_" + this.config.name + ".pageSpecificEvents()", 11);
-		
+
 		try {
 
 			success = true;
@@ -153,6 +171,17 @@ var plugin_Notification = {
 	 * 
 	 */
 	functions : {
+		push_successHandler : function() {
+			console.log('succesfull registered');
+		},
+
+		push_errorHandler : function(error) {
+			console.error('error registering ' + error);
+		},
+
+		push_onNotification : function(event) {
+			alert(event.alert);
+		},
 		alert : function(text, title, headline, callback, delay) {
 			if (text == undefined)
 				text = false;

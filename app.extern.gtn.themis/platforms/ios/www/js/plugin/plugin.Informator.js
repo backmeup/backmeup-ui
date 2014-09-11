@@ -142,9 +142,10 @@ var plugin_Informator = {
 	},
 
 	functions : {
-		// auch direkt die datei �ndern
+		// auch direkt die datei ���ndern
 		set : function(key, value) {
 			// change html5 storage
+			//alert(key+value);
 			if (plugin_Informator.config.useHtml5Storage) {
 				app.store.localStorage.set("config." + key, value);
 			}

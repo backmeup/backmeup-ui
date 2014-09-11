@@ -10,16 +10,12 @@ var plugin_RestClient = {
 	},
 	pluginsLoaded : function() {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
-		
+
 		try {
 			// load the webservice definitions
 			$.each(plugin_RestClient.config.wsdFiles, function(path, loadFile) {
 				if (loadFile) {
-					var json = JsonLoader(path);
-					// alert(JSON.stringify(json));
-					$.each(json, function(name, values) {
-						plugin_RestClient.config.webservices[name] = values;
-					});
+					plugin_RestClient.loadDefinitionFile(path);
 				}
 			});
 			success = true;
@@ -48,6 +44,14 @@ var plugin_RestClient = {
 		app.debug.alert("Plugin: " + this.config.name + ".pageSpecificEvents()", 5);
 	},
 
+	loadDefinitionFile : function(path) {
+		var json = JsonLoader(path);
+		// alert(JSON.stringify(json));
+		$.each(json, function(name, values) {
+			plugin_RestClient.config.webservices[name] = values;
+		});
+	},
+
 	functions : {
 		addWebserviceDefinition : function(name, path, method, timeout, cachetime, local) {
 			plugin_RestClient.config.webservices[name] = {
@@ -58,6 +62,9 @@ var plugin_RestClient = {
 				"local" : local
 			};
 			return true;
+		},
+		addWebserviceDefinitionFile : function(path) {
+			plugin_RestClient.loadDefinitionFile(path);
 		},
 		getJson : function(service, parameter, async) {
 			app.debug.alert("plugin_RestClient.functions.getJson(" + service + ", " + JSON.stringify(parameter) + ")", 20);
@@ -109,6 +116,16 @@ var plugin_RestClient = {
 				var async = true;
 				$.each(service, function(key, call) {
 					var serviceName = call[0], parameter = call[1];
+					
+					
+					// get the server
+					if (serviceName.indexOf('.') != -1) {
+						var splittedService = serviceName.split(".");
+						var server = splittedService[0];
+						serviceName = splittedService[1];
+					}
+					
+					
 					// get the path wich is defined in wsd file
 					var path = plugin_RestClient.config.webservices[serviceName].url;
 					// replace the parameters in path string
@@ -125,7 +142,7 @@ var plugin_RestClient = {
 					// webservice
 					var pathX = path.split('?')[0];
 					// ask for the deferred promise object
-					var promise = app.wsc.getJson(pathX, data, plugin_RestClient.config.webservices[serviceName].method, plugin_RestClient.config.webservices[serviceName].timeout, async, plugin_RestClient.config.webservices[serviceName].local);
+					var promise = app.wsc.getJson(pathX, data, plugin_RestClient.config.webservices[serviceName].method, plugin_RestClient.config.webservices[serviceName].timeout, async, plugin_RestClient.config.webservices[serviceName].local, server);
 					promiseArray.push(promise);
 					webserviceNamesArray.push(serviceName);
 				});
@@ -183,6 +200,14 @@ var plugin_RestClient = {
 				app.debug.alert("plugin_RestClient: Get a single json object; async = true; async = false", 60);
 				// the deferred object for the caller
 				var dfd = $.Deferred();
+				
+				// get the server
+				if (service.indexOf('.') != -1) {
+					var splittedService = service.split(".");
+					var server = splittedService[0];
+					service = splittedService[1];
+				}
+				
 				// get the path wich is defined in wsd file
 				var path = plugin_RestClient.config.webservices[service].url;
 				// replace the parameters in path string
@@ -201,8 +226,11 @@ var plugin_RestClient = {
 				// URL of the webservice provider including the path to
 				// webservice
 				var pathX = path.split('?')[0];
+
+				
+
 				// ask for the json file
-				var promise = app.wsc.getJson(pathX, data, plugin_RestClient.config.webservices[service].method, plugin_RestClient.config.webservices[service].timeout, async, plugin_RestClient.config.webservices[service].local);
+				var promise = app.wsc.getJson(pathX, data, plugin_RestClient.config.webservices[service].method, plugin_RestClient.config.webservices[service].timeout, async, plugin_RestClient.config.webservices[service].local, server);
 				// add language wildcards wich could be defined in webservice
 				// response
 

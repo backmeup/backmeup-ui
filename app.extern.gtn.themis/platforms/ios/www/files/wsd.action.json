@@ -1,0 +1,22 @@
+{
+	"actions":{
+		"url":"/actions",
+		"method":"get",
+		"timeout":15000
+	},
+	"actionOptions":{
+		"url":"/actions/{actionId}/options",
+		"method":"get",
+		"timeout":15000
+	},
+	"setActionOptions":{
+		"url":"/actions/{actionId}/options/{jobId}",
+		"method":"put",
+		"timeout":15000
+	},
+	"getActionOptions":{
+		"url":"/actions/{actionId}/storedOptions/{jobId}",
+		"method":"get",
+		"timeout":15000
+	}
+}

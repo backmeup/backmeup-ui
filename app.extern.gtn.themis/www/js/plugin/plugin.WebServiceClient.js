@@ -12,7 +12,7 @@ var plugin_WebServiceClient = {
 	},
 	pluginsLoaded : function() {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
-		
+
 		try {
 			// first keep alive
 			if (plugin_WebServiceClient.config.useKeepAlive) {
@@ -29,7 +29,7 @@ var plugin_WebServiceClient = {
 
 	// called after all pages are loaded
 	pagesLoaded : function() {
-		
+
 		try {
 			app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
 			success = true;
@@ -40,7 +40,7 @@ var plugin_WebServiceClient = {
 	},
 
 	definePluginEvents : function() {
-		
+
 		try {
 			success = true;
 		} catch (err) {
@@ -51,7 +51,7 @@ var plugin_WebServiceClient = {
 
 	// called by pages.js
 	afterHtmlInjectedBeforePageComputing : function(container) {
-		
+
 		try {
 			app.debug.alert("Plugin: " + this.config.name + ".afterHtmlInjectedBeforePageComputing()", 5);
 			success = true;
@@ -62,7 +62,7 @@ var plugin_WebServiceClient = {
 	},
 
 	pageSpecificEvents : function(container) {
-		
+
 		try {
 			app.debug.alert("Plugin: " + this.config.name + ".pageSpecificEvents()", 5);
 			success = true;
@@ -73,23 +73,41 @@ var plugin_WebServiceClient = {
 	},
 
 	// private methods
-	getPreferedServer : function() {
+	getPreferedServer : function(name) {
 		app.debug.alert("plugin_WebServiceClient.getPreferedServer()", 14);
-		if (!plugin_WebServiceClient.config.preferedServer.scheme || !plugin_WebServiceClient.config.preferedServer.scheme_specific_part || !plugin_WebServiceClient.config.preferedServer.host || !plugin_WebServiceClient.config.preferedServer.port) {
-			plugin_WebServiceClient.setPreferedServer();
-		}
-		return plugin_WebServiceClient.config.preferedServer;
+		plugin_WebServiceClient.setPreferedServer(name);
+		return plugin_WebServiceClient.config.preferedServer[name];
 	},
 
-	setPreferedServer : function() {
+	// server anhand der namen speichern
+	// server pingen
+	setPreferedServer : function(name) {
 		app.debug.alert("plugin_WebServiceClient.setPreferedServer() ... mehrere server implementieren", 14);
-		app.info.set("plugin_WebServiceClient.config.preferedServer.scheme", plugin_WebServiceClient.config.server.first.scheme);
-		app.info.set("plugin_WebServiceClient.config.preferedServer.scheme_specific_part", plugin_WebServiceClient.config.server.first.scheme_specific_part);
-		app.info.set("plugin_WebServiceClient.config.preferedServer.host", plugin_WebServiceClient.config.server.first.host);
-		app.info.set("plugin_WebServiceClient.config.preferedServer.port", plugin_WebServiceClient.config.server.first.port);
+		// old
+		// app.info.set("plugin_WebServiceClient.config.preferedServer.scheme",
+		// plugin_WebServiceClient.config.server.first.scheme);
+		// app.info.set("plugin_WebServiceClient.config.preferedServer.scheme_specific_part",
+		// plugin_WebServiceClient.config.server.first.scheme_specific_part);
+		// app.info.set("plugin_WebServiceClient.config.preferedServer.host",
+		// plugin_WebServiceClient.config.server.first.host);
+		// app.info.set("plugin_WebServiceClient.config.preferedServer.port",
+		// plugin_WebServiceClient.config.server.first.port);
+		// for each server farm
+		$.each(plugin_WebServiceClient.config.server, function(serverName, data) {
+			// alert(JSON.stringify(data));
+			if (data.active === true) {
+				if (plugin_WebServiceClient.config.preferedServer == undefined)
+					app.info.set("plugin_WebServiceClient.config.preferedServer", {});
+				app.info.set("plugin_WebServiceClient.config.preferedServer." + serverName, {});
+				app.info.set("plugin_WebServiceClient.config.preferedServer." + serverName + ".scheme", data.first.scheme);
+				app.info.set("plugin_WebServiceClient.config.preferedServer." + serverName + ".scheme_specific_part", data.first.scheme_specific_part);
+				app.info.set("plugin_WebServiceClient.config.preferedServer." + serverName + ".host", data.first.host);
+				app.info.set("plugin_WebServiceClient.config.preferedServer." + serverName + ".port", data.first.port);
+			}
+		});
 	},
 
-	getAjax : function(url, data, type, method, timeout, async) {
+	getAjax : function(url, data, type, method, timeout, async, dataType) {
 		app.debug.alert("plugin_WebServiceClient.getAjax(" + url + ", " + data + ", " + type + ", " + method + ", " + timeout + ", " + async + ")", 14);
 		app.debug.alert("Call webservice: " + url + "?" + data, 60);
 		var json = null;
@@ -100,9 +118,18 @@ var plugin_WebServiceClient = {
 			json = dfd.promise();
 		}
 
-		if (method.toLowerCase() == "post") {
+		// get headers from data
+		var headers = null;
+		if (data.indexOf('§') != -1) {
+			var splittedData = data.split("§");
+			headers = splittedData[1];
+			data = splittedData[0];
+		}
+
+		var contentType = "application/x-www-form-urlencoded";
+		if (dataType != undefined && dataType.toLowerCase() == "json") {
 			// (nicht mehr so) dirty
-			//alert(data);
+			// alert(data);
 			var obj = {};
 			var pairs = data.split('&');
 			for (i in pairs) {
@@ -122,7 +149,8 @@ var plugin_WebServiceClient = {
 
 			}
 			data = JSON.stringify(obj);
-			//alert(data);
+			contentType = "application/json; charset=utf-8"
+			// alert(data);
 		}
 
 		try {
@@ -130,13 +158,21 @@ var plugin_WebServiceClient = {
 				url : url,
 				data : data,// ?key=value
 				dataType : type, // json
-				contentType : "application/json; charset=utf-8",
+				contentType : contentType,
 				async : async, // false
 				method : method, // post
 				timeout : timeout, // 5000
 				beforeSend : function(jqXHR, settings) {
 					if (plugin_WebServiceClient.config.useHeaderToken) {
 						jqXHR.setRequestHeader(plugin_WebServiceClient.config.headerToken.key, app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value));
+					}
+					if (headers != null) {
+						var obj = {};
+						var pairs = headers.split('&');
+						for (i in pairs) {
+							var split = pairs[i].split('=');
+							jqXHR.setRequestHeader(split[0], split[1]);
+						}
 					}
 				},
 				success : function(data, textStatus, jqXHR) {
@@ -236,7 +272,7 @@ var plugin_WebServiceClient = {
 		var data = "";
 		var method = plugin_WebServiceClient.config.keepAlive.method;
 		var timeout = plugin_WebServiceClient.config.keepAlive.timeout;
-		var server = plugin_WebServiceClient.getPreferedServer();
+		var server = plugin_WebServiceClient.getPreferedServer(plugin_WebServiceClient.config.keepAlive.keepAliveServer);
 		var url = server.scheme + server.scheme_specific_part + server.host + ":" + server.port + path;
 		var wsDuration = 0;
 		switch (plugin_WebServiceClient.config.keepAlive.type) {
@@ -265,16 +301,22 @@ var plugin_WebServiceClient = {
 			return xml;
 		},
 
-		getJson : function(path, data, method, timeout, async, local) {
+		getJson : function(path, data, method, timeout, async, local, server) {
 			app.debug.alert("plugin_WebServiceClient.functions.getJson(" + path + ", " + data + ", " + method + ", " + timeout + ", " + async + ", " + local + ")", 20);
 			var url = null;
+			var dataType = null;
 			if (local === true)
 				url = path;
 			else {
-				var server = plugin_WebServiceClient.getPreferedServer();
-				url = server.scheme + server.scheme_specific_part + server.host + ":" + server.port + path;
+				//alert(server);
+				var serverConfig = plugin_WebServiceClient.getPreferedServer(server);
+				//alert(JSON.stringify(serverConfig));
+				url = serverConfig.scheme + serverConfig.scheme_specific_part + serverConfig.host + ":" + serverConfig.port + path;
+				var dataType = plugin_WebServiceClient.config.server[server].mappings[method.toLowerCase()];
+				//alert(dataType);
 			}
-			var json = plugin_WebServiceClient.getAjax(url, data, "json", method, timeout, async);
+
+			var json = plugin_WebServiceClient.getAjax(url, data, "json", method, timeout, async, dataType);
 			return json;
 		},
 
@@ -282,7 +324,7 @@ var plugin_WebServiceClient = {
 		// prefered server
 		askForPreferedServer : function() {
 			var preferedServer = null;
-			
+
 			plugin_WebServiceClient.config.preferedServer = preferedServer;
 			return success;
 		},

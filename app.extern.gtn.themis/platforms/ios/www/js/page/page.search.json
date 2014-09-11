@@ -1,0 +1,6 @@
+{
+	"name":"search",
+	"shortname":"search",
+	"useKeepAlive":true,
+	"loginObligate":true
+}

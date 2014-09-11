@@ -3,13 +3,13 @@ var page_create_backup_1 = {
 
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
-		
+
 	},
 
 	// load the html structure
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
-		
+
 		try {
 			var header = $('div[data-role=header]');
 			var content = $('div[data-role=content]');
@@ -33,7 +33,7 @@ var page_create_backup_1 = {
 				// alert(JSON.stringify(resultObject));
 				var list = $(app.template.get("listA", "responsive"));
 				$.each(resultObject, function(index, pluginJson) {
-					 //alert(JSON.stringify(pluginJson));
+					// alert(JSON.stringify(pluginJson));
 					list.append(app.ni.list.thumbnail({
 						href : "#",
 						imageSrc : pluginJson.imageURL,
@@ -56,7 +56,7 @@ var page_create_backup_1 = {
 					}
 				}));
 				$(".app-loader").remove();
-				
+
 				app.help.jQM.enhance(content);
 			});
 
@@ -72,32 +72,42 @@ var page_create_backup_1 = {
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
-		
+
 		try {
 			$(document).on("click", ".configtype-input", function(event) {
-				$(location).attr("href", "create_backup_1_newSource.html");
+
+				app.notify.dialog("Hier Stehen die vorhandenen Profile. Welches Webservice?", app.lang.string("choose_profile", "headlines"), app.lang.string("choose_profile", "headlines"), app.lang.string("new_source_profile", "actions"), app.lang.string("cancel", "actions"), function(popup) {
+					$(location).attr("href", "create_backup_1_newSource.html");
+				}, function(popup) {
+					;
+				}, 0);
 			});
 
 			$(document).on("click", ".configtype-oauth", function(event) {
 				// alert($(this).attr("data-html5-oAuthUrl"));
-
 				var url = $(this).attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback", "http://localhost:8888/ios/www/page/create_backup_1_newSource.html");
 
-				var promise = app.oa.dropbox(url);
+				app.notify.dialog("Hier Stehen die vorhandenen Profile. Welches Webservice?", app.lang.string("choose_profile", "headlines"), app.lang.string("choose_profile", "headlines"), app.lang.string("new_source_profile", "actions"), app.lang.string("cancel", "actions"), function(popup) {
 
-				// app.store.localStorage.set("data-html5-themis-pluginid",
-				// $(this).attr("data-html5-pluginId"));
+					var promise = app.oa.dropbox(url);
 
-				promise.done(function(accessToken) {
-					// alert(accessToken);
-					app.store.localStorage.set("data-html5-themis-oAuthToken", accessToken);
-					$(location).attr("href", "create_backup_1_newSource.html");
+					// app.store.localStorage.set("data-html5-themis-pluginid",
+					// $(this).attr("data-html5-pluginId"));
 
-				});
+					promise.done(function(accessToken) {
+						// alert(accessToken);
+						app.store.localStorage.set("data-html5-themis-oAuthToken", accessToken);
+						$(location).attr("href", "create_backup_1_newSource.html");
 
-				promise.fail(function(error) {
-					alert("oAuth error: " + error);
-				});
+					});
+
+					promise.fail(function(error) {
+						alert("oAuth error: " + error);
+					});
+				}, function(popup) {
+					;
+				}, 0);
+
 			});
 			success = true;
 		} catch (err) {
@@ -118,7 +128,7 @@ var page_create_backup_1 = {
 		// process.
 		pagebeforechange : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforechange()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -133,7 +143,7 @@ var page_create_backup_1 = {
 		// auto-initialization occurs.
 		pagebeforecreate : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforecreate()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -149,7 +159,7 @@ var page_create_backup_1 = {
 		// actual transition animation is kicked off.
 		pagebeforehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforehide()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -163,7 +173,7 @@ var page_create_backup_1 = {
 		// Triggered before any load request is made.
 		pagebeforeload : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeload()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -178,7 +188,7 @@ var page_create_backup_1 = {
 		// transition animation is kicked off.
 		pagebeforeshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeshow()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -194,7 +204,7 @@ var page_create_backup_1 = {
 		// completed.
 		pagechange : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagechange()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -208,7 +218,7 @@ var page_create_backup_1 = {
 		// Triggered when the changePage() request fails to load the page.
 		pagechangefailed : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagechangefailed()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -226,7 +236,7 @@ var page_create_backup_1 = {
 		// markup.
 		pagecreate : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagecreate()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -241,7 +251,7 @@ var page_create_backup_1 = {
 		// completed.
 		pagehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagehide()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -255,7 +265,7 @@ var page_create_backup_1 = {
 		// Triggered on the page being initialized, after initialization occurs.
 		pageinit : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageinit()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -270,7 +280,7 @@ var page_create_backup_1 = {
 		// DOM.
 		pageload : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageload()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -284,7 +294,7 @@ var page_create_backup_1 = {
 		// Triggered if the page load request failed.
 		pageloadfailed : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageloadfailed()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -300,7 +310,7 @@ var page_create_backup_1 = {
 		// from the DOM.
 		pageremove : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageremove()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -315,7 +325,7 @@ var page_create_backup_1 = {
 		// completed.
 		pageshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageshow()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {

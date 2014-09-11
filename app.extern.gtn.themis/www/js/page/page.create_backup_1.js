@@ -77,7 +77,9 @@ var page_create_backup_1 = {
 			$(document).on("click", ".configtype-input", function(event) {
 
 				app.notify.dialog("Hier Stehen die vorhandenen Profile. Welches Webservice?", app.lang.string("choose_profile", "headlines"), app.lang.string("choose_profile", "headlines"), app.lang.string("new_source_profile", "actions"), app.lang.string("cancel", "actions"), function(popup) {
-					$(location).attr("href", "create_backup_1_newSource.html");
+					window.setTimeout(function() {
+						$(location).attr("href", "create_backup_1_newSource.html");
+					}, 10);
 				}, function(popup) {
 					;
 				}, 0);
@@ -88,22 +90,23 @@ var page_create_backup_1 = {
 				var url = $(this).attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback", "http://localhost:8888/ios/www/page/create_backup_1_newSource.html");
 
 				app.notify.dialog("Hier Stehen die vorhandenen Profile. Welches Webservice?", app.lang.string("choose_profile", "headlines"), app.lang.string("choose_profile", "headlines"), app.lang.string("new_source_profile", "actions"), app.lang.string("cancel", "actions"), function(popup) {
+					window.setTimeout(function() {
+						var promise = app.oa.dropbox(url);
 
-					var promise = app.oa.dropbox(url);
+						// app.store.localStorage.set("data-html5-themis-pluginid",
+						// $(this).attr("data-html5-pluginId"));
 
-					// app.store.localStorage.set("data-html5-themis-pluginid",
-					// $(this).attr("data-html5-pluginId"));
+						promise.done(function(accessToken) {
+							// alert(accessToken);
+							app.store.localStorage.set("data-html5-themis-oAuthToken", accessToken);
+							$(location).attr("href", "create_backup_1_newSource.html");
 
-					promise.done(function(accessToken) {
-						// alert(accessToken);
-						app.store.localStorage.set("data-html5-themis-oAuthToken", accessToken);
-						$(location).attr("href", "create_backup_1_newSource.html");
+						});
 
-					});
-
-					promise.fail(function(error) {
-						alert("oAuth error: " + error);
-					});
+						promise.fail(function(error) {
+							alert("oAuth error: " + error);
+						});
+					}, 10);
 				}, function(popup) {
 					;
 				}, 0);

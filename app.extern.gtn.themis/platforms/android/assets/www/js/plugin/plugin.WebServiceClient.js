@@ -76,24 +76,28 @@ var plugin_WebServiceClient = {
 	getPreferedServer : function(name) {
 		app.debug.alert("plugin_WebServiceClient.getPreferedServer()", 14);
 		plugin_WebServiceClient.setPreferedServer(name);
-		if (name != undefined)
-			return plugin_WebServiceClient.config.preferedServer[name];
-		return plugin_WebServiceClient.config.preferedServer;
+		return plugin_WebServiceClient.config.preferedServer[name];
 	},
 
 	// server anhand der namen speichern
 	// server pingen
-	setPreferedServer : function() {
+	setPreferedServer : function(name) {
 		app.debug.alert("plugin_WebServiceClient.setPreferedServer() ... mehrere server implementieren", 14);
 		// old
-		app.info.set("plugin_WebServiceClient.config.preferedServer.scheme", plugin_WebServiceClient.config.server.first.scheme);
-		app.info.set("plugin_WebServiceClient.config.preferedServer.scheme_specific_part", plugin_WebServiceClient.config.server.first.scheme_specific_part);
-		app.info.set("plugin_WebServiceClient.config.preferedServer.host", plugin_WebServiceClient.config.server.first.host);
-		app.info.set("plugin_WebServiceClient.config.preferedServer.port", plugin_WebServiceClient.config.server.first.port);
+		// app.info.set("plugin_WebServiceClient.config.preferedServer.scheme",
+		// plugin_WebServiceClient.config.server.first.scheme);
+		// app.info.set("plugin_WebServiceClient.config.preferedServer.scheme_specific_part",
+		// plugin_WebServiceClient.config.server.first.scheme_specific_part);
+		// app.info.set("plugin_WebServiceClient.config.preferedServer.host",
+		// plugin_WebServiceClient.config.server.first.host);
+		// app.info.set("plugin_WebServiceClient.config.preferedServer.port",
+		// plugin_WebServiceClient.config.server.first.port);
 		// for each server farm
 		$.each(plugin_WebServiceClient.config.server, function(serverName, data) {
 			// alert(JSON.stringify(data));
 			if (data.active === true) {
+				if (plugin_WebServiceClient.config.preferedServer == undefined)
+					app.info.set("plugin_WebServiceClient.config.preferedServer", {});
 				app.info.set("plugin_WebServiceClient.config.preferedServer." + serverName, {});
 				app.info.set("plugin_WebServiceClient.config.preferedServer." + serverName + ".scheme", data.first.scheme);
 				app.info.set("plugin_WebServiceClient.config.preferedServer." + serverName + ".scheme_specific_part", data.first.scheme_specific_part);
@@ -122,7 +126,7 @@ var plugin_WebServiceClient = {
 			data = splittedData[0];
 		}
 
-		var contentType="application/x-www-form-urlencoded";
+		var contentType = "application/x-www-form-urlencoded";
 		if (dataType != undefined && dataType.toLowerCase() == "json") {
 			// (nicht mehr so) dirty
 			// alert(data);
@@ -145,7 +149,7 @@ var plugin_WebServiceClient = {
 
 			}
 			data = JSON.stringify(obj);
-			contentType="application/json; charset=utf-8"
+			contentType = "application/json; charset=utf-8"
 			// alert(data);
 		}
 
@@ -268,7 +272,7 @@ var plugin_WebServiceClient = {
 		var data = "";
 		var method = plugin_WebServiceClient.config.keepAlive.method;
 		var timeout = plugin_WebServiceClient.config.keepAlive.timeout;
-		var server = plugin_WebServiceClient.getPreferedServer();
+		var server = plugin_WebServiceClient.getPreferedServer(plugin_WebServiceClient.config.keepAlive.keepAliveServer);
 		var url = server.scheme + server.scheme_specific_part + server.host + ":" + server.port + path;
 		var wsDuration = 0;
 		switch (plugin_WebServiceClient.config.keepAlive.type) {
@@ -304,10 +308,12 @@ var plugin_WebServiceClient = {
 			if (local === true)
 				url = path;
 			else {
+				//alert(server);
 				var serverConfig = plugin_WebServiceClient.getPreferedServer(server);
+				//alert(JSON.stringify(serverConfig));
 				url = serverConfig.scheme + serverConfig.scheme_specific_part + serverConfig.host + ":" + serverConfig.port + path;
 				var dataType = plugin_WebServiceClient.config.server[server].mappings[method.toLowerCase()];
-				alert(dataType);
+				//alert(dataType);
 			}
 
 			var json = plugin_WebServiceClient.getAjax(url, data, "json", method, timeout, async, dataType);

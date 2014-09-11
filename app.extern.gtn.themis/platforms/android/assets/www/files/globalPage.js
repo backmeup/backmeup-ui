@@ -148,6 +148,15 @@ var globalPage = {
 			})));
 
 			ul.append(app.ni.element.li().append(app.ni.element.a({
+				"id" : "navPageNewBackup",
+				"text" : app.lang.string("create_backup", "actions"),
+				"attributes" : {
+					"href" : "create_backup_1.html",
+
+				}
+			})));
+
+			ul.append(app.ni.element.li().append(app.ni.element.a({
 				"id" : "navPageSettings",
 				"text" : app.lang.string("settings", "actions"),
 				"attributes" : {
@@ -306,9 +315,15 @@ var globalPage = {
 			search.append(app.ni.text.search({
 				"id" : "txtNavSearch"
 			}));
-			app.notify.alert(search, app.lang.string("search", "headlines"), app.lang.string("search_backup", "headlines"), function(popup) {
-				alert("Weiterleiten und Backups durchsuchen. Noch nicht implementiert. plugin.GlobalPage.js");
-			}, 0);
+			app.notify.dialog(search, app.lang.string("search", "headlines"), app.lang.string("search_backup", "headlines"), app.lang.string("search", "actions"), app.lang.string("cancel", "actions"), function(popup) {
+				var searchText = $(popup).find("#txtNavSearch").val();
+				app.store.localStorage.set("data-html5-themis-search-value", searchText);
+				window.setTimeout(function() {
+					$(location).attr("href", "search.html")
+				}, 10);
+			}, function(popup) {
+				;
+			}, 100);
 		});
 
 		$(document).on('click', '#navPageLogout', function() {

@@ -8,7 +8,9 @@
 var plugin_Notification = {
 	config : null,
 	notifications : null,
-	callbackFuntion : null,
+	callbackFunction : null,
+	callbackFunctionBtnLeft : null,
+	callbackFunctionBtnRight : null,
 
 	// called by plugins.js
 	constructor : function() {
@@ -44,15 +46,6 @@ var plugin_Notification = {
 	pagesLoaded : function() {
 		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
 
-		try {
-
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
 	},
 
 	// called after pluginsLoaded()
@@ -60,53 +53,55 @@ var plugin_Notification = {
 	definePluginEvents : function() {
 		app.debug.alert("plugin_" + this.config.name + ".definePluginEvents()", 11);
 
-		try {
-			$(document).on('pageshow', '.app-page', function(event) {
-				if (!plugin_Notification.notifications) {
-					plugin_Notification.notifications = app.store.localStorage.getObject("popup_notifications");
-				}
-				// alert(JSON.stringify(plugin_Notification.notifications));
-				app.store.localStorage.removeObject("popup_notifications");
-				plugin_Notification.popupShow();
-			});
-			$(document).on("click", "#btnPopupAlert", function() {
-				$("#popupAlert").popup("close");
-				if (plugin_Notification.callbackFuntion) {
-					plugin_Notification.callbackFuntion($("#popupAlert"));
-					plugin_Notification.callbackFuntion == null;
-				}
-				plugin_Notification.popupShow();
-			});
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+		$(document).on('pageshow', '.app-page', function(event) {
+			if (!plugin_Notification.notifications) {
+				plugin_Notification.notifications = app.store.localStorage.getObject("popup_notifications");
+			}
+			// alert(JSON.stringify(plugin_Notification.notifications));
+			app.store.localStorage.removeObject("popup_notifications");
+			plugin_Notification.popupShow();
+		});
+		$(document).on("click", "#btn-alert", function() {
+			$("#popupAlert").popup("close");
+			if (plugin_Notification.callbackFunction) {
+				plugin_Notification.callbackFunction($("#popupAlert"));
+				plugin_Notification.callbackFunction == null;
+			}
+			plugin_Notification.popupShow();
+		});
+
+		$(document).on("click", "#btn-dialog-left", function() {
+			$("#popupDialog").popup("close");
+			if (plugin_Notification.callbackFunctionBtnLeft) {
+				plugin_Notification.callbackFunctionBtnLeft($("#popupDialog"));
+				plugin_Notification.callbackFunctionBtnLeft == null;
+			}
+			plugin_Notification.popupShow();
+		});
+
+		$(document).on("click", "#btn-dialog-right", function() {
+			$("#popupDialog").popup("close");
+			if (plugin_Notification.callbackFunctionBtnRight) {
+				plugin_Notification.callbackFunctionBtnRight($("#popupDialog"));
+				plugin_Notification.callbackFunctionBtnRight == null;
+			}
+			plugin_Notification.popupShow();
+		});
 	},
 	// called by pages.js
 	// called for each page after createPage();
 	afterHtmlInjectedBeforePageComputing : function(container) {
 		app.debug.alert("plugin_" + this.config.name + ".afterHtmlInjectedBeforePageComputing()", 11);
 
-		try {
-			// alert('insert popups');
-			// alert($("body #popupDialog").length);
-			$("body #popupDialog").remove();
-			$("body #popupAlert").remove();
-			// if (($("body #popupDialog").length == 0))
-			app.template.append("#" + $(container).attr("id"), "JQueryMobilePopupDialog");
-			// if (($("body #popupAlert").length == 0))
-			app.template.append("#" + $(container).attr("id"), "JQueryMobilePopupAlert");
+		// alert('insert popups');
+		// alert($("body #popupDialog").length);
+		$("body #popupDialog").remove();
+		$("body #popupAlert").remove();
+		// if (($("body #popupDialog").length == 0))
+		app.template.append("#" + $(container).attr("id"), "JQueryMobilePopupDialog");
+		// if (($("body #popupAlert").length == 0))
+		app.template.append("#" + $(container).attr("id"), "JQueryMobilePopupAlert");
 
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
 	},
 	// called once
 	// set the jQuery delegates
@@ -114,15 +109,6 @@ var plugin_Notification = {
 	pageSpecificEvents : function(container) {
 		app.debug.alert("plugin_" + this.config.name + ".pageSpecificEvents()", 11);
 
-		try {
-
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
 	},
 	// private functions
 	popupShow : function(notification, delay) {
@@ -130,19 +116,47 @@ var plugin_Notification = {
 		if (delay == undefined || delay == null)
 			delay = 300;
 		if (notification != undefined) {
-			setTimeout(function() {
-				$("#popupAlert div[data-role=header] h1").text(notification.title);
-				$("#popupAlert div.ui-content h3.ui-title").text(notification.headline);
-				if (typeof notification.text == "object") {
-					$("#popupAlert div.ui-content p").replaceWith(notification.text);
-				} else {
-					$("#popupAlert div.ui-content p").html(notification.text);
-				}
-				$("#popupAlert").popup("open");
-				$("#popupAlert").popup("reposition");
-			}, delay);
-			plugin_Notification.callbackFuntion = notification.callback;
-		} else {
+			switch (notification.type) {
+			case "alert":
+				setTimeout(function() {
+					$("#popupAlert div[data-role=header] h1").text(notification.title);
+					$("#popupAlert div.ui-content h3.ui-title").text(notification.headline);
+					$("#popupAlert #btn-alert").text(notification.button);
+					if (typeof notification.text == "object") {
+						$("#popupAlert div.ui-content p").replaceWith(notification.text);
+					} else {
+						$("#popupAlert div.ui-content p").html(notification.text);
+					}
+					$("#popupAlert").popup("open");
+					//$("#popupAlert").popup("reposition");
+				}, delay);
+				plugin_Notification.callbackFunction = notification.callback;
+				break;
+			case "dialog":
+				setTimeout(function() {
+					$("#popupDialog div[data-role=header] h1").text(notification.title);
+					$("#popupDialog div.ui-content h3.ui-title").text(notification.headline);
+					$("#popupDialog #btn-dialog-left").text(notification.buttonLeft);
+					$("#popupDialog #btn-dialog-right").text(notification.buttonRight);
+					if (typeof notification.text == "object") {
+						$("#popupDialog div.ui-content p").replaceWith(notification.text);
+					} else {
+						$("#popupDialog div.ui-content p").html(notification.text);
+					}
+					$("#popupDialog").popup("open");
+					//$("#popupDialog").popup("reposition");
+				}, delay);
+				plugin_Notification.callbackFunctionBtnLeft = notification.callbackButtonLeft;
+				plugin_Notification.callbackFunctionBtnRight = notification.callbackButtonRight;
+				break;
+			default:
+				alert("error in popupShow();");
+				break;
+			}
+
+		}
+		// display popups from array
+		else {
 			if (plugin_Notification.notifications != null) {
 				if (Object.keys(plugin_Notification.notifications).length == 0)
 					plugin_Notification.notifications = null;
@@ -154,8 +168,10 @@ var plugin_Notification = {
 					setTimeout(function() {
 						$("#popupAlert div[data-role=header] h1").text(notification.title);
 						$("#popupAlert div.ui-content h3.ui-title").text(notification.headline);
+						$("#popupAlert #btn-alert").text(notification.button);
 						$("#popupAlert div.ui-content p").html(notification.text);
 						$("#popupAlert").popup("open");
+						//$("#popupAlert").popup("reposition");
 					}, delay);
 				}
 			}
@@ -182,36 +198,66 @@ var plugin_Notification = {
 		push_onNotification : function(event) {
 			alert(event.alert);
 		},
-		alert : function(text, title, headline, callback, delay) {
+		alert : function(text, title, headline, button, callbackButton, delayInMs) {
 			if (text == undefined)
 				text = false;
 			if (headline == undefined)
 				headline = false;
 			if (title == undefined)
 				title = false;
-			if (callback == undefined)
-				callback = false;
+			if (button == undefined)
+				button = false;
+			if (callbackButton == undefined)
+				callbackButton = false;
 			notification = {
 				"type" : "alert",
 				"text" : text,
 				"title" : title,
 				"headline" : headline,
-				"callback" : callback
+				"button" : button,
+				"callback" : callbackButton
 			};
-			plugin_Notification.popupShow(notification, delay);
+			plugin_Notification.popupShow(notification, delayInMs);
 		},
-		dialog : function(text, title) {
+		dialog : function(text, title, headline, buttonLeft, buttonRight, callbackButtonLeft, callbackButtonRight, delayInMs) {
+			if (text == undefined || text == null)
+				text = false;
+			if (headline == undefined || headline == null)
+				headline = false;
+			if (title == undefined || title == null)
+				title = false;
+			if (buttonLeft == undefined || buttonLeft == null)
+				buttonLeft = false;
+			if (buttonRight == undefined || buttonRight == null)
+				buttonRight = false;
+			if (callbackButtonLeft == undefined || callbackButtonLeft == null)
+				callbackButtonLeft = false;
+			if (callbackButtonRight == undefined || callbackButtonRight == null)
+				callbackButtonRight = false;
+			notification = {
+				"type" : "dialog",
+				"text" : text,
+				"title" : title,
+				"headline" : headline,
+				"buttonLeft" : buttonLeft,
+				"buttonRight" : buttonRight,
+				"callbackButtonLeft" : callbackButtonLeft,
+				"callbackButtonRight" : callbackButtonRight
+			};
+			plugin_Notification.popupShow(notification, delayInMs);
 		},
 		add : {
-			alert : function(text, title, headline, callback) {
+			alert : function(text, title, headline, button, callbackButton) {
 				if (text == undefined)
 					text = false;
 				if (headline == undefined)
 					headline = false;
 				if (title == undefined)
 					title = false;
-				if (callback == undefined)
-					callback = false;
+				if (button == undefined)
+					button = false;
+				if (callbackButton == undefined)
+					callbackButton = false;
 				if (!plugin_Notification.notifications)
 					plugin_Notification.notifications = app.store.localStorage.getObject("popup_notifications");
 				if (!plugin_Notification.notifications)
@@ -222,7 +268,8 @@ var plugin_Notification = {
 					"text" : text,
 					"title" : title,
 					"headline" : headline,
-					"callback" : callback
+					"button" : button,
+					"callback" : callbackButton
 				};
 				app.store.localStorage.setObject("popup_notifications", plugin_Notification.notifications);
 			}

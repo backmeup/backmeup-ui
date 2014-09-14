@@ -41,7 +41,7 @@
 				"scheme":"http",
 				"scheme_specific_part":"://",
 				"host":"themis-dev01.backmeup.at",
-				"port":8080
+				"port":80
 			},
 			"second":{},
 			"third":{},

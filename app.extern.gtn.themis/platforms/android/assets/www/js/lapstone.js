@@ -2,7 +2,7 @@
 var app = {
 	config : {
 		name : "app",
-		min : false,
+		min : true,
 		useJQueryMobile : true,
 		apacheCordova : null
 	},

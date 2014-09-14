@@ -5,17 +5,17 @@
 		"timeout":"int timeout"
 	},
 	"createActionProfile":{
-		"url":"/backmeup-service-rest/plugins/{pluginId}?title={title}&profileType=action&configProperties={configProperties}&options={options}",
+		"url":"/backmeup-service-rest/plugins/{pluginId}?title={title}&profileType=Action&configProperties={configProperties}&options={options}",
 		"method":"post",
 		"timeout":"3000"
 	},
 	"createSinkProfile":{
-		"url":"/backmeup-service-rest/plugins/{pluginId}?title={title}&profileType=sink&configProperties={configProperties}&options={options}",
+		"url":"/backmeup-service-rest/plugins/{pluginId}?title={title}&profileType=Sink&configProperties={configProperties}&options={options}",
 		"method":"post",
 		"timeout":"3000"
 	},
 	"createSourceProfile":{
-		"url":"/backmeup-service-rest/plugins/{pluginId}?title={title}&profileType=source&configProperties={configProperties}&options={options}",
+		"url":"/backmeup-service-rest/plugins/{pluginId}?title={title}&profileType=Source&configProperties={configProperties}&options={options}",
 		"method":"post",
 		"timeout":"3000"
 	},

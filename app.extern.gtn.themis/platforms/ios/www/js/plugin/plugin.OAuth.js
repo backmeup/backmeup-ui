@@ -56,15 +56,18 @@ var plugin_OAuth = {
 	 */
 	desktopOAuth : function(url) {
 		if (app.detect.isDesktop()) {
-			// alert(url);
+			alert("desktop oauth");
 			$(location).attr("href", url);
+			return true;
 		}
+		return false;
 	},
 	functions : {
 		// dropbox
 		dropbox : function(url) {
 			var dfd = $.Deferred();
-			plugin_OAuth.desktopOAuth(url);
+			if (plugin_OAuth.desktopOAuth(url))
+				return;
 			var loginWindow = window.open(url, '_blank', 'location=yes');
 			var eventCount = 0;
 			$(loginWindow).on('loadstart', function(e) {
@@ -91,7 +94,8 @@ var plugin_OAuth = {
 		// facebook
 		facebook : function(url) {
 			var dfd = $.Deferred();
-			plugin_OAuth.desktopOAuth(url);
+			if (plugin_OAuth.desktopOAuth(url))
+				return;
 			var loginWindow = window.open(url, '_blank', 'location=yes');
 			var eventCount = 0;
 			$(loginWindow).on('loadstart', function(e) {
@@ -126,9 +130,9 @@ var plugin_OAuth = {
 				redirect_uri : redirect_uri,
 				grant_type : 'authorization_code'
 			}).done(function(data) {
-				//deferred.resolve(data);
+				// deferred.resolve(data);
 			}).fail(function(response) {
-				//deferred.reject(response.responseJSON);
+				// deferred.reject(response.responseJSON);
 			});
 		}
 	}

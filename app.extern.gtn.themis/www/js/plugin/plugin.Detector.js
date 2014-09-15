@@ -408,7 +408,7 @@ var plugin_Detector = {
 				},
 				version : {}
 			},
-			isCannonicla : function() {
+			isCannonical : function() {
 				if (plugin_Detector.functions.desktop.cannonical.Ubuntu())
 					return "app-desktop-cannonical";
 				else

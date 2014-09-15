@@ -14,8 +14,8 @@ var page_create_backup_1_newSource = {
 			var error = /\?error=(.+)$/.exec(url);
 			var access_token = /\?oauth_token=(.+)$/.exec(url);
 			var code = /\?code=(.+)$/.exec(url);
-			app.store.localStorage.removeItem("data-html5-themis-oAuthCode")
-			app.store.localStorage.removeItem("data-html5-themis-oAuthToken")
+			app.store.localStorage.set("data-html5-themis-oAuthCode", "unused");
+			app.store.localStorage.set("data-html5-themis-oAuthToken", "unused");
 			if (access_token) {
 				var access_token = (access_token + "").split("=");
 				access_token = access_token[1] + "";
@@ -25,7 +25,7 @@ var page_create_backup_1_newSource = {
 				var code = (code + "").split("=");
 				code = code[1] + "";
 				code = code.split("&");
-				//alert(code[0]);
+				// alert(code[0]);
 				app.store.localStorage.set("data-html5-themis-oAuthCode", code[0]);
 			} else if (error) {
 				alert("oauth error" + error);

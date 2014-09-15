@@ -87,7 +87,7 @@ var plugin_OAuth = {
 			});
 			return dfd.promise();
 		},
-		
+
 		// facebook
 		facebook : function(url) {
 			var dfd = $.Deferred();
@@ -107,7 +107,7 @@ var plugin_OAuth = {
 						code = code.split("&");
 						alert(code);
 						// get token
-						
+
 						dfd.resolve(code[0]);
 					} else if (error) {
 						loginWindow.close();
@@ -117,6 +117,19 @@ var plugin_OAuth = {
 			});
 
 			return dfd.promise();
+		},
+		facebookToken : function(code, client_id, client_secret, redirect_uri) {
+			$.post('https://accounts.google.com/o/oauth2/token', {
+				code : code,
+				client_id : client_id,
+				client_secret : client_secret,
+				redirect_uri : redirect_uri,
+				grant_type : 'authorization_code'
+			}).done(function(data) {
+				//deferred.resolve(data);
+			}).fail(function(response) {
+				//deferred.reject(response.responseJSON);
+			});
 		}
 	}
 };

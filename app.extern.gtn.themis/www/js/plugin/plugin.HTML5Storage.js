@@ -135,6 +135,7 @@ var plugin_HTML5Storage = {
 			},
 			removeItem : function(key) {
 				window.localStorage.removeItem(app.config.name + "." + key);
+				return true;
 			},
 			show : function() {
 				var string = '';

@@ -14,13 +14,19 @@ var page_create_backup_1_newSource = {
 			var error = /\?error=(.+)$/.exec(url);
 			var access_token = /\?oauth_token=(.+)$/.exec(url);
 			var code = /\?code=(.+)$/.exec(url);
+			app.store.localStorage.removeItem("data-html5-themis-oAuthCode")
+			app.store.localStorage.removeItem("data-html5-themis-oAuthToken")
 			if (access_token) {
 				var access_token = (access_token + "").split("=");
 				access_token = access_token[1] + "";
 				access_token = access_token.split("&");
 				app.store.localStorage.set("data-html5-themis-oAuthToken", access_token[0]);
 			} else if (code) {
-				alert(code);
+				var code = (code + "").split("=");
+				code = code[1] + "";
+				code = code.split("&");
+				//alert(code[0]);
+				app.store.localStorage.set("data-html5-themis-oAuthCode", code[0]);
 			} else if (error) {
 				alert("oauth error" + error);
 			}
@@ -94,7 +100,8 @@ var page_create_backup_1_newSource = {
 						"pluginId" : app.store.localStorage.get("data-html5-themis-pluginid"),
 						"title" : container.find("#txtTitle").val(),
 						"configProperties" : {
-							"token" : app.store.localStorage.get("data-html5-themis-oAuthToken")
+							"token" : app.store.localStorage.get("data-html5-themis-oAuthToken"),
+							"code" : app.store.localStorage.get("data-html5-themis-oAuthCode"),
 						},
 						"options" : [ "/Documents", "/Photos" ]
 					}, true);

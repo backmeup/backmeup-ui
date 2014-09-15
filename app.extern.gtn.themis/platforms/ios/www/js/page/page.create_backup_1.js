@@ -87,8 +87,11 @@ var page_create_backup_1 = {
 
 			$(document).on("click", ".configtype-oauth", function(event) {
 				// alert($(this).attr("data-html5-oAuthUrl"));
-				var url = $(this).attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback", "http://themis-dev01.backmeup.at/page/create_backup_1_newSource.html");
+				// var url =
+				// $(this).attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback/",
+				// "http://themis-dev01.backmeup.at/page/create_backup_1_newSource.html");
 
+				var url = $(this).attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback/", "http://themis-dev01.backmeup.at/page/create_backup_1_newSource.html");
 				app.notify.dialog("Hier Stehen die vorhandenen Profile. Welches Webservice?", app.lang.string("choose_profile", "headlines"), app.lang.string("choose_profile", "headlines"), app.lang.string("new_source_profile", "actions"), app.lang.string("cancel", "actions"), function(popup) {
 					window.setTimeout(function() {
 

@@ -9,40 +9,40 @@ var plugin_OAuth = {
 	config : null,
 	// called by plugins.js
 	constructor : function() {
-		
+
 	},
 
 	// called after all plugins are loaded
 	pluginsLoaded : function() {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
-		
+
 	},
 
 	// called after all pages are loaded
 	// caller pages.js
 	pagesLoaded : function() {
 		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
-		
+
 	},
 
 	// called after pluginsLoaded()
 	// caller: plugins.js
 	definePluginEvents : function() {
 		app.debug.alert("plugin_" + this.config.name + ".definePluginEvents()", 11);
-		
+
 	},
 	// called by pages.js
 	// called for each page after createPage();
 	afterHtmlInjectedBeforePageComputing : function(container) {
 		app.debug.alert("plugin_" + this.config.name + ".afterHtmlInjectedBeforePageComputing()", 11);
-		
+
 	},
 	// called once
 	// set the jQuery delegates
 	// caller: pages.js
 	pageSpecificEvents : function(container) {
 		app.debug.alert("plugin_" + this.config.name + ".pageSpecificEvents()", 11);
-		
+
 	},
 	// private functions
 
@@ -54,36 +54,68 @@ var plugin_OAuth = {
 	 * @namespace plugin_OAuth.functions
 	 * 
 	 */
+	desktopOAuth : function(url) {
+		if (app.detect.isDesktop()) {
+			// alert(url);
+			$(location).attr("href", url);
+		}
+	},
 	functions : {
+		// dropbox
 		dropbox : function(url) {
-			
 			var dfd = $.Deferred();
-
-			if (app.detect.isDesktop()) {
-				//alert(url);
-				$(location).attr("href", url);
-			} else {
-				var loginWindow = window.open(url, '_blank', 'location=yes');
-				var eventCount = 0;
-				$(loginWindow).on('loadstart', function(e) {
-					eventCount++;
-					if (eventCount > 2) {
-						var url = e.originalEvent.url;
-						var error = /\?error=(.+)$/.exec(url);
-						var access_token = /\?oauth_token=(.+)$/.exec(url);
-						if (access_token) {
-							loginWindow.close();
-							var access_token = (access_token + "").split("=");
-							access_token = access_token[1] + "";
-							access_token = access_token.split("&");
-							dfd.resolve(access_token[0]);
-						} else if (error) {
-							loginWindow.close();
-							dfd.reject(error);
-						}
+			plugin_OAuth.desktopOAuth(url);
+			var loginWindow = window.open(url, '_blank', 'location=yes');
+			var eventCount = 0;
+			$(loginWindow).on('loadstart', function(e) {
+				eventCount++;
+				if (eventCount > 2) {
+					var url = e.originalEvent.url;
+					var error = /\?error=(.+)$/.exec(url);
+					var access_token = /\?oauth_token=(.+)$/.exec(url);
+					if (access_token) {
+						loginWindow.close();
+						var access_token = (access_token + "").split("=");
+						access_token = access_token[1] + "";
+						access_token = access_token.split("&");
+						dfd.resolve(access_token[0]);
+					} else if (error) {
+						loginWindow.close();
+						dfd.reject(error);
 					}
-				});
-			}
+				}
+			});
+			return dfd.promise();
+		},
+		
+		// facebook
+		facebook : function(url) {
+			var dfd = $.Deferred();
+			plugin_OAuth.desktopOAuth(url);
+			var loginWindow = window.open(url, '_blank', 'location=yes');
+			var eventCount = 0;
+			$(loginWindow).on('loadstart', function(e) {
+				eventCount++;
+				if (eventCount > 2) {
+					var url = e.originalEvent.url;
+					var error = /\?error=(.+)$/.exec(url);
+					var code = /\?code=(.+)$/.exec(url);
+					if (code) {
+						loginWindow.close();
+						var code = (access_token + "").split("=");
+						code = code[1] + "";
+						code = code.split("&");
+						alert(code);
+						// get token
+						
+						dfd.resolve(code[0]);
+					} else if (error) {
+						loginWindow.close();
+						dfd.reject(error);
+					}
+				}
+			});
+
 			return dfd.promise();
 		}
 	}

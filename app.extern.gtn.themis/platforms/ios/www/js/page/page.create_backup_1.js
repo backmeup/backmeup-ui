@@ -87,11 +87,18 @@ var page_create_backup_1 = {
 
 			$(document).on("click", ".configtype-oauth", function(event) {
 				// alert($(this).attr("data-html5-oAuthUrl"));
-				var url = $(this).attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback", "http://localhost:8000/ios/www/page/create_backup_1_newSource.html");
+				var url = $(this).attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback", "http://themis-dev01.backmeup.at/page/create_backup_1_newSource.html");
 
 				app.notify.dialog("Hier Stehen die vorhandenen Profile. Welches Webservice?", app.lang.string("choose_profile", "headlines"), app.lang.string("choose_profile", "headlines"), app.lang.string("new_source_profile", "actions"), app.lang.string("cancel", "actions"), function(popup) {
 					window.setTimeout(function() {
-						var promise = app.oa.dropbox(url);
+
+						var promise = null;
+						if (url.indexOf("dropbox") > -1)
+							promise = app.oa.dropbox(url);
+						else if (url.indexOf("facebook") > -1)
+							promise = app.oa.facebook(url);
+						else
+							alert("undefined oAuth page");
 
 						// app.store.localStorage.set("data-html5-themis-pluginid",
 						// $(this).attr("data-html5-pluginId"));

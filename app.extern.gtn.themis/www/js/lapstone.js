@@ -2,7 +2,7 @@
 var app = {
 	config : {
 		name : "app",
-		min : true,
+		min : false,
 		useJQueryMobile : true,
 		apacheCordova : null
 	},
@@ -17,7 +17,7 @@ function loadPlugins() {
 
 	// load plugins
 	var url;
-	if (app.config.min) { 
+	if (app.config.min) {
 		url = "../js/plugin/all.js";
 	} else {
 		url = "../js/plugin/plugins.js";

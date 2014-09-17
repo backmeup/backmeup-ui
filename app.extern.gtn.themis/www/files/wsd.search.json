@@ -3,5 +3,10 @@
 		"url":"string url",
 		"method":"string method",
 		"timeout":"int timeout"
+	},
+	"search":{
+		"url":"/backmeup-service-rest/backups/{userId}/search?query={query}",
+		"method":"put",
+		"timeout":"3000"
 	}
 }

@@ -55,7 +55,8 @@ var plugin_OAuth = {
 	 * 
 	 */
 	desktopOAuth : function(url) {
-		if (app.detect.isDesktop()) {
+		//alert(app.config.apacheCordova);
+		if (app.config.apacheCordova == null || app.config.apacheCordova == false) {
 			alert("desktop oauth");
 			$(location).attr("href", url);
 			return true;

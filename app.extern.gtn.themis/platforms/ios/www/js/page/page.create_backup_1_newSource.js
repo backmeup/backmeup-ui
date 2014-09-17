@@ -9,6 +9,7 @@ var page_create_backup_1_newSource = {
 	// load the html structure
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
+		// get token from url
 		if (app.detect.isDesktop()) {
 			var url = window.location.href;
 			var error = /\?error=(.+)$/.exec(url);
@@ -36,94 +37,106 @@ var page_create_backup_1_newSource = {
 		var content = $('div[data-role=content]');
 		var navPanel = $('div#nav-panel');
 		var pagePanel = $('div#page-panel');
-		// datasources
-		content.append(app.ni.element.h1({
-			"text" : app.lang.string("new_datasource", "headlines"),
-			"styles" : {
-				"clear" : "both"
-			}
-		}));
-		content.append(app.ni.text.text({
-			"id" : "txtTitle",
-			"placeholder" : app.lang.string("title", "labels"),
-			"label" : true,
-			"labelText" : app.lang.string("title", "labels"),
-			"container" : true
-		}));
-		content.append(app.ni.button.button({
-			"id" : "btnCreate",
-			"placeholder" : app.lang.string("create_source", "labels"),
-			"label" : true,
-			"labelText" : app.lang.string("create_source", "labels"),
-			"container" : true,
-			"value" : app.lang.string("create_source", "actions")
-		}));
-		return true;
+
+		app.template.append("div[data-role=content]", "app-loader-bubble");
+
+		var promise = app.rc.getJson("getPlugin", {
+			"pluginId" : app.store.localStorage.get("data-html5-themis-pluginid"),
+			"expandProfiles" : true
+		}, true);
+
+		promise.done(function(resultObject) {
+			//alert(JSON.stringify(resultObject));
+			// datasources
+			content.append(app.ni.element.h1({
+				"text" : app.lang.string("new_datasource", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
+			}));
+			content.append(app.ni.text.text({
+				"id" : "txtTitle",
+				"placeholder" : app.lang.string("title", "labels"),
+				"label" : true,
+				"labelText" : app.lang.string("title", "labels"),
+				"container" : true
+			}));
+			content.append(app.ni.button.button({
+				"id" : "btnCreate",
+				"placeholder" : app.lang.string("create_source", "labels"),
+				"label" : true,
+				"labelText" : app.lang.string("create_source", "labels"),
+				"container" : true,
+				"value" : app.lang.string("create_source", "actions")
+			}));
+
+			$(".app-loader").remove();
+			app.help.jQM.enhance(content);
+		});
+
+		promise.fail(function(resultObject) {
+			alert("ws error");
+		});
 	},
 
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 
-		try {
-			$(container).on("click", "#btnCreate", function() {
-				app.template.append("div[data-role=content]", "app-loader-bubble");
-				var configType = app.store.localStorage.get("data-html5-configtype");
-				// alert(configType);
-				if (configType == "input") {
-					var promise = app.rc.getJson("createSourceProfile", {
-						"pluginId" : app.store.localStorage.get("data-html5-themis-pluginid"),
-						"title" : container.find("#txtTitle").val(),
-						"configProperties" : {
-							"text" : "true",
-							"image" : "true",
-							"pdf" : "true",
-							"binary" : "true"
-						},
-						"options" : [ "" ]
-					}, true);
+		$(container).on("click", "#btnCreate", function() {
+			app.template.append("div[data-role=content]", "app-loader-bubble");
 
-					promise.done(function(resultObject) {
-						 alert(JSON.stringify(resultObject));
-						app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
-						$(".app-loader").remove();
-						$(location).attr("href", "create_backup_2.html");
-					});
+			var configType = app.store.localStorage.get("data-html5-configtype");
+			// alert(configType);
+			if (configType == "input") {
+				var promise = app.rc.getJson("createSourceProfile", {
+					"pluginId" : app.store.localStorage.get("data-html5-themis-pluginid"),
+					"title" : container.find("#txtTitle").val(),
+					"configProperties" : {
+						"text" : "true",
+						"image" : "true",
+						"pdf" : "true",
+						"binary" : "true"
+					},
+					"options" : [ "" ]
+				}, true);
 
-					promise.fail(function(error) {
-						alert("webservice error: " + error);
-					});
+				promise.done(function(resultObject) {
+					//alert(JSON.stringify(resultObject));
+					app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
+					$(".app-loader").remove();
+					$(location).attr("href", "create_backup_2.html");
+				});
 
-				} else if (configType == "oauth") {
+				promise.fail(function(error) {
+					alert("webservice error: " + error);
+				});
 
-					var promise = app.rc.getJson("createSourceProfile", {
-						"pluginId" : app.store.localStorage.get("data-html5-themis-pluginid"),
-						"title" : container.find("#txtTitle").val(),
-						"configProperties" : {
-							"token" : app.store.localStorage.get("data-html5-themis-oAuthToken"),
-							"code" : app.store.localStorage.get("data-html5-themis-oAuthCode"),
-						},
-						"options" : [ "/Documents", "/Photos" ]
-					}, true);
+			} else if (configType == "oauth") {
 
-					promise.done(function(resultObject) {
-						$(".app-loader").remove();
-						$(location).attr("href", "create_backup_2.html");
-					});
+				var promise = app.rc.getJson("createSourceProfile", {
+					"pluginId" : app.store.localStorage.get("data-html5-themis-pluginid"),
+					"title" : container.find("#txtTitle").val(),
+					"configProperties" : {
+						"token" : app.store.localStorage.get("data-html5-themis-oAuthToken"),
+						"code" : app.store.localStorage.get("data-html5-themis-oAuthCode"),
+					},
+					"options" : [ "/Documents", "/Photos", "/Profiles", "/Friends", "/Groups", "/Sites", "/Posts", "Photos", "Albums","Profiles", "Friends", "Groups", "Sites", "Posts", "Photos", "Albums",  ]
+				}, true);
 
-					promise.fail(function(error) {
-						alert("webservice error: " + error);
-					});
-				}
+				promise.done(function(resultObject) {
+					alert(JSON.stringify(resultObject));
+					app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
+					$(".app-loader").remove();
+					$(location).attr("href", "create_backup_2.html");
+				});
 
-			});
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+				promise.fail(function(error) {
+					alert("webservice error: " + error);
+				});
+			}
+
+		});
 
 	},
 

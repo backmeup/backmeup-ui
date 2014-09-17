@@ -10,63 +10,59 @@ var page_create_backup_1 = {
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 
-		try {
-			var header = $('div[data-role=header]');
-			var content = $('div[data-role=content]');
-			var navPanel = $('div#nav-panel');
-			var pagePanel = $('div#page-panel');
-			// datasources
+		var header = $('div[data-role=header]');
+		var content = $('div[data-role=content]');
+		var navPanel = $('div#nav-panel');
+		var pagePanel = $('div#page-panel');
+		// datasources
 
-			app.template.append("div[data-role=content]", "app-loader-bubble");
+		app.template.append("div[data-role=content]", "app-loader-bubble");
 
-			var promise = app.rc.getJson("getSources", {
-				"expandProfiles" : true
-			}, true);
+		var promise = app.rc.getJson("getSources", {
+			"expandProfiles" : true
+		}, true);
 
-			promise.done(function(resultObject) {
-				content.append(app.ni.element.h1({
-					"text" : app.lang.string("new_datasource", "headlines"),
-					"styles" : {
-						"clear" : "both"
+		promise.done(function(resultObject) {
+			content.append(app.ni.element.h1({
+				"text" : app.lang.string("new_datasource", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
+			}));
+			// alert(JSON.stringify(resultObject));
+			var list = $(app.template.get("listA", "responsive"));
+			$.each(resultObject, function(index, pluginJson) {
+				// alert(JSON.stringify(pluginJson));
+				list.append(app.ni.list.thumbnail({
+					href : "#",
+					imageSrc : pluginJson.imageURL,
+					title : "Id: " + pluginJson.datasourceProfileId,
+					headline : pluginJson.title,
+					text : pluginJson.pluginName,
+					classes : [ 'source', 'configtype-' + pluginJson.config.configType ],
+					attributes : {
+						"data-html5-oAuthUrl" : pluginJson.config.redirectURL,
+						"data-html5-themis-pluginid" : pluginJson.pluginId,
+						"data-html5-configType" : pluginJson.config.configType
 					}
 				}));
-				// alert(JSON.stringify(resultObject));
-				var list = $(app.template.get("listA", "responsive"));
-				$.each(resultObject, function(index, pluginJson) {
-					// alert(JSON.stringify(pluginJson));
-					list.append(app.ni.list.thumbnail({
-						href : "#",
-						imageSrc : pluginJson.imageURL,
-						title : "Id: " + pluginJson.datasourceProfileId,
-						headline : pluginJson.title,
-						text : pluginJson.pluginName,
-						classes : [ 'source', 'configtype-' + pluginJson.config.configType ],
-						attributes : {
-							"data-html5-oAuthUrl" : pluginJson.config.redirectURL,
-							"data-html5-themis-pluginid" : pluginJson.pluginId,
-							"data-html5-configType" : pluginJson.config.configType
-						}
-					}));
-				});
-				content.append(list);
-				content.append(app.ni.element.h1({
-					"text" : app.lang.string("existing_datasources", "headlines"),
-					"styles" : {
-						"clear" : "both"
-					}
-				}));
-				$(".app-loader").remove();
-
-				app.help.jQM.enhance(content);
 			});
+			content.append(list);
+			content.append(app.ni.element.h1({
+				"text" : app.lang.string("existing_datasources", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
+			}));
+			$(".app-loader").remove();
 
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+			app.help.jQM.enhance(content);
+		});
+
+		promise.fail(function(resultObject) {
+			alert("ws error");
+		});
+
 	},
 
 	// set the jquery events
@@ -78,6 +74,7 @@ var page_create_backup_1 = {
 
 				app.notify.dialog("Hier Stehen die vorhandenen Profile. Welches Webservice?", app.lang.string("choose_profile", "headlines"), app.lang.string("choose_profile", "headlines"), app.lang.string("new_source_profile", "actions"), app.lang.string("cancel", "actions"), function(popup) {
 					window.setTimeout(function() {
+						// $(this).attr("data-html5-oAuthUrl")
 						$(location).attr("href", "create_backup_1_newSource.html");
 					}, 10);
 				}, function(popup) {
@@ -96,6 +93,7 @@ var page_create_backup_1 = {
 					window.setTimeout(function() {
 
 						var promise = null;
+						//alert(url);
 						if (url.indexOf("dropbox") > -1)
 							promise = app.oa.dropbox(url);
 						else if (url.indexOf("facebook") > -1)

@@ -7,7 +7,7 @@ var page_login = {
 
 	// load the html structure
 	creator : function(container) {
-		
+
 		try {
 			app.debug.alert("page_" + this.config.name + ".creator()", 10);
 			var header = container.find('div[data-role=header]');
@@ -54,41 +54,35 @@ var page_login = {
 
 	// set the jquery events
 	setEvents : function(container) {
-		
-		try {
-			$(container).on("click", "#btnLogin", function() {
-				app.debug.alert("page_" + page_register.config.name + " #btnRegister click", 25);
-				if (!app.help.validate.username(container.find("#txtEmail").val())) {
-					app.notify.alert(app.lang.string("bad_username", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_username", "headlines"))
-				} else if (!app.help.validate.password(container.find("#txtPassword").val(), container.find("#txtPasswordRpt").val())) {
-					app.notify.alert(app.lang.string("bad_password", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_login", "headlines"))
-				} else {
-					if ((json = app.rc.getJson("authenticate", {
-						"username" : container.find("#txtUsername").val(),
-						"password" : container.find("#txtPassword").val()
-					})) != false) {
-						if (json.accessToken != undefined) {
-							app.store.localStorage.clearHtml5();
-							app.store.localStorage.set("data-html5-themis-loggedin", true);
-							app.sess.loggedIn("true");
-							app.store.localStorage.set("data-html5-themis-username", container.find("#txtEmail").val());
-							app.store.localStorage.set("data-html5-themis-token", json.accessToken);
-							$(location).attr("href", "start.html");
-						} else {
-							alert("Benutzername oder Passwort falsch.");
-						}
+
+		$(container).on("click", "#btnLogin", function() {
+			app.debug.alert("page_" + page_register.config.name + " #btnRegister click", 25);
+			if (!app.help.validate.username(container.find("#txtEmail").val())) {
+				app.notify.alert(app.lang.string("bad_username", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_username", "headlines"))
+			} else if (!app.help.validate.password(container.find("#txtPassword").val(), container.find("#txtPasswordRpt").val())) {
+				app.notify.alert(app.lang.string("bad_password", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_login", "headlines"))
+			} else {
+				if ((json = app.rc.getJson("authenticate", {
+					"username" : container.find("#txtUsername").val(),
+					"password" : container.find("#txtPassword").val()
+				})) != false) {
+					if (json.accessToken != undefined) {
+						//alert(JSON.stringify(json));
+						app.store.localStorage.clearHtml5();
+						app.store.localStorage.set("data-html5-themis-loggedin", true);
+						app.sess.loggedIn("true");
+						app.store.localStorage.set("data-html5-themis-username", container.find("#txtUsername").val());
+						app.store.localStorage.set("data-html5-themis-token", json.accessToken);
+						$(location).attr("href", "start.html");
 					} else {
-						app.notify.alert(app.lang.string("bad_login", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_login", "headlines"))
+						alert("Benutzername oder Passwort falsch.");
 					}
+				} else {
+					app.notify.alert(app.lang.string("bad_login", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_login", "headlines"))
 				}
-			});
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+			}
+		});
+
 	},
 
 	events : {
@@ -100,12 +94,12 @@ var page_login = {
 		// process.
 		pagebeforechange : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforechange()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -115,12 +109,12 @@ var page_login = {
 		// auto-initialization occurs.
 		pagebeforecreate : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforecreate()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -131,12 +125,12 @@ var page_login = {
 		// actual transition animation is kicked off.
 		pagebeforehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforehide()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -145,12 +139,12 @@ var page_login = {
 		// Triggered before any load request is made.
 		pagebeforeload : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeload()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -160,12 +154,12 @@ var page_login = {
 		// transition animation is kicked off.
 		pagebeforeshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeshow()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -176,12 +170,12 @@ var page_login = {
 		// completed.
 		pagechange : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagechange()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -190,12 +184,12 @@ var page_login = {
 		// Triggered when the changePage() request fails to load the page.
 		pagechangefailed : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagechangefailed()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -208,12 +202,12 @@ var page_login = {
 		// markup.
 		pagecreate : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagecreate()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -223,12 +217,12 @@ var page_login = {
 		// completed.
 		pagehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagehide()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -237,12 +231,12 @@ var page_login = {
 		// Triggered on the page being initialized, after initialization occurs.
 		pageinit : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageinit()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -252,12 +246,12 @@ var page_login = {
 		// DOM.
 		pageload : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageload()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -266,12 +260,12 @@ var page_login = {
 		// Triggered if the page load request failed.
 		pageloadfailed : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageloadfailed()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -282,12 +276,12 @@ var page_login = {
 		// from the DOM.
 		pageremove : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageremove()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;
@@ -297,12 +291,12 @@ var page_login = {
 		// completed.
 		pageshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageshow()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
 				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+				app.debug.log(JSON.stringify(err, null, 4));
 				success = false;
 			}
 			return success;

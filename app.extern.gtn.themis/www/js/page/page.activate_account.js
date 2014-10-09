@@ -9,6 +9,15 @@ var page_activate_account = {
 	// load the html structure
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
+		
+		app.debug.alert("page_" + this.config.name + ".creator()", 10);
+		var header = container.find('div[data-role=header]');
+		var content = container.find('div[data-role=content]');
+		var navPanel = container.find('div#nav-panel');
+		// content
+		content.append(app.ni.element.h1({
+			"text" : app.lang.string("activate_account", "headlines")
+		}));
 
 	},
 

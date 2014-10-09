@@ -7,10 +7,11 @@ var page_register = {
 
 	// load the html structure
 	creator : function(container) {
-		
+
 		try {
-			//app.template.append("div[data-role=content]", "app-loader-bubble");
-			
+			// app.template.append("div[data-role=content]",
+			// "app-loader-bubble");
+
 			app.debug.alert("page_" + this.config.name + ".creator()", 10);
 			var header = container.find('div[data-role=header]');
 			var content = container.find('div[data-role=content]');
@@ -79,13 +80,21 @@ var page_register = {
 
 	// set the jquery events
 	setEvents : function(container) {
-		
+
 		try {
 			$(container).on("click", "#btnRegister", function() {
 				app.debug.alert("page_" + page_register.config.name + " #btnRegister click", 25);
-				if (!app.help.validate.email(container.find("#txtEmail").val())) {
+				if (!app.help.validate.firstname(container.find("#txtFirstname").val())) {
+					app.notify.alert(app.lang.string("bad_firstname", "notifications"), app.lang.string("register", "headlines"), app.lang.string("register", "headlines"));
+				} else if (!app.help.validate.lastname(container.find("#txtLastname").val())) {
+					app.notify.alert(app.lang.string("bad_lastname", "notifications"), app.lang.string("register", "headlines"), app.lang.string("register", "headlines"));
+				} else if (!app.help.validate.username(container.find("#txtUsername").val())) {
+					app.notify.alert(app.lang.string("bad_username", "notifications"), app.lang.string("register", "headlines"), app.lang.string("register", "headlines"));
+				} else if (!app.help.validate.email(container.find("#txtEmail").val())) {
 					app.notify.alert(app.lang.string("bad_email", "notifications"), app.lang.string("register", "headlines"), app.lang.string("register", "headlines"));
-				} else if (!app.help.validate.password(container.find("#txtPassword").val(), container.find("#txtPasswordRpt").val())) {
+				} else if (!app.help.validate.equal(container.find("#txtPassword").val(), container.find("#txtPasswordRpt").val())) {
+					app.notify.alert(app.lang.string("bad_password_equal", "notifications"), app.lang.string("register", "headlines"), app.lang.string("register", "headlines"));
+				} else if (!app.help.validate.password(container.find("#txtPassword").val())) {
 					app.notify.alert(app.lang.string("bad_password", "notifications"), app.lang.string("register", "headlines"), app.lang.string("register", "headlines"));
 				} else {
 					if ((json = app.rc.getJson("register", {
@@ -100,7 +109,7 @@ var page_register = {
 							app.store.localStorage.set("data-html5-themis-userid", json.userId);
 							app.store.localStorage.set("data-html5-themis-activated", json.activated);
 							app.store.localStorage.set("data-html5-themis-username", container.find("#txtUsername").val());
-							$(location).attr("href", "login.html");
+							$(location).attr("href", "activate_account.html");
 						} else {
 							app.notify.alert(app.lang.string("bad_register", "notifications"), app.lang.string("register", "headlines"), app.lang.string("bad_register", "headlines"));
 						}

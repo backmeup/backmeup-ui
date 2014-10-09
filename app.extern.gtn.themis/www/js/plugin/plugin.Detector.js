@@ -10,13 +10,13 @@ var plugin_Detector = {
 	cssClasses : {},
 	// called by plugins.js
 	constructor : function() {
-		
+
 	},
 
 	// called after all plugins are loaded
 	pluginsLoaded : function() {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
-		
+
 		try {
 			plugin_Detector.functions.classes.generate();
 			app.debug.alert("Css Classes in body Tag: " + plugin_Detector.functions.classes.classNames(), 60);
@@ -35,7 +35,7 @@ var plugin_Detector = {
 	// caller pages.js
 	pagesLoaded : function() {
 		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
-		
+
 		try {
 
 			success = true;
@@ -51,7 +51,7 @@ var plugin_Detector = {
 	// caller: plugins.js
 	definePluginEvents : function() {
 		app.debug.alert("plugin_" + this.config.name + ".definePluginEvents()", 11);
-		
+
 		try {
 			var dfdCordovaDeviceReady = $.Deferred();
 			var dfdJQueryMobileInit = $.Deferred();
@@ -83,7 +83,7 @@ var plugin_Detector = {
 	// called for each page after createPage();
 	afterHtmlInjectedBeforePageComputing : function(container) {
 		app.debug.alert("plugin_" + this.config.name + ".afterHtmlInjectedBeforePageComputing()", 11);
-		
+
 		try {
 			if (plugin_Detector.config.addCssClassesToBodyTag) {
 				// add css classes
@@ -106,7 +106,7 @@ var plugin_Detector = {
 	// caller: pages.js
 	pageSpecificEvents : function(container) {
 		app.debug.alert("plugin_" + this.config.name + ".pageSpecificEvents()", 11);
-		
+
 	},
 	// private functions
 	jQueryMobileAndCordovaLoaded : function() {
@@ -375,7 +375,7 @@ var plugin_Detector = {
 			},
 		},
 		isDesktop : function() {
-			if (plugin_Detector.functions.desktop.isApple() || plugin_Detector.functions.desktop.isCannonicla() || plugin_Detector.functions.desktop.isMicrosoft())
+			if (plugin_Detector.functions.desktop.isApple() || plugin_Detector.functions.desktop.isCannonicla() || plugin_Detector.functions.desktop.isMicrosoft() || plugin_Detector.functions.desktop.isDebian())
 				return "app-desktop";
 			else
 				return false;
@@ -416,7 +416,19 @@ var plugin_Detector = {
 			},
 			cannonical : {
 				Ubuntu : function() {
+					return navigator.userAgent.match(/Ubuntu/i);
+				},
+				version : {}
+			},
+			isDebian : function() {
+				if (plugin_Detector.functions.desktop.debian.Debian())
+					return "app-desktop-debian";
+				else
 					return false;
+			},
+			debian : {
+				Debian : function() {
+					return navigator.userAgent.match(/Linux/i);
 				},
 				version : {}
 			},

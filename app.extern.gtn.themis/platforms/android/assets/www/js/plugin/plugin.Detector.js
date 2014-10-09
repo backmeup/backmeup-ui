@@ -375,7 +375,7 @@ var plugin_Detector = {
 			},
 		},
 		isDesktop : function() {
-			if (plugin_Detector.functions.desktop.isApple() || plugin_Detector.functions.desktop.isCannonicla() || plugin_Detector.functions.desktop.isMicrosoft())
+			if (plugin_Detector.functions.desktop.isApple() || plugin_Detector.functions.desktop.isCannonical() || plugin_Detector.functions.desktop.isMicrosoft())
 				return "app-desktop";
 			else
 				return false;

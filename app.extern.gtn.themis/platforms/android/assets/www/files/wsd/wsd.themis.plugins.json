@@ -1,0 +1,47 @@
+{
+	"template":{
+		"url":"string url",
+		"method":"string method",
+		"timeout":"int timeout"
+	},
+	"createActionProfile":{
+		"url":"/backmeup-service-rest/plugins/{pluginId}?title={title}&profileType=Action&configProperties={configProperties}&options={options}",
+		"method":"post",
+		"timeout":"3000"
+	},
+	"createSinkProfile":{
+		"url":"/backmeup-service-rest/plugins/{pluginId}?title={title}&profileType=Sink&configProperties={configProperties}&options={options}",
+		"method":"post",
+		"timeout":"3000"
+	},
+	"createSourceProfile":{
+		"url":"/backmeup-service-rest/plugins/{pluginId}?title={title}&profileType=Source&configProperties={configProperties}&options={options}",
+		"method":"post",
+		"timeout":"3000"
+	},
+	"getActions":{
+		"url":"/backmeup-service-rest/plugins?types=Action&expandProfiles={expandProfiles}",
+		"method":"get",
+		"timeout":"3000"
+	},
+	"getAll":{
+		"url":"/backmeup-service-rest/plugins?types=All&expandProfiles={expandProfiles}",
+		"method":"get",
+		"timeout":"3000"
+	},
+	"getSinks":{
+		"url":"/backmeup-service-rest/plugins?types=Sink&expandProfiles={expandProfiles}",
+		"method":"get",
+		"timeout":"3000"
+	},
+	"getSources":{
+		"url":"/backmeup-service-rest/plugins?types=Source&expandProfiles={expandProfiles}",
+		"method":"get",
+		"timeout":"3000"
+	},
+	"getPlugin":{
+		"url":"/backmeup-service-rest/plugins/{pluginId}?expandProfiles={expandProfiles}",
+		"method":"get",
+		"timeout":"3000"
+	}
+}

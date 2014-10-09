@@ -34,7 +34,7 @@
 			"mappings":{
 				"post":"json",
 				"get":"query",
-				"put":"json",
+				"put":"query",
 				"delete":"json"
 			},
 			"first":{

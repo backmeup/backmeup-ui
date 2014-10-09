@@ -2,12 +2,12 @@
 	"name":"RestClient",
 	"shortname":"rc",
 	"wsdFiles":{
-		"../files/wsd.authentication.json":true,
-		"../files/wsd.backupjobs.json":true,
-		"../files/wsd.logs.json":true,
-		"../files/wsd.plugins.json":true,
-		"../files/wsd.search.json":true,
-		"../files/wsd.users.json":true
+		"../files/wsd/wsd.themis.authentication.json":true,
+		"../files/wsd/wsd.themis.backupjobs.json":true,
+		"../files/wsd/wsd.themis.logs.json":true,
+		"../files/wsd/wsd.themis.plugins.json":true,
+		"../files/wsd/wsd.themis.search.json":true,
+		"../files/wsd/wsd.themis.users.json":true
 	},
 	"webservices":{
 		"template":{

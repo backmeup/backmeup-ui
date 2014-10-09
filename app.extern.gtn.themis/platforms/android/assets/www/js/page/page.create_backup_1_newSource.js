@@ -3,117 +3,140 @@ var page_create_backup_1_newSource = {
 
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
-		
+
 	},
 
 	// load the html structure
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
+		// get token from url
 		if (app.detect.isDesktop()) {
 			var url = window.location.href;
 			var error = /\?error=(.+)$/.exec(url);
 			var access_token = /\?oauth_token=(.+)$/.exec(url);
+			var code = /\?code=(.+)$/.exec(url);
+			app.store.localStorage.set("data-html5-themis-oAuthCode", "unused");
+			app.store.localStorage.set("data-html5-themis-oAuthToken", "unused");
 			if (access_token) {
 				var access_token = (access_token + "").split("=");
 				access_token = access_token[1] + "";
 				access_token = access_token.split("&");
 				app.store.localStorage.set("data-html5-themis-oAuthToken", access_token[0]);
+			} else if (code) {
+				var code = (code + "").split("=");
+				code = code[1] + "";
+				code = code.split("&");
+				// alert(code[0]);
+				app.store.localStorage.set("data-html5-themis-oAuthCode", code[0]);
 			} else if (error) {
-				 alert("oauth error" + error);
+				alert("oauth error" + error);
 			}
-			
+
 		}
 		var header = $('div[data-role=header]');
 		var content = $('div[data-role=content]');
 		var navPanel = $('div#nav-panel');
 		var pagePanel = $('div#page-panel');
-		// datasources
-		content.append(app.ni.element.h1({
-			"text" : app.lang.string("new_datasource", "headlines"),
-			"styles" : {
-				"clear" : "both"
-			}
-		}));
-		content.append(app.ni.text.text({
-			"id" : "txtTitle",
-			"placeholder" : app.lang.string("title", "labels"),
-			"label" : true,
-			"labelText" : app.lang.string("title", "labels"),
-			"container" : true
-		}));
-		content.append(app.ni.button.button({
-			"id" : "btnCreate",
-			"placeholder" : app.lang.string("create_source", "labels"),
-			"label" : true,
-			"labelText" : app.lang.string("create_source", "labels"),
-			"container" : true,
-			"value" : app.lang.string("create_source", "actions")
-		}));
-		return true;
+
+		app.template.append("div[data-role=content]", "app-loader-bubble");
+
+		var promise = app.rc.getJson("getPlugin", {
+			"pluginId" : app.store.localStorage.get("data-html5-themis-pluginid"),
+			"expandProfiles" : true
+		}, true);
+
+		promise.done(function(resultObject) {
+			//alert(JSON.stringify(resultObject));
+			// datasources
+			content.append(app.ni.element.h1({
+				"text" : app.lang.string("new_datasource", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
+			}));
+			content.append(app.ni.text.text({
+				"id" : "txtTitle",
+				"placeholder" : app.lang.string("title", "labels"),
+				"label" : true,
+				"labelText" : app.lang.string("title", "labels"),
+				"container" : true
+			}));
+			content.append(app.ni.button.button({
+				"id" : "btnCreate",
+				"placeholder" : app.lang.string("create_source", "labels"),
+				"label" : true,
+				"labelText" : app.lang.string("create_source", "labels"),
+				"container" : true,
+				"value" : app.lang.string("create_source", "actions")
+			}));
+
+			$(".app-loader").remove();
+			app.help.jQM.enhance(content);
+		});
+
+		promise.fail(function(resultObject) {
+			alert("ws error");
+		});
 	},
 
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
-		
-		try {
-			$(container).on("click", "#btnCreate", function() {
-				app.template.append("div[data-role=content]", "app-loader-bubble");
-				var configType = app.store.localStorage.get("data-html5-configtype");
-				// alert(configType);
-				if (configType == "input") {
-					var promise = app.rc.getJson("createSourceProfile", {
-						"pluginId" : app.store.localStorage.get("data-html5-themis-pluginid"),
-						"title" : container.find("#txtTitle").val(),
-						"configProperties" : {
-							"text" : "true",
-							"image" : "true",
-							"pdf" : "true",
-							"binary" : "true"
-						},
-						"options" : [ "" ]
-					}, true);
 
-					promise.done(function(resultObject) {
-						// alert(JSON.stringify(resultObject));
-						app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
-						$(".app-loader").remove();
-						$(location).attr("href", "create_backup_2.html");
-					});
+		$(container).on("click", "#btnCreate", function() {
+			app.template.append("div[data-role=content]", "app-loader-bubble");
 
-					promise.fail(function(error) {
-						alert("webservice error: " + error);
-					});
+			var configType = app.store.localStorage.get("data-html5-configtype");
+			// alert(configType);
+			if (configType == "input") {
+				var promise = app.rc.getJson("createSourceProfile", {
+					"pluginId" : app.store.localStorage.get("data-html5-themis-pluginid"),
+					"title" : container.find("#txtTitle").val(),
+					"configProperties" : {
+						"text" : "true",
+						"image" : "true",
+						"pdf" : "true",
+						"binary" : "true"
+					},
+					"options" : [ "" ]
+				}, true);
 
-				} else if (configType == "oauth") {
+				promise.done(function(resultObject) {
+					//alert(JSON.stringify(resultObject));
+					app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
+					$(".app-loader").remove();
+					$(location).attr("href", "create_backup_2.html");
+				});
 
-					var promise = app.rc.getJson("createSourceProfile", {
-						"pluginId" : app.store.localStorage.get("data-html5-themis-pluginid"),
-						"title" : container.find("#txtTitle").val(),
-						"configProperties" : {
-							"token" : app.store.localStorage.get("data-html5-themis-oAuthToken")
-						},
-						"options" : [ "/Documents", "/Photos" ]
-					}, true);
+				promise.fail(function(error) {
+					alert("webservice error: " + error);
+				});
 
-					promise.done(function(resultObject) {
-						$(".app-loader").remove();
-						$(location).attr("href", "create_backup_2.html");
-					});
+			} else if (configType == "oauth") {
 
-					promise.fail(function(error) {
-						alert("webservice error: " + error);
-					});
-				}
+				var promise = app.rc.getJson("createSourceProfile", {
+					"pluginId" : app.store.localStorage.get("data-html5-themis-pluginid"),
+					"title" : container.find("#txtTitle").val(),
+					"configProperties" : {
+						"token" : app.store.localStorage.get("data-html5-themis-oAuthToken"),
+						"code" : app.store.localStorage.get("data-html5-themis-oAuthCode"),
+					},
+					"options" : [ "/Documents", "/Photos", "/Profiles", "/Friends", "/Groups", "/Sites", "/Posts", "Photos", "Albums","Profiles", "Friends", "Groups", "Sites", "Posts", "Photos", "Albums",  ]
+				}, true);
 
-			});
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+				promise.done(function(resultObject) {
+					alert(JSON.stringify(resultObject));
+					app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
+					$(".app-loader").remove();
+					$(location).attr("href", "create_backup_2.html");
+				});
+
+				promise.fail(function(error) {
+					alert("webservice error: " + error);
+				});
+			}
+
+		});
 
 	},
 
@@ -126,7 +149,7 @@ var page_create_backup_1_newSource = {
 		// process.
 		pagebeforechange : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforechange()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -141,7 +164,7 @@ var page_create_backup_1_newSource = {
 		// auto-initialization occurs.
 		pagebeforecreate : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforecreate()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -157,7 +180,7 @@ var page_create_backup_1_newSource = {
 		// actual transition animation is kicked off.
 		pagebeforehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforehide()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -171,7 +194,7 @@ var page_create_backup_1_newSource = {
 		// Triggered before any load request is made.
 		pagebeforeload : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeload()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -186,7 +209,7 @@ var page_create_backup_1_newSource = {
 		// transition animation is kicked off.
 		pagebeforeshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeshow()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -202,7 +225,7 @@ var page_create_backup_1_newSource = {
 		// completed.
 		pagechange : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagechange()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -216,7 +239,7 @@ var page_create_backup_1_newSource = {
 		// Triggered when the changePage() request fails to load the page.
 		pagechangefailed : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagechangefailed()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -234,7 +257,7 @@ var page_create_backup_1_newSource = {
 		// markup.
 		pagecreate : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagecreate()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -249,7 +272,7 @@ var page_create_backup_1_newSource = {
 		// completed.
 		pagehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagehide()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -263,7 +286,7 @@ var page_create_backup_1_newSource = {
 		// Triggered on the page being initialized, after initialization occurs.
 		pageinit : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageinit()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -278,7 +301,7 @@ var page_create_backup_1_newSource = {
 		// DOM.
 		pageload : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageload()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -292,7 +315,7 @@ var page_create_backup_1_newSource = {
 		// Triggered if the page load request failed.
 		pageloadfailed : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageloadfailed()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -308,7 +331,7 @@ var page_create_backup_1_newSource = {
 		// from the DOM.
 		pageremove : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageremove()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -323,7 +346,7 @@ var page_create_backup_1_newSource = {
 		// completed.
 		pageshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageshow()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {

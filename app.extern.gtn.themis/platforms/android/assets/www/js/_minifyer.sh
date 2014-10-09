@@ -1,7 +1,10 @@
 #!/bin/bash
 
 # remove all files
+rm all.$1.js
 rm all.js
+rm all.$1.css
+rm all.css
 rm app.js
 rm app.config.js
 rm *-min.js
@@ -11,7 +14,7 @@ rm *.json.js
 # __________________
 # css
 yuicompressor -v -o '.css$:-min.css' *.css
-cat *-min.css > all.css
+cat *-min.css > all.$1.css
 
 # __________________
 # js
@@ -44,7 +47,7 @@ cat *-min.json.js > app.config-min.js
 cat plugin.*.json.js page.*.json.js > app.config.js
 
 # combine plugin and config files
-cat app*-min.js > all.js
+cat app*-min.js > all.$1.js
 
 # __________________
 # remove temporary minified files

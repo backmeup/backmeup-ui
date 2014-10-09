@@ -1,4 +1,5 @@
 {
+	"activate_account":true,
 	"backup_edit":true,
 	"backup_jobs":true,
 	"backup_log":"log",

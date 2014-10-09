@@ -2,7 +2,7 @@
 var app = {
 	config : {
 		name : "app",
-		min : true,
+		min : false,
 		useJQueryMobile : true,
 		apacheCordova : null
 	},
@@ -18,7 +18,7 @@ function loadPlugins() {
 	// load plugins
 	var url;
 	if (app.config.min) {
-		url = "../js/plugin/all.js";
+		url = "../js/plugin/all.plugin.min.js";
 	} else {
 		url = "../js/plugin/plugins.js";
 	}
@@ -46,7 +46,7 @@ function loadPages() {
 	// load pages
 	var url;
 	if (app.config.min) {
-		url = "../js/page/all.js";
+		url = "../js/page/all.page.min.js";
 	} else {
 		url = "../js/page/pages.js";
 	}
@@ -148,7 +148,7 @@ function onDeviceReady() {
 
 $(document).bind("mobileinit", function() {
 	app.debug.alert("jQuery mobile initialized", 30);
-	$.mobile.ajaxEnabled = true;
+	$.mobile.ajaxEnabled = false;
 	$.support.cors = true;
 	$.mobile.allowCrossDomainPages = true;
 	$.mobile.page.prototype.options.domCache = false;

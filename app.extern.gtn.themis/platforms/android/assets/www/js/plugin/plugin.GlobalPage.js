@@ -119,9 +119,9 @@ var plugin_GlobalPage = {
 			else if ((window['page_' + container.attr("id")].config.loginObligate && app.store.localStorage.get("data-html5-themis-loggedin")) || (!window['page_' + container.attr("id")].config.loginObligate && !app.store.localStorage.get("data-html5-themis-loggedin")) || (!window['page_' + container.attr("id")].config.loginObligate && app.store.localStorage.get("data-html5-themis-loggedin")) || (container.attr("data-type") == "static")) {
 				globalPage.pagebeforecreate(event, container);
 			} else {
-				alert("you re not logged in");
+				//alert("you re not logged in");
 				$(document).off();
-				$(location).attr('href', "index.html");
+				$(location).attr('href', "static-index.html");
 			}
 		},
 

@@ -2,6 +2,22 @@ var pages = {
 	config : null,
 	pageNames : [],
 	constructor : function() {
+		if (window.globalPage == undefined) {
+			var url = "../files/globalPage.js";
+			$.ajax({
+				url : url,
+				dataType : "script",
+				async : false,
+				success : function(data, textStatus, jqXHR) {
+					;
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+					alert("Fatal error in plugin_//globalPage.js: Can't load the javascript. Url: " + url + " Error: " + textStatus);
+					alert(errorThrown);
+				}
+			});
+		}
+
 		pages.loadPageConfig();
 		pages.verifyPageNames();
 		pages.loadPages();
@@ -111,7 +127,6 @@ var pages = {
 			window['plugin_' + value].afterHtmlInjectedBeforePageComputing(container);
 		});
 	},
-
 	setEvents : function() {
 
 		// jQuery Mobile Events
@@ -122,44 +137,33 @@ var pages = {
 		 * 
 		 */
 		$(document).on('pagebeforechange', '.app-page', function(event) {
-			app.debug.alert("jQuery mobile event: pagebeforechange for: " + $(this).attr('id'), 5);
-			if ($(this).attr('data-type') == "static" || $(this).attr('data-type') == "static-inline") {
-				app.debug.alert("this is a static page", 9);
-			} else if (window['page_' + $(this).attr('id')] == undefined) {
-				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
-				$(location).attr('href', "index.html");
-			} else {
-				window['page_' + $(this).attr('id')].events.pagebeforechange(event, $(this));
-			}
+			app.debug.alert("pages.js jQuery mobile event: pagebeforechange for: " + $(this).attr('id'), 5);
+			pages.eventFunctions.pageTypeSelector(event, $(this), "pagebeforechange");
 		});
 
 		/*
 		 * 
 		 */
 		$(document).on('pagebeforecreate', '.app-page', function(event) {
-			app.debug.alert("jQuery mobile event: pagebeforecreate for: " + $(this).attr('id'), 5);
-			// app.store.localStorage.log();
+			app.debug.alert("pages.js jQuery mobile event: pagebeforecreate for: " + $(this).attr('id'), 5);
+			pages.eventFunctions.pageTypeSelector(event, $(this), "pagebeforecreate");
+			// ---
+			//
 			// alert($(this).attr('data-type'));
 			if ($(this).attr('data-type') == "static" || $(this).attr('data-type') == "static-inline") {
-				app.debug.alert("this is a static page", 9);
-				if (plugin_GlobalPage != undefined) {
-					// alert();
-					app.gp.pagebeforecreate(event, $(this));
-					pages.callPluginsPageFunctions($(this));
-				}
+
 			} else if (window['page_' + $(this).attr('id')] == undefined) {
 				alert("-Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file. You'll be redirected to the index.html page.");
 				$(location).attr('href', "index.html");
 			} else {
+				// case 3: page is a common lapstone page
 				if (plugin_WebServiceClient.config.useKeepAlive) {
 					if (window['page_' + $(this).attr('id')].config.useKeepAlive != undefined) {
 						if (window['page_' + $(this).attr('id')].config.useKeepAlive) {
 							if (plugin_WebServiceClient.config.keepAlive.isAlive) {
 
 								// try the GlobalPage plugin
-								if (plugin_GlobalPage != undefined) {
-									app.gp.pagebeforecreate(event, $(this));
-								}
+
 								// +++++++++++++++++++++++++++++++++++++++++++++
 
 								/*
@@ -174,9 +178,8 @@ var pages = {
 								window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
 
 								window['page_' + $(this).attr('id')].creator($(this));
-								
+
 								window['page_' + $(this).attr('id')].setEvents($(this));
-								
 
 								// call plugins' page functions
 								app.debug.alert('Call: pages.callPluginsPageFunctions()', 5);
@@ -195,9 +198,7 @@ var pages = {
 							// alert("no keep alive on page");
 
 							// try the GlobalPage plugin
-							if (plugin_GlobalPage != undefined) {
-								app.gp.pagebeforecreate(event, $(this));
-							}
+
 							// +++++++++++++++++++++++++++++++++++++++++++++
 
 							window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
@@ -210,10 +211,6 @@ var pages = {
 					} else {
 						app.debug.alert("No useKeepAlive entry in your page_" + $(this).attr('id') + ".json. Please add it.", 60);
 
-						// try the GlobalPage plugin
-						if (plugin_GlobalPage != undefined) {
-							app.gp.pagebeforecreate(event, $(this));
-						}
 						// +++++++++++++++++++++++++++++++++++++++++++++
 
 						window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
@@ -230,9 +227,7 @@ var pages = {
 					// 
 
 					// try the GlobalPage plugin
-					if (plugin_GlobalPage != undefined) {
-						app.gp.pagebeforecreate(event, $(this));
-					}
+
 					// +++++++++++++++++++++++++++++++++++++++++++++
 
 					window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
@@ -251,185 +246,339 @@ var pages = {
 		 * 
 		 */
 		$(document).on('pagebeforehide', '.app-page', function(event) {
-			app.debug.alert("jQuery mobile event: pagebeforehide for: " + $(this).attr('id'), 5);
-			if ($(this).attr('data-type') == "static" || $(this).attr('data-type') == "static-inline") {
-				app.debug.alert("this is a static page", 9);
-			} else if (window['page_' + $(this).attr('id')] == undefined) {
-				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
-				$(location).attr('href', "index.html");
-			} else {
-				window['page_' + $(this).attr('id')].events.pagebeforehide(event, $(this));
-			}
+			app.debug.alert("pages.js jQuery mobile event: pagebeforehide for: " + $(this).attr('id'), 5);
+			pages.eventFunctions.pageTypeSelector(event, $(this), "pagebeforehide");
 		});
 
 		/*
 		 * 
 		 */
 		$(document).on('pagebeforeload', '.app-page', function(event) {
-			app.debug.alert("jQuery mobile event: pagebeforeload for: " + $(this).attr('id'), 5);
-			if ($(this).attr('data-type') == "static" || $(this).attr('data-type') == "static-inline") {
-				app.debug.alert("this is a static page", 9);
-			} else if (window['page_' + $(this).attr('id')] == undefined) {
-				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
-				$(location).attr('href', "index.html");
-			} else {
-				window['page_' + $(this).attr('id')].events.pagebeforeload(event, $(this));
-			}
+			app.debug.alert("pages.js jQuery mobile event: pagebeforeload for: " + $(this).attr('id'), 5);
+			pages.eventFunctions.pageTypeSelector(event, $(this), "pagebeforeload");
 		});
 
 		/*
 		 * 
 		 */
 		$(document).on('pagebeforeshow', '.app-page', function(event) {
-			app.debug.alert("jQuery mobile event: pagebeforeshow for: " + $(this).attr('id'), 5);
-
-			if ($(this).attr('data-type') == "static" || $(this).attr('data-type') == "static-inline") {
-				app.debug.alert("this is a static page", 9);
-			} else if (window['page_' + $(this).attr('id')] == undefined) {
-				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
-				$(location).attr('href', "index.html");
-			} else {
-				window['page_' + $(this).attr('id')].events.pagebeforeshow(event, $(this));
-			}
+			app.debug.alert("pages.js jQuery mobile event: pagebeforeshow for: " + $(this).attr('id'), 5);
+			pages.eventFunctions.pageTypeSelector(event, $(this), "pagebeforeshow");
 		});
 
 		/*
 		 * 
 		 */
 		$(document).on('pagechange', '.app-page', function(event) {
-			app.debug.alert("jQuery mobile event: pagechange for: " + $(this).attr('id'), 5);
-			if ($(this).attr('data-type') == "static" || $(this).attr('data-type') == "static-inline") {
-				app.debug.alert("this is a static page", 9);
-			} else if (window['page_' + $(this).attr('id')] == undefined) {
-				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
-				$(location).attr('href', "index.html");
-			} else {
-				window['page_' + $(this).attr('id')].events.pagechange(event, $(this));
-			}
+			app.debug.alert("pages.js jQuery mobile event: pagechange for: " + $(this).attr('id'), 5);
+			pages.eventFunctions.pageTypeSelector(event, $(this), "pagechange");
 		});
 
 		/*
 		 * 
 		 */
-		$(document).on('jQuery mobile event: pagechangefailed', '.app-page', function(event) {
-			app.debug.alert("pagechangefailed for: " + $(this).attr('id'), 5);
-			if ($(this).attr('data-type') == "static" || $(this).attr('data-type') == "static-inline") {
-				app.debug.alert("this is a static page", 9);
-			} else if (window['page_' + $(this).attr('id')] == undefined) {
-				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
-				$(location).attr('href', "index.html");
-			} else {
-				window['page_' + $(this).attr('id')].events.pagechangefailed(event, $(this));
-			}
+		$(document).on('pagechangefailed', '.app-page', function(event) {
+			app.debug.alert("pages.js jQuery mobile event: pagechangefailed for: " + $(this).attr('id'), 5);
+			pages.eventFunctions.pageTypeSelector(event, $(this), "pagechangefailed");
 		});
 
 		/*
 		 * 
 		 */
 		$(document).on('pagecreate', '.app-page', function(event) {
-			app.debug.alert("jQuery mobile event: pagecreate for: " + $(this).attr('id'), 5);
-			if ($(this).attr('data-type') == "static" || $(this).attr('data-type') == "static-inline") {
-				app.debug.alert("this is a static page", 9);
-			} else if (window['page_' + $(this).attr('id')] == undefined) {
-				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
-				$(location).attr('href', "index.html");
-			} else {
-				window['page_' + $(this).attr('id')].events.pagecreate(event, $(this));
-			}
+			app.debug.alert("pages.js jQuery mobile event: pagecreate for: " + $(this).attr('id'), 5);
+			pages.eventFunctions.pageTypeSelector(event, $(this), "pagecreate");
 		});
 
 		/*
 		 * 
 		 */
 		$(document).on('pagehide', '.app-page', function(event) {
-			app.debug.alert("jQuery mobile event: pagehide for: " + $(this).attr('id'), 5);
-			app.gp.pagehide(event, $(this));
-			if ($(this).attr('data-type') == "static" || $(this).attr('data-type') == "static-inline") {
-				app.debug.alert("this is a static page", 9);
-			} else if (window['page_' + $(this).attr('id')] == undefined) {
-				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
-				$(location).attr('href', "index.html");
-			} else {
-				window['page_' + $(this).attr('id')].events.pagehide(event, $(this));
-			}
+			app.debug.alert("pages.js jQuery mobile event: pagehide for: " + $(this).attr('id'), 5);
+			pages.eventFunctions.pageTypeSelector(event, $(this), "pagehide");
 		});
 
 		/*
 		 * 
 		 */
 		$(document).on('pageinit', '.app-page', function(event) {
-			app.debug.alert("jQuery mobile event: pageinit for: " + $(this).attr('id'), 5);
-			app.gp.pageinit(event, $(this));
-			if ($(this).attr('data-type') == "static" || $(this).attr('data-type') == "static-inline") {
-				app.debug.alert("this is a static page", 9);
-			} else if (window['page_' + $(this).attr('id')] == undefined) {
-				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
-				$(location).attr('href', "index.html");
-			} else {
-				window['page_' + $(this).attr('id')].events.pageinit(event, $(this));
-			}
+			app.debug.alert("pages.js jQuery mobile event: pageinit for: " + $(this).attr('id'), 5);
+			pages.eventFunctions.pageTypeSelector(event, $(this), "pageinit");
 		});
 
 		/*
 		 * 
 		 */
 		$(document).on('pageload', '.app-page', function(event) {
-			app.debug.alert("jQuery mobile event: pageload for: " + $(this).attr('id'), 5);
-			if ($(this).attr('data-type') == "static" || $(this).attr('data-type') == "static-inline") {
-				app.debug.alert("this is a static page", 9);
-			} else if (window['page_' + $(this).attr('id')] == undefined) {
-				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
-				$(location).attr('href', "index.html");
-			} else {
-				window['page_' + $(this).attr('id')].events.pageload(event, $(this));
-			}
+			app.debug.alert("pages.js jQuery mobile event: pageload for: " + $(this).attr('id'), 5);
+			pages.eventFunctions.pageTypeSelector(event, $(this), "pageload");
 		});
 
 		/*
 		 * 
 		 */
 		$(document).on('pageloadfailed', '.app-page', function(event) {
-			app.debug.alert("jQuery mobile event: pageloadfailed for: " + $(this).attr('id'), 5);
-			if ($(this).attr('data-type') == "static" || $(this).attr('data-type') == "static-inline") {
-				app.debug.alert("this is a static page", 9);
-			} else if (window['page_' + $(this).attr('id')] == undefined) {
-				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
-				$(location).attr('href', "index.html");
-			} else {
-				window['page_' + $(this).attr('id')].events.pageloadfailed(event, $(this));
-			}
+			app.debug.alert("pages.js jQuery mobile event: pageloadfailed for: " + $(this).attr('id'), 5);
+			pages.eventFunctions.pageTypeSelector(event, $(this), "pageloadfailed");
 		});
 
 		/*
 		 * 
 		 */
 		$(document).on('pageremove', '.app-page', function(event) {
-			app.debug.alert("jQuery mobile event: pageremove for: " + $(this).attr('id'), 5);
-			app.gp.pageremove(event, $(this));
-			if ($(this).attr('data-type') == "static" || $(this).attr('data-type') == "static-inline") {
-				app.debug.alert("this is a static page", 9);
-			} else if (window['page_' + $(this).attr('id')] == undefined) {
-				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
-				$(location).attr('href', "index.html");
-			} else {
-				window['page_' + $(this).attr('id')].events.pageremove(event, $(this));
-			}
+			app.debug.alert("pages.js jQuery mobile event: pageremove for: " + $(this).attr('id'), 5);
+			pages.eventFunctions.pageTypeSelector(event, $(this), "pageremove");
 		});
 
 		/*
 		 * 
 		 */
 		$(document).on('pageshow', '.app-page', function(event) {
-			app.debug.alert("jQuery mobile event: pageshow for: " + $(this).attr('id'), 5);
-			app.gp.pageshow(event, $(this));
-			if ($(this).attr('data-type') == "static" || $(this).attr('data-type') == "static-inline") {
-				app.debug.alert("this is a static page", 9);
-			} else if (window['page_' + $(this).attr('id')] == undefined) {
-				alert("Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file.");
+			app.debug.alert("pages.js jQuery mobile event: pageshow for: " + $(this).attr('id'), 5);
+			pages.eventFunctions.pageTypeSelector(event, $(this), "pageshow");
+		});
+	},
+
+	// a function for each event
+	eventFunctions : {
+		pageTypeSelector : function(event, container, eventName) {
+			app.debug.alert("pages.js plugin.eventFunctions.pageTypeSelector(" + event + ", " + container + ", " + eventName + ")", 5);
+			app.debug.alert("pages.js PageId: " + container.attr('id'), 5);
+
+			// alert(container.attr('data-type'));
+			if (container.attr('data-type') == "static") {
+				// case 1: page is static
+				app.debug.alert("pages.js page type is static", 5);
+				pages.eventFunctions.everyPage[eventName](event, container);
+				pages.eventFunctions.staticPage[eventName](event, container);
+			} else if (container.attr('data-type') == "static-inline") {
+				// case 2: page is inline-static
+				app.debug.alert("pages.js page type is inline-static", 5);
+				pages.eventFunctions.everyPage[eventName](event, container);
+				pages.eventFunctions.staticInlinePage[eventName](event, container);
+			//	globalPage[eventName](event, container);
+			} else if (window['page_' + container.attr('id')] == undefined) {
+				// case 3: page ist not defined in pages.json
+				app.debug.alert("page ist not defined in pages.json", 5);
+				alert("plugin.eventFunctions.pageTypeSelector() - Fatal error: Can't find the page object: page_" + container.attr('id') + "; Please have a look to your pages.json file.");
 				$(location).attr('href', "index.html");
 			} else {
-				window['page_' + $(this).attr('id')].events.pageshow(event, $(this));
+				// case 4: page is a common lapstone page
+				app.debug.alert("pages.js page is a common lapstone page", 5);
+				pages.eventFunctions.everyPage[eventName](event, container);
+				pages.eventFunctions.lapstonePage[eventName](event, container);
+				globalPage[eventName](event, container);
 			}
-		});
+		},
+
+		everyPage : {
+			pagebeforechange : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.everyPage.pagebeforechange(" + event + ", " + container + ")", 5);
+			},
+			pagebeforecreate : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.everyPage.pagebeforecreate(" + event + ", " + container + ")", 5);
+			},
+			pagebeforehide : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.everyPage.pagebeforehide(" + event + ", " + container + ")", 5);
+			},
+			pagebeforeload : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.everyPage.pagebeforeload(" + event + ", " + container + ")", 5);
+			},
+			pagebeforeshow : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.everyPage.pagechange(" + event + ", " + container + ")", 5);
+			},
+			pagechange : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.everyPage.pagechange(" + event + ", " + container + ")", 5);
+			},
+			pagechangefailed : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.everyPage.pagechangefailed(" + event + ", " + container + ")", 5);
+			},
+			pagecreate : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.everyPage.pagecreate(" + event + ", " + container + ")", 5);
+			},
+			pagehide : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.everyPage.pagehide(" + event + ", " + container + ")", 5);
+				app.debug.alert("pages.js remove page from DOM: " + container.attr('id'), 5);
+				container.remove();
+			},
+			pageinit : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.everyPage.pageinit(" + event + ", " + container + ")", 5);
+			},
+			pageload : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.everyPage.pageload(" + event + ", " + container + ")", 5);
+			},
+			pageloadfailed : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.everyPage.pageloadfailed(" + event + ", " + container + ")", 5);
+			},
+			pageremove : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.everyPage.pageremove(" + event + ", " + container + ")", 5);
+			},
+			pageshow : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.everyPage.pageshow(" + event + ", " + container + ")", 5);
+			}
+		},
+
+		staticPage : {
+			pagebeforechange : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticPage.pagebeforechange(" + event + ", " + container + ")", 5);
+			},
+			pagebeforecreate : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticPage.pagebeforecreate(" + event + ", " + container + ")", 5);
+
+				app.debug.alert("pages.js do language string replacement", 5);
+				container.find("[data-language]").each(function(index, element) {
+					var languageArray = $(this).attr('data-language').split(".");
+					$(this).html(app.lang.string(languageArray[1], languageArray[0]));
+				});
+			},
+			pagebeforehide : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticPage.pagebeforehide(" + event + ", " + container + ")", 5);
+			},
+			pagebeforeload : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticPage.pagebeforeload(" + event + ", " + container + ")", 5);
+			},
+			pagebeforeshow : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticPage.pagechange(" + event + ", " + container + ")", 5);
+			},
+			pagechange : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticPage.pagechange(" + event + ", " + container + ")", 5);
+			},
+			pagechangefailed : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticPage.pagechangefailed(" + event + ", " + container + ")", 5);
+			},
+			pagecreate : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticPage.pagecreate(" + event + ", " + container + ")", 5);
+			},
+			pagehide : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticPage.pagehide(" + event + ", " + container + ")", 5);
+			},
+			pageinit : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticPage.pageinit(" + event + ", " + container + ")", 5);
+			},
+			pageload : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticPage.pageload(" + event + ", " + container + ")", 5);
+			},
+			pageloadfailed : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticPage.pageloadfailed(" + event + ", " + container + ")", 5);
+			},
+			pageremove : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticPage.pageremove(" + event + ", " + container + ")", 5);
+			},
+			pageshow : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticPage.pageshow(" + event + ", " + container + ")", 5);
+			}
+		},
+		staticInlinePage : {
+			pagebeforechange : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagebeforechange(" + event + ", " + container + ")", 5);
+			},
+			pagebeforecreate : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagebeforecreate(" + event + ", " + container + ")", 5);
+				app.debug.alert("pages.js do language string replacement", 5);
+
+				container.find("[data-language]").each(function(index, element) {
+					var languageArray = $(this).attr('data-language').split(".");
+					$(this).html(app.lang.string(languageArray[1], languageArray[0]));
+				});
+				var html = container.html();
+				globalPage.pagebeforecreate(event, container);
+				container.find('div[data-role=content]').append(html);
+				// wichtig, dass macht irgend eine sache mit den dialog feldern.
+				pages.callPluginsPageFunctions(container);
+			},
+			pagebeforehide : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagebeforehide(" + event + ", " + container + ")", 5);
+			},
+			pagebeforeload : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagebeforeload(" + event + ", " + container + ")", 5);
+			},
+			pagebeforeshow : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagechange(" + event + ", " + container + ")", 5);
+			},
+			pagechange : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagechange(" + event + ", " + container + ")", 5);
+			},
+			pagechangefailed : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagechangefailed(" + event + ", " + container + ")", 5);
+			},
+			pagecreate : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagecreate(" + event + ", " + container + ")", 5);
+			},
+			pagehide : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagehide(" + event + ", " + container + ")", 5);
+			},
+			pageinit : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pageinit(" + event + ", " + container + ")", 5);
+			},
+			pageload : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pageload(" + event + ", " + container + ")", 5);
+			},
+			pageloadfailed : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pageloadfailed(" + event + ", " + container + ")", 5);
+			},
+			pageremove : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pageremove(" + event + ", " + container + ")", 5);
+			},
+			pageshow : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pageshow(" + event + ", " + container + ")", 5);
+			}
+		},
+		lapstonePage : {
+			pagebeforechange : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforechange(" + event + ", " + container + ")", 5);
+				window['page_' + container.attr('id')].events.pageshow(event, container);
+			},
+			pagebeforecreate : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate(" + event + ", " + container + ")", 5);
+			},
+			pagebeforehide : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforehide(" + event + ", " + container + ")", 5);
+				window['page_' + container.attr('id')].events.pageshow(event, container);
+			},
+			pagebeforeload : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforeload(" + event + ", " + container + ")", 5);
+				window['page_' + container.attr('id')].events.pageshow(event, container);
+			},
+			pagebeforeshow : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagechange(" + event + ", " + container + ")", 5);
+				window['page_' + container.attr('id')].events.pageshow(event, container);
+			},
+			pagechange : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagechange(" + event + ", " + container + ")", 5);
+				window['page_' + container.attr('id')].events.pageshow(event, container);
+			},
+			pagechangefailed : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagechangefailed(" + event + ", " + container + ")", 5);
+				window['page_' + container.attr('id')].events.pageshow(event, container);
+			},
+			pagecreate : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagecreate(" + event + ", " + container + ")", 5);
+				window['page_' + container.attr('id')].events.pageshow(event, container);
+			},
+			pagehide : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagehide(" + event + ", " + container + ")", 5);
+				window['page_' + container.attr('id')].events.pageshow(event, container);
+			},
+			pageinit : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pageinit(" + event + ", " + container + ")", 5);
+				window['page_' + container.attr('id')].events.pageshow(event, container);
+			},
+			pageload : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pageload(" + event + ", " + container + ")", 5);
+				window['page_' + container.attr('id')].events.pageshow(event, container);
+			},
+			pageloadfailed : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pageloadfailed(" + event + ", " + container + ")", 5);
+				window['page_' + container.attr('id')].events.pageshow(event, container);
+			},
+			pageremove : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pageremove(" + event + ", " + container + ")", 5);
+				window['page_' + container.attr('id')].events.pageshow(event, container);
+			},
+			pageshow : function(event, container) {
+				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pageshow(" + event + ", " + container + ")", 5);
+				window['page_' + container.attr('id')].events.pageshow(event, container);
+			}
+		}
 	}
 };

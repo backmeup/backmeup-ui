@@ -3,7 +3,6 @@
 	"Debug":true,
 	"Detector":true,
 	"FormInputDesigner":true,
-	"GlobalPage":true,
 	"GlobalSettings":true,
 	"HelperFunctions":true,
 	"HTML5Storage":true,

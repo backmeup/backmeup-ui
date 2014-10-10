@@ -477,7 +477,6 @@
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/plugin/plugin.Detector.json \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/plugin/plugin.FormInputDesigner.js \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/plugin/plugin.FormInputDesigner.json \
-/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/plugin/plugin.GlobalPage.js \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/plugin/plugin.GlobalPage.json \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/plugin/plugin.GlobalSettings.js \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/plugin/plugin.GlobalSettings.json \

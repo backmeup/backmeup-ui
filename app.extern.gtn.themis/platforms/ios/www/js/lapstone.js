@@ -148,7 +148,7 @@ function onDeviceReady() {
 
 $(document).bind("mobileinit", function() {
 	app.debug.alert("jQuery mobile initialized", 30);
-	$.mobile.ajaxEnabled = false;
+	$.mobile.ajaxEnabled = true;
 	$.support.cors = true;
 	$.mobile.allowCrossDomainPages = true;
 	$.mobile.page.prototype.options.domCache = false;

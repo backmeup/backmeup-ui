@@ -113,7 +113,7 @@ var pages = {
 	callPluginPageEventFunctions : function() {
 
 		$.each(plugins.pluginNames, function(key, value) {
-			app.debug.alert("try to call: plugin_" + value + ".pageSpecificEvents()", 6);
+			app.debug.alert("pages.js try to call: plugin_" + value + ".pageSpecificEvents()", 6);
 			window['plugin_' + value].pageSpecificEvents();
 		});
 	},
@@ -157,87 +157,7 @@ var pages = {
 				$(location).attr('href', "index.html");
 			} else {
 				// case 3: page is a common lapstone page
-				if (plugin_WebServiceClient.config.useKeepAlive) {
-					if (window['page_' + $(this).attr('id')].config.useKeepAlive != undefined) {
-						if (window['page_' + $(this).attr('id')].config.useKeepAlive) {
-							if (plugin_WebServiceClient.config.keepAlive.isAlive) {
 
-								// try the GlobalPage plugin
-
-								// +++++++++++++++++++++++++++++++++++++++++++++
-
-								/*
-								 * 
-								 * setTimeout(function() {
-								 * 
-								 * window['page_backup_jobs'].creator($(this));
-								 * alert(); }, 10000);
-								 * 
-								 */
-
-								window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
-
-								window['page_' + $(this).attr('id')].creator($(this));
-
-								window['page_' + $(this).attr('id')].setEvents($(this));
-
-								// call plugins' page functions
-								app.debug.alert('Call: pages.callPluginsPageFunctions()', 5);
-								pages.callPluginsPageFunctions($(this));
-
-							} else {
-								app.debug.alert("Can't load page because keepAlive failed. Check your connection. You'll be redirected to the index.html page.", 60);
-								app.notify.add.alert(app.lang.string("bad_connection", "notifications"), app.lang.string("bad_connection", "headlines"), app.lang.string("bad_connection", "headlines"));
-								app.store.localStorage.clearHtml5();
-								$(document).off();
-								$(location).attr('href', "index.html");
-							}
-						}
-
-						else {
-							// alert("no keep alive on page");
-
-							// try the GlobalPage plugin
-
-							// +++++++++++++++++++++++++++++++++++++++++++++
-
-							window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
-							window['page_' + $(this).attr('id')].creator($(this));
-							window['page_' + $(this).attr('id')].setEvents($(this));
-							// call plugins' page functions
-							app.debug.alert('Call: pages.callPluginsPageFunctions()', 5);
-							pages.callPluginsPageFunctions($(this));
-						}
-					} else {
-						app.debug.alert("No useKeepAlive entry in your page_" + $(this).attr('id') + ".json. Please add it.", 60);
-
-						// +++++++++++++++++++++++++++++++++++++++++++++
-
-						window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
-						window['page_' + $(this).attr('id')].creator($(this));
-						window['page_' + $(this).attr('id')].setEvents($(this));
-
-						// call plugins' page functions
-						app.debug.alert('Call: pages.callPluginsPageFunctions()', 5);
-						pages.callPluginsPageFunctions($(this));
-					}
-				} else {
-					// alert("plugin keep alive false")
-					// load the page and don't care about keep alive
-					// 
-
-					// try the GlobalPage plugin
-
-					// +++++++++++++++++++++++++++++++++++++++++++++
-
-					window['page_' + $(this).attr('id')].events.pagebeforecreate(event, $(this));
-					window['page_' + $(this).attr('id')].creator($(this));
-					window['page_' + $(this).attr('id')].setEvents($(this));
-
-					// call plugins' page functions
-					app.debug.alert('Call: pages.callPluginsPageFunctions()', 5);
-					pages.callPluginsPageFunctions($(this));
-				}
 			}
 
 		});
@@ -348,26 +268,29 @@ var pages = {
 			// alert(container.attr('data-type'));
 			if (container.attr('data-type') == "static") {
 				// case 1: page is static
-				app.debug.alert("pages.js page type is static", 5);
+				app.debug.alert("pages.js case: page type is static", 5);
 				pages.eventFunctions.everyPage[eventName](event, container);
 				pages.eventFunctions.staticPage[eventName](event, container);
 			} else if (container.attr('data-type') == "static-inline") {
 				// case 2: page is inline-static
-				app.debug.alert("pages.js page type is inline-static", 5);
+				app.debug.alert("pages.js case: page type is inline-static", 5);
+				var staticContainer = container.clone();
+				globalPage[eventName](event, container);
 				pages.eventFunctions.everyPage[eventName](event, container);
-				pages.eventFunctions.staticInlinePage[eventName](event, container);
-			//	globalPage[eventName](event, container);
+				pages.eventFunctions.staticInlinePage[eventName](event, container, staticContainer);
 			} else if (window['page_' + container.attr('id')] == undefined) {
 				// case 3: page ist not defined in pages.json
-				app.debug.alert("page ist not defined in pages.json", 5);
+				app.debug.alert("pages.js case: page ist not defined in pages.json", 5);
 				alert("plugin.eventFunctions.pageTypeSelector() - Fatal error: Can't find the page object: page_" + container.attr('id') + "; Please have a look to your pages.json file.");
 				$(location).attr('href', "index.html");
 			} else {
 				// case 4: page is a common lapstone page
-				app.debug.alert("pages.js page is a common lapstone page", 5);
-				pages.eventFunctions.everyPage[eventName](event, container);
-				pages.eventFunctions.lapstonePage[eventName](event, container);
+				app.debug.alert("pages.js case: page is a common lapstone page", 5);
 				globalPage[eventName](event, container);
+				pages.eventFunctions.everyPage[eventName](event, container);
+
+				pages.eventFunctions.lapstonePage[eventName](event, container);
+
 			}
 		},
 
@@ -469,57 +392,57 @@ var pages = {
 			}
 		},
 		staticInlinePage : {
-			pagebeforechange : function(event, container) {
+			pagebeforechange : function(event, container, staticContainer) {
 				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagebeforechange(" + event + ", " + container + ")", 5);
 			},
-			pagebeforecreate : function(event, container) {
+			pagebeforecreate : function(event, container, staticContainer) {
 				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagebeforecreate(" + event + ", " + container + ")", 5);
 				app.debug.alert("pages.js do language string replacement", 5);
 
-				container.find("[data-language]").each(function(index, element) {
+				staticContainer.find("[data-language]").each(function(index, element) {
 					var languageArray = $(this).attr('data-language').split(".");
 					$(this).html(app.lang.string(languageArray[1], languageArray[0]));
 				});
-				var html = container.html();
-				globalPage.pagebeforecreate(event, container);
+				var html = staticContainer.html();
+alert(html);
 				container.find('div[data-role=content]').append(html);
 				// wichtig, dass macht irgend eine sache mit den dialog feldern.
 				pages.callPluginsPageFunctions(container);
 			},
-			pagebeforehide : function(event, container) {
+			pagebeforehide : function(event, container, staticContainer) {
 				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagebeforehide(" + event + ", " + container + ")", 5);
 			},
-			pagebeforeload : function(event, container) {
+			pagebeforeload : function(event, container, staticContainer) {
 				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagebeforeload(" + event + ", " + container + ")", 5);
 			},
-			pagebeforeshow : function(event, container) {
+			pagebeforeshow : function(event, container, staticContainer) {
 				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagechange(" + event + ", " + container + ")", 5);
 			},
-			pagechange : function(event, container) {
+			pagechange : function(event, container, staticContainer) {
 				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagechange(" + event + ", " + container + ")", 5);
 			},
-			pagechangefailed : function(event, container) {
+			pagechangefailed : function(event, container, staticContainer) {
 				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagechangefailed(" + event + ", " + container + ")", 5);
 			},
-			pagecreate : function(event, container) {
+			pagecreate : function(event, container, staticContainer) {
 				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagecreate(" + event + ", " + container + ")", 5);
 			},
-			pagehide : function(event, container) {
+			pagehide : function(event, container, staticContainer) {
 				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pagehide(" + event + ", " + container + ")", 5);
 			},
-			pageinit : function(event, container) {
+			pageinit : function(event, container, staticContainer) {
 				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pageinit(" + event + ", " + container + ")", 5);
 			},
-			pageload : function(event, container) {
+			pageload : function(event, container, staticContainer) {
 				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pageload(" + event + ", " + container + ")", 5);
 			},
-			pageloadfailed : function(event, container) {
+			pageloadfailed : function(event, container, staticContainer) {
 				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pageloadfailed(" + event + ", " + container + ")", 5);
 			},
-			pageremove : function(event, container) {
+			pageremove : function(event, container, staticContainer) {
 				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pageremove(" + event + ", " + container + ")", 5);
 			},
-			pageshow : function(event, container) {
+			pageshow : function(event, container, staticContainer) {
 				app.debug.alert("pages.js plugin.eventFunctions.staticInlinePage.pageshow(" + event + ", " + container + ")", 5);
 			}
 		},
@@ -530,6 +453,46 @@ var pages = {
 			},
 			pagebeforecreate : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate(" + event + ", " + container + ")", 5);
+
+				if (plugin_WebServiceClient.config.useKeepAlive) {
+					// case: WebServiceClient requires keepAlive
+					if (window['page_' + container.attr('id')].config.useKeepAlive != undefined) {
+						// case: Page has keepAlive configuration
+						if (window['page_' + container.attr('id')].config.useKeepAlive) {
+							// case: keepAlive is TRUE
+							if (plugin_WebServiceClient.config.keepAlive.isAlive) {
+								// case: server isAlive
+								pages.eventFunctions.lapstonePage.pagebeforecreate_createPage(event, container);
+							} else {
+								// case: no connection to server
+								app.debug.alert("pages.js Can't load page because keepAlive failed. Check your connection. You'll be redirected to the index.html page.", 60);
+								app.notify.add.alert(app.lang.string("bad_connection", "notifications"), app.lang.string("bad_connection", "headlines"), app.lang.string("bad_connection", "headlines"));
+								app.store.localStorage.clearHtml5();
+								$(document).off();
+								$(location).attr('href', "index.html");
+							}
+						} else {
+							// case: Page has NO keepAlive entry in json file
+							pages.eventFunctions.lapstonePage.pagebeforecreate_createPage(event, container);
+						}
+					} else {
+						// case: Page does not require keepAlive
+						app.debug.alert("pages.js No useKeepAlive entry in your page_" + container.attr('id') + ".json. Please add it.", 60);
+						pages.eventFunctions.lapstonePage.pagebeforecreate_createPage(event, container);
+					}
+				} else {
+					// case: WebServiceClient does not require keepAlive
+					pages.eventFunctions.lapstonePage.pagebeforecreate_createPage(event, container);
+				}
+			},
+			pagebeforecreate_createPage : function(event, container) {
+				app.debug.alert("pages.js pages.eventFunctions.lapstonePage.pagebeforecreate_createPage(" + event + ", " + container + ")", 5);
+				window['page_' + container.attr('id')].events.pagebeforecreate(event, container);
+				window['page_' + container.attr('id')].creator(container);
+				window['page_' + container.attr('id')].setEvents(container);
+				// call plugins' page functions
+				app.debug.alert('pages.js Call: pages.callPluginsPageFunctions()', 5);
+				pages.callPluginsPageFunctions(container);
 			},
 			pagebeforehide : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforehide(" + event + ", " + container + ")", 5);

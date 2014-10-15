@@ -10,29 +10,29 @@
 	<string>themis</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>EBD7EBF4-46E4-4B81-9994-16E2AE08CC90</key>
+		<key>27FA37489999C698056E5D510D7D7434D8437EFC</key>
 		<string>https://github.com/backmeup/backmeup-ui.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>app.extern.gtn.themis/platforms/ios/themis.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>EBD7EBF4-46E4-4B81-9994-16E2AE08CC90</key>
+		<key>27FA37489999C698056E5D510D7D7434D8437EFC</key>
 		<string>../../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/backmeup/backmeup-ui.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>EBD7EBF4-46E4-4B81-9994-16E2AE08CC90</string>
+	<string>27FA37489999C698056E5D510D7D7434D8437EFC</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>EBD7EBF4-46E4-4B81-9994-16E2AE08CC90</string>
+			<string>27FA37489999C698056E5D510D7D7434D8437EFC</string>
 			<key>IDESourceControlWCCName</key>
 			<string>app.extern.gtn.themis</string>
 		</dict>

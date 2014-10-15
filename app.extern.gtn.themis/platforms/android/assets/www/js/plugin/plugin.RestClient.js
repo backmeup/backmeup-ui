@@ -10,21 +10,12 @@ var plugin_RestClient = {
 	},
 	pluginsLoaded : function() {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
-
-		try {
-			// load the webservice definitions
-			$.each(plugin_RestClient.config.wsdFiles, function(path, loadFile) {
-				if (loadFile) {
-					plugin_RestClient.loadDefinitionFile(path);
-				}
-			});
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+		// load the webservice definitions
+		$.each(plugin_RestClient.config.wsdFiles, function(path, loadFile) {
+			if (loadFile) {
+				plugin_RestClient.loadDefinitionFile(path);
+			}
+		});
 	},
 
 	// called after all pages are loaded
@@ -252,6 +243,7 @@ var plugin_RestClient = {
 	},
 	functions : {
 		addWebserviceDefinition : function(name, path, method, timeout, cachetime, local) {
+			app.debug.alert("plugin.RestClient.js plugin_RestClient.functions.addWebserviceDefinition(" + name + ", " + path + ", " + method + ", " + timeout + ", " + cachetime + ", " + local + ")", 5);
 			plugin_RestClient.config.webservices[name] = {
 				"url" : path,
 				"method" : method,
@@ -262,28 +254,29 @@ var plugin_RestClient = {
 			return true;
 		},
 		addWebserviceDefinitionFile : function(path) {
+			app.debug.alert("plugin.RestClient.js plugin_RestClient.functions.addWebserviceDefinitionFile(" + path + ")", 5);
 			plugin_RestClient.loadDefinitionFile(path);
 		},
 		getJson : function(service, parameter, async) {
-			app.debug.alert("plugin_RestClient.functions.getJson(" + service + ", " + JSON.stringify(parameter) + ")", 20);
+			app.debug.alert("plugin.RestClient.js plugin_RestClient.functions.getJson(" + service + ", " + parameter + ", " + async + ")", 20);
 
-			// get multible json objects; async = false
 			if (typeof service == "object" && (parameter == false || parameter == undefined)) {
+				app.debug.alert("plugin.RestClient.js case: get multible json objects; async = false", 5);
 				return plugin_RestClient.getMultipleJson(service, parameter, async);
 			}
 
-			// get multible json objects; async = true
 			else if (typeof service == "object" && parameter == true) {
+				app.debug.alert("plugin.RestClient.js case: get multible json objects; async = true", 5);
 				return plugin_RestClient.getMultipleJsonAsync(service, parameter, async);
 			}
 
-			// get a single json object; async = false
 			else if (typeof service == "string" && (parameter == undefined || typeof parameter == "object") && (async == undefined || async == false)) {
+				app.debug.alert("plugin.RestClient.js case: get a single json object; async = false", 5);
 				return plugin_RestClient.getSingleJson(service, parameter, async);
 			}
 
-			// get a single json object; async = true
 			else if (typeof service == "string" && (parameter == undefined || typeof parameter == "object") && async == true) {
+				app.debug.alert("plugin.RestClient.js case: get a single json object; async = true", 5);
 				return plugin_RestClient.getSingleJsonAsync(service, parameter, async);
 			}
 

@@ -21,6 +21,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Accelerometer\"><param name=\"ios-package\" value=\"CDVAccelerometer\" /></feature>",
                             "count": 1
                         },
@@ -49,6 +53,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"ios-package\" value=\"CDVInAppBrowser\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Media\"><param name=\"ios-package\" value=\"CDVSound\" /></feature>",
                             "count": 1
                         },
@@ -66,14 +74,6 @@
                         },
                         {
                             "xml": "<feature name=\"Vibration\"><param name=\"ios-package\" value=\"CDVVibration\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"InAppBrowser\"><param name=\"ios-package\" value=\"CDVInAppBrowser\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -96,19 +96,19 @@
                     "CoreGraphics.framework": [
                         {
                             "xml": "false",
-                            "count": 25
+                            "count": 5
                         }
                     ],
                     "AssetsLibrary.framework": [
                         {
                             "xml": "false",
-                            "count": 9
+                            "count": 3
                         }
                     ],
                     "MobileCoreServices.framework": [
                         {
                             "xml": "false",
-                            "count": 9
+                            "count": 3
                         }
                     ],
                     "AddressBook.framework": [
@@ -132,7 +132,7 @@
                     "AudioToolbox.framework": [
                         {
                             "xml": "true",
-                            "count": 4
+                            "count": 2
                         }
                     ],
                     "SystemConfiguration.framework": [
@@ -153,6 +153,9 @@
             "PACKAGE_NAME": "app.extern.gtn.themis"
         },
         "org.apache.cordova.contacts": {
+            "PACKAGE_NAME": "app.extern.gtn.themis"
+        },
+        "org.apache.cordova.device": {
             "PACKAGE_NAME": "app.extern.gtn.themis"
         },
         "org.apache.cordova.device-motion": {
@@ -176,6 +179,9 @@
         "org.apache.cordova.globalization": {
             "PACKAGE_NAME": "app.extern.gtn.themis"
         },
+        "org.apache.cordova.inappbrowser": {
+            "PACKAGE_NAME": "app.extern.gtn.themis"
+        },
         "org.apache.cordova.media": {
             "PACKAGE_NAME": "app.extern.gtn.themis"
         },
@@ -189,12 +195,6 @@
             "PACKAGE_NAME": "app.extern.gtn.themis"
         },
         "org.apache.cordova.vibration": {
-            "PACKAGE_NAME": "app.extern.gtn.themis"
-        },
-        "org.apache.cordova.device": {
-            "PACKAGE_NAME": "app.extern.gtn.themis"
-        },
-        "org.apache.cordova.inappbrowser": {
             "PACKAGE_NAME": "app.extern.gtn.themis"
         }
     },

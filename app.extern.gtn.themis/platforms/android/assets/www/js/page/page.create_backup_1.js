@@ -73,10 +73,7 @@ var page_create_backup_1 = {
 			$(document).on("click", ".configtype-input", function(event) {
 
 				app.notify.dialog("Hier Stehen die vorhandenen Profile. Welches Webservice?", app.lang.string("choose_profile", "headlines"), app.lang.string("choose_profile", "headlines"), app.lang.string("new_source_profile", "actions"), app.lang.string("cancel", "actions"), function(popup) {
-					window.setTimeout(function() {
-						// $(this).attr("data-html5-oAuthUrl")
-						$(location).attr("href", "create_backup_1_newSource.html");
-					}, 10);
+					app.help.navigation.redirect( "create_backup_1_newSource.html");
 				}, function(popup) {
 					;
 				}, 0);
@@ -107,7 +104,7 @@ var page_create_backup_1 = {
 						promise.done(function(accessToken) {
 							// alert(accessToken);
 							app.store.localStorage.set("data-html5-themis-oAuthToken", accessToken);
-							$(location).attr("href", "create_backup_1_newSource.html");
+							app.help.navigation.redirect( "create_backup_1_newSource.html");
 
 						});
 

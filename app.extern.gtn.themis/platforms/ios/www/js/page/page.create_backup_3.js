@@ -85,7 +85,7 @@ var page_create_backup_3 = {
 				promise.done(function(resultObject) {
 					//alert(JSON.stringify(resultObject));
 					$(".app-loader").remove();
-					$(location).attr("href", "backup_jobs.html");
+					app.help.navigation.redirect("backup_jobs.html");
 				});
 
 				promise.fail(function(error) {

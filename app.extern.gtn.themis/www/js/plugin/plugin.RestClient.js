@@ -131,11 +131,12 @@ var plugin_RestClient = {
 					});
 				}
 			}
+			app.debug.alert("pugin.RestClient.js Webservice call done: " + JSON.stringify(json), 60);
 			dfd.resolve(json);
 		});
 
 		promise.fail(function(jqXHR) {
-			app.debug.alert("async webservice call failed", 60);
+			app.debug.alert("pugin.RestClient.js Webservice call failed: " + JSON.stringify(jqXHR), 60);
 			dfd.reject(jqXHR);
 		});
 
@@ -234,8 +235,10 @@ var plugin_RestClient = {
 			$.each(webserviceNamesArray, function(key, value) {
 				resultObject[value] = argumentsArray[key];
 			});
+			app.debug.alert("pugin.RestClient.js Webservice call done: " + JSON.stringify(resultObject), 60);
 			dfd.resolve(resultObject);
 		}, function(errorObject) {
+			app.debug.alert("pugin.RestClient.js Webservice call failed: " + JSON.stringify(errorObject), 60);
 			dfd.reject(errorObject);
 		});
 

@@ -154,7 +154,7 @@ var pages = {
 
 			} else if (window['page_' + $(this).attr('id')] == undefined) {
 				alert("-Fatal error: Can't find the page object: page_" + $(this).attr('id') + "; Please have a look to your pages.json file. You'll be redirected to the index.html page.");
-				$(location).attr('href', "index.html");
+				app.help.navigation.redirect("index.html");
 			} else {
 				// case 3: page is a common lapstone page
 
@@ -282,7 +282,7 @@ var pages = {
 				// case 3: page ist not defined in pages.json
 				app.debug.alert("pages.js case: page ist not defined in pages.json", 5);
 				alert("plugin.eventFunctions.pageTypeSelector() - Fatal error: Can't find the page object: page_" + container.attr('id') + "; Please have a look to your pages.json file.");
-				$(location).attr('href', "index.html");
+				app.help.navigation.redirect("index.html");
 			} else {
 				// case 4: page is a common lapstone page
 				app.debug.alert("pages.js case: page is a common lapstone page", 5);
@@ -404,7 +404,6 @@ var pages = {
 					$(this).html(app.lang.string(languageArray[1], languageArray[0]));
 				});
 				var html = staticContainer.html();
-alert(html);
 				container.find('div[data-role=content]').append(html);
 				// wichtig, dass macht irgend eine sache mit den dialog feldern.
 				pages.callPluginsPageFunctions(container);
@@ -469,7 +468,7 @@ alert(html);
 								app.notify.add.alert(app.lang.string("bad_connection", "notifications"), app.lang.string("bad_connection", "headlines"), app.lang.string("bad_connection", "headlines"));
 								app.store.localStorage.clearHtml5();
 								$(document).off();
-								$(location).attr('href', "index.html");
+								app.help.navigation.redirect("index.html");
 							}
 						} else {
 							// case: Page has NO keepAlive entry in json file

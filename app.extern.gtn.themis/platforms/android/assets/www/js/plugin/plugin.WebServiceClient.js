@@ -108,52 +108,63 @@ var plugin_WebServiceClient = {
 	},
 
 	getAjax : function(url, data, type, method, timeout, async, dataType) {
-		app.debug.alert("plugin_WebServiceClient.getAjax(" + url + ", " + data + ", " + type + ", " + method + ", " + timeout + ", " + async + ")", 14);
-		app.debug.alert("Call webservice: " + url + "?" + data, 60);
+		app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax(" + url + ", " + data + ", " + type + ", " + method + ", " + timeout + ", " + async + ")", 14);
+		app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() webservice: " + url + "?" + data, 60);
 		var json = null;
 
 		var dfd = null;
 		if (async) {
+			app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() case: webservice is async - create deferred object", 60);
 			dfd = $.Deferred();
 			json = dfd.promise();
 		}
 
-		// get headers from data
 		var headers = null;
 		if (data.indexOf('§') != -1) {
+			app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() case: webservice needs special headers", 60);
 			var splittedData = data.split("§");
 			headers = splittedData[1];
 			data = splittedData[0];
 		}
 
 		var contentType = "application/x-www-form-urlencoded";
-		if (dataType != undefined && dataType.toLowerCase() == "json") {
-			// (nicht mehr so) dirty
-			// alert(data);
-			var obj = {};
-			var pairs = data.split('&');
-			for (i in pairs) {
-				var split = pairs[i].split('=');
-				if (split[1].substr(0, 1) == "{" || split[1].substr(0, 1) == "[") {
-					// alert(split[1]);
-					try {
-						split[1] = JSON.parse(split[1]);
+		if (dataType != undefined) {
+			if (dataType.toLowerCase() == "query") {
+				app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() case: contentType = application/x-www-form-urlencoded", 60);
+			
+			} else if (dataType.toLowerCase() == "json") {
+				app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() case: contentType = application/json; charset=utf-8", 60);
+				app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() Create json object", 60);
+				var obj = {};
+				var pairs = data.split('&');
+				for (i in pairs) {
+					var split = pairs[i].split('=');
+					if (split[1].substr(0, 1) == "{" || split[1].substr(0, 1) == "[") {
+						try {
+							split[1] = JSON.parse(split[1]);
+							obj[split[0]] = split[1];
+						} catch (e) {
+							alert("Ein parameter ist nicht gesetzt: " + split[0]);
+						}
+					} else {
 						obj[split[0]] = split[1];
-					} catch (e) {
-						alert("Ein parameter ist nicht gesetzt: " + split[0]);
 					}
-					// alert(JSON.stringify(split[1]));
-				} else {
-					obj[split[0]] = split[1];
-				}
 
+				}
+				data = JSON.stringify(obj);
+				contentType = "application/json; charset=utf-8"
 			}
-			data = JSON.stringify(obj);
-			contentType = "application/json; charset=utf-8"
-			// alert(data);
 		}
 
 		try {
+			app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() set up ajax request", 60);
+			app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() parameter: url = " + url, 60);
+			app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() parameter: data = " + data, 60);
+			app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() parameter: dataType = " + dataType, 60);
+			app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() parameter: contentType = " + contentType, 60);
+			app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() parameter: async = " + async, 60);
+			app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() parameter: method = " + method, 60);
+			app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() parameter: timeout = " + timeout, 60);
 			$.ajax({
 				url : url,
 				data : data,// ?key=value
@@ -163,30 +174,41 @@ var plugin_WebServiceClient = {
 				method : method, // post
 				timeout : timeout, // 5000
 				beforeSend : function(jqXHR, settings) {
+					app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() beforeSend: set http headers", 60);
 					if (plugin_WebServiceClient.config.useHeaderToken) {
+						app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() case: plugin_WebServiceClient.config.useHeaderToken = true", 60);
+						app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() paramerter: " + plugin_WebServiceClient.config.headerToken.key + " = " + app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value), 60);
+
 						jqXHR.setRequestHeader(plugin_WebServiceClient.config.headerToken.key, app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value));
 					}
 					if (headers != null) {
+						app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() case: headers != null", 60);
+						app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() set additional headers", 60);
 						var obj = {};
 						var pairs = headers.split('&');
 						for (i in pairs) {
 							var split = pairs[i].split('=');
+							app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() setRequestHeader(" + split[0] + ", " + split[1] + ")", 60);
 							jqXHR.setRequestHeader(split[0], split[1]);
 						}
 					}
 				},
+
 				success : function(data, textStatus, jqXHR) {
+					app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() Webservice done: " + JSON.stringify(data), 5);
 					json = data;
 					if (dfd != undefined && dfd != null) {
-						// alert("ws success -- resolve dfd");
 						dfd.resolve(json);
 					}
 				},
+
 				error : function(jqXHR, textStatus, errorThrown) {
-					app.debug.alert("Error in: plugin_WebServiceClient.getAjax(). Error: " + errorThrown, 50);
+					app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() Error: " + errorThrown, 50);
+					app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() Error: " + JSON.stringify(jqXHR), 50);
+					app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() Error: " + textStatus, 50);
 					json = false;
 					if (dfd != undefined && dfd != null) {
-						// alert("now, reject it");
+						app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() case: reject deferred object", 60);
 						dfd.reject({
 							"call" : {
 								"url" : url,
@@ -202,11 +224,11 @@ var plugin_WebServiceClient = {
 				}
 			});
 		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+			app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() catch block: " + JSON.stringify(err), 50);
 			app.debug.log(JSON.stringify(err, null, 4));
 			json = false;
 		}
-		app.debug.alert("Webservice returns: " + JSON.stringify(json, null, 4), 60);
+		app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() Webservice returns: " + JSON.stringify(json), 60);
 		return json;
 	},
 
@@ -308,12 +330,12 @@ var plugin_WebServiceClient = {
 			if (local === true)
 				url = path;
 			else {
-				//alert(server);
+				// alert(server);
 				var serverConfig = plugin_WebServiceClient.getPreferedServer(server);
-				//alert(JSON.stringify(serverConfig));
+				// alert(JSON.stringify(serverConfig));
 				url = serverConfig.scheme + serverConfig.scheme_specific_part + serverConfig.host + ":" + serverConfig.port + path;
 				var dataType = plugin_WebServiceClient.config.server[server].mappings[method.toLowerCase()];
-				//alert(dataType);
+				// alert(dataType);
 			}
 
 			var json = plugin_WebServiceClient.getAjax(url, data, "json", method, timeout, async, dataType);

@@ -12,7 +12,7 @@ var page_logout = {
 		
 		try {
 			app.store.localStorage.set("data-html5-themis-loggedin", false);
-			$(location).attr("href", "index.html");
+			app.help.navigation.redirect( "index.html");
 			success = true;
 		} catch (err) {
 			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);

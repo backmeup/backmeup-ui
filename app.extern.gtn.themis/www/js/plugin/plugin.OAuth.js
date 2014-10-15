@@ -58,7 +58,7 @@ var plugin_OAuth = {
 		//alert(app.config.apacheCordova);
 		if (app.config.apacheCordova == null || app.config.apacheCordova == false) {
 			alert("desktop oauth");
-			$(location).attr("href", url);
+			app.help.navigation.redirect(url);
 			return true;
 		}
 		return false;

@@ -74,7 +74,7 @@ var page_create_backup_2_newSink = {
 						// alert(JSON.stringify(resultObject));
 						app.store.localStorage.set("data-html5-themis-sink-profileid", resultObject.profileId);
 						$(".app-loader").remove();
-						$(location).attr("href", "create_backup_3.html");
+						app.help.navigation.redirect( "create_backup_3.html");
 					});
 
 					promise.fail(function(error) {
@@ -94,7 +94,7 @@ var page_create_backup_2_newSink = {
 
 					promise.done(function(resultObject) {
 						$(".app-loader").remove();
-						$(location).attr("href", "create_backup_3.html");
+						app.help.navigation.redirect( "create_backup_3.html");
 					});
 
 					promise.fail(function(error) {

@@ -141,6 +141,13 @@ var plugin_HelperFunctions = {
 				object.find('select').selectmenu();
 
 			}
+		},
+		navigation : {
+			redirect : function(url) {
+				setTimeout(function() {
+					$(location).attr("href", url);
+				}, 20);
+			}
 		}
 	}
 };

@@ -454,16 +454,16 @@ var pages = {
 				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate(" + event + ", " + container + ")", 5);
 
 				if (plugin_WebServiceClient.config.useKeepAlive) {
-					// case: WebServiceClient requires keepAlive
+					app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate() case: : WebServiceClient requires keepAlive", 5);
 					if (window['page_' + container.attr('id')].config.useKeepAlive != undefined) {
-						// case: Page has keepAlive configuration
+						app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate() case: Page has keepAlive configuration in page.json", 5);
 						if (window['page_' + container.attr('id')].config.useKeepAlive) {
-							// case: keepAlive is TRUE
+							app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate() case: global keepAlive is TRUE", 5);
 							if (plugin_WebServiceClient.config.keepAlive.isAlive) {
-								// case: server isAlive
+								app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate() case: server isAlive", 5);
 								pages.eventFunctions.lapstonePage.pagebeforecreate_createPage(event, container);
 							} else {
-								// case: no connection to server
+								app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate() case: no connection to server", 5);
 								app.debug.alert("pages.js Can't load page because keepAlive failed. Check your connection. You'll be redirected to the index.html page.", 60);
 								app.notify.add.alert(app.lang.string("bad_connection", "notifications"), app.lang.string("bad_connection", "headlines"), app.lang.string("bad_connection", "headlines"));
 								app.store.localStorage.clearHtml5();
@@ -471,16 +471,16 @@ var pages = {
 								app.help.navigation.redirect("index.html");
 							}
 						} else {
-							// case: Page has NO keepAlive entry in json file
+							app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate() case: Page has NO keepAlive entry in page.json file", 5);
 							pages.eventFunctions.lapstonePage.pagebeforecreate_createPage(event, container);
 						}
 					} else {
-						// case: Page does not require keepAlive
+						app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate() case: Page does not require keepAlive", 5);
 						app.debug.alert("pages.js No useKeepAlive entry in your page_" + container.attr('id') + ".json. Please add it.", 60);
 						pages.eventFunctions.lapstonePage.pagebeforecreate_createPage(event, container);
 					}
 				} else {
-					// case: WebServiceClient does not require keepAlive
+					app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate() case: WebServiceClient does not require keepAlive", 5);
 					pages.eventFunctions.lapstonePage.pagebeforecreate_createPage(event, container);
 				}
 			},

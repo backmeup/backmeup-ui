@@ -2,7 +2,7 @@
 var app = {
 	config : {
 		name : "app",
-		min : true,
+		min : false,
 		useJQueryMobile : true,
 		apacheCordova : null
 	},
@@ -72,15 +72,16 @@ function loadPages() {
 
 $(document).ready(function() {
 
+	var configuration = JsonLoader("../js/lapstone.json");
+	app.config.name = configuration.appname;
+
 	var success = true;
 	success = loadPlugins();
 	success = loadPages();
 
-	
-
 	// load jQuery mobile
 	if (app.config.useJQueryMobile) {
-		var url = "../ext/jquery.mobile-1.4.2.min.js";
+		var url = "../ext/jquery.mobile-1.4.4.min.js";
 		$.ajax({
 			url : url,
 			dataType : "script",
@@ -98,7 +99,7 @@ $(document).ready(function() {
 
 	app.debug.alert("app framework initialized", 30);
 
-	 // app.store.localStorage.clear();
+	// app.store.localStorage.clear();
 	// app.store.localStorage.show();
 	// app.notify.add.alert("dasd", "sadsad", "asdsad");
 
@@ -142,7 +143,7 @@ function TextLoader(url) {
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-	alert("cordova initialized", 30);
+	app.debug.alert("cordova initialized", 30);
 	app.config.apacheCordova = true;
 }
 

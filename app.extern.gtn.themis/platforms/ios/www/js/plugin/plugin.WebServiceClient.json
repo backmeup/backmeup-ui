@@ -7,7 +7,7 @@
 	"useKeepAlive":true,
 	"keepAlive":{
 		"keepAliveServer":"backmeup",
-		"keepAliveIntervalInS":5,
+		"keepAliveIntervalInS":15,
 		"keepAlivePath":"/keepAlive.json",
 		"method":"get",
 		"type":"json",

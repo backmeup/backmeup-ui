@@ -75,6 +75,8 @@ var pages = {
 		}
 
 		window['page_' + key].constructor();
+		window['page_' + key]['config']['page'] = key;
+		window['page_' + key]['config']['pageId'] = '#' + key;
 
 		app.addObject(window['page_' + key].config.name, window['page_' + key].functions);
 		app.addObject(window['page_' + key].config.shortname, window['page_' + key].functions);
@@ -275,7 +277,8 @@ var pages = {
 				// case 2: page is inline-static
 				app.debug.alert("pages.js case: page type is inline-static", 5);
 				var staticContainer = container.clone();
-				globalPage[eventName](event, container);
+				if (window['page_' + container.attr('id')].config.isGlobalPage || window['page_' + container.attr('id')].config.isGlobalPage == undefined)
+					globalPage[eventName](event, container);
 				pages.eventFunctions.everyPage[eventName](event, container);
 				pages.eventFunctions.staticInlinePage[eventName](event, container, staticContainer);
 			} else if (window['page_' + container.attr('id')] == undefined) {
@@ -286,7 +289,8 @@ var pages = {
 			} else {
 				// case 4: page is a common lapstone page
 				app.debug.alert("pages.js case: page is a common lapstone page", 5);
-				globalPage[eventName](event, container);
+				if (window['page_' + container.attr('id')].config.isGlobalPage || window['page_' + container.attr('id')].config.isGlobalPage == undefined)
+					globalPage[eventName](event, container);
 				pages.eventFunctions.everyPage[eventName](event, container);
 
 				pages.eventFunctions.lapstonePage[eventName](event, container);
@@ -321,8 +325,13 @@ var pages = {
 			},
 			pagehide : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.everyPage.pagehide(" + event + ", " + container + ")", 5);
+
+				
+				$("#" + container.attr("id")).off();
+
 				app.debug.alert("pages.js remove page from DOM: " + container.attr('id'), 5);
 				container.remove();
+
 			},
 			pageinit : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.everyPage.pageinit(" + event + ", " + container + ")", 5);
@@ -448,22 +457,22 @@ var pages = {
 		lapstonePage : {
 			pagebeforechange : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforechange(" + event + ", " + container + ")", 5);
-				window['page_' + container.attr('id')].events.pageshow(event, container);
+				window['page_' + container.attr('id')].events.pagebeforechange(event, container);
 			},
 			pagebeforecreate : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate(" + event + ", " + container + ")", 5);
 
 				if (plugin_WebServiceClient.config.useKeepAlive) {
-					// case: WebServiceClient requires keepAlive
+					app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate() case: : WebServiceClient requires keepAlive", 5);
 					if (window['page_' + container.attr('id')].config.useKeepAlive != undefined) {
-						// case: Page has keepAlive configuration
+						app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate() case: Page has keepAlive configuration in page.json", 5);
 						if (window['page_' + container.attr('id')].config.useKeepAlive) {
-							// case: keepAlive is TRUE
+							app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate() case: global keepAlive is TRUE", 5);
 							if (plugin_WebServiceClient.config.keepAlive.isAlive) {
-								// case: server isAlive
+								app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate() case: server isAlive", 5);
 								pages.eventFunctions.lapstonePage.pagebeforecreate_createPage(event, container);
 							} else {
-								// case: no connection to server
+								app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate() case: no connection to server", 5);
 								app.debug.alert("pages.js Can't load page because keepAlive failed. Check your connection. You'll be redirected to the index.html page.", 60);
 								app.notify.add.alert(app.lang.string("bad_connection", "notifications"), app.lang.string("bad_connection", "headlines"), app.lang.string("bad_connection", "headlines"));
 								app.store.localStorage.clearHtml5();
@@ -471,16 +480,16 @@ var pages = {
 								app.help.navigation.redirect("index.html");
 							}
 						} else {
-							// case: Page has NO keepAlive entry in json file
+							app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate() case: Page has NO keepAlive entry in page.json file", 5);
 							pages.eventFunctions.lapstonePage.pagebeforecreate_createPage(event, container);
 						}
 					} else {
-						// case: Page does not require keepAlive
+						app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate() case: Page does not require keepAlive", 5);
 						app.debug.alert("pages.js No useKeepAlive entry in your page_" + container.attr('id') + ".json. Please add it.", 60);
 						pages.eventFunctions.lapstonePage.pagebeforecreate_createPage(event, container);
 					}
 				} else {
-					// case: WebServiceClient does not require keepAlive
+					app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforecreate() case: WebServiceClient does not require keepAlive", 5);
 					pages.eventFunctions.lapstonePage.pagebeforecreate_createPage(event, container);
 				}
 			},
@@ -495,47 +504,47 @@ var pages = {
 			},
 			pagebeforehide : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforehide(" + event + ", " + container + ")", 5);
-				window['page_' + container.attr('id')].events.pageshow(event, container);
+				window['page_' + container.attr('id')].events.pagebeforehide(event, container);
 			},
 			pagebeforeload : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagebeforeload(" + event + ", " + container + ")", 5);
-				window['page_' + container.attr('id')].events.pageshow(event, container);
+				window['page_' + container.attr('id')].events.pagebeforeload(event, container);
 			},
 			pagebeforeshow : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagechange(" + event + ", " + container + ")", 5);
-				window['page_' + container.attr('id')].events.pageshow(event, container);
+				window['page_' + container.attr('id')].events.pagebeforeshow(event, container);
 			},
 			pagechange : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagechange(" + event + ", " + container + ")", 5);
-				window['page_' + container.attr('id')].events.pageshow(event, container);
+				window['page_' + container.attr('id')].events.pagechange(event, container);
 			},
 			pagechangefailed : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagechangefailed(" + event + ", " + container + ")", 5);
-				window['page_' + container.attr('id')].events.pageshow(event, container);
+				window['page_' + container.attr('id')].events.pagechangefailed(event, container);
 			},
 			pagecreate : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagecreate(" + event + ", " + container + ")", 5);
-				window['page_' + container.attr('id')].events.pageshow(event, container);
+				window['page_' + container.attr('id')].events.pagecreate(event, container);
 			},
 			pagehide : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pagehide(" + event + ", " + container + ")", 5);
-				window['page_' + container.attr('id')].events.pageshow(event, container);
+				window['page_' + container.attr('id')].events.pagehide(event, container);
 			},
 			pageinit : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pageinit(" + event + ", " + container + ")", 5);
-				window['page_' + container.attr('id')].events.pageshow(event, container);
+				window['page_' + container.attr('id')].events.pageinit(event, container);
 			},
 			pageload : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pageload(" + event + ", " + container + ")", 5);
-				window['page_' + container.attr('id')].events.pageshow(event, container);
+				window['page_' + container.attr('id')].events.pageload(event, container);
 			},
 			pageloadfailed : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pageloadfailed(" + event + ", " + container + ")", 5);
-				window['page_' + container.attr('id')].events.pageshow(event, container);
+				window['page_' + container.attr('id')].events.pageloadfailed(event, container);
 			},
 			pageremove : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pageremove(" + event + ", " + container + ")", 5);
-				window['page_' + container.attr('id')].events.pageshow(event, container);
+				window['page_' + container.attr('id')].events.pageremove(event, container);
 			},
 			pageshow : function(event, container) {
 				app.debug.alert("pages.js plugin.eventFunctions.lapstonePage.pageshow(" + event + ", " + container + ")", 5);

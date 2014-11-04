@@ -22,7 +22,7 @@ var plugin_Notification = {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
 		if (plugin_Notification.config.enablePushNotifications)
 			setTimeout(function() {
-				alert(JSON.stringify(plugin_Notification.config.pushConfig));
+				//alert(JSON.stringify(plugin_Notification.config.pushConfig));
 
 				var promise = app.rc.getJson([ [ "licence.registerDevice", {
 					"deviceId" : "aa",

@@ -8,7 +8,9 @@ var globalPage = {
 
 			var ul = app.ni.element.ul();
 
-			ul.append(app.ni.element.li().append(app.ni.element.a({
+			ul.append(app.ni.element.li({
+				"id" : "ftrLiNavSearch"
+			}).append(app.ni.element.a({
 				"id" : "ftrBtnNavSearch",
 				"text" : app.lang.string("search", "actions"),
 				"attributes" : {

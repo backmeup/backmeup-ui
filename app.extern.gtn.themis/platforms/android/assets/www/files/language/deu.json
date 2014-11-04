@@ -126,11 +126,15 @@
 	"texts":{
 		"verify_email":"Eine E-Mail mit einem Bestätigungs-Code wurde an Ihre E-Mail-Adresse geschickt. Bitte geben Sie den Bestätigungs-Code ein oder klicken Sie den Bestätigungs-Link um Ihre E-Mail zu verifizieren.",
 		"select_datasource":"Bitte wählen Sie ein bestehendes Datenquellen-Profil (aus einem vorangegangenem Backup) oder wählen Sie eine neue Datenquelle aus der Liste unten.",
-		"":""
+		"multilanguage":"Das ist ein dynamischer mehrsprachiger Text auf einer static-inline Seite",
+		"getstarted":"Get Started!"
 		
 	},
 	"themisIds":{
 		"info":"Info",
 		"job_failed":"Fehler"
+	},
+	"org.backmeup.dropbox":{
+		"The password of your E-Mail account":""
 	}
 }

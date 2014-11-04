@@ -33,7 +33,12 @@
 		"menu_close":"Menü schließen",
 		"settings":"Einstellungen",
 		"share":"Teilen",
-		"zip_archive":"Zip Archiv"
+		"zip_archive":"Zip Archiv",
+		"incoming_share":"Eingehendes Backup",
+		"incoming_shares":"Eingehendes Backups",
+		"accept":"annehmen",
+		"decline":"ablehnen",
+		"finish":"fertig"
 	},
 	"labels":{
 		"title":"Titel",
@@ -54,6 +59,7 @@
 		"verify_email":"E-Mail bestätigen"
 	},
 	"headlines":{
+		"share":"Teilen",
 		"activate_account":"Account aktivieren",
 		"backup_jobs_successful":"Erfolgreiche Backupjobs",
 		"backup_jobs_queued":"Warteschlange",
@@ -105,7 +111,10 @@
 		"select_datasource":"Datenquelle auswählen",
 		"select_datasink":"Speicherziel auswählen",
 		"share_backup":"Backup Teilen",
-		"backup_options":"Backupoptionen"
+		"backup_options":"Backupoptionen",
+		"backup_to_share":"Diese Backups können geteilt werden",
+		"incoming_share":"Eingehendes Backup",
+		"incoming_shares":"Eingehende Backups"
 	},
 	"notifications":{
 		"bad_connection":"Der Verbindungsaufbau zum Themis-Server dauert zu lange. Sie werden zur Startseite weitergeleitet.",
@@ -127,7 +136,9 @@
 		"verify_email":"Eine E-Mail mit einem Bestätigungs-Code wurde an Ihre E-Mail-Adresse geschickt. Bitte geben Sie den Bestätigungs-Code ein oder klicken Sie den Bestätigungs-Link um Ihre E-Mail zu verifizieren.",
 		"select_datasource":"Bitte wählen Sie ein bestehendes Datenquellen-Profil (aus einem vorangegangenem Backup) oder wählen Sie eine neue Datenquelle aus der Liste unten.",
 		"multilanguage":"Das ist ein dynamischer mehrsprachiger Text auf einer static-inline Seite",
-		"getstarted":"Get Started!"
+		"getstarted":"Get Started!",
+		"incoming_share":"Die Person ___ gibt ihnen ein Facebook backup frei. Möchten Sie dieses annehmen?",
+		"share_backup":"Du kannst dieses Backup teilen, indem Du die E-Mail Adresse des Empängers eingubst"
 		
 	},
 	"themisIds":{

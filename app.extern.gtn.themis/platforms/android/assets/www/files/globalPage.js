@@ -133,6 +133,15 @@ var globalPage = {
 
 			ul.append(app.ni.element.li().append(app.ni.element.a({
 				"id" : "navPageBackupJobs",
+				"text" : app.lang.string("incoming_share", "actions"),
+				"attributes" : {
+					"href" : "share_backup.html",
+
+				}
+			})));
+			
+			ul.append(app.ni.element.li().append(app.ni.element.a({
+				"id" : "navPageBackupJobs",
 				"text" : app.lang.string("backup_jobs", "actions"),
 				"attributes" : {
 					"href" : "backup_jobs.html",

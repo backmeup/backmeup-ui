@@ -8,7 +8,9 @@ var globalPage = {
 
 			var ul = app.ni.element.ul();
 
-			ul.append(app.ni.element.li().append(app.ni.element.a({
+			ul.append(app.ni.element.li({
+				"id" : "ftrLiNavSearch"
+			}).append(app.ni.element.a({
 				"id" : "ftrBtnNavSearch",
 				"text" : app.lang.string("search", "actions"),
 				"attributes" : {
@@ -131,6 +133,15 @@ var globalPage = {
 
 			ul.append(app.ni.element.li().append(app.ni.element.a({
 				"id" : "navPageBackupJobs",
+				"text" : app.lang.string("incoming_share", "actions"),
+				"attributes" : {
+					"href" : "share_backup.html",
+
+				}
+			})));
+			
+			ul.append(app.ni.element.li().append(app.ni.element.a({
+				"id" : "navPageBackupJobs",
 				"text" : app.lang.string("backup_jobs", "actions"),
 				"attributes" : {
 					"href" : "backup_jobs.html",
@@ -143,6 +154,15 @@ var globalPage = {
 				"text" : app.lang.string("zip_archive", "actions"),
 				"attributes" : {
 					"href" : "zip_archive.html",
+
+				}
+			})));
+
+			ul.append(app.ni.element.li().append(app.ni.element.a({
+				"id" : "navShowLog",
+				"text" : "UI Log File",
+				"attributes" : {
+					"href" : "#",
 
 				}
 			})));
@@ -221,6 +241,7 @@ var globalPage = {
 	 */
 	pagebeforecreate : function(event, container) {
 		app.debug.alert("globalPage.js - globalPage.pagebeforecreate(event, container)", 5);
+
 		/*
 		 * 
 		 */
@@ -278,6 +299,7 @@ var globalPage = {
 		 * desktop specific operations
 		 */
 		if (app.detect.isDesktop()) {
+
 			pagePanel.removeAttr("data-role");
 			pagePanel.find("ul").removeAttr("data-role");
 
@@ -292,10 +314,11 @@ var globalPage = {
 
 			footer.removeAttr("data-position");
 
+			// $(document).off("mouseenter", "#navBtnNavMore");
 			$(document).on("mouseenter", "#navBtnNavMore", function() {
-				$("#page-panel").slideDown();
+				$("#page-panel").css("display", "block");
 			});
-
+			// $(document).off("mouseleave", "#page-panel");
 			$(document).on("mouseleave", "#page-panel", function() {
 				$(this).slideUp();
 			});
@@ -309,6 +332,14 @@ var globalPage = {
 			header.css("display", "none");
 
 		}
+
+		$(document).on("click", "#navShowLog", function() {
+			var text = "";
+			$.each(plugin_Debug.logObject, function(key, value) {
+				text += value + "<br />\n";
+			});
+			app.notify.alert(text, "UI Log File", "UI Log File");
+		}),
 
 		$(document).on("click", "#ftrBtnNavSearch, #navBtnNavSearch", function() {
 			var search = $("<div></div>");

@@ -64,7 +64,7 @@ var page_login = {
 			} else {
 				if ((json = app.rc.getJson("authenticate", {
 					"username" : container.find("#txtUsername").val(),
-					"password" : container.find("#txtPassword").val()
+					"password" : encodeURIComponent(container.find("#txtPassword").val())
 				})) != false) {
 					if (json.accessToken != undefined) {
 						//alert(JSON.stringify(json));
@@ -73,7 +73,7 @@ var page_login = {
 						app.sess.loggedIn("true");
 						app.store.localStorage.set("data-html5-themis-username", container.find("#txtUsername").val());
 						app.store.localStorage.set("data-html5-themis-token", json.accessToken);
-						$(location).attr("href", "start.html");
+						app.help.navigation.redirect("start.html");
 					} else {
 						alert("Benutzername oder Passwort falsch.");
 					}

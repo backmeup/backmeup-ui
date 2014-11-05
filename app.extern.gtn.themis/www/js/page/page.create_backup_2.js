@@ -79,7 +79,7 @@ var page_create_backup_2 = {
 			// just another dirty part
 			$(document).on("click", 'a[data-html5-themis-pluginid="org.backmeup.dummy"]', function(event) {
 				event.stopImmediatePropagation();
-				$(location).attr("href", "create_backup_2_newSink.html");
+				app.help.navigation.redirect("create_backup_2_newSink.html");
 			});
 
 			$(document).on("click", ".configtype-oauth", function(event) {
@@ -92,7 +92,7 @@ var page_create_backup_2 = {
 				promise.done(function(accessToken) {
 					// alert(accessToken);
 					app.store.localStorage.set("data-html5-themis-oAuthToken", accessToken);
-					$(location).attr("href", "create_backup_2_newSink.html");
+					app.help.navigation.redirect( "create_backup_2_newSink.html");
 
 				});
 

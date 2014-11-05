@@ -1,5 +1,5 @@
 <?php 
-// sparchfile einlesen
+// sparchfile einlesen 
 
 // sprachfile 
 ?>

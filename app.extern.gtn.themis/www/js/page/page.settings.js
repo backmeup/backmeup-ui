@@ -56,7 +56,7 @@ var page_settings = {
 
 	redirectHome : function() {
 		app.store.localStorage.clear();
-		$(location).attr('href', "index.html");
+		app.help.navigation.redirect("index.html");
 	},
 
 	events : {

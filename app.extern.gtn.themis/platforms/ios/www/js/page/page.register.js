@@ -109,7 +109,7 @@ var page_register = {
 							app.store.localStorage.set("data-html5-themis-userid", json.userId);
 							app.store.localStorage.set("data-html5-themis-activated", json.activated);
 							app.store.localStorage.set("data-html5-themis-username", container.find("#txtUsername").val());
-							$(location).attr("href", "activate_account.html");
+							app.help.navigation.redirect( "activate_account.html");
 						} else {
 							app.notify.alert(app.lang.string("bad_register", "notifications"), app.lang.string("register", "headlines"), app.lang.string("bad_register", "headlines"));
 						}

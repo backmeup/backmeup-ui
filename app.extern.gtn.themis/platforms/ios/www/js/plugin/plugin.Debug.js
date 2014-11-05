@@ -225,7 +225,8 @@ var plugin_Debug = {
 				alert("DebugLevel: " + level + "\n" + text);
 			}
 			if (plugin_Debug.config.logDebug && (level >= plugin_Debug.config.logDebugLevel)) {
-				plugin_Debug.functions.log("DebugLevel: " + level + " - " + text);
+				//plugin_Debug.functions.log("DebugLevel: " + level + " - " + text);
+				plugin_Debug.functions.log(text);
 			}
 		},
 		/**

@@ -105,7 +105,7 @@ var page_create_backup_1_newSource = {
 					//alert(JSON.stringify(resultObject));
 					app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
 					$(".app-loader").remove();
-					$(location).attr("href", "create_backup_2.html");
+					app.help.navigation.redirect("create_backup_2.html");
 				});
 
 				promise.fail(function(error) {
@@ -128,7 +128,7 @@ var page_create_backup_1_newSource = {
 					alert(JSON.stringify(resultObject));
 					app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
 					$(".app-loader").remove();
-					$(location).attr("href", "create_backup_2.html");
+					app.help.navigation.redirect( "create_backup_2.html");
 				});
 
 				promise.fail(function(error) {

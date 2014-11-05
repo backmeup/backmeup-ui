@@ -137,6 +137,23 @@ var plugin_FormInputDesigner = {
 	},
 	// public functions
 	functions : {
+		form : {
+			form : function(options) {
+				app.debug.alert("plugin_FormInputDesigner.functions.form.form()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
+				var type = "form";
+				plugin_FormInputDesigner.addClassToOptions(options, "app-form");
+
+				var options = plugin_FormInputDesigner.verifyOptions(options);
+				var attributes = plugin_FormInputDesigner.getAttributes(options);
+				if (options.text == undefined)
+					options.text = "";
+
+				var output = '<' + type + ' ' + attributes + '>' + options.text + '</' + type + '>';
+
+				return $(output);
+			}
+		},
 		text : {
 			text : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.text.text()", 20);
@@ -260,7 +277,15 @@ var plugin_FormInputDesigner = {
 				return plugin_FormInputDesigner.generateInput(options, type);
 			}
 		},
-		checkbox : {},
+		checkbox : {
+			checkbox : function(options) {
+				app.debug.alert("plugin_FormInputDesigner.functions.checkbox.checkbox()", 20);
+				options = plugin_FormInputDesigner.verifyOptions(options);
+				var type = "checkbox";
+				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-checkbox");
+				return plugin_FormInputDesigner.generateInput(options, type);
+			}
+		},
 		collabsible : {},
 		list : {
 			thumbnail : function(options) {

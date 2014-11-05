@@ -9,40 +9,40 @@ var plugin_HelperFunctions = {
 	config : null,
 	// called by plugins.js
 	constructor : function() {
-		
+
 	},
 
 	// called after all plugins are loaded
 	pluginsLoaded : function() {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
-		
+
 	},
 
 	// called after all pages are loaded
 	// caller pages.js
 	pagesLoaded : function() {
 		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
-		
+
 	},
 
 	// called after pluginsLoaded()
 	// caller: plugins.js
 	definePluginEvents : function() {
 		app.debug.alert("plugin_" + this.config.name + ".definePluginEvents()", 11);
-		
+
 	},
 	// called by pages.js
 	// called for each page after createPage();
 	afterHtmlInjectedBeforePageComputing : function(container) {
 		app.debug.alert("plugin_" + this.config.name + ".afterHtmlInjectedBeforePageComputing()", 11);
-		
+
 	},
 	// called once
 	// set the jQuery delegates
 	// caller: pages.js
 	pageSpecificEvents : function() {
 		app.debug.alert("plugin_" + this.config.name + ".pageSpecificEvents()", 11);
-		
+
 	},
 	// private functions
 
@@ -56,35 +56,72 @@ var plugin_HelperFunctions = {
 	 */
 	functions : {
 		validate : {
-			email : function(email) {
-				app.debug.alert("plugin_HelperFunctions.functions.validate.email(" + email + ")", 20);
-				
-				var regex = new RegExp(plugin_HelperFunctions.config.validate.email, "g");
-				if (regex.test(email)) {
+			firstname : function(firstname) {
+				app.debug.alert("plugin_HelperFunctions.functions.validate.firstname(" + firstname + ")", 20);
+
+				var success = false;
+				var regex = new RegExp(plugin_HelperFunctions.config.validate.firstname, "g");
+				if (firstname == undefined)
+					success = false;
+				else if (regex.test(firstname)) {
 					success = true;
 				}
 				return success;
 			},
-			password : function(p1, p2) {
-				app.debug.alert("plugin_HelperFunctions.functions.validate.password(" + p1 + ", " + p2 + ")", 20);
-				
-				var regex = new RegExp(plugin_HelperFunctions.config.validate.password, "g");
-				if (p2 == undefined) {
-					if (regex.test(p1)) {
-						success = true;
-					}
-				} else {
+			lastname : function(lastname) {
+				app.debug.alert("plugin_HelperFunctions.functions.validate.lastname(" + lastname + ")", 20);
 
-					if (p1 != p2) {
-						success = false;
-					} else if (regex.test(p1)) {
-						success = true;
-					}
+				var success = false;
+				var regex = new RegExp(plugin_HelperFunctions.config.validate.lastname, "g");
+				if (lastname == undefined)
+					success = false;
+				else if (regex.test(lastname)) {
+					success = true;
 				}
 				return success;
 			},
-			username : function(usernam) {
-				return true;
+			username : function(username) {
+				app.debug.alert("plugin_HelperFunctions.functions.validate.username(" + username + ")", 20);
+
+				var success = false;
+				var regex = new RegExp(plugin_HelperFunctions.config.validate.username, "g");
+				if (username == undefined)
+					success = false;
+				else if (regex.test(username)) {
+					success = true;
+				}
+				return success;
+			},
+			email : function(email) {
+				app.debug.alert("plugin_HelperFunctions.functions.validate.email(" + email + ")", 20);
+
+				var success = false;
+				var regex = new RegExp(plugin_HelperFunctions.config.validate.email, "g");
+				if (email == undefined)
+					success = false;
+				else if (regex.test(email)) {
+					success = true;
+				}
+				return success;
+			},
+			password : function(password) {
+				app.debug.alert("plugin_HelperFunctions.functions.validate.password(" + password + ")", 20);
+
+				var success = false;
+				var regex = new RegExp(plugin_HelperFunctions.config.validate.password, "g");
+				if (password == undefined)
+					success = false;
+				else if (regex.test(password)) {
+					success = true;
+				}
+				return success;
+			},
+			equal : function(s1, s2) {
+				var success = false;
+				if (s1 == s2) {
+					success = true;
+				}
+				return success;
 			}
 		},
 		random : {
@@ -102,7 +139,24 @@ var plugin_HelperFunctions = {
 				object.find('[type=range]').slider();
 				object.find('[type=radio]').checkboxradio();
 				object.find('select').selectmenu();
-
+			}
+		},
+		navigation : {
+			redirect : function(url, transition) {
+				setTimeout(function() {
+					if (transition != undefined)
+						$.mobile.changePage(url, {
+							transition : transition
+						});
+					else
+						$(location).attr("href", url);
+				}, 20);
+			},
+			back : function() {
+				window.history.back();
+			},
+			forward : function() {
+				window.history.forward();
 			}
 		}
 	}

@@ -57,14 +57,14 @@ var page_login = {
 
 		$(container).on("click", "#btnLogin", function() {
 			app.debug.alert("page_" + page_register.config.name + " #btnRegister click", 25);
-			if (!app.help.validate.username(container.find("#txtEmail").val())) {
+			if (!app.help.validate.username(container.find("#txtUsername").val())) {
 				app.notify.alert(app.lang.string("bad_username", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_username", "headlines"))
-			} else if (!app.help.validate.password(container.find("#txtPassword").val(), container.find("#txtPasswordRpt").val())) {
+			} else if (!app.help.validate.password(container.find("#txtPassword").val())) {
 				app.notify.alert(app.lang.string("bad_password", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_login", "headlines"))
 			} else {
 				if ((json = app.rc.getJson("authenticate", {
 					"username" : container.find("#txtUsername").val(),
-					"password" : container.find("#txtPassword").val()
+					"password" : encodeURIComponent(container.find("#txtPassword").val())
 				})) != false) {
 					if (json.accessToken != undefined) {
 						//alert(JSON.stringify(json));
@@ -73,7 +73,7 @@ var page_login = {
 						app.sess.loggedIn("true");
 						app.store.localStorage.set("data-html5-themis-username", container.find("#txtUsername").val());
 						app.store.localStorage.set("data-html5-themis-token", json.accessToken);
-						$(location).attr("href", "start.html");
+						app.help.navigation.redirect("start.html");
 					} else {
 						alert("Benutzername oder Passwort falsch.");
 					}

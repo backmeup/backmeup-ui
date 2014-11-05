@@ -33,7 +33,12 @@
 		"menu_close":"Menü schließen",
 		"settings":"Einstellungen",
 		"share":"Teilen",
-		"zip_archive":"Zip Archiv"
+		"zip_archive":"Zip Archiv",
+		"incoming_share":"Eingehendes Backup",
+		"incoming_shares":"Eingehendes Backups",
+		"accept":"annehmen",
+		"decline":"ablehnen",
+		"finish":"fertig"
 	},
 	"labels":{
 		"title":"Titel",
@@ -54,6 +59,8 @@
 		"verify_email":"E-Mail bestätigen"
 	},
 	"headlines":{
+		"share":"Teilen",
+		"activate_account":"Account aktivieren",
 		"backup_jobs_successful":"Erfolgreiche Backupjobs",
 		"backup_jobs_queued":"Warteschlange",
 		"backup_jobs_running":"Laufende Backupjobs",
@@ -104,28 +111,41 @@
 		"select_datasource":"Datenquelle auswählen",
 		"select_datasink":"Speicherziel auswählen",
 		"share_backup":"Backup Teilen",
-		"backup_options":"Backupoptionen"
+		"backup_options":"Backupoptionen",
+		"backup_to_share":"Diese Backups können geteilt werden",
+		"incoming_share":"Eingehendes Backup",
+		"incoming_shares":"Eingehende Backups"
 	},
 	"notifications":{
 		"bad_connection":"Der Verbindungsaufbau zum Themis-Server dauert zu lange. Sie werden zur Startseite weitergeleitet.",
 		"bad_login":"Es ist ein Fehler beim Login aufgetreten. Bitte überprüfen Sie ihren Benutzernamen und ihr Passwort.",
 		"bad_email":"Die E-Mailadresse konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe.",
-		"bad_password":"Das Passwort konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe.",
+		"bad_password":"Das Passwort konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe. (?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\\W]).{8,100}",
 		"bad_register":"Fehler bei der Registrierung. Bitte versuchen Sie es erneut.",
 		"bad_verify_email":"Die E-Mail Adresse %mail% konnte nicht bestätigt werden. Bitte überprüfen Sie ihren Aktivierungscode.",
 		"resend_verification_mail":"Die Bestätigungs-E-Mail wurde erneut verschickt.",
 		"user_not_activated":"Ihr Benutzer wurde noch nicht aktiviert.",
 		"clear_html5_storage":"Ihre personenbezogenen Appdaten wurden erfolgreich gelöscht.",
-		"varification_key_resend":"Die Aktivierungs-E-Mail wurde erneut gesendet."
+		"varification_key_resend":"Die Aktivierungs-E-Mail wurde erneut gesendet.",
+		"bad_firstname":"Der Vorname muss aus mindestens 2 Buchstaben und maximal 99 Buchstben bestehen.",
+		"bad_lastname":"Der Nachname muss aus mindestens 2 Buchstaben und maximal 99 Buchstben bestehen.",
+		"bad_username":"Der Benutzername muss aus mindestens 2 Buchstaben und maximal 99 Buchstben bestehen.",
+		"bad_password_equal":"Die Passwörter stimmen nicht überein."
 	},
 	"texts":{
 		"verify_email":"Eine E-Mail mit einem Bestätigungs-Code wurde an Ihre E-Mail-Adresse geschickt. Bitte geben Sie den Bestätigungs-Code ein oder klicken Sie den Bestätigungs-Link um Ihre E-Mail zu verifizieren.",
 		"select_datasource":"Bitte wählen Sie ein bestehendes Datenquellen-Profil (aus einem vorangegangenem Backup) oder wählen Sie eine neue Datenquelle aus der Liste unten.",
-		"":""
+		"multilanguage":"Das ist ein dynamischer mehrsprachiger Text auf einer static-inline Seite",
+		"getstarted":"Get Started!",
+		"incoming_share":"Die Person ___ gibt ihnen ein Facebook backup frei. Möchten Sie dieses annehmen?",
+		"share_backup":"Du kannst dieses Backup teilen, indem Du die E-Mail Adresse des Empängers eingubst"
 		
 	},
 	"themisIds":{
 		"info":"Info",
 		"job_failed":"Fehler"
+	},
+	"org.backmeup.dropbox":{
+		"The password of your E-Mail account":""
 	}
 }

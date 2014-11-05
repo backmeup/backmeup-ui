@@ -13,7 +13,7 @@ var page_index = {
 		try {
 			if (app.store.localStorage.get("data-html5-themis-loggedin")) {
 				$(document).off();
-				$(location).attr('href', "start.html");
+				app.help.navigation.redirect( "start.html");
 			} else {
 				app.debug.alert("page_" + this.config.name + ".creator()", 10);
 				var header = container.find('div[data-role=header]');

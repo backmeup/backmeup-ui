@@ -139,7 +139,24 @@ var plugin_HelperFunctions = {
 				object.find('[type=range]').slider();
 				object.find('[type=radio]').checkboxradio();
 				object.find('select').selectmenu();
-
+			}
+		},
+		navigation : {
+			redirect : function(url, transition) {
+				setTimeout(function() {
+					if (transition != undefined)
+						$.mobile.changePage(url, {
+							transition : transition
+						});
+					else
+						$(location).attr("href", url);
+				}, 20);
+			},
+			back : function() {
+				window.history.back();
+			},
+			forward : function() {
+				window.history.forward();
 			}
 		}
 	}

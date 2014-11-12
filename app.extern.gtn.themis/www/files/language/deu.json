@@ -147,5 +147,16 @@
 	},
 	"org.backmeup.dropbox":{
 		"The password of your E-Mail account":""
+	},
+	"org.backmeup.filegenerator":{
+		"text":"text",
+		"text.paragraphs":"text.paragraphs",
+		"image":"image",
+		"image.size":"image.size",
+		"pdf":"pdf",
+		"pdf.paragraphs":"pdf.paragraphs",
+		"binary":"binary",
+		"binary.size":"binary.size",
+		"generator.files":"generator.files"
 	}
 }

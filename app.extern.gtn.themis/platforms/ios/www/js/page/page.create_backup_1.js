@@ -19,7 +19,7 @@ var page_create_backup_1 = {
 		app.template.append("div[data-role=content]", "app-loader-bubble");
 
 		var promise = app.rc.getJson("getSources", {
-			"expandProfiles" : true
+			"expandConfigs" : false
 		}, true);
 
 		promise.done(function(resultObject) {
@@ -32,18 +32,31 @@ var page_create_backup_1 = {
 			// alert(JSON.stringify(resultObject));
 			var list = $(app.template.get("listA", "responsive"));
 			$.each(resultObject, function(index, pluginJson) {
-				// alert(JSON.stringify(pluginJson));
+				//alert(JSON.stringify(pluginJson));
+				var authRequired = null, authType = null, pluginId = pluginJson.pluginId, redirectUrl = null;
+				// configuration type
+				if (pluginJson.authDataDescription != undefined) {
+					// needs to authenticate
+					authRequired = true;
+					authType = pluginJson.authDataDescription.configType;
+					if (authType = "oauth")
+						redirectUrl = pluginJson.authDataDescription.redirectURL;
+				} else {
+					authRequired = false;
+				}
+
 				list.append(app.ni.list.thumbnail({
 					href : "#",
 					imageSrc : pluginJson.imageURL,
 					title : "Id: " + pluginJson.datasourceProfileId,
 					headline : pluginJson.title,
 					text : pluginJson.pluginName,
-					classes : [ 'source', 'configtype-' + pluginJson.config.configType ],
+					classes : [ 'source', 'authRequired-' + authRequired ],
 					attributes : {
-						"data-html5-oAuthUrl" : pluginJson.config.redirectURL,
-						"data-html5-themis-pluginid" : pluginJson.pluginId,
-						"data-html5-configType" : pluginJson.config.configType
+						"data-html5-authRequired" : authRequired,
+						"data-html5-oAuthUrl" : redirectUrl,
+						"data-html5-pluginId" : pluginId,
+						"data-html5-authType" : authType
 					}
 				}));
 			});
@@ -69,34 +82,20 @@ var page_create_backup_1 = {
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 
-		try {
-			$(document).on("click", ".configtype-input", function(event) {
+		$(page_create_backup_1.config.pageId).on("click", ".authRequired-false", function(event) {
+			app.help.navigation.redirect("create_backup_1_newSource.html");
+		});
 
-				app.notify.dialog("Hier Stehen die vorhandenen Profile. Welches Webservice?", app.lang.string("choose_profile", "headlines"), app.lang.string("choose_profile", "headlines"), app.lang.string("new_source_profile", "actions"), app.lang.string("cancel", "actions"), function(popup) {
-					app.help.navigation.redirect( "create_backup_1_newSource.html");
-				}, function(popup) {
-					;
-				}, 0);
-			});
-
-			$(document).on("click", ".configtype-oauth", function(event) {
-				// alert($(this).attr("data-html5-oAuthUrl"));
-				// var url =
-				// $(this).attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback/",
-				// "http://themis-dev01.backmeup.at/page/create_backup_1_newSource.html");
-
+		$(page_create_backup_1.config.pageId).on("click", ".authRequired-true", function(event) {
+			switch ($(this).attr("data-html5-authType")) {
+			case 'oauth':
 				var url = $(this).attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback/", "http://themis-dev01.backmeup.at/page/create_backup_1_newSource.html");
 				app.notify.dialog("Hier Stehen die vorhandenen Profile. Welches Webservice?", app.lang.string("choose_profile", "headlines"), app.lang.string("choose_profile", "headlines"), app.lang.string("new_source_profile", "actions"), app.lang.string("cancel", "actions"), function(popup) {
 					window.setTimeout(function() {
 
 						var promise = null;
-						//alert(url);
-						if (url.indexOf("dropbox") > -1)
-							promise = app.oa.dropbox(url);
-						else if (url.indexOf("facebook") > -1)
-							promise = app.oa.facebook(url);
-						else
-							alert("undefined oAuth page");
+						// alert(url);
+							promise = app.oa.generic(url);
 
 						// app.store.localStorage.set("data-html5-themis-pluginid",
 						// $(this).attr("data-html5-pluginId"));
@@ -104,7 +103,7 @@ var page_create_backup_1 = {
 						promise.done(function(accessToken) {
 							// alert(accessToken);
 							app.store.localStorage.set("data-html5-themis-oAuthToken", accessToken);
-							app.help.navigation.redirect( "create_backup_1_newSource.html");
+							app.help.navigation.redirect("create_backup_1_newSource.html");
 
 						});
 
@@ -115,15 +114,14 @@ var page_create_backup_1 = {
 				}, function(popup) {
 					;
 				}, 0);
+				break;
 
-			});
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+			default:
+				alert("not implemented");
+			}
+
+		});
+		success = true;
 
 	},
 

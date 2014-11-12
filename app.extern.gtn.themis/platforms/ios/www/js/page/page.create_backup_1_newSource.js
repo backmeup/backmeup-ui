@@ -41,12 +41,12 @@ var page_create_backup_1_newSource = {
 		app.template.append("div[data-role=content]", "app-loader-bubble");
 
 		var promise = app.rc.getJson("getPlugin", {
-			"pluginId" : app.store.localStorage.get("data-html5-themis-pluginid"),
-			"expandProfiles" : true
+			"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
+			"expandConfigs" : true
 		}, true);
 
 		promise.done(function(resultObject) {
-			//alert(JSON.stringify(resultObject));
+			// alert(JSON.stringify(resultObject));
 			// datasources
 			content.append(app.ni.element.h1({
 				"text" : app.lang.string("new_datasource", "headlines"),
@@ -54,15 +54,54 @@ var page_create_backup_1_newSource = {
 					"clear" : "both"
 				}
 			}));
-			content.append(app.ni.text.text({
-				"id" : "txtTitle",
+
+			var form = app.ni.form.form({
+				"id" : "frmCreateSource",
+				"attributes" : {
+					"action" : "#",
+					"data-ajax" : "false"
+				},
+				"label" : false
+			});
+
+			form.append(app.ni.text.text({
+				"id" : "#txtTitle",
+				"name" : "title",
 				"placeholder" : app.lang.string("title", "labels"),
 				"label" : true,
 				"labelText" : app.lang.string("title", "labels"),
 				"container" : true
 			}));
-			content.append(app.ni.button.button({
+
+			$.each(resultObject.propertiesDescription, function(key, value) {
+				switch (value.type.toLowerCase()) {
+				case 'number':
+					form.append(app.ni.text.number({
+						"name" : value.name,
+						"placeholder" : app.lang.string(value.label, resultObject.pluginId),
+						"label" : true,
+						"labelText" : app.lang.string(value.label, resultObject.pluginId),
+						"container" : true
+					}));
+					break;
+				case 'bool':
+					form.append(app.ni.checkbox.checkbox({
+						"name" : value.name,
+						"placeholder" : app.lang.string(value.label, resultObject.pluginId),
+						"label" : true,
+						"labelText" : app.lang.string(value.label, resultObject.pluginId),
+						"container" : true
+					}));
+					break;
+				default:
+					// alert("Unknown type:" + value.type.toLowerCase());
+					break;
+				}
+			});
+
+			form.append(app.ni.button.button({
 				"id" : "btnCreate",
+				"name" : "btnCreate",
 				"placeholder" : app.lang.string("create_source", "labels"),
 				"label" : true,
 				"labelText" : app.lang.string("create_source", "labels"),
@@ -70,6 +109,7 @@ var page_create_backup_1_newSource = {
 				"value" : app.lang.string("create_source", "actions")
 			}));
 
+			content.append(form);
 			$(".app-loader").remove();
 			app.help.jQM.enhance(content);
 		});
@@ -83,58 +123,76 @@ var page_create_backup_1_newSource = {
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 
-		$(container).on("click", "#btnCreate", function() {
+		$(page_create_backup_1_newSource.config.pageId).on("click", "#btnCreate", function() {
 			app.template.append("div[data-role=content]", "app-loader-bubble");
 
-			var configType = app.store.localStorage.get("data-html5-configtype");
-			// alert(configType);
-			if (configType == "input") {
-				var promise = app.rc.getJson("createSourceProfile", {
-					"pluginId" : app.store.localStorage.get("data-html5-themis-pluginid"),
-					"title" : container.find("#txtTitle").val(),
-					"configProperties" : {
-						"text" : "true",
-						"image" : "true",
-						"pdf" : "true",
-						"binary" : "true"
-					},
+			var formObject = app.help.form.serialize($("#frmCreateSource")), promise;
+
+			if (app.store.localStorage.get("data-html5-authRequired")) {
+				promise = app.rc.getJson("createSourceProfile", {
+					"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
+					"title" : container.find("#frmCreateSource ").val(),
+					"authData" : 1,
+					"properties" : formObject,
 					"options" : [ "" ]
 				}, true);
-
-				promise.done(function(resultObject) {
-					//alert(JSON.stringify(resultObject));
-					app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
-					$(".app-loader").remove();
-					app.help.navigation.redirect("create_backup_2.html");
-				});
-
-				promise.fail(function(error) {
-					alert("webservice error: " + error);
-				});
-
-			} else if (configType == "oauth") {
-
-				var promise = app.rc.getJson("createSourceProfile", {
-					"pluginId" : app.store.localStorage.get("data-html5-themis-pluginid"),
-					"title" : container.find("#txtTitle").val(),
-					"configProperties" : {
-						"token" : app.store.localStorage.get("data-html5-themis-oAuthToken"),
-						"code" : app.store.localStorage.get("data-html5-themis-oAuthCode"),
-					},
-					"options" : [ "/Documents", "/Photos", "/Profiles", "/Friends", "/Groups", "/Sites", "/Posts", "Photos", "Albums","Profiles", "Friends", "Groups", "Sites", "Posts", "Photos", "Albums",  ]
+			} else {
+				promise = app.rc.getJson("createSourceProfile", {
+					"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
+					"title" : container.find("#frmCreateSource ").val(),
+					// "authData" : 1,
+					"properties" : formObject,
+					"options" : [ "" ]
 				}, true);
-
-				promise.done(function(resultObject) {
-					alert(JSON.stringify(resultObject));
-					app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
-					$(".app-loader").remove();
-					app.help.navigation.redirect( "create_backup_2.html");
-				});
-
-				promise.fail(function(error) {
-					alert("webservice error: " + error);
-				});
 			}
+
+			promise.done(function(resultObject) {
+				alert(JSON.stringify(resultObject));
+				app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
+				$(".app-loader").remove();
+				app.help.navigation.redirect("create_backup_2.html");
+			});
+
+			promise.fail(function() {
+				alert("Quelle nicht angelegt. WS Error")
+			});
+			/*
+			 * if (configType == "input") { var promise =
+			 * app.rc.getJson("createSourceProfile", { "pluginId" :
+			 * app.store.localStorage.get("data-html5-pluginid"), "title" :
+			 * container.find("#txtTitle").val(), "authData" : 1, "properties" : {
+			 * "text" : "true", "image" : "true", "pdf" : "true", "binary" :
+			 * "true" }, "options" : [ "" ] }, true);
+			 * 
+			 * promise.done(function(resultObject) { //
+			 * alert(JSON.stringify(resultObject));
+			 * app.store.localStorage.set("data-html5-themis-source-profileid",
+			 * resultObject.profileId); $(".app-loader").remove();
+			 * app.help.navigation.redirect("create_backup_2.html"); });
+			 * 
+			 * promise.fail(function(error) { alert("webservice error: " +
+			 * error); }); } else if (configType == "oauth") {
+			 * 
+			 * var promise = app.rc.getJson("createSourceProfile", { "pluginId" :
+			 * app.store.localStorage.get("data-html5-themis-pluginid"), "title" :
+			 * container.find("#txtTitle").val(), "configProperties" : { "token" :
+			 * app.store.localStorage.get("data-html5-themis-oAuthToken"),
+			 * "code" :
+			 * app.store.localStorage.get("data-html5-themis-oAuthCode"), },
+			 * "options" : [ "/Documents", "/Photos", "/Profiles", "/Friends",
+			 * "/Groups", "/Sites", "/Posts", "Photos", "Albums", "Profiles",
+			 * "Friends", "Groups", "Sites", "Posts", "Photos", "Albums", ] },
+			 * true);
+			 * 
+			 * promise.done(function(resultObject) {
+			 * alert(JSON.stringify(resultObject));
+			 * app.store.localStorage.set("data-html5-themis-source-profileid",
+			 * resultObject.profileId); $(".app-loader").remove();
+			 * app.help.navigation.redirect("create_backup_2.html"); });
+			 * 
+			 * promise.fail(function(error) { alert("webservice error: " +
+			 * error); }); }
+			 */
 
 		});
 

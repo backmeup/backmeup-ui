@@ -72,32 +72,33 @@ var page_create_backup_1_newSource = {
 				"labelText" : app.lang.string("title", "labels"),
 				"container" : true
 			}));
-
-			$.each(resultObject.propertiesDescription, function(key, value) {
-				switch (value.type.toLowerCase()) {
-				case 'number':
-					form.append(app.ni.text.number({
-						"name" : value.name,
-						"placeholder" : app.lang.string(value.label, resultObject.pluginId),
-						"label" : true,
-						"labelText" : app.lang.string(value.label, resultObject.pluginId),
-						"container" : true
-					}));
-					break;
-				case 'bool':
-					form.append(app.ni.checkbox.checkbox({
-						"name" : value.name,
-						"placeholder" : app.lang.string(value.label, resultObject.pluginId),
-						"label" : true,
-						"labelText" : app.lang.string(value.label, resultObject.pluginId),
-						"container" : true
-					}));
-					break;
-				default:
-					// alert("Unknown type:" + value.type.toLowerCase());
-					break;
-				}
-			});
+			if (resultObject.propertiesDescription != undefined) {
+				$.each(resultObject.propertiesDescription, function(key, value) {
+					switch (value.type.toLowerCase()) {
+					case 'number':
+						form.append(app.ni.text.number({
+							"name" : value.name,
+							"placeholder" : app.lang.string(value.label, resultObject.pluginId),
+							"label" : true,
+							"labelText" : app.lang.string(value.label, resultObject.pluginId),
+							"container" : true
+						}));
+						break;
+					case 'bool':
+						form.append(app.ni.checkbox.checkbox({
+							"name" : value.name,
+							"placeholder" : app.lang.string(value.label, resultObject.pluginId),
+							"label" : true,
+							"labelText" : app.lang.string(value.label, resultObject.pluginId),
+							"container" : true
+						}));
+						break;
+					default:
+						// alert("Unknown type:" + value.type.toLowerCase());
+						break;
+					}
+				});
+			}
 
 			form.append(app.ni.button.button({
 				"id" : "btnCreate",
@@ -131,15 +132,17 @@ var page_create_backup_1_newSource = {
 			if (app.store.localStorage.get("data-html5-authRequired")) {
 				promise = app.rc.getJson("createSourceProfile", {
 					"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
-					"title" : container.find("#frmCreateSource ").val(),
-					"authData" : 1,
+					"title" : container.find("#txtTitle ").val(),
+					"authData" : {
+						"id" : app.store.localStorage.get("data-html5-authdataId")
+					},
 					"properties" : formObject,
 					"options" : [ "" ]
 				}, true);
 			} else {
 				promise = app.rc.getJson("createSourceProfile", {
 					"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
-					"title" : container.find("#frmCreateSource ").val(),
+					"title" : container.find("#txtTitle ").val(),
 					// "authData" : 1,
 					"properties" : formObject,
 					"options" : [ "" ]

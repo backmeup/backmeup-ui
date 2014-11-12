@@ -117,6 +117,7 @@ var plugin_HTML5Storage = {
 		localStorage : {
 			set : function(key, val) {
 				app.debug.alert('plugin_HTML5Storage.localStorage.set(' + key + ', ' + val + ')', 1);
+				key = key.toLowerCase();
 				window.localStorage.setItem(app.config.name + "." + key, val);
 				return true;
 			},

@@ -40,8 +40,8 @@
 			"first":{
 				"scheme":"http",
 				"scheme_specific_part":"://",
-				"host":"localhost",
-				"port":8080
+				"host":"themis-dev01.backmeup.at",
+				"port":80
 			},
 			"second":{},
 			"third":{},

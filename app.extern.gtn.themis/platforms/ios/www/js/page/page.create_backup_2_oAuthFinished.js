@@ -10,11 +10,73 @@ var page_create_backup_2_oAuthFinished = {
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 
+		var header = $('div[data-role=header]');
+		var content = $('div[data-role=content]');
+		var navPanel = $('div#nav-panel');
+		var pagePanel = $('div#page-panel');
+
+		if (app.detect.isDesktop()) {
+			var url = window.location.href;
+			var error = /\?error=(.+)$/.exec(url);
+			var access_token = /\?oauth_token=(.+)$/.exec(url);
+			if (access_token) {
+				var access_token = (access_token + "").split("=");
+				access_token = access_token[1] + "";
+				access_token = access_token.split("&");
+				app.store.localStorage.set("data-html5-oAuthToken", access_token[0]);
+			} else if (error) {
+				alert("oauth error" + error);
+			}
+		}
+		alert("oauth token: " + app.store.localStorage.get("data-html5-oAuthToken"));
+
+		content.append(app.ni.element.h1({
+			"text" : app.lang.string("create_auth_data", "headlines"),
+			"styles" : {
+				"clear" : "both"
+			}
+		}));
+
+		content.append(app.ni.text.text({
+			"id" : "txtName",
+			"placeholder" : app.lang.string("authdata_name", "labels"),
+			"label" : true,
+			"labelText" : app.lang.string("authdata_name", "labels"),
+			"container" : true
+		}));
+
+		content.append(app.ni.button.button({
+			"id" : "btnCreateAuthData",
+			"placeholder" : app.lang.string("create_authdata", "labels"),
+			"label" : true,
+			"labelText" : app.lang.string("create_authdata", "labels"),
+			"container" : true,
+			"value" : app.lang.string("create_authdata", "actions")
+		}));
+
 	},
 
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
+
+		$(page_create_backup_2_oAuthFinished.config.pageId).on("click", "#btnCreateAuthData", function(event) {
+			var promise = app.rc.getJson("createAuthdata", {
+				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
+				"name" : $("#txtName").val(),
+				"properties" : {}
+			}, true);
+
+			promise.done(function(resultObject) {
+				alert(JSON.stringify(resultObject));
+				app.store.localStorage.set("data-html5-authdataId", resultObject.id);
+				app.help.navigation.redirect("create_backup_2_newSink.html");
+			});
+
+			promise.fail(function() {
+				alert("ws error");
+			});
+		});
 
 	},
 

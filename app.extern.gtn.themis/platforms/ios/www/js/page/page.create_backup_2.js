@@ -10,78 +10,72 @@ var page_create_backup_2 = {
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 
-		try {
-			var header = $('div[data-role=header]');
-			var content = $('div[data-role=content]');
-			var navPanel = $('div#nav-panel');
-			var pagePanel = $('div#page-panel');
-			// datasources
+		var header = $('div[data-role=header]');
+		var content = $('div[data-role=content]');
+		var navPanel = $('div#nav-panel');
+		var pagePanel = $('div#page-panel');
+		// datasources
 
-			app.template.append("div[data-role=content]", "app-loader-bubble");
+		app.template.append("div[data-role=content]", "app-loader-bubble");
 
-			var promise = app.rc.getJson("getSinks", {
-				"expandConfigs" : true
-			}, true);
+		var promise = app.rc.getJson("getSinks", {
+			"expandConfigs" : true
+		}, true);
 
-			promise.done(function(resultObject) {
-				content.append(app.ni.element.h1({
-					"text" : app.lang.string("new_datasink", "headlines"),
-					"styles" : {
-						"clear" : "both"
+		promise.done(function(resultObject) {
+			content.append(app.ni.element.h1({
+				"text" : app.lang.string("new_datasink", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
+			}));
+			// alert(JSON.stringify(resultObject));
+			var list = $(app.template.get("listA", "responsive"));
+			$.each(resultObject, function(index, pluginJson) {
+				// alert(JSON.stringify(pluginJson));
+				var authRequired = null, authType = null, pluginId = pluginJson.pluginId, redirectUrl = null;
+				// configuration type
+				if (pluginJson.authDataDescription != undefined) {
+					// needs to authenticate
+					authRequired = true;
+					authType = pluginJson.authDataDescription.configType;
+					if (authType = "oauth")
+						redirectUrl = pluginJson.authDataDescription.redirectURL;
+				} else {
+					authRequired = false;
+				}
+
+				list.append(app.ni.list.thumbnail({
+					href : "#",
+					imageSrc : pluginJson.imageURL,
+					title : "Id: " + pluginJson.datasourceProfileId,
+					headline : pluginJson.title,
+					text : pluginJson.pluginName,
+					classes : [ 'source', 'authRequired-' + authRequired ],
+					attributes : {
+						"data-html5-authRequired" : authRequired,
+						"data-html5-oAuthUrl" : redirectUrl,
+						"data-html5-pluginId" : pluginId,
+						"data-html5-authType" : authType
 					}
 				}));
-				// alert(JSON.stringify(resultObject));
-				var list = $(app.template.get("listA", "responsive"));
-				$.each(resultObject, function(index, pluginJson) {
-					// alert(JSON.stringify(pluginJson));
-					var authRequired = null, authType = null, pluginId = pluginJson.pluginId, redirectUrl = null;
-					// configuration type
-					if (pluginJson.authDataDescription != undefined) {
-						// needs to authenticate
-						authRequired = true;
-						authType = pluginJson.authDataDescription.configType;
-						if (authType = "oauth")
-							redirectUrl = pluginJson.authDataDescription.redirectURL;
-					} else {
-						authRequired = false;
-					}
-
-					list.append(app.ni.list.thumbnail({
-						href : "#",
-						imageSrc : pluginJson.imageURL,
-						title : "Id: " + pluginJson.datasourceProfileId,
-						headline : pluginJson.title,
-						text : pluginJson.pluginName,
-						classes : [ 'source', 'authRequired-' + authRequired ],
-						attributes : {
-							"data-html5-authRequired" : authRequired,
-							"data-html5-oAuthUrl" : redirectUrl,
-							"data-html5-pluginId" : pluginId,
-							"data-html5-authType" : authType
-						}
-					}));
-				});
-
-				content.append(list);
-
-				content.append(app.ni.element.h1({
-					"text" : app.lang.string("existing_datasinks", "headlines"),
-					"styles" : {
-						"clear" : "both"
-					}
-				}));
-				$(".app-loader").remove();
-
-				app.help.jQM.enhance(content);
 			});
 
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+			content.append(list);
+
+			content.append(app.ni.element.h1({
+				"text" : app.lang.string("existing_datasinks", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
+			}));
+			$(".app-loader").remove();
+
+			app.help.jQM.enhance(content);
+		});
+
+		success = true;
+
 	},
 
 	// set the jquery events

@@ -1,0 +1,6 @@
+{
+	"name":"create_backup_1_oAuthFinished",
+	"shortname":"create_backup_1_oAuthFinished",
+	"useKeepAlive":true,
+	"loginObligate":true
+}

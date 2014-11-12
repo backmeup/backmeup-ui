@@ -1,0 +1,6 @@
+{
+	"name":"create_backup_2_inputAuth",
+	"shortname":"create_backup_2_inputAuth",
+	"useKeepAlive":true,
+	"loginObligate":true
+}

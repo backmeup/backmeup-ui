@@ -32,19 +32,18 @@ var page_create_backup_1 = {
 			// alert(JSON.stringify(resultObject));
 			var list = $(app.template.get("listA", "responsive"));
 			$.each(resultObject, function(index, pluginJson) {
-				//alert(JSON.stringify(pluginJson));
+				// alert(JSON.stringify(pluginJson));
 				var authRequired = null, authType = null, pluginId = pluginJson.pluginId, redirectUrl = null;
 				// configuration type
 				if (pluginJson.authDataDescription != undefined) {
 					// needs to authenticate
 					authRequired = true;
 					authType = pluginJson.authDataDescription.configType;
-					if (authType = "oauth")
+					if (authType == "oauth")
 						redirectUrl = pluginJson.authDataDescription.redirectURL;
 				} else {
 					authRequired = false;
 				}
-
 				list.append(app.ni.list.thumbnail({
 					href : "#",
 					imageSrc : pluginJson.imageURL,
@@ -95,15 +94,15 @@ var page_create_backup_1 = {
 
 						var promise = null;
 						// alert(url);
-							promise = app.oa.generic(url);
+						promise = app.oa.generic(url);
 
 						// app.store.localStorage.set("data-html5-themis-pluginid",
 						// $(this).attr("data-html5-pluginId"));
 
 						promise.done(function(accessToken) {
 							// alert(accessToken);
-							app.store.localStorage.set("data-html5-themis-oAuthToken", accessToken);
-							app.help.navigation.redirect("create_backup_1_newSource.html");
+							app.store.localStorage.set("data-html5-oAuthToken", accessToken);
+							app.help.navigation.redirect("create_backup_1_oAuthFinished.html");
 
 						});
 
@@ -115,7 +114,16 @@ var page_create_backup_1 = {
 					;
 				}, 0);
 				break;
-
+			case 'input':
+				var url = $(this).attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback/", "http://themis-dev01.backmeup.at/page/create_backup_1_newSource.html");
+				app.notify.dialog("Hier Stehen die vorhandenen Profile. Welches Webservice?", app.lang.string("choose_profile", "headlines"), app.lang.string("choose_profile", "headlines"), app.lang.string("new_source_profile", "actions"), app.lang.string("cancel", "actions"), function(popup) {
+					window.setTimeout(function() {
+						app.help.navigation.redirect("create_backup_1_inputAuth.html");
+					}, 10);
+				}, function(popup) {
+					;
+				}, 0);
+				break;
 			default:
 				alert("not implemented");
 			}

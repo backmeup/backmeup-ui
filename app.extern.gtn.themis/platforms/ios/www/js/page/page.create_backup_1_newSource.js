@@ -74,29 +74,7 @@ var page_create_backup_1_newSource = {
 			}));
 			if (resultObject.propertiesDescription != undefined) {
 				$.each(resultObject.propertiesDescription, function(key, value) {
-					switch (value.type.toLowerCase()) {
-					case 'number':
-						form.append(app.ni.text.number({
-							"name" : value.name,
-							"placeholder" : app.lang.string(value.label, resultObject.pluginId),
-							"label" : true,
-							"labelText" : app.lang.string(value.label, resultObject.pluginId),
-							"container" : true
-						}));
-						break;
-					case 'bool':
-						form.append(app.ni.checkbox.checkbox({
-							"name" : value.name,
-							"placeholder" : app.lang.string(value.label, resultObject.pluginId),
-							"label" : true,
-							"labelText" : app.lang.string(value.label, resultObject.pluginId),
-							"container" : true
-						}));
-						break;
-					default:
-						// alert("Unknown type:" + value.type.toLowerCase());
-						break;
-					}
+					form.append(app.bmu.print.formElement(value, resultObject.pluginId));
 				});
 			}
 

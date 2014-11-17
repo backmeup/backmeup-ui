@@ -158,5 +158,13 @@
 		"binary":"binary",
 		"binary.size":"binary.size",
 		"generator.files":"generator.files"
+	},
+	"org.backmeup.mail":{
+		"Username":"Benutzername",
+		"Password":"Passwort",
+		"Type":"Type",
+		"Host":"Host",
+		"Port":"Port",
+		"SSL":"SSL"
 	}
 }

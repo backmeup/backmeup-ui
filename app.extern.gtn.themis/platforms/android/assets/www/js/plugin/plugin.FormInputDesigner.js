@@ -42,6 +42,8 @@ var plugin_FormInputDesigner = {
 			attributes += ' placeholder="' + options.placeholder + '"';
 		if (options.id != undefined)
 			attributes += ' id="' + options.id + '"';
+		if (options.name != undefined)
+			attributes += ' name="' + options.name + '"';
 		if (options.value != undefined)
 			attributes += ' value="' + options.value + '"';
 		if (options.attributes != undefined) {
@@ -274,6 +276,14 @@ var plugin_FormInputDesigner = {
 				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "submit";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-submit");
+				return plugin_FormInputDesigner.generateInput(options, type);
+			}
+		},
+		radio : {
+			radio : function(option) {
+				options = plugin_FormInputDesigner.verifyOptions(options);
+				var type = "radio";
+				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-radio");
 				return plugin_FormInputDesigner.generateInput(options, type);
 			}
 		},

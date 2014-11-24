@@ -105,7 +105,7 @@ var plugin_WebServiceClient = {
 							split[1] = JSON.parse(split[1]);
 							obj[split[0]] = split[1];
 						} catch (e) {
-							alert("Ein parameter ist nicht gesetzt: " + split[0]);
+							app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() Ein parameter ist nicht gesetzt: " + split[0], 9);
 						}
 					} else {
 						obj[split[0]] = split[1];
@@ -114,6 +114,11 @@ var plugin_WebServiceClient = {
 				}
 				data = JSON.stringify(obj);
 				contentType = "application/json; charset=utf-8"
+			} else if (dataType.toLowerCase() == "form") {
+				app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() case: contentType = application/x-www-form-urlencoded", 60);
+				contentType = "application/x-www-form-urlencoded; charset=UTF-8"
+			} else {
+				alert("unknown type: " + dataType);
 			}
 		}
 

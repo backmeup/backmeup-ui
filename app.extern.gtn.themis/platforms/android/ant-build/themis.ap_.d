@@ -54,8 +54,8 @@
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/test \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/trash.js \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/trash.txt \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/WEB-INF \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/css/all.css \
-/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/css/all.js \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/css/fonts \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/css/fonts.css \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/css/global.css \
@@ -64,6 +64,7 @@
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/css/platform.desktop.css \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/css/platform.ios.css \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/css/platform.mobile.css \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/css/popup.css \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/css/fonts/ssp-bold-webfont.eot \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/css/fonts/ssp-bold-webfont.svg \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/css/fonts/ssp-bold-webfont.ttf \
@@ -87,6 +88,7 @@
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/ext/jquery.mobile-1.4.4.min.css \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/ext/jquery.mobile-1.4.4.min.js \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/ext/jquery.mobile-1.4.4.min.map \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/ext/jquery.serializejson.min.js \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/ext/MD5.js \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/ext/MDETECT.js \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/ext/images/ajax-loader.gif \
@@ -439,12 +441,20 @@
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.backup_log.json \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_1.js \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_1.json \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_1_inputAuth.js \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_1_inputAuth.json \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_1_newSource.js \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_1_newSource.json \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_1_oAuthFinished.js \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_1_oAuthFinished.json \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_2.js \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_2.json \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_2_inputAuth.js \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_2_inputAuth.json \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_2_newSink.js \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_2_newSink.json \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_2_oAuthFinished.js \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_2_oAuthFinished.json \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_3.js \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.create_backup_3.json \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/page/page.index.js \
@@ -477,6 +487,8 @@
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/plugin/all.plugin.min.js \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/plugin/plugin.Actions.js \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/plugin/plugin.Actions.json \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/plugin/plugin.Backmeup.js \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/plugin/plugin.Backmeup.json \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/plugin/plugin.Debug.js \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/plugin/plugin.Debug.json \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/js/plugin/plugin.Detector.js \
@@ -522,9 +534,13 @@
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/page/backup_jobs.html \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/page/backup_log.html \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/page/create_backup_1.html \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/page/create_backup_1_inputAuth.html \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/page/create_backup_1_newSource.html \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/page/create_backup_1_oAuthFinished.html \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/page/create_backup_2.html \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/page/create_backup_2_inputAuth.html \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/page/create_backup_2_newSink.html \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/page/create_backup_2_oAuthFinished.html \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/page/create_backup_3.html \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/page/index.html \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/page/job_details.html \
@@ -677,4 +693,5 @@
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/test/files/webservice1.json \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/test/files/webservice2.json \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/test/files/webservice3.json \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/WEB-INF/web.xml \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/AndroidManifest.xml \

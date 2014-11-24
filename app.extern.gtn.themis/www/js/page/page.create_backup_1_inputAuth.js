@@ -42,7 +42,7 @@ var page_create_backup_1_inputAuth = {
 			});
 
 			form.append(app.ni.text.text({
-				"id" : "#txtName",
+				"id" : "txtName",
 				"name" : "title",
 				"placeholder" : app.lang.string("title", "labels"),
 				"label" : true,
@@ -80,12 +80,13 @@ var page_create_backup_1_inputAuth = {
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 
-		$(page_create_backup_1_inputAuth.config.pageId).on("click", "#btnAuthenticate", function() {
+		$(page_create_backup_1_inputAuth.config.pageId).on("click", "#btnAuthenticate", function(event) {
 			app.template.append("div[data-role=content]", "app-loader-bubble");
-
 			var formObject = app.help.form.serialize($("#frmCreateSource")), promise;
+			delete formObject.btnAuthenticate;
+			delete formObject.title;
 			alert(JSON.stringify(formObject));
-
+			
 			promise = app.rc.getJson("createAuthdata", {
 				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
 				"name" : container.find("#txtName").val(),

@@ -150,13 +150,28 @@ var plugin_HelperFunctions = {
 						});
 					else
 						$(location).attr("href", url);
-				}, 20);
+				}, 50);
 			},
 			back : function() {
 				window.history.back();
 			},
 			forward : function() {
 				window.history.forward();
+			}
+		},
+		form : {
+			serialize : function(container) {
+				var returnObject = {};
+				container.find("input").each(function(key, HTMLInputElement) {
+					// alert($(HTMLInputElement).html());
+					// alert($(HTMLInputElement).attr("name") + "=" +
+					// $(HTMLInputElement).val());
+					if ($(HTMLInputElement).attr("type") == "checkbox")
+						returnObject[$(HTMLInputElement).attr("name")] = $(HTMLInputElement).is(':checked');
+					else
+						returnObject[$(HTMLInputElement).attr("name")] = $(HTMLInputElement).val();
+				});
+				return returnObject;
 			}
 		}
 	}

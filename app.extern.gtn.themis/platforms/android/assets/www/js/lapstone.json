@@ -1,3 +1,4 @@
 {
-	"appname":"themis-app"
+	"appname":"themis-app",
+	"startPage":"static-index.html"
 }

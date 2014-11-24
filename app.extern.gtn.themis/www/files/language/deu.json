@@ -38,7 +38,8 @@
 		"incoming_shares":"Eingehendes Backups",
 		"accept":"annehmen",
 		"decline":"ablehnen",
-		"finish":"fertig"
+		"finish":"fertig",
+		"create_authdata":"Authentifizierung speichern"
 	},
 	"labels":{
 		"title":"Titel",
@@ -171,6 +172,8 @@
 		"IMAP or POP3":"IMAP or POP3",
 		"The hostname of your E-Mail server":"The hostname of your E-Mail server",
 		"The port on which the plugin should connect to the E-Mail server":"The port on which the plugin should connect to the E-Mail server",
-		"Use SSL (encrypted connection)":"Use SSL (encrypted connection)"
+		"Use SSL (encrypted connection)":"Use SSL (encrypted connection)",
+		"imap":"IMAP",
+		"pop3":"POP3"
 	}
 }

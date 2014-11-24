@@ -150,7 +150,7 @@ var plugin_HelperFunctions = {
 						});
 					else
 						$(location).attr("href", url);
-				}, 20);
+				}, 50);
 			},
 			back : function() {
 				window.history.back();
@@ -168,7 +168,11 @@ var plugin_HelperFunctions = {
 					// $(HTMLInputElement).val());
 					if ($(HTMLInputElement).attr("type") == "checkbox")
 						returnObject[$(HTMLInputElement).attr("name")] = $(HTMLInputElement).is(':checked');
-					else
+					else if ($(HTMLInputElement).attr("type") == "radio") {
+						if ($(HTMLInputElement).is(':checked')) {
+							returnObject[$(HTMLInputElement).attr("name")] = $(HTMLInputElement).val();
+						}
+					} else
 						returnObject[$(HTMLInputElement).attr("name")] = $(HTMLInputElement).val();
 				});
 				return returnObject;

@@ -95,7 +95,7 @@ var plugin_WebServiceClient = {
 
 			} else if (dataType.toLowerCase() == "json") {
 				app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() case: contentType = application/json; charset=utf-8", 60);
-				app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() Create json object", 60);
+				app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() create json object", 60);
 				var obj = {};
 				var pairs = data.split('&');
 				for (i in pairs) {
@@ -114,6 +114,11 @@ var plugin_WebServiceClient = {
 				}
 				data = JSON.stringify(obj);
 				contentType = "application/json; charset=utf-8"
+			} else if (dataType.toLowerCase() == "form") {
+				app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() case: contentType = application/x-www-form-urlencoded", 60);
+				contentType = "application/x-www-form-urlencoded; charset=UTF-8"
+			} else {
+				alert("unknown type: " + dataType);
 			}
 		}
 

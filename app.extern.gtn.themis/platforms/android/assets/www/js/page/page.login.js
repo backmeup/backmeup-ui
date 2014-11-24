@@ -70,7 +70,7 @@ var page_login = {
 						//alert(JSON.stringify(json));
 						app.store.localStorage.clearHtml5();
 						app.store.localStorage.set("data-html5-themis-loggedin", true);
-						app.sess.loggedIn("true");
+						app.sess.loggedIn(true);
 						app.store.localStorage.set("data-html5-themis-username", container.find("#txtUsername").val());
 						app.store.localStorage.set("data-html5-themis-token", json.accessToken);
 						app.help.navigation.redirect("start.html");

@@ -5,17 +5,17 @@
 		"timeout":"int timeout"
 	},
 	"createActionProfile":{
-		"url":"/backmeup-service-rest/plugins/{pluginId}?title={title}&profileType=Action&configProperties={configProperties}&options={options}",
+		"url":"/backmeup-service-rest/plugins/{pluginId}?title={title}&profileType=Action&authData={authData}&properties={properties}&options={options}",
 		"method":"post",
 		"timeout":"3000"
 	},
 	"createSinkProfile":{
-		"url":"/backmeup-service-rest/plugins/{pluginId}?title={title}&profileType=Sink&configProperties={configProperties}&options={options}",
+		"url":"/backmeup-service-rest/plugins/{pluginId}?title={title}&profileType=Sink&authData={authData}&properties={properties}&options={options}",
 		"method":"post",
 		"timeout":"3000"
 	},
 	"createSourceProfile":{
-		"url":"/backmeup-service-rest/plugins/{pluginId}?title={title}&profileType=Source&configProperties={configProperties}&options={options}",
+		"url":"/backmeup-service-rest/plugins/{pluginId}?title={title}&profileType=Source&authData={authData}&properties={properties}&options={options}",
 		"method":"post",
 		"timeout":"3000"
 	},
@@ -24,23 +24,33 @@
 		"method":"get",
 		"timeout":"3000"
 	},
+	"getAuthdata":{
+		"url":"/backmeup-service-rest/plugins/{pluginId}",
+		"method":"get",
+		"timeout":"3000"
+	},
+	"createAuthdata":{
+		"url":"/backmeup-service-rest/plugins/{pluginId}/authdata?name={name}&properties={properties}",
+		"method":"post",
+		"timeout":"3000"
+	},
 	"getAll":{
 		"url":"/backmeup-service-rest/plugins?types=All&expandProfiles={expandProfiles}",
 		"method":"get",
 		"timeout":"3000"
 	},
 	"getSinks":{
-		"url":"/backmeup-service-rest/plugins?types=Sink&expandProfiles={expandProfiles}",
+		"url":"/backmeup-service-rest/plugins?types=Sink&expandConfigs={expandConfigs}",
 		"method":"get",
 		"timeout":"3000"
 	},
 	"getSources":{
-		"url":"/backmeup-service-rest/plugins?types=Source&expandProfiles={expandProfiles}",
+		"url":"/backmeup-service-rest/plugins?types=Source&expandConfigs={expandConfigs}",
 		"method":"get",
 		"timeout":"3000"
 	},
 	"getPlugin":{
-		"url":"/backmeup-service-rest/plugins/{pluginId}?expandProfiles={expandProfiles}",
+		"url":"/backmeup-service-rest/plugins/{pluginId}?expandConfigs={expandConfigs}",
 		"method":"get",
 		"timeout":"3000"
 	}

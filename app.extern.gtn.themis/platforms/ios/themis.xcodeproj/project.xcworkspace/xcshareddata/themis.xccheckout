@@ -20,13 +20,8 @@
 		<key>5e05fe40-3b8f-4a6a-bda9-c5fa7ae88371++7897</key>
 		<string>../../../../..</string>
 	</dict>
-	<key>IDESourceControlProjectRepositoryRootDictionary</key>
-	<dict>
-		<key>5e05fe40-3b8f-4a6a-bda9-c5fa7ae88371++7897</key>
-		<string>http://svn.stygs.com/svn/stygs/dev1</string>
-	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>http://svn.stygs.com/svn/stygs/dev1/app.extern.gtn.themis/app.extern.gtn.themis/platforms/ios/themis.xcodeproj</string>
+	<string>http://svn.stygs.com/svn/stygs/dev1</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
@@ -35,7 +30,7 @@
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.subversion</string>
+			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>5e05fe40-3b8f-4a6a-bda9-c5fa7ae88371++7897</string>
 			<key>IDESourceControlWCCName</key>
@@ -43,7 +38,7 @@
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
+			<string>public.vcs.subversion</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>5e05fe40-3b8f-4a6a-bda9-c5fa7ae88371++7897</string>
 			<key>IDESourceControlWCCName</key>

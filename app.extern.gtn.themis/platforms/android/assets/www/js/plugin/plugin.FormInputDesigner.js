@@ -106,7 +106,9 @@ var plugin_FormInputDesigner = {
 		options = plugin_FormInputDesigner.verifyOptions(options);
 		var attributes = plugin_FormInputDesigner.getAttributes(options);
 		var input = '<input type="' + type + '"  ' + attributes + ' />';
-		var label = plugin_FormInputDesigner.getLabel(options);
+		var label = "";
+		if (options.label != undefined && options.label == true)
+			label = plugin_FormInputDesigner.getLabel(options);
 		if (options.container != undefined && options.container)
 			var html = plugin_FormInputDesigner.wrapInContainer(label, input);
 		else
@@ -280,7 +282,7 @@ var plugin_FormInputDesigner = {
 			}
 		},
 		radio : {
-			radio : function(option) {
+			radio : function(options) {
 				options = plugin_FormInputDesigner.verifyOptions(options);
 				var type = "radio";
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-input-radio");

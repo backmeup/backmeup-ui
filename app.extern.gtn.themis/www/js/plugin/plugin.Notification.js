@@ -69,6 +69,10 @@ var plugin_Notification = {
 			}
 			plugin_Notification.popupShow();
 		});
+
+		$(document).on("popupbeforeposition", "div[data-role=popup]", function(event, ui) {
+			$(this).popup().trigger("create");
+		});
 	},
 	// called by pages.js
 	// called for each page after createPage();
@@ -86,8 +90,8 @@ var plugin_Notification = {
 
 		if (plugin_Notification.config.enablePushNotifications && app.config.apacheCordova && app.sess.loggedIn() == true)
 			setTimeout(function() {
-				//alert("its time to register the device")
-				//alert("device uuid: " + device.uuid);
+				// alert("its time to register the device")
+				// alert("device uuid: " + device.uuid);
 
 				var promise = app.rc.getJson("notifyme.registerDevice", {
 					"deviceId" : device.uuid,
@@ -103,7 +107,8 @@ var plugin_Notification = {
 				});
 
 				if (window.push != undefined)
-					push.register(plugin_Notification.functions.push_onNotification, plugin_Notification.functions.push_successHandler, plugin_Notification.functions.push_errorHandler, plugin_Notification.config.pushConfig);
+					push.register(plugin_Notification.functions.push_onNotification, plugin_Notification.functions.push_successHandler,
+							plugin_Notification.functions.push_errorHandler, plugin_Notification.config.pushConfig);
 			}, 100);
 	},
 	// called once
@@ -122,23 +127,48 @@ var plugin_Notification = {
 			switch (notification.type) {
 			case "alert":
 				setTimeout(function() {
-					$("#popupAlert div[data-role=header] h1").text(notification.title);
-					$("#popupAlert div.ui-content h3.ui-title").text(notification.headline);
+					if (notification.title) {
+						$("#popupAlert div[data-role=header] h1").text(notification.title);
+						$("#popupAlert div[data-role=header] h1").css("display", "block");
+					} else {
+						$("#popupAlert div[data-role=header] h1").css("display", "none");
+					}
+
+					if (notification.headline) {
+						$("#popupAlert div.ui-content h3.ui-title").text(notification.headline);
+						$("#popupAlert div.ui-content h3.ui-title").css("display", "block");
+					} else {
+						$("#popupAlert div.ui-content h3.ui-title").css("display", "none");
+					}
+
 					$("#popupAlert #btn-alert").text(notification.button);
 					if (typeof notification.text == "object") {
 						$("#popupAlert div.ui-content p").replaceWith(notification.text);
 					} else {
 						$("#popupAlert div.ui-content p").html(notification.text);
 					}
+
 					$("#popupAlert").popup("open");
-					// $("#popupAlert").popup("reposition");
 				}, delay);
 				plugin_Notification.callbackFunction = notification.callback;
 				break;
 			case "dialog":
 				setTimeout(function() {
-					$("#popupDialog div[data-role=header] h1").text(notification.title);
-					$("#popupDialog div.ui-content h3.ui-title").text(notification.headline);
+
+					if (notification.title) {
+						$("#popupDialog div[data-role=header] h1").text(notification.title);
+						$("#popupDialog div[data-role=header] h1").css("display", "block");
+					} else {
+						$("#popupDialog div[data-role=header] h1").css("display", "none");
+					}
+
+					if (notification.headline) {
+						$("#popupDialog div.ui-content h3.ui-title").text(notification.headline);
+						$("#popupDialog div.ui-content h3.ui-title").css("display", "block");
+					} else {
+						$("#popupDialog div.ui-content h3.ui-title").css("display", "none");
+					}
+
 					$("#popupDialog #btn-dialog-left").text(notification.buttonLeft);
 					$("#popupDialog #btn-dialog-right").text(notification.buttonRight);
 					if (typeof notification.text == "object") {

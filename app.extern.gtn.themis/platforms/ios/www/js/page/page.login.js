@@ -8,80 +8,124 @@ var page_login = {
 	// load the html structure
 	creator : function(container) {
 
-		try {
-			app.debug.alert("page_" + this.config.name + ".creator()", 10);
-			var header = container.find('div[data-role=header]');
-			var content = container.find('div[data-role=content]');
-			var navPanel = container.find('div#nav-panel');
-			// content
-			content.append(app.ni.element.h1({
-				"text" : app.lang.string("login", "headlines")
-			}));
-			content.append(app.ni.text.text({
-				"id" : "txtUsername",
-				"placeholder" : app.lang.string("username", "labels"),
-				"label" : true,
-				"labelText" : app.lang.string("username", "labels"),
-				"container" : true
-			}));
-			content.append(app.ni.text.password({
-				"id" : "txtPassword",
-				"placeholder" : app.lang.string("password", "labels"),
-				"label" : true,
-				"labelText" : app.lang.string("password", "labels"),
-				"container" : true
-			}));
-			/*
-			 * content.append(app.ni.checkbox({ "id" : "cbxSaveCedentials" }));
-			 */
-			content.append(app.ni.button.button({
-				"id" : "btnLogin",
-				"placeholder" : app.lang.string("login", "labels"),
-				"label" : true,
-				"labelText" : app.lang.string("login", "labels"),
-				"container" : true,
-				"value" : app.lang.string("login", "actions")
-			}));
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+		app.debug.alert("page_" + this.config.name + ".creator()", 10);
+		app.template.overwrite("#" + container.attr("id"), "JQueryMobilePlainPage");
+		$.each(app.detect.classes.array(), function(key, name) {
+			if (!$('body').hasClass(key))
+				$('body').addClass(key);
+		});
+		var content = container.find('div[data-role=content]');
+		// content
+		content.append(app.ni.element.h1({
+			"text" : app.lang.string("login", "headlines")
+		}));
 
+		var form = app.ni.form.form({
+			"id" : "frmLogin",
+			"attributes" : {
+				"action" : "#",
+				"data-ajax" : "false"
+			},
+			"label" : false
+		});
+
+		form.append(app.ni.text.text({
+			"id" : "txtUsername",
+			"placeholder" : app.lang.string("username", "labels"),
+			"label" : false,
+			"labelText" : app.lang.string("username", "labels"),
+			"container" : false
+		}));
+		form.append(app.ni.text.password({
+			"id" : "txtPassword",
+			"placeholder" : app.lang.string("password", "labels"),
+			"label" : false,
+			"labelText" : app.lang.string("password", "labels"),
+			"container" : false
+		}));
+		/*
+		 * content.append(app.ni.checkbox({ "id" : "cbxSaveCedentials" }));
+		 */
+		form.append(app.ni.element.a({
+			"id" : "btnLogin",
+			"text" : app.lang.string("login", "actions"),
+			"classes" : [ 'ui-btn' ]
+		}));
+
+		content.append(form);
+
+		content.append(app.ni.element.p({
+			"text" : app.ni.element.a({
+				"id" : "btnLostPassword",
+				"text" : app.lang.string("lost_password", "actions"),
+				"attributes" : {
+					"href" : "lostPassword.html",
+					"data-transition" : "slideup"
+				}
+			}),
+			"classes" : [ 'app-subtext2' ]
+		}));
+
+		content.append(app.ni.element.p({
+			"text" : app.ni.element.a({
+				"id" : "btnLostPassword",
+				"text" : app.lang.string("register", "actions"),
+				"attributes" : {
+					"href" : "register.html",
+					"data-transition" : "slideup"
+				}
+			}),
+			"classes" : [ 'app-subtext1' ]
+		}));
 	},
 
 	// set the jquery events
 	setEvents : function(container) {
 
-		$(container).on("click", "#btnLogin", function() {
-			app.debug.alert("page_" + page_register.config.name + " #btnRegister click", 25);
-			if (!app.help.validate.username(container.find("#txtUsername").val())) {
-				app.notify.alert(app.lang.string("bad_username", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_username", "headlines"))
-			} else if (!app.help.validate.password(container.find("#txtPassword").val())) {
-				app.notify.alert(app.lang.string("bad_password", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_login", "headlines"))
-			} else {
-				if ((json = app.rc.getJson("authenticate", {
-					"username" : container.find("#txtUsername").val(),
-					"password" : encodeURIComponent(container.find("#txtPassword").val())
-				})) != false) {
-					if (json.accessToken != undefined) {
-						//alert(JSON.stringify(json));
-						app.store.localStorage.clearHtml5();
-						app.store.localStorage.set("data-html5-themis-loggedin", true);
-						app.sess.loggedIn(true);
-						app.store.localStorage.set("data-html5-themis-username", container.find("#txtUsername").val());
-						app.store.localStorage.set("data-html5-themis-token", json.accessToken);
-						app.help.navigation.redirect("start.html");
+		$(container).on(
+				"click",
+				"#btnLogin",
+				function() {
+					app.debug.alert("page_" + page_register.config.name + " #btnRegister click", 25);
+					if (!app.help.validate.username(container.find("#txtUsername").val())) {
+						app.notify.alert(app.lang.string("bad_username", "notifications"), false, app.lang.string("login", "headlines"),
+								app.lang.string("ok", "actions"))
+					} else if (!app.help.validate.password(container.find("#txtPassword").val())) {
+						app.notify.alert(app.lang.string("bad_password", "notifications"), false, app.lang.string("login", "headlines"),
+								app.lang.string("ok", "actions"))
 					} else {
-						alert("Benutzername oder Passwort falsch.");
+
+						app.template.append("#btnLogin", "app-loader-bubble-inline-button");
+
+						var promise = app.rc.getJson("authenticate", {
+							"username" : container.find("#txtUsername").val(),
+							"password" : encodeURIComponent(container.find("#txtPassword").val())
+						}, true);
+
+						promise.always(function() {
+							container.find(".bubblingG-inline-button").remove();
+						});
+
+						promise.done(function(json) {
+							if (json.accessToken != undefined) {
+								// alert(JSON.stringify(json));
+								app.store.localStorage.clearHtml5();
+								app.store.localStorage.set("data-html5-themis-loggedin", true);
+								app.sess.loggedIn(true);
+								app.store.localStorage.set("data-html5-themis-username", container.find("#txtUsername").val());
+								app.store.localStorage.set("data-html5-themis-token", json.accessToken);
+								app.help.navigation.redirect("start.html", "slideup");
+							} else {
+								alert("Benutzername oder Passwort falsch.");
+							}
+						});
+
+						promise.fail(function(errorObject) {
+							app.notify.alert(app.lang.string("bad_login", "notifications"), app.lang.string("login", "headlines"), false,
+									app.lang.string("ok", "actions"));
+						});
 					}
-				} else {
-					app.notify.alert(app.lang.string("bad_login", "notifications"), app.lang.string("login", "headlines"), app.lang.string("bad_login", "headlines"))
-				}
-			}
-		});
+				});
 
 	},
 

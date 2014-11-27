@@ -85,51 +85,55 @@ var page_create_backup_1 = {
 			app.help.navigation.redirect("create_backup_1_newSource.html");
 		});
 
-		$(page_create_backup_1.config.pageId).on("click", ".authRequired-true", function(event) {
-			switch ($(this).attr("data-html5-authType")) {
-			case 'oauth':
-				var url = $(this).attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback/", "http://themis-dev01.backmeup.at/page/create_backup_1_newSource.html");
-				app.notify.dialog("Hier Stehen die vorhandenen Profile. Welches Webservice?", app.lang.string("choose_profile", "headlines"), app.lang.string("choose_profile", "headlines"), app.lang.string("new_source_profile", "actions"), app.lang.string("cancel", "actions"), function(popup) {
-					window.setTimeout(function() {
+		$(page_create_backup_1.config.pageId)
+				.on(
+						"click",
+						".authRequired-true",
+						function(event) {
+							var callerElement = $(this).clone();
+							
+							app.notify
+									.dialog(
+											'<ul data-role="listview" >    <li><a href="#"><img src="http://demos.jquerymobile.com/1.4.5/_assets/img/us.png" alt="France" class="ui-li-icon ui-corner-none">France</a></li>    <li><a href="#"><img src="http://demos.jquerymobile.com/1.4.5/_assets/img/us.png" alt="Germany" class="ui-li-icon">Germany</a></li>    <li><a href="#"><img src="../_assets/img/gb.png" alt="Great Britain" class="ui-li-icon">Great Britain</a></li>    <li><a href="#"><img src="../_assets/img/fi.png" alt="Finland" class="ui-li-icon">Finland</a></li>    <li><a href="#"><img src="../_assets/img/us.png" alt="United States" class="ui-li-icon ui-corner-none">United States</a></li></ul>',
+											app.lang.string("choose_profile", "headlines"), false, app.lang.string("new_source_profile",
+													"actions"), app.lang.string("cancel", "actions"), function(popup) {
+												window.setTimeout(function() {
+													switch (callerElement.attr("data-html5-authType")) {
+													case 'oauth':
+														var url = callerElement.attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback/",
+														"http://themis-dev01.backmeup.at/page/create_backup_1_newSource.html");
+														var promise = null;
+														// alert(url);
+														promise = app.oa.generic(url);
 
-						var promise = null;
-						// alert(url);
-						promise = app.oa.generic(url);
+														// app.store.localStorage.set("data-html5-themis-pluginid",
+														// $(this).attr("data-html5-pluginId"));
 
-						// app.store.localStorage.set("data-html5-themis-pluginid",
-						// $(this).attr("data-html5-pluginId"));
+														promise.done(function(accessToken) {
+															// alert(accessToken);
+															app.store.localStorage.set("data-html5-oAuthToken", accessToken);
+															app.help.navigation.redirect("create_backup_1_oAuthFinished.html");
 
-						promise.done(function(accessToken) {
-							// alert(accessToken);
-							app.store.localStorage.set("data-html5-oAuthToken", accessToken);
-							app.help.navigation.redirect("create_backup_1_oAuthFinished.html");
+														});
+
+														promise.fail(function(error) {
+															alert("oAuth error: " + error);
+														});
+
+														break;
+
+													case 'input':
+														app.help.navigation.redirect("create_backup_1_inputAuth.html");
+														break;
+													default:
+														alert("not implemented");
+													}
+												}, 10);
+											}, function(popup) {
+												;
+											}, 0);
 
 						});
-
-						promise.fail(function(error) {
-							alert("oAuth error: " + error);
-						});
-					}, 10);
-				}, function(popup) {
-					;
-				}, 0);
-				break;
-			case 'input':
-				var url = $(this).attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback/", "http://themis-dev01.backmeup.at/page/create_backup_1_newSource.html");
-				app.notify.dialog("Hier Stehen die vorhandenen Profile. Welches Webservice?", app.lang.string("choose_profile", "headlines"), app.lang.string("choose_profile", "headlines"), app.lang.string("new_source_profile", "actions"), app.lang.string("cancel", "actions"), function(popup) {
-					window.setTimeout(function() {
-						app.help.navigation.redirect("create_backup_1_inputAuth.html");
-					}, 10);
-				}, function(popup) {
-					;
-				}, 0);
-				break;
-			default:
-				alert("not implemented");
-			}
-
-		});
-		success = true;
 
 	},
 

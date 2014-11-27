@@ -175,6 +175,12 @@ var plugin_WebServiceClient = {
 					json = false;
 					if (dfd != undefined && dfd != null) {
 						app.debug.alert("plugin.WebServiceClient.js plugin_WebServiceClient.getAjax() case: reject deferred object", 60);
+						var rejectObject;
+						switch (jqXHR.status) {
+						case 500:
+							delete jqXHR.responseText;
+							break;
+						}
 						dfd.reject({
 							"call" : {
 								"url" : url,

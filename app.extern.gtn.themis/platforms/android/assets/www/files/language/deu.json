@@ -38,7 +38,12 @@
 		"incoming_shares":"Eingehendes Backups",
 		"accept":"annehmen",
 		"decline":"ablehnen",
-		"finish":"fertig"
+		"finish":"fertig",
+		"create_authdata":"Authentifizierung speichern",
+		"lost_password":"Passwort vergessen?",
+		"lets_go":"Los geht's",
+		"accept_terms":"Nutzungsbedingungen akzeptieren",
+		"continue":"Weiter"
 	},
 	"labels":{
 		"title":"Titel",
@@ -57,6 +62,10 @@
 		"register":"Registrieren",
 		"verification_key":"Bestätigungscode",
 		"verify_email":"E-Mail bestätigen"
+	},
+	"links":{
+		"terms":"AGBs",
+		"privacy_policy":"Datenschutzrichtlinien"
 	},
 	"headlines":{
 		"share":"Teilen",
@@ -114,7 +123,10 @@
 		"backup_options":"Backupoptionen",
 		"backup_to_share":"Diese Backups können geteilt werden",
 		"incoming_share":"Eingehendes Backup",
-		"incoming_shares":"Eingehende Backups"
+		"incoming_shares":"Eingehende Backups",
+		"register_1_terms":"Nutzungsbedingungen",
+		"register_2_name":"Name",
+		"register_2_credentials":"Login Daten"
 	},
 	"notifications":{
 		"bad_connection":"Der Verbindungsaufbau zum Themis-Server dauert zu lange. Sie werden zur Startseite weitergeleitet.",
@@ -138,8 +150,15 @@
 		"multilanguage":"Das ist ein dynamischer mehrsprachiger Text auf einer static-inline Seite",
 		"getstarted":"Get Started!",
 		"incoming_share":"Die Person ___ gibt ihnen ein Facebook backup frei. Möchten Sie dieses annehmen?",
-		"share_backup":"Du kannst dieses Backup teilen, indem Du die E-Mail Adresse des Empängers eingubst"
-		
+		"share_backup":"Du kannst dieses Backup teilen, indem Du die E-Mail Adresse des Empängers eingibst",
+		"register":"Registriere dich in nur wenigen Schritten bei backmeup",
+		"accept_terms":"Mit der Registrierung stimmst du den %terms% und den %privacy_policy% von notifyme zu.",
+		"what_is_your_name":"Registriere Dich mit deinem echten Namen damit Dich deine Freunde leichter finden",
+		"bad_name":"Dein Name konnte nicht Verifiziert werden.",
+		"insert_login_data":"Gib deine Logindaten an.",
+		"bad_email":"Die E-Mailadresse konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe.",
+		"bad_password":"Das Passwort konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe. (?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\\W]).{8,100}",
+		"bad_passwords_not_equal":"Die Passwörter stimmen nicht überein."
 	},
 	"themisIds":{
 		"info":"Info",
@@ -171,6 +190,8 @@
 		"IMAP or POP3":"IMAP or POP3",
 		"The hostname of your E-Mail server":"The hostname of your E-Mail server",
 		"The port on which the plugin should connect to the E-Mail server":"The port on which the plugin should connect to the E-Mail server",
-		"Use SSL (encrypted connection)":"Use SSL (encrypted connection)"
+		"Use SSL (encrypted connection)":"Use SSL (encrypted connection)",
+		"imap":"IMAP",
+		"pop3":"POP3"
 	}
 }

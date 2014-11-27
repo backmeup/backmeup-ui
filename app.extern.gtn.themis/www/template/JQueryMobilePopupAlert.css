@@ -1,19 +1,40 @@
 #popupAlert {
-	
+	box-shadow: none;
+	min-width: 250px;
 }
 
 #popupAlert .ui-header {
 	
 }
 
+#popupAlert .ui-title {
+	font-weight: 400;
+	font-size: 18px;
+}
+
 #popupAlert .ui-content {
-	
+	padding: 10px 0px 0px 0px;
+	text-align: center;
+}
+
+#popupAlert .ui-content p {
+	padding: 0 10px 0 10px !important;
 }
 
 #popupAlert .ui-btn {
 	
 }
 
+#popupAlert .ui-focus {
+	box-shadow: none !important;
+}
+
 #popupAlert #btn-alert {
-	
+	width: 100%;
+	padding: 10px 0px 5px 0px;
+	color: #0080FF;
+	background-color: #FFF;
+	border: none;
+	border-top: 1px solid #0080FF;
+	border-radius: 0px;
 }

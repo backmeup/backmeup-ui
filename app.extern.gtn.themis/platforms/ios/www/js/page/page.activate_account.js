@@ -10,13 +10,38 @@ var page_activate_account = {
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 		
-		app.debug.alert("page_" + this.config.name + ".creator()", 10);
-		var header = container.find('div[data-role=header]');
+		app.template.overwrite("#" + container.attr("id"), "JQueryMobilePlainPage");
+		$.each(app.detect.classes.array(), function(key, name) {
+			if (!$('body').hasClass(key))
+				$('body').addClass(key);
+		});
 		var content = container.find('div[data-role=content]');
-		var navPanel = container.find('div#nav-panel');
-		// content
 		content.append(app.ni.element.h1({
 			"text" : app.lang.string("activate_account", "headlines")
+		}));
+		
+		content.append(app.ni.element.p({
+			"text" : app.ni.element.a({
+				"id" : "btnLostPassword",
+				"text" : app.lang.string("lost_password", "actions"),
+				"attributes" : {
+					"href" : "lostPassword.html",
+					"data-transition" : "slideup"
+				}
+			}),
+			"classes" : [ 'app-subtext2' ]
+		}));
+
+		content.append(app.ni.element.p({
+			"text" : app.ni.element.a({
+				"id" : "btnLostPassword",
+				"text" : app.lang.string("login", "actions"),
+				"attributes" : {
+					"href" : "login.html",
+					"data-transition" : "slideup"
+				}
+			}),
+			"classes" : [ 'app-subtext1' ]
 		}));
 
 	},

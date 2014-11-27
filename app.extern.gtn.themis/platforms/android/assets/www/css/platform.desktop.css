@@ -8,12 +8,6 @@ body.app-desktop  div[data-role=page] {
 }
 
 body.app-desktop  div[data-role=content] {
-	width: 1000px;
-	position: relative;
-	left: 50%;
-	margin-left: -500px;
-	padding-top: 80px;
-	min-height: inherit;
 	background: url("../Images/shadowtop.png") no-repeat scroll center top rgba(0, 0, 0, 0);
 }
 

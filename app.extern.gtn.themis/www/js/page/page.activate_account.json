@@ -2,5 +2,6 @@
 	"name":"activate_account",
 	"shortname":"activate_account",
 	"useKeepAlive":true,
-	"loginObligate":false
+	"loginObligate":false,
+	"isGlobalPage":false
 }

@@ -147,21 +147,18 @@ var page_share_backup = {
 
 		$(this.config.pageId).on("click", "#btnIncomingShares", function(event) {
 			app.notify.alert(app.ni.element.a({
-				"id" : "btnIncomingShare",
 				"text" : app.lang.string("incoming_share", "actions"),
 				"attributes" : {
 					"href" : "#"
 				},
 				"classes" : [ 'ui-btn', 'incoming_backup' ]
 			}) + app.ni.element.a({
-				"id" : "btnIncomingShare",
 				"text" : app.lang.string("incoming_share", "actions"),
 				"attributes" : {
 					"href" : "#"
 				},
 				"classes" : [ 'ui-btn', 'incoming_backup' ]
 			}) + app.ni.element.a({
-				"id" : "btnIncomingShare",
 				"text" : app.lang.string("incoming_share", "actions"),
 				"attributes" : {
 					"href" : "#"

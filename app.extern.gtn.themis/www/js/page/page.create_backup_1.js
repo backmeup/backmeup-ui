@@ -112,7 +112,7 @@ var page_create_backup_1 = {
 														promise.done(function(accessToken) {
 															// alert(accessToken);
 															app.store.localStorage.set("data-html5-oAuthToken", accessToken);
-															app.help.navigation.redirect("create_backup_1_oAuthFinished.html");
+															app.help.navigation.redirect("create_backup_1_oAuthFinished.html", "slide");
 
 														});
 
@@ -123,7 +123,7 @@ var page_create_backup_1 = {
 														break;
 
 													case 'input':
-														app.help.navigation.redirect("create_backup_1_inputAuth.html");
+														app.help.navigation.redirect("create_backup_1_inputAuth.html", "slide");
 														break;
 													default:
 														alert("not implemented");

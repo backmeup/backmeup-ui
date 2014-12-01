@@ -14,7 +14,17 @@ var page_register_3_credentials = {
 			if (!$('body').hasClass(key))
 				$('body').addClass(key);
 		});
+		
 		var content = container.find('div[data-role=content]');
+		
+		content.append(app.ni.element.img({
+			"attributes" : {
+				"src" : "../images/logo_full.png",
+				"alt" : "LOGO"
+			},
+			"classes" : [ 'logo' ]
+		}));
+		
 		content.append(app.ni.element.h1({
 			"text" : app.lang.string("register_2_credentials", "headlines")
 		}));

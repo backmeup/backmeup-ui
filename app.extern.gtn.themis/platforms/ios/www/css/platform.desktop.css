@@ -14,6 +14,16 @@ body.app-desktop div[data-role=page][data-isglobalpage=false] div[data-role=cont
 	box-shadow: 5px 5px 5px #888888;
 }
 
+body.app-desktop div[data-role=page][data-isglobalpage=false] div[data-role=content] img.logo {
+	position: absolute;
+	margin-top: -70px;
+	margin-left: -95px;
+}
+
+body.app-desktop div[data-role=page][data-isglobalpage=false] div[data-role=content] h1{
+	margin-left: 70px;
+}
+
 body.app-desktop 
 
 

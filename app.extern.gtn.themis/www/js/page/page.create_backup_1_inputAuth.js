@@ -37,17 +37,16 @@ var page_create_backup_1_inputAuth = {
 				"attributes" : {
 					"action" : "#",
 					"data-ajax" : "false"
-				},
-				"label" : false
+				}
 			});
 
 			form.append(app.ni.text.text({
 				"id" : "txtName",
 				"name" : "title",
 				"placeholder" : app.lang.string("title", "labels"),
-				"label" : true,
+				"label" : false,
 				"labelText" : app.lang.string("title", "labels"),
-				"container" : true
+				"container" : false
 			}));
 			if (resultObject.authDataDescription != undefined) {
 				$.each(resultObject.authDataDescription.requiredInputs, function(key, value) {
@@ -59,9 +58,9 @@ var page_create_backup_1_inputAuth = {
 				"id" : "btnAuthenticate",
 				"name" : "btnAuthenticate",
 				"placeholder" : app.lang.string("create_authdata", "labels"),
-				"label" : true,
+				"label" : false,
 				"labelText" : app.lang.string("create_authdata", "labels"),
-				"container" : true,
+				"container" : false,
 				"value" : app.lang.string("create_authdata", "actions")
 			}));
 

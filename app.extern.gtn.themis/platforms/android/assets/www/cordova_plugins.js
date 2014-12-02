@@ -96,6 +96,13 @@ module.exports = [
         "id": "org.apache.cordova.contacts.ContactFieldType"
     },
     {
+        "file": "plugins/org.apache.cordova.device/www/device.js",
+        "id": "org.apache.cordova.device.device",
+        "clobbers": [
+            "device"
+        ]
+    },
+    {
         "file": "plugins/org.apache.cordova.device-motion/www/Acceleration.js",
         "id": "org.apache.cordova.device-motion.Acceleration",
         "clobbers": [
@@ -330,6 +337,13 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/org.apache.cordova.inappbrowser/www/inappbrowser.js",
+        "id": "org.apache.cordova.inappbrowser.inappbrowser",
+        "clobbers": [
+            "window.open"
+        ]
+    },
+    {
         "file": "plugins/org.apache.cordova.media/www/MediaError.js",
         "id": "org.apache.cordova.media.MediaError",
         "clobbers": [
@@ -420,20 +434,6 @@ module.exports = [
         "merges": [
             "navigator.notification"
         ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.device/www/device.js",
-        "id": "org.apache.cordova.device.device",
-        "clobbers": [
-            "device"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.inappbrowser/www/inappbrowser.js",
-        "id": "org.apache.cordova.inappbrowser.inappbrowser",
-        "clobbers": [
-            "window.open"
-        ]
     }
 ];
 module.exports.metadata = 
@@ -442,6 +442,7 @@ module.exports.metadata =
     "org.apache.cordova.battery-status": "0.2.7",
     "org.apache.cordova.camera": "0.2.8",
     "org.apache.cordova.contacts": "0.2.11",
+    "org.apache.cordova.device": "0.2.10",
     "org.apache.cordova.device-motion": "0.2.6",
     "org.apache.cordova.device-orientation": "0.3.5",
     "org.apache.cordova.dialogs": "0.2.6",
@@ -449,13 +450,12 @@ module.exports.metadata =
     "org.apache.cordova.file-transfer": "0.4.2",
     "org.apache.cordova.geolocation": "0.3.6",
     "org.apache.cordova.globalization": "0.2.6",
+    "org.apache.cordova.inappbrowser": "0.5.0",
     "org.apache.cordova.media": "0.2.9",
     "org.apache.cordova.media-capture": "0.2.8",
     "org.apache.cordova.network-information": "0.2.7",
     "org.apache.cordova.splashscreen": "0.2.7",
-    "org.apache.cordova.vibration": "0.3.7",
-    "org.apache.cordova.device": "0.2.10",
-    "org.apache.cordova.inappbrowser": "0.5.0"
+    "org.apache.cordova.vibration": "0.3.7"
 }
 // BOTTOM OF METADATA
 });

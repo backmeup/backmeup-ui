@@ -21,6 +21,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Accelerometer\"><param name=\"android-package\" value=\"org.apache.cordova.devicemotion.AccelListener\" /></feature>",
                             "count": 1
                         },
@@ -49,6 +53,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Media\"><param name=\"android-package\" value=\"org.apache.cordova.media.AudioHandler\" /></feature>",
                             "count": 1
                         },
@@ -67,14 +75,6 @@
                         {
                             "xml": "<feature name=\"Vibration\"><param name=\"android-package\" value=\"org.apache.cordova.vibration.Vibration\" /></feature>",
                             "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
-                            "count": 1
                         }
                     ]
                 }
@@ -84,7 +84,7 @@
                     "/*": [
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 25
+                            "count": 5
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.READ_CONTACTS\" />",
@@ -100,15 +100,15 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
-                            "count": 4
+                            "count": 2
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
-                            "count": 4
+                            "count": 2
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.RECORD_AUDIO\" />",
-                            "count": 4
+                            "count": 2
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\" />",
@@ -147,6 +147,9 @@
         "org.apache.cordova.contacts": {
             "PACKAGE_NAME": "app.extern.gtn.themis"
         },
+        "org.apache.cordova.device": {
+            "PACKAGE_NAME": "app.extern.gtn.themis"
+        },
         "org.apache.cordova.device-motion": {
             "PACKAGE_NAME": "app.extern.gtn.themis"
         },
@@ -168,6 +171,9 @@
         "org.apache.cordova.globalization": {
             "PACKAGE_NAME": "app.extern.gtn.themis"
         },
+        "org.apache.cordova.inappbrowser": {
+            "PACKAGE_NAME": "app.extern.gtn.themis"
+        },
         "org.apache.cordova.media": {
             "PACKAGE_NAME": "app.extern.gtn.themis"
         },
@@ -181,12 +187,6 @@
             "PACKAGE_NAME": "app.extern.gtn.themis"
         },
         "org.apache.cordova.vibration": {
-            "PACKAGE_NAME": "app.extern.gtn.themis"
-        },
-        "org.apache.cordova.device": {
-            "PACKAGE_NAME": "app.extern.gtn.themis"
-        },
-        "org.apache.cordova.inappbrowser": {
             "PACKAGE_NAME": "app.extern.gtn.themis"
         }
     },

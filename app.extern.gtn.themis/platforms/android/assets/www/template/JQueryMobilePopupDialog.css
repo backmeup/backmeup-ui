@@ -1,5 +1,6 @@
-#popupDialog-popup {
-	min-width:50%;
+#popupDialog {
+	box-shadow: none;
+	min-width: 250px;
 }
 
 #popupDialog h1 {
@@ -18,21 +19,51 @@
 }
 
 #popupDialog .ui-content {
-	
+	padding: 10px 0px 0px 0px;
+	text-align: center;
 }
 
-#popupDialog .ui-btn {
-	
+#popupDialog .ui-content p {
+	padding: 0 10px 0 10px !important;
+}
+
+#popupDialog .ui-content ul.ui-listview {
+	margin: -10px -10px 0px -10px !important;
+}
+
+#popupDialog .ui-content ul.ui-listview>li>a {
+	background-color: #FFF;
+border:none;
+
+}
+
+#popupDialog .ui-btn .ui-focus {
+	box-shadow: none !important;
 }
 
 #popupDialog .btn-container {
 	text-align: right;
+	padding: 0;
+	margin: 0;
 }
 
 #popupDialog #btn-dialog-left {
+	width: 100%;
+	padding: 10px 0px 5px 0px;
+	color: #0080FF;
+	background-color: #FFF;
+	border: none;
+	border-top: 1px solid #0080FF;
+	border-radius: 0px;
 	margin: 0;
 }
 
 #popupDialog #btn-dialog-right {
-	margin: 0 0 0 15px;
+	width: 100%;
+	padding: 10px 0px 5px 0px;
+	color: #0080FF;
+	background-color: #FFF;
+	border: none;
+	border-top: 1px solid #0080FF;
+	border-radius: 0px;
 }

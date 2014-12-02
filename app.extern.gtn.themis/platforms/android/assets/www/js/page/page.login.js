@@ -16,6 +16,15 @@ var page_login = {
 		});
 		var content = container.find('div[data-role=content]');
 		// content
+
+		content.append(app.ni.element.img({
+			"attributes" : {
+				"src" : "../images/logo_full.png",
+				"alt" : "LOGO"
+			},
+			"classes" : [ 'logo' ]
+		}));
+
 		content.append(app.ni.element.h1({
 			"text" : app.lang.string("login", "headlines")
 		}));

@@ -1,6 +1,6 @@
 #popupAlert {
-	max-width: 300px;
 	box-shadow: none;
+	min-width: 250px;
 }
 
 #popupAlert .ui-header {

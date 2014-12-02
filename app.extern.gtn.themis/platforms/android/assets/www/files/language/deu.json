@@ -35,7 +35,7 @@
 		"share":"Teilen",
 		"zip_archive":"Zip Archiv",
 		"incoming_share":"Eingehendes Backup",
-		"incoming_shares":"Eingehendes Backups",
+		"incoming_shares":"Eingehende Backups",
 		"accept":"annehmen",
 		"decline":"ablehnen",
 		"finish":"fertig",
@@ -126,7 +126,8 @@
 		"incoming_shares":"Eingehende Backups",
 		"register_1_terms":"Nutzungsbedingungen",
 		"register_2_name":"Name",
-		"register_2_credentials":"Login Daten"
+		"register_2_credentials":"Login Daten",
+		"register_4_final":"Registrieren"
 	},
 	"notifications":{
 		"bad_connection":"Der Verbindungsaufbau zum Themis-Server dauert zu lange. Sie werden zur Startseite weitergeleitet.",

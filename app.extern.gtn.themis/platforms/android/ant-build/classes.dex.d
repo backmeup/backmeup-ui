@@ -1,11 +1,11 @@
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/classes.dex : \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/classes/app/extern/gtn/themis/BuildConfig.class \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/classes/app/extern/gtn/themis/CordovaApp.class \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/classes/app/extern/gtn/themis/R$attr.class \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/classes/app/extern/gtn/themis/R$drawable.class \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/classes/app/extern/gtn/themis/R$string.class \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/classes/app/extern/gtn/themis/R$xml.class \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/classes/app/extern/gtn/themis/R.class \
-/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/classes/app/extern/gtn/themis/themis.class \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/classes/org/apache/cordova/batterystatus/BatteryListener$1.class \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/classes/org/apache/cordova/batterystatus/BatteryListener.class \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/classes/org/apache/cordova/camera/CameraLauncher.class \

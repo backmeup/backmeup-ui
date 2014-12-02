@@ -22,12 +22,13 @@ package app.extern.gtn.themis;
 import android.os.Bundle;
 import org.apache.cordova.*;
 
-public class themis extends CordovaActivity
+public class CordovaApp extends CordovaActivity
 {
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        super.init();
         // Set by <content src="index.html" /> in config.xml
         loadUrl(launchUrl);
     }

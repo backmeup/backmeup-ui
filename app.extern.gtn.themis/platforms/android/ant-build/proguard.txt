@@ -1,3 +1,3 @@
 # view AndroidManifest.xml #generated:6
--keep class app.extern.gtn.themis.themis { <init>(...); }
+-keep class app.extern.gtn.themis.CordovaApp { <init>(...); }
 

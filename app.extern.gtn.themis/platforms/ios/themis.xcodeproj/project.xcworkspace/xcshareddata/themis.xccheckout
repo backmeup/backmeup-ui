@@ -5,42 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>2EAB94EA-2C55-4667-8B97-8E27876A4FC0</string>
+	<string>20AA8AC4-10D0-48AC-960F-3FB003DFBFE1</string>
 	<key>IDESourceControlProjectName</key>
 	<string>themis</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>5e05fe40-3b8f-4a6a-bda9-c5fa7ae88371++7897</key>
-		<string>http://svn.stygs.com/svn/stygs/dev1</string>
+		<key>27FA37489999C698056E5D510D7D7434D8437EFC</key>
+		<string>https://github.com/backmeup/backmeup-ui.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>app.extern.gtn.themis/platforms/ios/themis.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>5e05fe40-3b8f-4a6a-bda9-c5fa7ae88371++7897</key>
+		<key>27FA37489999C698056E5D510D7D7434D8437EFC</key>
 		<string>../../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>http://svn.stygs.com/svn/stygs/dev1</string>
+	<string>https://github.com/backmeup/backmeup-ui.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>5e05fe40-3b8f-4a6a-bda9-c5fa7ae88371++7897</string>
+	<string>27FA37489999C698056E5D510D7D7434D8437EFC</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>5e05fe40-3b8f-4a6a-bda9-c5fa7ae88371++7897</string>
-			<key>IDESourceControlWCCName</key>
-			<string>app.extern.gtn.themis</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.subversion</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>5e05fe40-3b8f-4a6a-bda9-c5fa7ae88371++7897</string>
+			<string>27FA37489999C698056E5D510D7D7434D8437EFC</string>
 			<key>IDESourceControlWCCName</key>
 			<string>app.extern.gtn.themis</string>
 		</dict>

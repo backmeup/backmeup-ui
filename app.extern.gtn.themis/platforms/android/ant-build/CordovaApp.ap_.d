@@ -1,4 +1,4 @@
-/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/themis.ap_ \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/CordovaApp.ap_ \
  : /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/res/drawable/icon.png \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/res/drawable-hdpi/ic_action_next_item.png \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/res/drawable-hdpi/ic_action_previous_item.png \
@@ -24,6 +24,7 @@
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/res/drawable-xxhdpi/ic_action_next_item.png \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/res/drawable-xxhdpi/ic_action_previous_item.png \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/res/drawable-xxhdpi/ic_action_remove.png \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/res/drawable-xxhdpi/icon.png \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/res/values/strings.xml \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/res/xml/config.xml \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/res/drawable/icon.png \
@@ -51,6 +52,7 @@
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/res/drawable-xxhdpi/ic_action_next_item.png \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/res/drawable-xxhdpi/ic_action_previous_item.png \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/res/drawable-xxhdpi/ic_action_remove.png \
+/Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/ant-build/res/drawable-xxhdpi/icon.png \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/_where-is-www.txt \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www \
 /Users/martinkattner/stygs/app.extern.gtn.themis/app.extern.gtn.themis/platforms/android/assets/www/cordova.js \

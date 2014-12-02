@@ -16,14 +16,15 @@ var page_register_1_terms = {
 		});
 		var content = container.find('div[data-role=content]');
 
-		content.append(app.ni.element.img({
-			"attributes" : {
-				"src" : "../images/logo_full.png",
-				"alt" : "LOGO"
-			},
-			"classes" : [ 'logo' ]
-		}));
-		
+		if (app.detect.isDesktop())
+			content.append(app.ni.element.img({
+				"attributes" : {
+					"src" : "../images/logo_full.png",
+					"alt" : "LOGO"
+				},
+				"classes" : [ 'logo' ]
+			}));
+
 		content.append(app.ni.element.h1({
 			"text" : app.lang.string("register_1_terms", "headlines")
 		}));

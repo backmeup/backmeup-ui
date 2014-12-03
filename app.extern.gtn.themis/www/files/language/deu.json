@@ -1,4 +1,12 @@
 {
+	"app-session":{
+		"login_obligate_headline":"Login",
+		"login_obligate_text":"Du kannst die gewünschte Seite nicht Öffnen, weil Du nicht eingelogged bist."
+	},
+	"app-keepAlive":{
+		"bad_connection_headline":"Verbindungsfehler",
+		"bad_connection_text":"Etwas stimmt mit deiner Internetverbindung nicht."
+	},
 	"actions":{
 		"administrate":"Backups",
 		"new_source_profile":"Neues Profil anlegen",

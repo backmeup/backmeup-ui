@@ -100,7 +100,7 @@ var page_create_backup_1 = {
 					});
 
 					promise.done(function(resultObject) {
-						alert(JSON.stringify(resultObject));
+						//alert(JSON.stringify(resultObject));
 
 						var authDataList = app.ni.element.ul({
 							"attributes" : {

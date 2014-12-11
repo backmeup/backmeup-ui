@@ -85,6 +85,7 @@ var page_create_backup_3 = {
 				promise.done(function(resultObject) {
 					//alert(JSON.stringify(resultObject));
 					$(".app-loader").remove();
+					app.store.localStorage.clearHtml5();
 					app.help.navigation.redirect("backup_jobs.html");
 				});
 

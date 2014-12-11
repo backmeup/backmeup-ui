@@ -24,7 +24,7 @@
 	"useHeaderToken":true,
 	"headerToken":{
 		"key":"Authorization",
-		"value":"data-html5-themis-token"
+		"value":"themis-token"
 	},
 	"defaultServer":"backmeup",
 	"server":{

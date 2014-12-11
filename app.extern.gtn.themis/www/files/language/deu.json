@@ -227,7 +227,7 @@
 	},
 	"page.create_backup_1":
 	{
-		"headline":"Backup erstellen",
+		"headline":"Backup erstellen (Direkt auf git geändert)",
 		"description":"Wähle eine Quelle für dein Backup."
 	},
 	"page.create_backup_2_inputAuth":

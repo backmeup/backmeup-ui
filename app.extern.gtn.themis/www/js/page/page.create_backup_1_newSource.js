@@ -46,14 +46,17 @@ var page_create_backup_1_newSource = {
 		}, true);
 
 		promise.done(function(resultObject) {
-			// alert(JSON.stringify(resultObject));
-			// datasources
 			content.append(app.ni.element.h1({
-				"text" : app.lang.string("new_datasource", "headlines"),
+				"text" : app.lang.string("headline", "page.create_backup_1_newSource"),
 				"styles" : {
 					"clear" : "both"
 				}
 			}));
+
+			content.append(app.ni.element.p({
+				"text" : app.lang.string("description", "page.create_backup_1_newSource")
+			}));
+			
 
 			var form = app.ni.form.form({
 				"id" : "frmCreateSource",
@@ -128,7 +131,7 @@ var page_create_backup_1_newSource = {
 			}
 
 			promise.done(function(resultObject) {
-				alert(JSON.stringify(resultObject));
+				//alert(JSON.stringify(resultObject));
 				app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
 				$(".app-loader").remove();
 				app.help.navigation.redirect("create_backup_2.html");

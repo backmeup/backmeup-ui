@@ -17,7 +17,14 @@ var page_create_backup_3 = {
 			var pagePanel = $('div#page-panel');
 			// datasources
 			content.append(app.ni.element.h1({
-				"text" : app.lang.string("new_backup", "headlines")
+				"text" : app.lang.string("headline", "page.create_backup_3"),
+				"styles" : {
+					"clear" : "both"
+				}
+			}));
+
+			content.append(app.ni.element.p({
+				"text" : app.lang.string("description", "page.create_backup_3")
 			}));
 
 			content.append(app.ni.element.h2({

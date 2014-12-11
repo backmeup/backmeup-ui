@@ -24,11 +24,16 @@ var page_create_backup_1 = {
 
 		promise.done(function(resultObject) {
 			content.append(app.ni.element.h1({
-				"text" : app.lang.string("new_datasource", "headlines"),
+				"text" : app.lang.string("headline", "page.create_backup_1"),
 				"styles" : {
 					"clear" : "both"
 				}
 			}));
+
+			content.append(app.ni.element.p({
+				"text" : app.lang.string("description", "page.create_backup_1")
+			}));
+
 			// alert(JSON.stringify(resultObject));
 			var list = $(app.template.get("listA", "responsive"));
 			$.each(resultObject, function(index, pluginJson) {
@@ -60,12 +65,7 @@ var page_create_backup_1 = {
 				}));
 			});
 			content.append(list);
-			content.append(app.ni.element.h1({
-				"text" : app.lang.string("existing_datasources", "headlines"),
-				"styles" : {
-					"clear" : "both"
-				}
-			}));
+			
 			$(".app-loader").remove();
 
 			app.help.jQM.enhance(content);
@@ -89,8 +89,9 @@ var page_create_backup_1 = {
 				"click",
 				".authRequired-true",
 				function(event) {
-					var callerElement = $(this).clone(), promise;
+					var callerElement = $(this).clone(), promise, authDataList;
 
+					// get existing auths
 					promise = app.rc.getJson("getAuthdataForPlugin", {
 						"pluginId" : callerElement.attr("data-html5-pluginId")
 					}, true);
@@ -100,9 +101,9 @@ var page_create_backup_1 = {
 					});
 
 					promise.done(function(resultObject) {
-						//alert(JSON.stringify(resultObject));
+						// alert(JSON.stringify(resultObject));
 
-						var authDataList = app.ni.element.ul({
+						authDataList = app.ni.element.ul({
 							"attributes" : {
 								"data-role" : "listview",
 								"data-inset" : "true"

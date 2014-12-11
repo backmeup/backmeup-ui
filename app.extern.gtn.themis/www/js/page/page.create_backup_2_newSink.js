@@ -22,13 +22,15 @@ var page_create_backup_2_newSink = {
 		}, true);
 
 		promise.done(function(resultObject) {
-			// alert(JSON.stringify(resultObject));
-			// datasources
 			content.append(app.ni.element.h1({
-				"text" : app.lang.string("new_datasink", "headlines"),
+				"text" : app.lang.string("headline", "page.create_backup_2_newSink"),
 				"styles" : {
 					"clear" : "both"
 				}
+			}));
+
+			content.append(app.ni.element.p({
+				"text" : app.lang.string("description", "page.create_backup_2_newSink")
 			}));
 
 			var form = app.ni.form.form({
@@ -127,7 +129,7 @@ var page_create_backup_2_newSink = {
 				}
 
 				promise.done(function(resultObject) {
-					alert(JSON.stringify(resultObject));
+					//alert(JSON.stringify(resultObject));
 					app.store.localStorage.set("data-html5-themis-sink-profileid", resultObject.profileId);
 					$(".app-loader").remove();
 					app.help.navigation.redirect("create_backup_3.html");

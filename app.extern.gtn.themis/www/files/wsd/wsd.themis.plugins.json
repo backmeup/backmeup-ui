@@ -29,6 +29,11 @@
 		"method":"get",
 		"timeout":"3000"
 	},
+	"getAuthdataForPlugin":{
+		"url":"/backmeup-service-rest/plugins/{pluginId}/authdata",
+		"method":"get",
+		"timeout":"3000"
+	},
 	"createAuthdata":{
 		"url":"/backmeup-service-rest/plugins/{pluginId}/authdata?name={name}&properties={properties}",
 		"method":"post",

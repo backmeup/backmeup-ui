@@ -85,7 +85,7 @@ var page_create_backup_1_inputAuth = {
 			delete formObject.btnAuthenticate;
 			delete formObject.title;
 			alert(JSON.stringify(formObject));
-			
+
 			promise = app.rc.getJson("createAuthdata", {
 				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
 				"name" : container.find("#txtName").val(),
@@ -94,9 +94,12 @@ var page_create_backup_1_inputAuth = {
 
 			promise.done(function(resultObject) {
 				alert(JSON.stringify(resultObject));
-				app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
+				// app.store.localStorage.set("data-html5-themis-source-profileid",
+				// );
+				app.store.localStorage.set("data-html5-authdataId", resultObject.id);
+				app.store.localStorage.set("data-html5-authdataName", resultObject.name);
 				$(".app-loader").remove();
-				app.help.navigation.redirect("create_backup_2.html");
+				app.help.navigation.redirect("create_backup_1_newSource.html", "slide");
 			});
 
 			promise.fail(function() {

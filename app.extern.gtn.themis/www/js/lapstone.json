@@ -1,4 +1,5 @@
 {
 	"appname":"themis-app",
-	"startPage":"static-index.html"
+	"startPage":"static-index.html",
+	"startPage_loggedIn":"search.html"
 }

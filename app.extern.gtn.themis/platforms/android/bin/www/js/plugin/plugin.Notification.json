@@ -1,0 +1,5 @@
+{
+	"name":"Notification",
+	"shortname":"notify",
+	"enablePushNotifications":false
+}

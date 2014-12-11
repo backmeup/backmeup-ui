@@ -1,0 +1,6 @@
+{
+	"name":"zip_archive",
+	"shortname":"zip_archive",
+	"useKeepAlive":true,
+	"loginObligate":true
+}

@@ -1,0 +1,7 @@
+{
+	"name":"login",
+	"shortname":"login",
+	"useKeepAlive":true,
+	"loginObligate":false,
+	"isGlobalPage":false
+}

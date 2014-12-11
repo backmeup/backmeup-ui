@@ -1,0 +1,6 @@
+{
+	"name":"logout",
+	"shortname":"logout",
+	"useKeepAlive":false,
+	"loginObligate":false
+}

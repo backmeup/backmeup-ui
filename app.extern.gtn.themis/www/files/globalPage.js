@@ -346,11 +346,11 @@ var globalPage = {
 			search.append(app.ni.text.search({
 				"id" : "txtNavSearch"
 			}));
-			app.notify.dialog(search, app.lang.string("search", "headlines"), app.lang.string("search_backup", "headlines"), app.lang.string("search", "actions"), app.lang.string("cancel", "actions"), function(popup) {
+			app.notify.dialog(search, false, app.lang.string("search_backup", "headlines"), app.lang.string("search", "actions"), app.lang.string("cancel", "actions"), function(popup) {
 				var searchText = $(popup).find("#txtNavSearch").val();
 				app.store.localStorage.set("data-html5-themis-search-value", searchText);
 				window.setTimeout(function() {
-					$(location).attr("href", "search.html")
+					app.help.navigation.redirect("search.html", "none");
 				}, 10);
 			}, function(popup) {
 				;

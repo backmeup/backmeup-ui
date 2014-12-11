@@ -1,0 +1,6 @@
+{
+	"name":"job_details",
+	"shortname":"job_details",
+	"useKeepAlive":true,
+	"loginObligate":true
+}

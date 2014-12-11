@@ -15,113 +15,196 @@ var page_search = {
 		var pagePanel = $('div#page-panel');
 		// datasources
 
-		app.template.append("div[data-role=content]", "app-loader-bubble");
+		content.append(app.ni.element.h1({
+			"text" : app.lang.string("search_in_backups", "headlines")
+		}));
 
-		var promise = app.rc.getJson("search", {
-			"userId" : 8,//app.store.localStorage.get("data-html5-themis-username"),
-			"query" : app.store.localStorage.get("data-html5-themis-search-value")
-		}, true);
-
-		promise.done(function(resultObject) {
-
-			var list = $(app.template.get("listB", "responsive"));
-			var searchElement = app.ni.element.li();
-			searchElement.append(app.ni.element.img({
-				"attributes" : {
-					"src" : "test.jpg"
-				}
-			}));
-			var textContainer = app.ni.element.div();
-			textContainer.append(app.ni.element.h2({
-				"classes" : [ 'list-B-headline' ],
-				"text" : "Pearl ist eine freie..."
-			}));
-			textContainer.append(app.ni.element.p({
-				"classes" : [ 'list-B-text' ],
-				"text" : "plattform­unabhängige und inter­pretierte Programmier­sprache (Skript­sprache), die mehrere Programmier­paradigmen unter­stützt. Der Linguist Larry Wall entwarf sie 1987 als Synthese aus C, awk, den Unix-­Befehlen und anderen Einflüssen. Ursprüng­lich als Werkzeug zur Verar­beitung und Manipu­lation von Textdateien insbesondere bei System- und Netzwerk­administration vorgesehen (zum Beispiel Auswertung von Logdateien), hat Perl auch ..."
-			}));
-			textContainer.append(app.ni.element.p({
-				"classes" : [ 'list-B-status' ],
-				"text" : "Statuszeile mit links"
-			}));
-			searchElement.append(textContainer);
-			list.append(searchElement);
-			// ----
-			var searchElement = app.ni.element.li();
-			searchElement.append(app.ni.element.img({
-				"attributes" : {
-					"src" : "test.jpg"
-				}
-			}));
-			var textContainer = app.ni.element.div();
-			textContainer.append(app.ni.element.h2({
-				"classes" : [ 'list-B-headline' ],
-				"text" : "Pearl ist eine freie..."
-			}));
-			textContainer.append(app.ni.element.p({
-				"classes" : [ 'list-B-text' ],
-				"text" : "plattform­unabhängige und inter­pretierte Programmier­sprache (Skript­sprache), die mehrere Programmier­paradigmen unter­stützt. Der Linguist Larry Wall entwarf sie 1987 als Synthese aus C, awk, den Unix-­Befehlen und anderen Einflüssen. Ursprüng­lich als Werkzeug zur Verar­beitung und Manipu­lation von Textdateien insbesondere bei System- und Netzwerk­administration vorgesehen (zum Beispiel Auswertung von Logdateien), hat Perl auch ..."
-			}));
-			textContainer.append(app.ni.element.p({
-				"classes" : [ 'list-B-status' ],
-				"text" : "Statuszeile mit links"
-			}));
-			searchElement.append(textContainer);
-			list.append(searchElement);
-			var searchElement = app.ni.element.li();
-			searchElement.append(app.ni.element.img({
-				"attributes" : {
-					"src" : "test.jpg"
-				}
-			}));
-			var textContainer = app.ni.element.div();
-			textContainer.append(app.ni.element.h2({
-				"classes" : [ 'list-B-headline' ],
-				"text" : "Pearl ist eine freie..."
-			}));
-			textContainer.append(app.ni.element.p({
-				"classes" : [ 'list-B-text' ],
-				"text" : "plattform­unabhängige und inter­pretierte Programmier­sprache (Skript­sprache), die mehrere Programmier­paradigmen unter­stützt. Der Linguist Larry Wall entwarf sie 1987 als Synthese aus C, awk, den Unix-­Befehlen und anderen Einflüssen. Ursprüng­lich als Werkzeug zur Verar­beitung und Manipu­lation von Textdateien insbesondere bei System- und Netzwerk­administration vorgesehen (zum Beispiel Auswertung von Logdateien), hat Perl auch ..."
-			}));
-			textContainer.append(app.ni.element.p({
-				"classes" : [ 'list-B-status' ],
-				"text" : "Statuszeile mit links"
-			}));
-			searchElement.append(textContainer);
-			list.append(searchElement);
-			var searchElement = app.ni.element.li();
-			searchElement.append(app.ni.element.img({
-				"attributes" : {
-					"src" : "test.jpg"
-				}
-			}));
-			var textContainer = app.ni.element.div();
-			textContainer.append(app.ni.element.h2({
-				"classes" : [ 'list-B-headline' ],
-				"text" : "Pearl ist eine freie..."
-			}));
-			textContainer.append(app.ni.element.p({
-				"classes" : [ 'list-B-text' ],
-				"text" : "plattform­unabhängige und inter­pretierte Programmier­sprache (Skript­sprache), die mehrere Programmier­paradigmen unter­stützt. Der Linguist Larry Wall entwarf sie 1987 als Synthese aus C, awk, den Unix-­Befehlen und anderen Einflüssen. Ursprüng­lich als Werkzeug zur Verar­beitung und Manipu­lation von Textdateien insbesondere bei System- und Netzwerk­administration vorgesehen (zum Beispiel Auswertung von Logdateien), hat Perl auch ..."
-			}));
-			textContainer.append(app.ni.element.p({
-				"classes" : [ 'list-B-status' ],
-				"text" : "Statuszeile mit links"
-			}));
-			searchElement.append(textContainer);
-			list.append(searchElement);
-			// ----
-
-			content.append(list);
+		var form = app.ni.form.form({
+			"id" : "frmRegisterCredentials",
+			"attributes" : {
+				"action" : "#",
+				"data-ajax" : "false"
+			},
+			"label" : false
 		});
+
+		form.append(app.ni.text.text({
+			"id" : "txtSearch",
+			"placeholder" : (app.store.localStorage.get("data-html5-themis-search-value")) ? app.store.localStorage.get("data-html5-themis-search-value")
+					: app.lang.string("search", "labels"),
+			"label" : false,
+			"labelText" : app.lang.string("search", "labels"),
+			"container" : false
+		}));
+
+		form.append(app.ni.element.a({
+			"id" : "btnSearch",
+			"text" : app.lang.string("search", "actions"),
+			"attributes" : {
+				"href" : "#"
+			},
+			"classes" : [ 'ui-btn' ],
+			"styles" : {
+				"display" : "none"
+			}
+		}));
+
+		content.append(form);
+
+		var searchResults = app.ni.element.div({
+			"id" : "divSearchResults",
+			"styles" : {
+				"margin-top" : "15px",
+				"border-top" : "1px solid #999"
+			}
+		});
+		content.append(searchResults);
+
+		if (app.store.localStorage.get("data-html5-themis-search-value") != null) {
+			window.setTimeout(function() {
+				page_search.updateSearchDiv(searchResults);
+			}, 1000);
+		}
 
 	},
 
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
-		var success = null;
+		$(this.config.pageId).on("focus click", "#txtSearch", function(event) {
+			$("#btnSearch").css("display", "block");
+			if (app.store.localStorage.get("data-html5-themis-search-value") && $("#txtSearch").val() == "") {
+				$("#txtSearch").val(app.store.localStorage.get("data-html5-themis-search-value"));
+				this.select();
+			}
+		});
 
+		$(this.config.pageId).on("click", "#btnSearch", function(event) {
+			app.store.localStorage.set("data-html5-themis-search-value", $("#txtSearch").val());
+			page_search.updateSearchDiv($("#divSearchResults"));
+		});
+
+	},
+
+	updateSearchDiv : function(searchResults) {
+
+		searchResults.empty();
+
+		app.template.append("div[data-role=content]", "app-loader-bubble");
+
+		var promise = app.rc.getJson("search", {
+			"userId" : 8,// app.store.localStorage.get("data-html5-themis-username"),
+			"query" : app.store.localStorage.get("data-html5-themis-search-value")
+		}, true);
+
+		promise.fail(function() {
+			app.notify.alert(app.lang.string("search_error", "texts"), false, app.lang.string("search", "headlines"), app.lang.string("ok", "actions"));
+		});
+
+		promise
+				.done(function(resultObject) {
+
+					var list = $(app.template.get("listB", "responsive"));
+					var searchElement = app.ni.element.li();
+					searchElement.append(app.ni.element.img({
+						"attributes" : {
+							"src" : "test.jpg"
+						}
+					}));
+					var textContainer = app.ni.element.div();
+					textContainer.append(app.ni.element.h2({
+						"classes" : [ 'list-B-headline' ],
+						"text" : "Pearl ist eine freie..."
+					}));
+					textContainer
+							.append(app.ni.element
+									.p({
+										"classes" : [ 'list-B-text' ],
+										"text" : "plattform­unabhängige und inter­pretierte Programmier­sprache (Skript­sprache), die mehrere Programmier­paradigmen unter­stützt. Der Linguist Larry Wall entwarf sie 1987 als Synthese aus C, awk, den Unix-­Befehlen und anderen Einflüssen. Ursprüng­lich als Werkzeug zur Verar­beitung und Manipu­lation von Textdateien insbesondere bei System- und Netzwerk­administration vorgesehen (zum Beispiel Auswertung von Logdateien), hat Perl auch ..."
+									}));
+					textContainer.append(app.ni.element.p({
+						"classes" : [ 'list-B-status' ],
+						"text" : "Statuszeile mit links"
+					}));
+					searchElement.append(textContainer);
+					list.append(searchElement);
+					// ----
+					var searchElement = app.ni.element.li();
+					searchElement.append(app.ni.element.img({
+						"attributes" : {
+							"src" : "test.jpg"
+						}
+					}));
+					var textContainer = app.ni.element.div();
+					textContainer.append(app.ni.element.h2({
+						"classes" : [ 'list-B-headline' ],
+						"text" : "Pearl ist eine freie..."
+					}));
+					textContainer
+							.append(app.ni.element
+									.p({
+										"classes" : [ 'list-B-text' ],
+										"text" : "plattform­unabhängige und inter­pretierte Programmier­sprache (Skript­sprache), die mehrere Programmier­paradigmen unter­stützt. Der Linguist Larry Wall entwarf sie 1987 als Synthese aus C, awk, den Unix-­Befehlen und anderen Einflüssen. Ursprüng­lich als Werkzeug zur Verar­beitung und Manipu­lation von Textdateien insbesondere bei System- und Netzwerk­administration vorgesehen (zum Beispiel Auswertung von Logdateien), hat Perl auch ..."
+									}));
+					textContainer.append(app.ni.element.p({
+						"classes" : [ 'list-B-status' ],
+						"text" : "Statuszeile mit links"
+					}));
+					searchElement.append(textContainer);
+					list.append(searchElement);
+					var searchElement = app.ni.element.li();
+					searchElement.append(app.ni.element.img({
+						"attributes" : {
+							"src" : "test.jpg"
+						}
+					}));
+					var textContainer = app.ni.element.div();
+					textContainer.append(app.ni.element.h2({
+						"classes" : [ 'list-B-headline' ],
+						"text" : "Pearl ist eine freie..."
+					}));
+					textContainer
+							.append(app.ni.element
+									.p({
+										"classes" : [ 'list-B-text' ],
+										"text" : "plattform­unabhängige und inter­pretierte Programmier­sprache (Skript­sprache), die mehrere Programmier­paradigmen unter­stützt. Der Linguist Larry Wall entwarf sie 1987 als Synthese aus C, awk, den Unix-­Befehlen und anderen Einflüssen. Ursprüng­lich als Werkzeug zur Verar­beitung und Manipu­lation von Textdateien insbesondere bei System- und Netzwerk­administration vorgesehen (zum Beispiel Auswertung von Logdateien), hat Perl auch ..."
+									}));
+					textContainer.append(app.ni.element.p({
+						"classes" : [ 'list-B-status' ],
+						"text" : "Statuszeile mit links"
+					}));
+					searchElement.append(textContainer);
+					list.append(searchElement);
+					var searchElement = app.ni.element.li();
+					searchElement.append(app.ni.element.img({
+						"attributes" : {
+							"src" : "test.jpg"
+						}
+					}));
+					var textContainer = app.ni.element.div();
+					textContainer.append(app.ni.element.h2({
+						"classes" : [ 'list-B-headline' ],
+						"text" : "Pearl ist eine freie..."
+					}));
+					textContainer
+							.append(app.ni.element
+									.p({
+										"classes" : [ 'list-B-text' ],
+										"text" : "plattform­unabhängige und inter­pretierte Programmier­sprache (Skript­sprache), die mehrere Programmier­paradigmen unter­stützt. Der Linguist Larry Wall entwarf sie 1987 als Synthese aus C, awk, den Unix-­Befehlen und anderen Einflüssen. Ursprüng­lich als Werkzeug zur Verar­beitung und Manipu­lation von Textdateien insbesondere bei System- und Netzwerk­administration vorgesehen (zum Beispiel Auswertung von Logdateien), hat Perl auch ..."
+									}));
+					textContainer.append(app.ni.element.p({
+						"classes" : [ 'list-B-status' ],
+						"text" : "Statuszeile mit links"
+					}));
+					searchElement.append(textContainer);
+					list.append(searchElement);
+					// ----
+
+					searchResults.append(list);
+				});
+		promise.always(function() {
+			$(".app-loader").remove();
+		});
 	},
 
 	events : {

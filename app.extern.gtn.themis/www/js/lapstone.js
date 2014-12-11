@@ -2,7 +2,7 @@
 var app = {
 	config : {
 		name : "app",
-		min : true,
+		min : false,
 		useJQueryMobile : true,
 		apacheCordova : null
 	},
@@ -75,6 +75,7 @@ $(document).ready(function() {
 	var configuration = JsonLoader("../js/lapstone.json");
 	app.config.name = configuration.appname;
 	app.config['startPage'] = configuration.startPage;
+	app.config['startPage_loggedIn'] = configuration.startPage_loggedIn;
 
 	var success = true;
 	success = loadPlugins();

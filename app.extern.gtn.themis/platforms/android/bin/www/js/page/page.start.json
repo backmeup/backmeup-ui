@@ -1,0 +1,6 @@
+{
+	"name":"start",
+	"shortname":"start",
+	"useKeepAlive":true,
+	"loginObligate":true
+}

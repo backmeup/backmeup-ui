@@ -1,0 +1,7 @@
+{
+	"name":"register",
+	"shortname":"register",
+	"useKeepAlive":true,
+	"loginObligate":false,
+	"isGlobalPage":false
+}

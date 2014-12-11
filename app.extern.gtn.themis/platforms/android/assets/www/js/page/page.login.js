@@ -124,7 +124,7 @@ var page_login = {
 								app.sess.loggedIn(true);
 								app.store.localStorage.set("data-html5-themis-username", container.find("#txtUsername").val());
 								app.store.localStorage.set("data-html5-themis-token", json.accessToken);
-								app.help.navigation.redirect("start.html", "slideup");
+								app.help.navigation.redirect(app.config.startPage_loggedIn, "slideup");
 							} else {
 								alert("Benutzername oder Passwort falsch.");
 							}

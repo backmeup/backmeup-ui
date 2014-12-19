@@ -93,7 +93,7 @@ var page_search = {
 		app.template.append("div[data-role=content]", "app-loader-bubble");
 
 		var promise = app.rc.getJson("search", {
-			"userId" : 8,// app.store.localStorage.get("data-html5-themis-username"),
+			//"userId" : 8,// app.store.localStorage.get("data-html5-themis-username"),
 			"query" : app.store.localStorage.get("data-html5-themis-search-value")
 		}, true);
 

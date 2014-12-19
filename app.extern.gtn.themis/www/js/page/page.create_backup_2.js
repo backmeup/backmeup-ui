@@ -50,7 +50,7 @@ var page_create_backup_2 = {
 				}
 				list.append(app.ni.list.thumbnail({
 					href : "#",
-					imageSrc : pluginJson.imageURL,
+					imageSrc : app.img.getUrlById(pluginId + "Large"),
 					title : "Id: " + pluginJson.datasourceProfileId,
 					headline : pluginJson.title,
 					text : pluginJson.pluginName,

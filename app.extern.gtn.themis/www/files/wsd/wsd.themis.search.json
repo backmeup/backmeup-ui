@@ -6,7 +6,7 @@
 		"timeout":"int timeout"
 	},
 	"search":{
-        "url":"/backmeup-service-rest/search/{userId}?query={query}",
+        "url":"/backmeup-service-rest/search?query={query}",
         "method":"get",
         "timeout":"3000"
 	}

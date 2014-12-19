@@ -46,12 +46,13 @@ var page_create_backup_1 = {
 					authType = pluginJson.authDataDescription.configType;
 					if (authType == "oauth")
 						redirectUrl = pluginJson.authDataDescription.redirectURL;
+					// alert(redirectUrl);
 				} else {
 					authRequired = false;
 				}
 				list.append(app.ni.list.thumbnail({
 					href : "#",
-					imageSrc : pluginJson.imageURL,
+					imageSrc : app.img.getUrlById(pluginId + "Large"),
 					title : "Id: " + pluginJson.datasourceProfileId,
 					headline : pluginJson.title,
 					text : pluginJson.pluginName,
@@ -65,7 +66,7 @@ var page_create_backup_1 = {
 				}));
 			});
 			content.append(list);
-			
+
 			$(".app-loader").remove();
 
 			app.help.jQM.enhance(content);
@@ -84,13 +85,12 @@ var page_create_backup_1 = {
 		$(page_create_backup_1.config.pageId).on("click", ".authRequired-false", function(event) {
 			app.help.navigation.redirect("create_backup_1_newSource.html");
 		});
-
 		$(page_create_backup_1.config.pageId).on(
 				"click",
 				".authRequired-true",
 				function(event) {
 					var callerElement = $(this).clone(), promise, authDataList;
-
+					// alert(callerElement.html());
 					// get existing auths
 					promise = app.rc.getJson("getAuthdataForPlugin", {
 						"pluginId" : callerElement.attr("data-html5-pluginId")
@@ -161,7 +161,7 @@ var page_create_backup_1 = {
 									}, 10);
 								}, function(popup) {
 									;
-								}, 0);
+								}, 100);
 					});
 
 				});

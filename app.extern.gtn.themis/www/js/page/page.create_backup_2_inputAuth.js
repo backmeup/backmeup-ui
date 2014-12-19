@@ -83,9 +83,10 @@ var page_create_backup_2_inputAuth = {
 		$(page_create_backup_2_inputAuth.config.pageId).on("click", "#btnAuthenticate", function(event) {
 			app.template.append("div[data-role=content]", "app-loader-bubble");
 			var formObject = app.help.form.serialize($("#frmCreateSource")), promise;
+			//alert(JSON.stringify(formObject));
 			delete formObject.btnAuthenticate;
 			delete formObject.title;
-			//alert(JSON.stringify(formObject));
+			
 
 			promise = app.rc.getJson("createAuthdata", {
 				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
@@ -104,7 +105,7 @@ var page_create_backup_2_inputAuth = {
 			});
 
 			promise.fail(function() {
-				alert(" WS Error")
+				alert(" WS Error...geht ned")
 			});
 		});
 		

@@ -76,12 +76,12 @@ var plugin_WebServiceClient = {
 	getAjax : function(url, data, type, method, timeout, async, dataType) {
 		app.debug.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax(" + url + ", " + data + ", " + type + ", " + method + ", " + timeout
 				+ ", " + async + ")", 14);
-		app.debug.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax() webservice: " + url + "?" + data, 60);
+		app.debug.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax() - webservice: " + url + "?" + data, 60);
 		var json = null;
 
 		var dfd = null;
 		if (async) {
-			app.debug.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax() case: webservice is async - create deferred object", 60);
+			app.debug.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax() - case: webservice is async - create deferred object", 60);
 			dfd = $.Deferred();
 			json = dfd.promise();
 		}
@@ -106,16 +106,25 @@ var plugin_WebServiceClient = {
 				var obj = {};
 				var pairs = data.split('&');
 				for (i in pairs) {
-					var split = pairs[i].split('=');
-					if (split[1].substr(0, 1) == "{" || split[1].substr(0, 1) == "[") {
+					var indexOfEquals = pairs[i].indexOf('='), paramKey, paramValue;
+					paramKey = pairs[i].substring(0, indexOfEquals);
+					paramValue = pairs[i].substring(indexOfEquals + 1);
+					//var split = pairs[i].split('=');
+					//alert(paramKey);
+					//alert(paramValue);
+					if (paramValue.substr(0, 1) == "{" || paramValue.substr(0, 1) == "[") {
 						try {
-							split[1] = JSON.parse(split[1]);
-							obj[split[0]] = split[1];
+							app.debug.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax() - map json/array object: key = " + paramKey, 20);
+							app.debug.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax() - map json/array object: value = " + paramValue, 20);
+							paramValue = JSON.parse(paramValue);
+							obj[paramKey] = paramValue;
 						} catch (e) {
-							app.debug.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax() - Ein parameter ist nicht gesetzt: " + split[0], 9);
+							app.debug.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax() - Ein parameter ist nicht gesetzt: " + paramKey, 9);
 						}
 					} else {
-						obj[split[0]] = split[1];
+						app.debug
+								.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax() - set to json object: " + paramKey + "=" + paramValue, 20);
+						obj[paramKey] = paramValue;
 					}
 
 				}

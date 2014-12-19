@@ -114,7 +114,7 @@ var page_create_backup_2 = {
 								"text" : app.ni.element.a({
 									"text" : currentAuthdata.name,
 									"attributes" : {
-										"href" : "create_backup_1_newSource.html",
+										"href" : "create_backup_2_newSink.html",
 										"data-transition" : "slide",
 										"data-html5-authdataId" : currentAuthdata.id,
 										"data-html5-authdataName" : currentAuthdata.name,

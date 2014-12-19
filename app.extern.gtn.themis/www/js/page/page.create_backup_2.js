@@ -101,7 +101,7 @@ var page_create_backup_2 = {
 					});
 
 					promise.done(function(resultObject) {
-						//alert(JSON.stringify(resultObject));
+						// alert(JSON.stringify(resultObject));
 
 						authDataList = app.ni.element.ul({
 							"attributes" : {
@@ -130,8 +130,8 @@ var page_create_backup_2 = {
 									window.setTimeout(function() {
 										switch (callerElement.attr("data-html5-authType")) {
 										case 'oauth':
-											var url = callerElement.attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback/",
-													"http://themis-dev01.backmeup.at/page/create_backup_2_newSource.html");
+											var url = callerElement.attr("data-html5-oAuthUrl").replace("###REPLACE_ME###",
+													plugin_Backmeup.config.themis_url + plugin_Backmeup.config.themis_oauth_redirect_sink);
 											var promise = null;
 											// alert(url);
 											promise = app.oa.generic(url);

@@ -359,7 +359,8 @@ var globalPage = {
 
 		$(document).on('click', '#navPageLogout', function() {
 			app.sess.loggedIn(false);
-			$(location).attr("href", "static-index.html");
+			app.store.localStorage.clear();
+			app.help.navigation.redirectAndReload("static-index.html");
 		});
 	},
 

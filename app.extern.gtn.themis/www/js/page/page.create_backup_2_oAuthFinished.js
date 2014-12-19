@@ -46,7 +46,10 @@ var page_create_backup_2_oAuthFinished = {
 			"placeholder" : app.lang.string("authdata_name", "labels"),
 			"label" : true,
 			"labelText" : app.lang.string("authdata_name", "labels"),
-			"container" : true
+			"container" : true,
+			"attributes" : {
+				"value" : app.lang.string("new authentication", "page.create_backup") + ": " + app.store.localStorage.get("data-html5-pluginId")
+			}
 		}));
 
 		content.append(app.ni.button.button({

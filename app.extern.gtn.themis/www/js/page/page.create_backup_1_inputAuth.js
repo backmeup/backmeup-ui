@@ -46,9 +46,12 @@ var page_create_backup_1_inputAuth = {
 				"id" : "txtName",
 				"name" : "title",
 				"placeholder" : app.lang.string("title", "labels"),
-				"label" : false,
+				"label" : true,
 				"labelText" : app.lang.string("title", "labels"),
-				"container" : false
+				"container" : true,
+				"attributes" : {
+					"value" : app.lang.string("new authentication", "page.create_backup") + ": " + app.store.localStorage.get("data-html5-pluginId")
+				}
 			}));
 			if (resultObject.authDataDescription != undefined) {
 				$.each(resultObject.authDataDescription.requiredInputs, function(key, value) {

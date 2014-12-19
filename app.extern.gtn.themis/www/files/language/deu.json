@@ -210,6 +210,14 @@
 	{
 		"Connection String. Currently, set user id here (eg. '1')":"Connection String ???"
 	},
+	"page.create_backup":
+	{
+		"datasource":"Datenquelle",
+		"datadink":"Datensenke",
+		"new authentication":"Neue Authentifizierungsdaten",
+		"new datasource":"Neue Datenquelle",
+		"new datasink":"Neue Datensenke"
+	},
 	"page.create_backup_1_inputAuth":
 	{
 		"headline":"Authentifizierungsdaten",

@@ -46,9 +46,12 @@ var page_create_backup_2_inputAuth = {
 				"id" : "txtName",
 				"name" : "title",
 				"placeholder" : app.lang.string("title", "labels"),
-				"label" : false,
+				"label" : true,
 				"labelText" : app.lang.string("title", "labels"),
-				"container" : false
+				"container" : true,
+				"attributes" : {
+					"value" : app.lang.string("new authentication", "page.create_backup") + ": " + app.store.localStorage.get("data-html5-pluginId")
+				}
 			}));
 			if (resultObject.authDataDescription != undefined) {
 				$.each(resultObject.authDataDescription.requiredInputs, function(key, value) {
@@ -83,10 +86,9 @@ var page_create_backup_2_inputAuth = {
 		$(page_create_backup_2_inputAuth.config.pageId).on("click", "#btnAuthenticate", function(event) {
 			app.template.append("div[data-role=content]", "app-loader-bubble");
 			var formObject = app.help.form.serialize($("#frmCreateSource")), promise;
-			//alert(JSON.stringify(formObject));
+			// alert(JSON.stringify(formObject));
 			delete formObject.btnAuthenticate;
 			delete formObject.title;
-			
 
 			promise = app.rc.getJson("createAuthdata", {
 				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
@@ -95,7 +97,7 @@ var page_create_backup_2_inputAuth = {
 			}, true);
 
 			promise.done(function(resultObject) {
-				//alert(JSON.stringify(resultObject));
+				// alert(JSON.stringify(resultObject));
 				// app.store.localStorage.set("data-html5-themis-source-profileid",
 				// );
 				app.store.localStorage.set("data-html5-authdataId", resultObject.id);
@@ -108,7 +110,7 @@ var page_create_backup_2_inputAuth = {
 				alert(" WS Error...geht ned")
 			});
 		});
-		
+
 	},
 
 	events : {

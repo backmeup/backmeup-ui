@@ -16,7 +16,7 @@ var page_login = {
 		});
 		var content = container.find('div[data-role=content]');
 		// content
-		
+
 		if (app.detect.isDesktop())
 			content.append(app.ni.element.img({
 				"attributes" : {
@@ -59,7 +59,10 @@ var page_login = {
 		form.append(app.ni.element.a({
 			"id" : "btnLogin",
 			"text" : app.lang.string("login", "actions"),
-			"classes" : [ 'ui-btn' ]
+			"classes" : [ 'ui-btn' ],
+			"attributes" : {
+				"href" : "#"
+			}
 		}));
 
 		content.append(form);
@@ -92,17 +95,17 @@ var page_login = {
 	// set the jquery events
 	setEvents : function(container) {
 
-		$(container).on(
+		$(page_login.config.pageId).on(
 				"click",
 				"#btnLogin",
-				function() {
+				function(event) {
 					app.debug.alert("page_" + page_register.config.name + " #btnRegister click", 25);
 					if (!app.help.validate.username(container.find("#txtUsername").val())) {
-						app.notify.alert(app.lang.string("bad_username", "notifications"), false, app.lang.string("login", "headlines"),
-								app.lang.string("ok", "actions"))
+						app.notify.alert(app.lang.string("bad_username", "notifications"), false, app.lang.string("login", "headlines"), app.lang.string("ok",
+								"actions"))
 					} else if (!app.help.validate.password(container.find("#txtPassword").val())) {
-						app.notify.alert(app.lang.string("bad_password", "notifications"), false, app.lang.string("login", "headlines"),
-								app.lang.string("ok", "actions"))
+						app.notify.alert(app.lang.string("bad_password", "notifications"), false, app.lang.string("login", "headlines"), app.lang.string("ok",
+								"actions"))
 					} else {
 
 						app.template.append("#btnLogin", "app-loader-bubble-inline-button");
@@ -121,7 +124,8 @@ var page_login = {
 								// alert(JSON.stringify(json));
 								app.store.localStorage.clearHtml5();
 								app.sess.loggedIn(true);
-								//app.store.localStorage.set("data-html5-themis-username", container.find("#txtUsername").val());
+								// app.store.localStorage.set("data-html5-themis-username",
+								// container.find("#txtUsername").val());
 								app.store.localStorage.set("themis-token", json.accessToken);
 								app.help.navigation.redirect(app.config.startPage_loggedIn, "slideup");
 							} else {
@@ -130,8 +134,8 @@ var page_login = {
 						});
 
 						promise.fail(function(errorObject) {
-							app.notify.alert(app.lang.string("bad_login", "notifications"), app.lang.string("login", "headlines"), false,
-									app.lang.string("ok", "actions"));
+							app.notify.alert(app.lang.string("bad_login", "notifications"), app.lang.string("login", "headlines"), false, app.lang.string("ok",
+									"actions"));
 						});
 					}
 				});

@@ -47,7 +47,10 @@ var page_create_backup_2_newSink = {
 				"placeholder" : app.lang.string("title", "labels"),
 				"label" : true,
 				"labelText" : app.lang.string("title", "labels"),
-				"container" : true
+				"container" : true,
+				"attributes" : {
+					"value" : app.lang.string("new datasink", "page.create_backup") + ": " + app.store.localStorage.get("data-html5-pluginId")
+				}
 			}));
 			if (resultObject.propertiesDescription != undefined) {
 				$.each(resultObject.propertiesDescription, function(key, value) {

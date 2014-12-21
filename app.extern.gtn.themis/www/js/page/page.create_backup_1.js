@@ -130,8 +130,10 @@ var page_create_backup_1 = {
 									window.setTimeout(function() {
 										switch (callerElement.attr("data-html5-authType")) {
 										case 'oauth':
-											var url = callerElement.attr("data-html5-oAuthUrl").replace("###REPLACE_ME###",
-													plugin_Backmeup.config.themis_url+plugin_Backmeup.config.themis_oauth_redirect_source);
+											var url = callerElement.attr("data-html5-oAuthUrl").replace(
+													"http://themis-dev01.backmeup.at/page/create_backup_1_newSource.html",
+													plugin_Backmeup.config.themis_url + plugin_Backmeup.config.themis_oauth_redirect_source);
+											alert(url);
 											var promise = null;
 											// alert(url);
 											promise = app.oa.generic(url);

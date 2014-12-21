@@ -74,7 +74,8 @@ var page_create_backup_1_oAuthFinished = {
 				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
 				"name" : $("#txtName").val(),
 				"properties" : {
-					"token" : app.store.localStorage.get("data-html5-oAuthToken")
+					"token" : app.store.localStorage.get("data-html5-oAuthToken"),
+					"secret" : ""
 				}
 			}, true);
 

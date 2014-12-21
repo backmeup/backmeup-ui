@@ -72,7 +72,9 @@ var page_create_backup_1_oAuthFinished = {
 			var promise = app.rc.getJson("createAuthdata", {
 				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
 				"name" : $("#txtName").val(),
-				"properties" : {}
+				"properties" : {
+					"token" : app.store.localStorage.get("data-html5-oAuthToken")
+				}
 			}, true);
 
 			promise.done(function(resultObject) {

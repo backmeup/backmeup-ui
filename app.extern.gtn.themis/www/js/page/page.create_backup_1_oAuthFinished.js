@@ -20,6 +20,9 @@ var page_create_backup_1_oAuthFinished = {
 			case 'org.backmeup.facebook':
 				if (!app.oa.tokenFromUrl(plugin_OAuth.config.facebook.error_name))
 					app.store.localStorage.set("data-html5-oAuthToken", app.oa.tokenFromUrl(plugin_OAuth.config.facebook.token_name));
+				$.post("https://api.dropbox.com/1/oauth/access_token", function(data) {
+					alert(data);
+				});
 				break;
 			case 'org.backmeup.dropbox':
 				if (!app.oa.tokenFromUrl(plugin_OAuth.config.dropbox.error_name))
@@ -73,7 +76,8 @@ var page_create_backup_1_oAuthFinished = {
 				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
 				"name" : $("#txtName").val(),
 				"properties" : {
-					"token" : app.store.localStorage.get("data-html5-oAuthToken")
+					"token" : app.store.localStorage.get("data-html5-oAuthToken"),
+					"secret" : ""
 				}
 			}, true);
 

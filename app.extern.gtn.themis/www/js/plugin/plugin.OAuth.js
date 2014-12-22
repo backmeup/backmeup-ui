@@ -57,7 +57,7 @@ var plugin_OAuth = {
 	desktopOAuth : function(url) {
 		// alert(app.config.apacheCordova);
 		if (app.config.apacheCordova == null || app.config.apacheCordova == false) {
-			alert("desktop oauth");
+			//alert("desktop oauth");
 			app.help.navigation.redirect(url);
 			return true;
 		}

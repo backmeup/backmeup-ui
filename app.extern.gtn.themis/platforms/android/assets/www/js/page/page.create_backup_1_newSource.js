@@ -10,29 +10,22 @@ var page_create_backup_1_newSource = {
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 		// get token from url
-		if (app.detect.isDesktop()) {
-			var url = window.location.href;
-			var error = /\?error=(.+)$/.exec(url);
-			var access_token = /\?oauth_token=(.+)$/.exec(url);
-			var code = /\?code=(.+)$/.exec(url);
-			app.store.localStorage.set("data-html5-themis-oAuthCode", "unused");
-			app.store.localStorage.set("data-html5-themis-oAuthToken", "unused");
-			if (access_token) {
-				var access_token = (access_token + "").split("=");
-				access_token = access_token[1] + "";
-				access_token = access_token.split("&");
-				app.store.localStorage.set("data-html5-themis-oAuthToken", access_token[0]);
-			} else if (code) {
-				var code = (code + "").split("=");
-				code = code[1] + "";
-				code = code.split("&");
-				// alert(code[0]);
-				app.store.localStorage.set("data-html5-themis-oAuthCode", code[0]);
-			} else if (error) {
-				alert("oauth error" + error);
-			}
-
-		}
+		/*
+		 * if (app.detect.isDesktop()) { var url = window.location.href; var
+		 * error = /\?error=(.+)$/.exec(url); var access_token =
+		 * /\?oauth_token=(.+)$/.exec(url); var code = /\?code=(.+)$/.exec(url);
+		 * app.store.localStorage.set("data-html5-themis-oAuthCode", "unused");
+		 * app.store.localStorage.set("data-html5-themis-oAuthToken", "unused");
+		 * if (access_token) { var access_token = (access_token +
+		 * "").split("="); access_token = access_token[1] + ""; access_token =
+		 * access_token.split("&");
+		 * app.store.localStorage.set("data-html5-themis-oAuthToken",
+		 * access_token[0]); } else if (code) { var code = (code +
+		 * "").split("="); code = code[1] + ""; code = code.split("&"); //
+		 * alert(code[0]);
+		 * app.store.localStorage.set("data-html5-themis-oAuthCode", code[0]); }
+		 * else if (error) { alert("oauth error" + error); } }
+		 */
 		var header = $('div[data-role=header]');
 		var content = $('div[data-role=content]');
 		var navPanel = $('div#nav-panel');
@@ -46,13 +39,15 @@ var page_create_backup_1_newSource = {
 		}, true);
 
 		promise.done(function(resultObject) {
-			// alert(JSON.stringify(resultObject));
-			// datasources
 			content.append(app.ni.element.h1({
-				"text" : app.lang.string("new_datasource", "headlines"),
+				"text" : app.lang.string("headline", "page.create_backup_1_newSource"),
 				"styles" : {
 					"clear" : "both"
 				}
+			}));
+
+			content.append(app.ni.element.p({
+				"text" : app.lang.string("description", "page.create_backup_1_newSource")
 			}));
 
 			var form = app.ni.form.form({
@@ -70,7 +65,10 @@ var page_create_backup_1_newSource = {
 				"placeholder" : app.lang.string("title", "labels"),
 				"label" : true,
 				"labelText" : app.lang.string("title", "labels"),
-				"container" : true
+				"container" : true,
+				"attributes" : {
+					"value" : app.lang.string("new datasource", "page.create_backup") + ": " + app.store.localStorage.get("data-html5-pluginId")
+				}
 			}));
 			if (resultObject.propertiesDescription != undefined) {
 				$.each(resultObject.propertiesDescription, function(key, value) {
@@ -128,7 +126,7 @@ var page_create_backup_1_newSource = {
 			}
 
 			promise.done(function(resultObject) {
-				alert(JSON.stringify(resultObject));
+				// alert(JSON.stringify(resultObject));
 				app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
 				$(".app-loader").remove();
 				app.help.navigation.redirect("create_backup_2.html");

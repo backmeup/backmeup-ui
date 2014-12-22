@@ -1,4 +1,7 @@
 {
 	"name":"Backmeup",
-	"shortname":"bmu"
+	"shortname":"bmu",
+	"themis_url":"http://themis-dev01.backmeup.at",
+	"themis_oauth_redirect_source":"/page/create_backup_1_oAuthFinished.html",
+	"themis_oauth_redirect_sink":"/page/create_backup_2_oAuthFinished.html"
 }

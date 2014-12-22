@@ -28,13 +28,17 @@ var page_create_backup_2_oAuthFinished = {
 				alert("oauth error" + error);
 			}
 		}
-		alert("oauth token: " + app.store.localStorage.get("data-html5-oAuthToken"));
+		//alert("oauth token: " + app.store.localStorage.get("data-html5-oAuthToken"));
 
 		content.append(app.ni.element.h1({
-			"text" : app.lang.string("create_auth_data", "headlines"),
+			"text" : app.lang.string("headline", "page.create_backup_2_oAuthFinished"),
 			"styles" : {
 				"clear" : "both"
 			}
+		}));
+
+		content.append(app.ni.element.p({
+			"text" : app.lang.string("description", "page.create_backup_2_oAuthFinished")
 		}));
 
 		content.append(app.ni.text.text({
@@ -42,7 +46,10 @@ var page_create_backup_2_oAuthFinished = {
 			"placeholder" : app.lang.string("authdata_name", "labels"),
 			"label" : true,
 			"labelText" : app.lang.string("authdata_name", "labels"),
-			"container" : true
+			"container" : true,
+			"attributes" : {
+				"value" : app.lang.string("new authentication", "page.create_backup") + ": " + app.store.localStorage.get("data-html5-pluginId")
+			}
 		}));
 
 		content.append(app.ni.button.button({
@@ -68,7 +75,7 @@ var page_create_backup_2_oAuthFinished = {
 			}, true);
 
 			promise.done(function(resultObject) {
-				alert(JSON.stringify(resultObject));
+				//alert(JSON.stringify(resultObject));
 				app.store.localStorage.set("data-html5-authdataId", resultObject.id);
 				app.help.navigation.redirect("create_backup_2_newSink.html");
 			});

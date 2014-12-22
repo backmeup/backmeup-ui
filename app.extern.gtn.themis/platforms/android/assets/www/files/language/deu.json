@@ -54,6 +54,8 @@
 		"continue":"Weiter"
 	},
 	"labels":{
+		"authdata_name":"Name",
+		"create_authdata":"Authentifizierung speichern",
 		"title":"Titel",
 		"create_backup":"Backupjob erstellen",
 		"create_source":"Datenquelle erstellen",
@@ -205,5 +207,62 @@
 		"Use SSL (encrypted connection)":"Use SSL (encrypted connection)",
 		"imap":"IMAP",
 		"pop3":"POP3"
+	},
+	"org.backmeup.storage":
+	{
+		"Connection String. Currently, set user id here (eg. '1')":"Connection String ???"
+	},
+	"page.create_backup":
+	{
+		"datasource":"Datenquelle",
+		"datadink":"Datensenke",
+		"new authentication":"Neue Authentifizierungsdaten",
+		"new datasource":"Neue Datenquelle",
+		"new datasink":"Neue Datensenke"
+	},
+	"page.create_backup_1_inputAuth":
+	{
+		"headline":"Authentifizierungsdaten",
+		"description":"Gib die Authentifizierungsdaten ein."
+	},
+	"page.create_backup_1_newSource":
+	{
+		"headline":"Datenquellen Einstellungen",
+		"description":"Wähle Einstellungen für deine Datenquelle."
+	},
+	"page.create_backup_1_oAuthFinished":
+	{
+		"headline":"oAuth Autentifizierung abgeschlossen",
+		"description":"Gib der Autentifizierung einen namen"
+	},
+	"page.create_backup_1":
+	{
+		"headline":"Backup erstellen (Direkt auf git geändert)",
+		"description":"Wähle eine Quelle für dein Backup."
+	},
+	"page.create_backup_2_inputAuth":
+	{
+		"headline":"Authentifizierungsdaten",
+		"description":"Gib die Authentifizierungsdaten ein."
+	},
+	"page.create_backup_2_newSink":
+	{
+		"headline":"Datensenken Einstellungen",
+		"description":"Wähle Einstellungen für deine Datensenke."
+	},
+	"page.create_backup_2_oAuthFinished":
+	{
+		"headline":"oAuth Autentifizierung abgeschlossen",
+		"description":"Gib der Autentifizierung einen namen"
+	},
+	"page.create_backup_2":
+	{
+		"headline":"Datensenke wählen",
+		"description":"Wähle eine Senke (=Speicherort) für dein Backup. "
+	},
+	"page.create_backup_3":
+	{
+		"headline":"Backup abschließen",
+		"description":"Einstellungen für das Backup."
 	}
 }

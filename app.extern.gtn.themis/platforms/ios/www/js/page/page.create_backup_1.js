@@ -24,11 +24,16 @@ var page_create_backup_1 = {
 
 		promise.done(function(resultObject) {
 			content.append(app.ni.element.h1({
-				"text" : app.lang.string("new_datasource", "headlines"),
+				"text" : app.lang.string("headline", "page.create_backup_1"),
 				"styles" : {
 					"clear" : "both"
 				}
 			}));
+
+			content.append(app.ni.element.p({
+				"text" : app.lang.string("description", "page.create_backup_1")
+			}));
+
 			// alert(JSON.stringify(resultObject));
 			var list = $(app.template.get("listA", "responsive"));
 			$.each(resultObject, function(index, pluginJson) {
@@ -41,12 +46,13 @@ var page_create_backup_1 = {
 					authType = pluginJson.authDataDescription.configType;
 					if (authType == "oauth")
 						redirectUrl = pluginJson.authDataDescription.redirectURL;
+					// alert(redirectUrl);
 				} else {
 					authRequired = false;
 				}
 				list.append(app.ni.list.thumbnail({
 					href : "#",
-					imageSrc : pluginJson.imageURL,
+					imageSrc : app.img.getUrlById(pluginId + "Large"),
 					title : "Id: " + pluginJson.datasourceProfileId,
 					headline : pluginJson.title,
 					text : pluginJson.pluginName,
@@ -60,12 +66,7 @@ var page_create_backup_1 = {
 				}));
 			});
 			content.append(list);
-			content.append(app.ni.element.h1({
-				"text" : app.lang.string("existing_datasources", "headlines"),
-				"styles" : {
-					"clear" : "both"
-				}
-			}));
+
 			$(".app-loader").remove();
 
 			app.help.jQM.enhance(content);
@@ -84,56 +85,88 @@ var page_create_backup_1 = {
 		$(page_create_backup_1.config.pageId).on("click", ".authRequired-false", function(event) {
 			app.help.navigation.redirect("create_backup_1_newSource.html");
 		});
+		$(page_create_backup_1.config.pageId).on(
+				"click",
+				".authRequired-true",
+				function(event) {
+					var callerElement = $(this).clone(), promise, authDataList;
+					// alert(callerElement.html());
+					// get existing auths
+					promise = app.rc.getJson("getAuthdataForPlugin", {
+						"pluginId" : callerElement.attr("data-html5-pluginId")
+					}, true);
 
-		$(page_create_backup_1.config.pageId)
-				.on(
-						"click",
-						".authRequired-true",
-						function(event) {
-							var callerElement = $(this).clone();
-							
-							app.notify
-									.dialog(
-											'<ul data-role="listview" >    <li><a href="#"><img src="http://demos.jquerymobile.com/1.4.5/_assets/img/us.png" alt="France" class="ui-li-icon ui-corner-none">France</a></li>    <li><a href="#"><img src="http://demos.jquerymobile.com/1.4.5/_assets/img/us.png" alt="Germany" class="ui-li-icon">Germany</a></li>    <li><a href="#"><img src="../_assets/img/gb.png" alt="Great Britain" class="ui-li-icon">Great Britain</a></li>    <li><a href="#"><img src="../_assets/img/fi.png" alt="Finland" class="ui-li-icon">Finland</a></li>    <li><a href="#"><img src="../_assets/img/us.png" alt="United States" class="ui-li-icon ui-corner-none">United States</a></li></ul>',
-											app.lang.string("choose_profile", "headlines"), false, app.lang.string("new_source_profile",
-													"actions"), app.lang.string("cancel", "actions"), function(popup) {
-												window.setTimeout(function() {
-													switch (callerElement.attr("data-html5-authType")) {
-													case 'oauth':
-														var url = callerElement.attr("data-html5-oAuthUrl").replace("http://localhost:9998/oauth_callback/",
-														"http://themis-dev01.backmeup.at/page/create_backup_1_newSource.html");
-														var promise = null;
-														// alert(url);
-														promise = app.oa.generic(url);
+					promise.fail(function() {
+						alert("ws error");
+					});
 
-														// app.store.localStorage.set("data-html5-themis-pluginid",
-														// $(this).attr("data-html5-pluginId"));
+					promise.done(function(resultObject) {
+						// alert(JSON.stringify(resultObject));
 
-														promise.done(function(accessToken) {
-															// alert(accessToken);
-															app.store.localStorage.set("data-html5-oAuthToken", accessToken);
-															app.help.navigation.redirect("create_backup_1_oAuthFinished.html", "slide");
-
-														});
-
-														promise.fail(function(error) {
-															alert("oAuth error: " + error);
-														});
-
-														break;
-
-													case 'input':
-														app.help.navigation.redirect("create_backup_1_inputAuth.html", "slide");
-														break;
-													default:
-														alert("not implemented");
-													}
-												}, 10);
-											}, function(popup) {
-												;
-											}, 0);
+						authDataList = app.ni.element.ul({
+							"attributes" : {
+								"data-role" : "listview",
+								"data-inset" : "true"
+							}
+						});
+						$.each(resultObject, function(key, currentAuthdata) {
+							authDataList.append(app.ni.element.li({
+								"text" : app.ni.element.a({
+									"text" : currentAuthdata.name,
+									"attributes" : {
+										"href" : "create_backup_1_newSource.html",
+										"data-transition" : "slide",
+										"data-html5-authdataId" : currentAuthdata.id,
+										"data-html5-authdataName" : currentAuthdata.name,
+									},
+									"classes" : []
+								})
+							}));
 
 						});
+
+						app.notify.dialog(authDataList, app.lang.string("choose_profile", "headlines"), false,
+								app.lang.string("new_source_profile", "actions"), app.lang.string("cancel", "actions"), function(popup) {
+									window.setTimeout(function() {
+										switch (callerElement.attr("data-html5-authType")) {
+										case 'oauth':
+											var url = callerElement.attr("data-html5-oAuthUrl").replace(
+													"http://themis-dev01.backmeup.at/page/create_backup_1_newSource.html",
+													plugin_Backmeup.config.themis_url + plugin_Backmeup.config.themis_oauth_redirect_source);
+											//alert(url);
+											var promise = null;
+											// alert(url);
+											promise = app.oa.generic(url);
+
+											// app.store.localStorage.set("data-html5-themis-pluginid",
+											// $(this).attr("data-html5-pluginId"));
+
+											promise.done(function(accessToken) {
+												// alert(accessToken);
+												app.store.localStorage.set("data-html5-oAuthToken", accessToken);
+												app.help.navigation.redirect("create_backup_1_oAuthFinished.html", "slide");
+
+											});
+
+											promise.fail(function(error) {
+												alert("oAuth error: " + error);
+											});
+
+											break;
+
+										case 'input':
+											app.help.navigation.redirect("create_backup_1_inputAuth.html", "slide");
+											break;
+										default:
+											alert("not implemented");
+										}
+									}, 10);
+								}, function(popup) {
+									;
+								}, 100);
+					});
+
+				});
 
 	},
 

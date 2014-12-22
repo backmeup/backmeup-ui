@@ -1,8 +1,11 @@
 {
-	"org.backmeup.dropbox":"../images/logo.dropbox.jpg",
-	"org.backmeup.facebook":"../images/logo.facebook.jpg",
-	"org.backmeup.mail":"../images/logo.mail.jpg",
-	"org.backmeup.moodle":"../images/logo.moodle.jpg",
-	"org.backmeup.skydrive":"../images/logo.skydrive.jpg",
-	"org.backmeup.twitter":"../images/logo.twitter.jpg"
+	"org.backmeup.dropboxLarge":"../files/image/logo.dropbox.jpg",
+	"org.backmeup.dummyLarge":"../files/image/logo.dummy.jpg",
+	"org.backmeup.facebookLarge":"../files/image/logo.facebook.jpg",
+	"org.backmeup.filegeneratorLarge":"../files/image/logo.filegenerator.jpg",
+	"org.backmeup.mailLarge":"../files/image/logo.mail.jpg",
+	"org.backmeup.moodleLarge":"../files/image/logo.moodle.jpg",
+	"org.backmeup.skydriveLarge":"../files/image/logo.skydrive.jpg",
+	"org.backmeup.storageLarge":"../files/image/logo.storage.jpg",
+	"org.backmeup.twitterLarge":"../files/image/logo.twitter.jpg"
 }

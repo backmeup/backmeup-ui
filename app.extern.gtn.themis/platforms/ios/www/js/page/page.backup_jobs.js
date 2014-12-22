@@ -3,13 +3,13 @@ var page_backup_jobs = {
 
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
-		
+
 	},
 
 	// load the html structure
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
-		
+
 		try {
 			app.debug.alert("page_" + this.config.name + ".creator()", 10);
 
@@ -33,103 +33,102 @@ var page_backup_jobs = {
 				"expand" : "true"
 			} ] ], true);
 
-			promise.done(function(resultObject) {
+			promise
+					.done(function(resultObject) {
 
-				var runningBackupjobs = resultObject["getRunningBackupjobs"], successfulBackupjobs = resultObject["getSuccessfulBackupjobs"], queuedBackupjobs = resultObject["getQueuedBackupjobs"];
+						var runningBackupjobs = resultObject["getRunningBackupjobs"], successfulBackupjobs = resultObject["getSuccessfulBackupjobs"], queuedBackupjobs = resultObject["getQueuedBackupjobs"];
 
-				content.append(app.ni.element.h1({
-					"text" : app.lang.string("backup_jobs", "headlines")
-				}));
+						//alert(JSON.stringify(resultObject));
+						content.append(app.ni.element.h1({
+							"text" : app.lang.string("backup_jobs", "headlines")
+						}));
 
-				content.append(app.ni.element.a({
-					"id" : "btnNewBackup",
-					"text" : app.lang.string("create_backup", "actions"),
-					"attributes" : {
-						"href" : "create_backup_1.html"
-					},
-					"classes" : [ 'ui-btn' ]
-				}));
-				
-				
+						content.append(app.ni.element.a({
+							"id" : "btnNewBackup",
+							"text" : app.lang.string("create_backup", "actions"),
+							"attributes" : {
+								"href" : "create_backup_1.html"
+							},
+							"classes" : [ 'ui-btn' ]
+						}));
 
-				content.append(app.ni.element.h2({
-					"text" : app.lang.string("backup_jobs_successful", "headlines"),
-					"styles" : {
-						"clear" : "both"
-					}
-				}));
+						content.append(app.ni.element.h2({
+							"text" : app.lang.string("backup_jobs_successful", "headlines"),
+							"styles" : {
+								"clear" : "both"
+							}
+						}));
 
-				// alert(JSON.stringify(resultObject));
-				var list = $(app.template.get("listA", "responsive"));
-				$.each(successfulBackupjobs, function(index, jobJson) {
-					// alert(JSON.stringify(jobJson));
-					list.append(app.ni.list.thumbnail({
-						href : "backup_edit.html",
-						imageSrc : "",
-						title : "Id: " + jobJson.jobId,
-						headline : jobJson.jobTitle,
-						text : jobJson.jobTitle,
-						classes : [ 'job' ],
-						attributes : {
-							"data-html5-themis-backupid" : jobJson.jobId
-						}
-					}));
-				});
-				$(".app-loader").remove();
-				content.append(list);
+						// alert(JSON.stringify(resultObject));
+						var list = $(app.template.get("listA", "responsive"));
+						$.each(successfulBackupjobs, function(index, jobJson) {
+							list.append(app.ni.list.thumbnail({
+								href : "backup_edit.html",
+								imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
+								title : "Id: " + jobJson.jobId,
+								headline : jobJson.jobTitle,
+								text : jobJson.jobTitle,
+								classes : [ 'job' ],
+								attributes : {
+									"data-html5-themis-backupid" : jobJson.jobId
+								}
+							}));
+						});
+						$(".app-loader").remove();
+						content.append(list);
 
-				content.append(app.ni.element.h2({
-					"text" : app.lang.string("backup_jobs_queued", "headlines"),
-					"styles" : {
-						"clear" : "both"
-					}
-				}));
+						content.append(app.ni.element.h2({
+							"text" : app.lang.string("backup_jobs_queued", "headlines"),
+							"styles" : {
+								"clear" : "both"
+							}
+						}));
 
-				list = $(app.template.get("listA", "responsive"));
-				$.each(queuedBackupjobs, function(index, jobJson) {
-					// alert(JSON.stringify(jobJson));
-					list.append(app.ni.list.thumbnail({
-						href : "backup_edit.html",
-						imageSrc : "",
-						title : "Id: " + jobJson.jobId,
-						headline : jobJson.jobTitle,
-						text : jobJson.jobTitle,
-						classes : [ 'job' ],
-						attributes : {
-							"data-html5-themis-backupid" : jobJson.jobId
-						}
-					}));
-				});
-				$(".app-loader").remove();
-				content.append(list);
+						list = $(app.template.get("listA", "responsive"));
+						$.each(queuedBackupjobs, function(index, jobJson) {
+							// alert(JSON.stringify(jobJson));
+							list.append(app.ni.list.thumbnail({
+								href : "backup_edit.html",
+								imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
+								title : "Id: " + jobJson.jobId,
+								headline : jobJson.jobTitle,
+								text : jobJson.jobTitle,
+								classes : [ 'job' ],
+								attributes : {
+									"data-html5-themis-backupid" : jobJson.jobId
+								}
+							}));
+						});
+						$(".app-loader").remove();
+						content.append(list);
 
-				content.append(app.ni.element.h2({
-					"text" : app.lang.string("backup_jobs_running", "headlines"),
-					"styles" : {
-						"clear" : "both"
-					}
-				}));
+						content.append(app.ni.element.h2({
+							"text" : app.lang.string("backup_jobs_running", "headlines"),
+							"styles" : {
+								"clear" : "both"
+							}
+						}));
 
-				list = $(app.template.get("listA", "responsive"));
-				$.each(runningBackupjobs, function(index, jobJson) {
-					// alert(JSON.stringify(jobJson));
-					list.append(app.ni.list.thumbnail({
-						href : "backup_edit.html",
-						imageSrc : "",
-						title : "Id: " + jobJson.jobId,
-						headline : jobJson.jobTitle,
-						text : jobJson.jobTitle,
-						classes : [ 'job' ],
-						attributes : {
-							"data-html5-themis-backupid" : jobJson.jobId
-						}
-					}));
-				});
-				$(".app-loader").remove();
-				content.append(list);
-				$(".app-loader").remove();
-				app.help.jQM.enhance(content);
-			});
+						list = $(app.template.get("listA", "responsive"));
+						$.each(runningBackupjobs, function(index, jobJson) {
+							// alert(JSON.stringify(jobJson));
+							list.append(app.ni.list.thumbnail({
+								href : "backup_edit.html",
+								imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
+								title : "Id: " + jobJson.jobId,
+								headline : jobJson.jobTitle,
+								text : jobJson.jobTitle,
+								classes : [ 'job' ],
+								attributes : {
+									"data-html5-themis-backupid" : jobJson.jobId
+								}
+							}));
+						});
+						$(".app-loader").remove();
+						content.append(list);
+						$(".app-loader").remove();
+						app.help.jQM.enhance(content);
+					});
 
 			promise.fail(function(error) {
 				$(".app-loader").remove();
@@ -148,7 +147,6 @@ var page_backup_jobs = {
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
-		
 
 	},
 
@@ -161,7 +159,7 @@ var page_backup_jobs = {
 		// process.
 		pagebeforechange : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforechange()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -176,7 +174,7 @@ var page_backup_jobs = {
 		// auto-initialization occurs.
 		pagebeforecreate : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforecreate()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -192,7 +190,7 @@ var page_backup_jobs = {
 		// actual transition animation is kicked off.
 		pagebeforehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforehide()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -206,7 +204,7 @@ var page_backup_jobs = {
 		// Triggered before any load request is made.
 		pagebeforeload : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeload()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -221,7 +219,7 @@ var page_backup_jobs = {
 		// transition animation is kicked off.
 		pagebeforeshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeshow()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -237,7 +235,7 @@ var page_backup_jobs = {
 		// completed.
 		pagechange : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagechange()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -251,7 +249,7 @@ var page_backup_jobs = {
 		// Triggered when the changePage() request fails to load the page.
 		pagechangefailed : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagechangefailed()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -269,7 +267,7 @@ var page_backup_jobs = {
 		// markup.
 		pagecreate : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagecreate()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -284,7 +282,7 @@ var page_backup_jobs = {
 		// completed.
 		pagehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagehide()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -298,7 +296,7 @@ var page_backup_jobs = {
 		// Triggered on the page being initialized, after initialization occurs.
 		pageinit : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageinit()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -313,7 +311,7 @@ var page_backup_jobs = {
 		// DOM.
 		pageload : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageload()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -327,7 +325,7 @@ var page_backup_jobs = {
 		// Triggered if the page load request failed.
 		pageloadfailed : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageloadfailed()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -343,7 +341,7 @@ var page_backup_jobs = {
 		// from the DOM.
 		pageremove : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageremove()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {
@@ -358,7 +356,7 @@ var page_backup_jobs = {
 		// completed.
 		pageshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageshow()", 12);
-			
+
 			try {
 				success = true;
 			} catch (err) {

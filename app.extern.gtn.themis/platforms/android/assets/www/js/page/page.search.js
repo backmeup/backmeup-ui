@@ -20,7 +20,7 @@ var page_search = {
 		}));
 
 		var form = app.ni.form.form({
-			"id" : "frmRegisterCredentials",
+			"id" : "frmSearch",
 			"attributes" : {
 				"action" : "#",
 				"data-ajax" : "false"
@@ -79,6 +79,12 @@ var page_search = {
 			}
 		});
 
+		$(this.config.pageId).on("submit", "#frmSearch", function(event) {
+			event.preventDefault();
+			app.store.localStorage.set("data-html5-themis-search-value", $("#txtSearch").val());
+			page_search.updateSearchDiv($("#divSearchResults"));
+		});
+		
 		$(this.config.pageId).on("click", "#btnSearch", function(event) {
 			app.store.localStorage.set("data-html5-themis-search-value", $("#txtSearch").val());
 			page_search.updateSearchDiv($("#divSearchResults"));
@@ -93,7 +99,7 @@ var page_search = {
 		app.template.append("div[data-role=content]", "app-loader-bubble");
 
 		var promise = app.rc.getJson("search", {
-			"userId" : 8,// app.store.localStorage.get("data-html5-themis-username"),
+			//"userId" : 8,// app.store.localStorage.get("data-html5-themis-username"),
 			"query" : app.store.localStorage.get("data-html5-themis-search-value")
 		}, true);
 

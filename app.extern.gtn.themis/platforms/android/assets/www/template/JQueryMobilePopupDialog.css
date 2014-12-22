@@ -28,13 +28,12 @@
 }
 
 #popupDialog .ui-content ul.ui-listview {
-	margin: -10px -10px 0px -10px !important;
+	margin: 0;
 }
 
 #popupDialog .ui-content ul.ui-listview>li>a {
 	background-color: #FFF;
-border:none;
-
+	border: none;
 }
 
 #popupDialog .ui-btn .ui-focus {

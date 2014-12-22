@@ -10,11 +10,106 @@ var page_create_backup_2_inputAuth = {
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 
+		var header = $('div[data-role=header]');
+		var content = $('div[data-role=content]');
+		var navPanel = $('div#nav-panel');
+		var pagePanel = $('div#page-panel');
+
+		app.template.append("div[data-role=content]", "app-loader-bubble");
+
+		var promise = app.rc.getJson("getPlugin", {
+			"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
+			"expandConfigs" : true
+		}, true);
+
+		promise.done(function(resultObject) {
+			content.append(app.ni.element.h1({
+				"text" : app.lang.string("headline", "page.create_backup_2_inputAuth"),
+				"styles" : {
+					"clear" : "both"
+				}
+			}));
+
+			content.append(app.ni.element.p({
+				"text" : app.lang.string("description", "page.create_backup_2_inputAuth")
+			}));
+
+			var form = app.ni.form.form({
+				"id" : "frmCreateSource",
+				"attributes" : {
+					"action" : "#",
+					"data-ajax" : "false"
+				}
+			});
+
+			form.append(app.ni.text.text({
+				"id" : "txtName",
+				"name" : "title",
+				"placeholder" : app.lang.string("title", "labels"),
+				"label" : true,
+				"labelText" : app.lang.string("title", "labels"),
+				"container" : true,
+				"attributes" : {
+					"value" : app.lang.string("new authentication", "page.create_backup") + ": " + app.store.localStorage.get("data-html5-pluginId")
+				}
+			}));
+			if (resultObject.authDataDescription != undefined) {
+				$.each(resultObject.authDataDescription.requiredInputs, function(key, value) {
+					form.append(app.bmu.print.formElement(value, resultObject.pluginId));
+				});
+			}
+
+			form.append(app.ni.button.button({
+				"id" : "btnAuthenticate",
+				"name" : "btnAuthenticate",
+				"placeholder" : app.lang.string("create_authdata", "labels"),
+				"label" : false,
+				"labelText" : app.lang.string("create_authdata", "labels"),
+				"container" : false,
+				"value" : app.lang.string("create_authdata", "actions")
+			}));
+
+			content.append(form);
+			$(".app-loader").remove();
+			app.help.jQM.enhance(content);
+		});
+
+		promise.fail(function(resultObject) {
+			alert("ws error");
+		});
 	},
 
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
+
+		$(page_create_backup_2_inputAuth.config.pageId).on("click", "#btnAuthenticate", function(event) {
+			app.template.append("div[data-role=content]", "app-loader-bubble");
+			var formObject = app.help.form.serialize($("#frmCreateSource")), promise;
+			// alert(JSON.stringify(formObject));
+			delete formObject.btnAuthenticate;
+			delete formObject.title;
+
+			promise = app.rc.getJson("createAuthdata", {
+				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
+				"name" : container.find("#txtName").val(),
+				"properties" : formObject
+			}, true);
+
+			promise.done(function(resultObject) {
+				// alert(JSON.stringify(resultObject));
+				// app.store.localStorage.set("data-html5-themis-source-profileid",
+				// );
+				app.store.localStorage.set("data-html5-authdataId", resultObject.id);
+				app.store.localStorage.set("data-html5-authdataName", resultObject.name);
+				$(".app-loader").remove();
+				app.help.navigation.redirect("create_backup_2_newSink.html", "slide");
+			});
+
+			promise.fail(function() {
+				alert(" WS Error...geht ned")
+			});
+		});
 
 	},
 

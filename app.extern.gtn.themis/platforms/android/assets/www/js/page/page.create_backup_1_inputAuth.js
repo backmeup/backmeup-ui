@@ -23,13 +23,15 @@ var page_create_backup_1_inputAuth = {
 		}, true);
 
 		promise.done(function(resultObject) {
-			// alert(JSON.stringify(resultObject));
-			// datasources
 			content.append(app.ni.element.h1({
-				"text" : app.lang.string("new_authdata", "headlines"),
+				"text" : app.lang.string("headline", "page.create_backup_1_inputAuth"),
 				"styles" : {
 					"clear" : "both"
 				}
+			}));
+
+			content.append(app.ni.element.p({
+				"text" : app.lang.string("description", "page.create_backup_1_inputAuth")
 			}));
 
 			var form = app.ni.form.form({
@@ -44,9 +46,12 @@ var page_create_backup_1_inputAuth = {
 				"id" : "txtName",
 				"name" : "title",
 				"placeholder" : app.lang.string("title", "labels"),
-				"label" : false,
+				"label" : true,
 				"labelText" : app.lang.string("title", "labels"),
-				"container" : false
+				"container" : true,
+				"attributes" : {
+					"value" : app.lang.string("new authentication", "page.create_backup") + ": " + app.store.localStorage.get("data-html5-pluginId")
+				}
 			}));
 			if (resultObject.authDataDescription != undefined) {
 				$.each(resultObject.authDataDescription.requiredInputs, function(key, value) {
@@ -84,8 +89,8 @@ var page_create_backup_1_inputAuth = {
 			var formObject = app.help.form.serialize($("#frmCreateSource")), promise;
 			delete formObject.btnAuthenticate;
 			delete formObject.title;
-			alert(JSON.stringify(formObject));
-			
+			//alert(JSON.stringify(formObject));
+
 			promise = app.rc.getJson("createAuthdata", {
 				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
 				"name" : container.find("#txtName").val(),
@@ -93,10 +98,13 @@ var page_create_backup_1_inputAuth = {
 			}, true);
 
 			promise.done(function(resultObject) {
-				alert(JSON.stringify(resultObject));
-				app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
+				//alert(JSON.stringify(resultObject));
+				// app.store.localStorage.set("data-html5-themis-source-profileid",
+				// );
+				app.store.localStorage.set("data-html5-authdataId", resultObject.id);
+				app.store.localStorage.set("data-html5-authdataName", resultObject.name);
 				$(".app-loader").remove();
-				app.help.navigation.redirect("create_backup_2.html");
+				app.help.navigation.redirect("create_backup_1_newSource.html", "slide");
 			});
 
 			promise.fail(function() {

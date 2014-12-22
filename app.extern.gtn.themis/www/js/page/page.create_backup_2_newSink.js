@@ -114,10 +114,10 @@ var page_create_backup_2_newSink = {
 					promise = app.rc.getJson("createSinkProfile", {
 						"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
 						"title" : container.find("#txtTitle").val(),
-						/*
+
 						"authData" : {
 							"id" : app.store.localStorage.get("data-html5-authdataId")
-						},*/
+						},
 						"properties" : formObject,
 						"options" : [ "" ]
 					}, true);
@@ -132,10 +132,10 @@ var page_create_backup_2_newSink = {
 				}
 
 				promise.done(function(resultObject) {
-					//alert(JSON.stringify(resultObject));
+					// alert(JSON.stringify(resultObject));
 					app.store.localStorage.set("data-html5-themis-sink-profileid", resultObject.profileId);
 					$(".app-loader").remove();
-					app.help.navigation.redirect("create_backup_3.html");
+					app.help.navigation.redirect("create_backup_3.html", "slide");
 				});
 
 				promise.fail(function() {
@@ -159,8 +159,7 @@ var page_create_backup_2_newSink = {
 				 * app.help.navigation.redirect("create_backup_3.html"); });
 				 * 
 				 * promise.fail(function(error) { alert("webservice error: " +
-				 * error); });
-				 *  } else if (configType == "oauth") {
+				 * error); }); } else if (configType == "oauth") {
 				 * 
 				 * var promise = app.rc.getJson("createSourceProfile", {
 				 * "pluginId" :

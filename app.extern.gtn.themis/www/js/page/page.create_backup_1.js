@@ -104,6 +104,7 @@ var page_create_backup_1 = {
 						// alert(JSON.stringify(resultObject));
 
 						authDataList = app.ni.element.ul({
+							"attributes" : {
 								"data-role" : "listview",
 								"data-inset" : "true"
 							}

@@ -104,7 +104,6 @@ var page_create_backup_1 = {
 						// alert(JSON.stringify(resultObject));
 
 						authDataList = app.ni.element.ul({
-							"attributes" : {
 								"data-role" : "listview",
 								"data-inset" : "true"
 							}
@@ -133,7 +132,7 @@ var page_create_backup_1 = {
 											var url = callerElement.attr("data-html5-oAuthUrl").replace(
 													"http://themis-dev01.backmeup.at/page/create_backup_1_newSource.html",
 													plugin_Backmeup.config.themis_url + plugin_Backmeup.config.themis_oauth_redirect_source);
-											alert(url);
+											//alert(url);
 											var promise = null;
 											// alert(url);
 											promise = app.oa.generic(url);

@@ -18,8 +18,10 @@ var page_create_backup_1_oAuthFinished = {
 		if (app.detect.isDesktop()) {
 			switch (app.store.localStorage.get("data-html5-pluginId")) {
 			case 'org.backmeup.facebook':
-				if (!app.oa.tokenFromUrl(plugin_OAuth.config.facebook.error_name))
+				if (!app.oa.tokenFromUrl(plugin_OAuth.config.facebook.error_name)) {
 					app.store.localStorage.set("data-html5-oAuthToken", app.oa.tokenFromUrl(plugin_OAuth.config.facebook.token_name));
+					app.store.localStorage.set("data-html5-oAuthCode", app.oa.tokenFromUrl(plugin_OAuth.config.facebook.token_name));
+				}
 				break;
 			case 'org.backmeup.dropbox':
 				if (!app.oa.tokenFromUrl(plugin_OAuth.config.dropbox.error_name)) {
@@ -31,7 +33,8 @@ var page_create_backup_1_oAuthFinished = {
 				break;
 			}
 		}
-		//alert("oauth token: " + app.store.localStorage.get("data-html5-oAuthToken"));
+		// alert("oauth token: " +
+		// app.store.localStorage.get("data-html5-oAuthToken"));
 
 		content.append(app.ni.element.h1({
 			"text" : app.lang.string("headline", "page.create_backup_1_oAuthFinished"),
@@ -75,7 +78,8 @@ var page_create_backup_1_oAuthFinished = {
 				"name" : $("#txtName").val(),
 				"properties" : {
 					"token" : app.store.localStorage.get("data-html5-oAuthToken"),
-					"secret" : ""
+					"secret" : "",
+					"code" : app.store.localStorage.get("data-html5-oAuthCode")
 				}
 			}, true);
 

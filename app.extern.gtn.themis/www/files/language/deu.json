@@ -54,6 +54,8 @@
 		"continue":"Weiter"
 	},
 	"labels":{
+		"authdata_name":"Name",
+		"create_authdata":"Authentifizierung speichern",
 		"title":"Titel",
 		"create_backup":"Backupjob erstellen",
 		"create_source":"Datenquelle erstellen",

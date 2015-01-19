@@ -264,5 +264,10 @@
 	{
 		"headline":"Backup abschließen",
 		"description":"Einstellungen für das Backup."
+	},
+	"page.search":
+	{
+		"jobName":"Backupjob",
+		"timeStamp":"Datum"
 	}
 }

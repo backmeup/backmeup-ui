@@ -109,6 +109,7 @@ var page_create_backup_2_newSink = {
 			$(page_create_backup_2_newSink.config.pageId).on("click", "#btnCreate", function() {
 
 				var formObject = app.help.form.serialize($("#frmCreateSink")), promise;
+				delete formObject.btnCreate;
 
 				if (app.store.localStorage.get("data-html5-authRequired")) {
 					promise = app.rc.getJson("createSinkProfile", {

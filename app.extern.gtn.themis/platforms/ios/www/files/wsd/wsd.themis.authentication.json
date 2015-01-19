@@ -7,6 +7,6 @@
 	"authenticate":{
 		"url":"/backmeup-service-rest/authenticate?username={username}&password={password}",
 		"method":"get",
-		"timeout":"3000"
+		"timeout":"7000"
 	}
 }

@@ -139,9 +139,9 @@ var page_create_backup_1 = {
 											// app.store.localStorage.set("data-html5-themis-pluginid",
 											// $(this).attr("data-html5-pluginId"));
 
-											promise.done(function(accessToken) {
-												// alert(accessToken);
-												app.store.localStorage.set("data-html5-oAuthToken", accessToken);
+											promise.done(function(oAuthQuery) {
+												//alert(oAuthQuery);
+												app.store.localStorage.set("data-html5-oAuthQuery", oAuthQuery);
 												app.help.navigation.redirect("create_backup_1_oAuthFinished.html", "slide");
 
 											});

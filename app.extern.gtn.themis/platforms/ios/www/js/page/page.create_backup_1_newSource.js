@@ -60,7 +60,7 @@ var page_create_backup_1_newSource = {
 			});
 
 			form.append(app.ni.text.text({
-				"id" : "#txtTitle",
+				"id" : "txtTitle",
 				"name" : "title",
 				"placeholder" : app.lang.string("title", "labels"),
 				"label" : true,
@@ -104,6 +104,7 @@ var page_create_backup_1_newSource = {
 			app.template.append("div[data-role=content]", "app-loader-bubble");
 
 			var formObject = app.help.form.serialize($("#frmCreateSource")), promise;
+			delete formObject.btnCreate;
 
 			if (app.store.localStorage.get("data-html5-authRequired")) {
 				promise = app.rc.getJson("createSourceProfile", {
@@ -129,7 +130,7 @@ var page_create_backup_1_newSource = {
 				// alert(JSON.stringify(resultObject));
 				app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
 				$(".app-loader").remove();
-				app.help.navigation.redirect("create_backup_2.html");
+				app.help.navigation.redirect("create_backup_2.html", "slide");
 			});
 
 			promise.fail(function() {

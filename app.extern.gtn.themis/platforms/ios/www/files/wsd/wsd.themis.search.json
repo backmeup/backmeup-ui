@@ -8,6 +8,6 @@
 	"search":{
         "url":"/backmeup-service-rest/search?query={query}",
         "method":"get",
-        "timeout":"10000"
+        "timeout":"12000"
 	}
 }

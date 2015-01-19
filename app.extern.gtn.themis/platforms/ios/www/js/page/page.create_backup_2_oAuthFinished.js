@@ -16,17 +16,7 @@ var page_create_backup_2_oAuthFinished = {
 		var pagePanel = $('div#page-panel');
 
 		if (app.detect.isDesktop()) {
-			var url = window.location.href;
-			var error = /\?error=(.+)$/.exec(url);
-			var access_token = /\?oauth_token=(.+)$/.exec(url);
-			if (access_token) {
-				var access_token = (access_token + "").split("=");
-				access_token = access_token[1] + "";
-				access_token = access_token.split("&");
-				app.store.localStorage.set("data-html5-oAuthToken", access_token[0]);
-			} else if (error) {
-				alert("oauth error" + error);
-			}
+			app.store.localStorage.set("data-html5-oAuthQuery", window.location.href.split('?')[1]);
 		}
 		//alert("oauth token: " + app.store.localStorage.get("data-html5-oAuthToken"));
 
@@ -71,7 +61,9 @@ var page_create_backup_2_oAuthFinished = {
 			var promise = app.rc.getJson("createAuthdata", {
 				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
 				"name" : $("#txtName").val(),
-				"properties" : {}
+				"properties" : {
+					"oAuthQuery" : app.store.localStorage.get("data-html5-oAuthQuery")
+				}
 			}, true);
 
 			promise.done(function(resultObject) {

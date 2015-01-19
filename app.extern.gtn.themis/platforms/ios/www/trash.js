@@ -1,74 +1,90 @@
 var fasdf = {
-	"pluginId" : "org.backmeup.filegenerator",
-	"title" : "Backmeup File Generator Plugin",
-	"description" : "A plugin for testing purposes that generates files",
-	"imageURL" : "https://backmeup.at/dummy.png",
-	"pluginType" : "Source",
-	"metadata" : {
-		"META_BACKUP_FREQUENCY" : "daily"
-	},
-	"propertiesDescription" : [ {
-		"name" : "text",
-		"label" : "text",
-		"description" : "Generate plain text files",
-		"required" : true,
-		"order" : 0,
-		"type" : "Bool"
+	"files" : [ {
+		"fileId" : "27:936bbc094ab3eafc2ba634952e466a8c:1421671283421",
+		"timeStamp" : 1421671283421,
+		"title" : "file0.txt",
+		"type" : "text",
+		"datasource" : "undefined (378)",
+		"jobName" : "Test BU"
 	}, {
-		"name" : "text.paragraphs",
-		"label" : "text.paragraphs",
-		"description" : "Amout of paragraph in the text file",
-		"required" : false,
-		"order" : 1,
-		"type" : "Number"
+		"fileId" : "27:8e8f2088f400f7798726b3ef9ed192e2:1421671283421",
+		"timeStamp" : 1421671283421,
+		"title" : "file2.pdf",
+		"type" : "text",
+		"datasource" : "undefined (378)",
+		"jobName" : "Test BU"
 	}, {
-		"name" : "image",
-		"label" : "image",
-		"description" : "Generate image files",
-		"required" : true,
-		"order" : 2,
-		"type" : "Bool"
+		"fileId" : "27:32fdd2ec26fb35920807034f4cbe05dc:1421671283421",
+		"timeStamp" : 1421671283421,
+		"title" : "file6.pdf",
+		"type" : "text",
+		"datasource" : "undefined (378)",
+		"jobName" : "Test BU"
 	}, {
-		"name" : "image.size",
-		"label" : "image.size",
-		"description" : "Size (in pixel) of the generated image",
-		"required" : false,
-		"order" : 3,
-		"type" : "Number"
+		"fileId" : "27:936bbc094ab3eafc2ba634952e466a8c:1421671283421",
+		"timeStamp" : 1421671283421,
+		"title" : "file8.txt",
+		"type" : "text",
+		"datasource" : "undefined (378)",
+		"jobName" : "Test BU"
 	}, {
-		"name" : "pdf",
-		"label" : "pdf",
-		"description" : "Generate pdf documents",
-		"required" : true,
-		"order" : 4,
-		"type" : "Bool"
+		"fileId" : "27:936bbc094ab3eafc2ba634952e466a8c:1421671283421",
+		"timeStamp" : 1421671283421,
+		"title" : "file4.txt",
+		"type" : "text",
+		"datasource" : "undefined (378)",
+		"jobName" : "Test BU"
 	}, {
-		"name" : "pdf.paragraphs",
-		"label" : "pdf.paragraphs",
-		"description" : "Amout of paragraphs in the pdf document",
-		"required" : false,
-		"order" : 5,
-		"type" : "Number"
+		"fileId" : "27:936bbc094ab3eafc2ba634952e466a8c:1421671263232",
+		"timeStamp" : 1421671263232,
+		"title" : "file4.txt",
+		"type" : "text",
+		"datasource" : "undefined (378)",
+		"jobName" : "Test BU"
 	}, {
-		"name" : "binary",
-		"label" : "binary",
-		"description" : "Generate binary files",
-		"required" : true,
-		"order" : 6,
-		"type" : "Bool"
+		"fileId" : "27:391b4ecca2720197699936d3a3fef12f:1421671263232",
+		"timeStamp" : 1421671263232,
+		"title" : "file6.pdf",
+		"type" : "text",
+		"datasource" : "undefined (378)",
+		"jobName" : "Test BU"
 	}, {
-		"name" : "binary.size",
-		"label" : "binary.size",
-		"description" : "Size (in bytes) of the allocated file",
-		"required" : false,
-		"order" : 7,
-		"type" : "Number"
+		"fileId" : "27:936bbc094ab3eafc2ba634952e466a8c:1421671263232",
+		"timeStamp" : 1421671263232,
+		"title" : "file0.txt",
+		"type" : "text",
+		"datasource" : "undefined (378)",
+		"jobName" : "Test BU"
 	}, {
-		"name" : "generator.files",
-		"label" : "generator.files",
-		"description" : "Set the maximum number of files that should be generated",
-		"required" : false,
-		"order" : 8,
-		"type" : "Number"
-	} ]
+		"fileId" : "27:26f2ede435386cd6bde5343873387f7:1421671263232",
+		"timeStamp" : 1421671263232,
+		"title" : "file2.pdf",
+		"type" : "text",
+		"datasource" : "undefined (378)",
+		"jobName" : "Test BU"
+	}, {
+		"fileId" : "27:936bbc094ab3eafc2ba634952e466a8c:1421671263232",
+		"timeStamp" : 1421671263232,
+		"title" : "file8.txt",
+		"type" : "text",
+		"datasource" : "undefined (378)",
+		"jobName" : "Test BU"
+	} ],
+	"bySource" : [ {
+		"title" : "undefined (378)",
+		"count" : 10
+	} ],
+	"byType" : [ {
+		"title" : "text",
+		"count" : 10
+	} ],
+	"byJob" : [ {
+		"title" : "Test BU (1421671263232)",
+		"count" : 5
+	}, {
+		"title" : "Test BU (1421671283421)",
+		"count" : 5
+	} ],
+	"searchQuery" : "*",
+	"progress" : 0
 }

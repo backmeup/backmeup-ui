@@ -77,13 +77,11 @@ var page_create_backup_1_oAuthFinished = {
 			properties = {
 				"oAuthQuery" : app.store.localStorage.get("data-html5-oAuthQuery")
 			};
-			storedProperties = app.sess.getObject(app.store.localStorage.get("data-html5-pluginId"), "session_CreateSink");
+			storedProperties = app.sess.getObject(app.store.localStorage.get("data-html5-pluginId"), "session_CreateSource");
 
 			for ( var key in storedProperties) {
 				properties[key] = storedProperties[key];
 			}
-
-			alert(JSON.stringify(properties));
 
 			promise = app.rc.getJson("createAuthdata", {
 				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),

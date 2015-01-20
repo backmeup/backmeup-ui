@@ -1,90 +1,17 @@
 var fasdf = {
-	"files" : [ {
-		"fileId" : "27:936bbc094ab3eafc2ba634952e466a8c:1421671283421",
-		"timeStamp" : 1421671283421,
-		"title" : "file0.txt",
-		"type" : "text",
-		"datasource" : "undefined (378)",
-		"jobName" : "Test BU"
-	}, {
-		"fileId" : "27:8e8f2088f400f7798726b3ef9ed192e2:1421671283421",
-		"timeStamp" : 1421671283421,
-		"title" : "file2.pdf",
-		"type" : "text",
-		"datasource" : "undefined (378)",
-		"jobName" : "Test BU"
-	}, {
-		"fileId" : "27:32fdd2ec26fb35920807034f4cbe05dc:1421671283421",
-		"timeStamp" : 1421671283421,
-		"title" : "file6.pdf",
-		"type" : "text",
-		"datasource" : "undefined (378)",
-		"jobName" : "Test BU"
-	}, {
-		"fileId" : "27:936bbc094ab3eafc2ba634952e466a8c:1421671283421",
-		"timeStamp" : 1421671283421,
-		"title" : "file8.txt",
-		"type" : "text",
-		"datasource" : "undefined (378)",
-		"jobName" : "Test BU"
-	}, {
-		"fileId" : "27:936bbc094ab3eafc2ba634952e466a8c:1421671283421",
-		"timeStamp" : 1421671283421,
-		"title" : "file4.txt",
-		"type" : "text",
-		"datasource" : "undefined (378)",
-		"jobName" : "Test BU"
-	}, {
-		"fileId" : "27:936bbc094ab3eafc2ba634952e466a8c:1421671263232",
-		"timeStamp" : 1421671263232,
-		"title" : "file4.txt",
-		"type" : "text",
-		"datasource" : "undefined (378)",
-		"jobName" : "Test BU"
-	}, {
-		"fileId" : "27:391b4ecca2720197699936d3a3fef12f:1421671263232",
-		"timeStamp" : 1421671263232,
-		"title" : "file6.pdf",
-		"type" : "text",
-		"datasource" : "undefined (378)",
-		"jobName" : "Test BU"
-	}, {
-		"fileId" : "27:936bbc094ab3eafc2ba634952e466a8c:1421671263232",
-		"timeStamp" : 1421671263232,
-		"title" : "file0.txt",
-		"type" : "text",
-		"datasource" : "undefined (378)",
-		"jobName" : "Test BU"
-	}, {
-		"fileId" : "27:26f2ede435386cd6bde5343873387f7:1421671263232",
-		"timeStamp" : 1421671263232,
-		"title" : "file2.pdf",
-		"type" : "text",
-		"datasource" : "undefined (378)",
-		"jobName" : "Test BU"
-	}, {
-		"fileId" : "27:936bbc094ab3eafc2ba634952e466a8c:1421671263232",
-		"timeStamp" : 1421671263232,
-		"title" : "file8.txt",
-		"type" : "text",
-		"datasource" : "undefined (378)",
-		"jobName" : "Test BU"
-	} ],
-	"bySource" : [ {
-		"title" : "undefined (378)",
-		"count" : 10
-	} ],
-	"byType" : [ {
-		"title" : "text",
-		"count" : 10
-	} ],
-	"byJob" : [ {
-		"title" : "Test BU (1421671263232)",
-		"count" : 5
-	}, {
-		"title" : "Test BU (1421671283421)",
-		"count" : 5
-	} ],
-	"searchQuery" : "*",
-	"progress" : 0
+	"pluginId" : "org.backmeup.facebook",
+	"title" : "BackMeUp Facebook Plug-In",
+	"description" : "A plug-in that is capable of downloading from facebook",
+	"imageURL" : "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-snc4/174597_20531316728_2866555_s.jpg",
+	"pluginType" : "Source",
+	"metadata" : {
+		"META_BACKUP_FREQUENCY" : "daily"
+	},
+	"authDataDescription" : {
+		"configType" : "oauth",
+		"redirectURL" : "https://www.facebook.com/dialog/oauth?client_id=508411825969983&redirect_uri=http://themis-dev01.backmeup.at/page/create_backup_1_oAuthFinished.html&scope=user_birthday,user_photos,read_stream,user_about_me,user_activities,user_education_history,user_events,user_groups,user_hometown,user_interests,user_likes,user_location,user_notes,user_questions,user_relationships,user_relationship_details,user_religion_politics,user_status,user_subscriptions,user_videos,user_website,user_work_history,email,read_friendlists,friends_photos, friends_about_me, friends_activities, friends_birthday, friends_education_history, friends_hometown, friends_interests, friends_likes, friends_location, friends_relationships, friends_religion_politics, friends_website, friends_work_history, manage_pages",
+		"properties" : {
+			"fbcallback" : "http://themis-dev01.backmeup.at/page/create_backup_1_oAuthFinished.html"
+		}
+	}
 }

@@ -16,7 +16,7 @@ var page_create_backup_2_oAuthFinished = {
 		var pagePanel = $('div#page-panel');
 
 		if (app.detect.isDesktop()) {
-			app.store.localStorage.set("data-html5-oAuthQuery", window.location.href.split('?')[1]);
+			app.store.localStorage.set("data-html5-oAuthQuery", window.location.href.split('?')[1].split('&')[0]);
 		}
 		//alert("oauth token: " + app.store.localStorage.get("data-html5-oAuthToken"));
 

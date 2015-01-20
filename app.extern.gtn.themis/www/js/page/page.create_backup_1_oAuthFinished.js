@@ -18,22 +18,20 @@ var page_create_backup_1_oAuthFinished = {
 		if (app.detect.isDesktop()) {
 			app.store.localStorage.set("data-html5-oAuthQuery", window.location.href.split('?')[1]);
 			/*
-			switch (app.store.localStorage.get("data-html5-pluginId")) {
-			case 'org.backmeup.facebook':
-				if (!app.oa.tokenFromUrl(plugin_OAuth.config.facebook.error_name)) {
-					app.store.localStorage.set("data-html5-oAuthToken", app.oa.tokenFromUrl(plugin_OAuth.config.facebook.token_name));
-					app.store.localStorage.set("data-html5-oAuthCode", app.oa.tokenFromUrl(plugin_OAuth.config.facebook.token_name));
-				}
-				break;
-			case 'org.backmeup.dropbox':
-				if (!app.oa.tokenFromUrl(plugin_OAuth.config.dropbox.error_name)) {
-					app.store.localStorage.set("data-html5-oAuthToken", app.oa.tokenFromUrl(plugin_OAuth.config.dropbox.token_name));
-				}
-				break;
-			default:
-				alert("oauth not defined: " + app.store.localStorage.get("data-html5-pluginId"));
-				break;
-			}*/
+			 * switch (app.store.localStorage.get("data-html5-pluginId")) { case
+			 * 'org.backmeup.facebook': if
+			 * (!app.oa.tokenFromUrl(plugin_OAuth.config.facebook.error_name)) {
+			 * app.store.localStorage.set("data-html5-oAuthToken",
+			 * app.oa.tokenFromUrl(plugin_OAuth.config.facebook.token_name));
+			 * app.store.localStorage.set("data-html5-oAuthCode",
+			 * app.oa.tokenFromUrl(plugin_OAuth.config.facebook.token_name)); }
+			 * break; case 'org.backmeup.dropbox': if
+			 * (!app.oa.tokenFromUrl(plugin_OAuth.config.dropbox.error_name)) {
+			 * app.store.localStorage.set("data-html5-oAuthToken",
+			 * app.oa.tokenFromUrl(plugin_OAuth.config.dropbox.token_name)); }
+			 * break; default: alert("oauth not defined: " +
+			 * app.store.localStorage.get("data-html5-pluginId")); break; }
+			 */
 		}
 		// alert("oauth token: " +
 		// app.store.localStorage.get("data-html5-oAuthToken"));
@@ -75,12 +73,18 @@ var page_create_backup_1_oAuthFinished = {
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 		$(page_create_backup_1_oAuthFinished.config.pageId).on("click", "#btnCreateAuthData", function(event) {
-			var promise = app.rc.getJson("createAuthdata", {
+			var properties, storedProperties, promise;
+			properties = {
+				"oAuthQuery" : app.store.localStorage.get("data-html5-oAuthQuery")
+			};
+			storedProperties = app.sess.getObject(app.store.localStorage.get("data-html5-pluginId"), "session_CreateSink");
+			for ( var key in storedProperties) {
+				properties[key] = storedProperties[key];
+			}
+			promise = app.rc.getJson("createAuthdata", {
 				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
 				"name" : $("#txtName").val(),
-				"properties" : {
-					"oAuthQuery" : app.store.localStorage.get("data-html5-oAuthQuery")
-				}
+				"properties" : properties
 			}, true);
 
 			promise.done(function(resultObject) {

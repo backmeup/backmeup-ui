@@ -16,7 +16,7 @@ var page_create_backup_1_oAuthFinished = {
 		var pagePanel = $('div#page-panel');
 
 		if (app.detect.isDesktop()) {
-			app.store.localStorage.set("data-html5-oAuthQuery", window.location.href.split('?')[1]);
+			app.store.localStorage.set("data-html5-oAuthQuery", window.location.href.split('?')[1].split('&')[1]);
 			/*
 			 * switch (app.store.localStorage.get("data-html5-pluginId")) { case
 			 * 'org.backmeup.facebook': if
@@ -78,9 +78,13 @@ var page_create_backup_1_oAuthFinished = {
 				"oAuthQuery" : app.store.localStorage.get("data-html5-oAuthQuery")
 			};
 			storedProperties = app.sess.getObject(app.store.localStorage.get("data-html5-pluginId"), "session_CreateSink");
+
 			for ( var key in storedProperties) {
 				properties[key] = storedProperties[key];
 			}
+
+			alert(JSON.stringify(properties));
+
 			promise = app.rc.getJson("createAuthdata", {
 				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
 				"name" : $("#txtName").val(),

@@ -16,21 +16,10 @@ var page_create_backup_1_oAuthFinished = {
 		var pagePanel = $('div#page-panel');
 
 		if (app.detect.isDesktop()) {
-			switch (app.store.localStorage.get("data-html5-pluginId")) {
-			case 'org.backmeup.facebook':
-				if (!app.oa.tokenFromUrl(plugin_OAuth.config.facebook.error_name)) {
-					app.store.localStorage.set("data-html5-oAuthToken", app.oa.tokenFromUrl(plugin_OAuth.config.facebook.token_name));
-					app.store.localStorage.set("data-html5-oAuthCode", app.oa.tokenFromUrl(plugin_OAuth.config.facebook.token_name));
-				}
-				break;
-			case 'org.backmeup.dropbox':
-				if (!app.oa.tokenFromUrl(plugin_OAuth.config.dropbox.error_name)) {
-					app.store.localStorage.set("data-html5-oAuthToken", app.oa.tokenFromUrl(plugin_OAuth.config.dropbox.token_name));
-				}
-				break;
-			default:
-				alert("oauth not defined: " + app.store.localStorage.get("data-html5-pluginId"));
-				break;
+			try {
+				app.store.localStorage.set("data-html5-oAuthQuery", window.location.href.split('?')[1].split('&')[0]);
+			} catch (e) {
+				app.store.localStorage.set("data-html5-oAuthQuery", "");
 			}
 		}
 		// alert("oauth token: " +
@@ -73,14 +62,20 @@ var page_create_backup_1_oAuthFinished = {
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 		$(page_create_backup_1_oAuthFinished.config.pageId).on("click", "#btnCreateAuthData", function(event) {
-			var promise = app.rc.getJson("createAuthdata", {
+			var properties, storedProperties, promise;
+			properties = {
+				"oAuthQuery" : app.store.localStorage.get("data-html5-oAuthQuery")
+			};
+			storedProperties = app.sess.getObject(app.store.localStorage.get("data-html5-pluginId"), "session_CreateSource");
+
+			for ( var key in storedProperties) {
+				properties[key] = storedProperties[key];
+			}
+
+			promise = app.rc.getJson("createAuthdata", {
 				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
 				"name" : $("#txtName").val(),
-				"properties" : {
-					"token" : app.store.localStorage.get("data-html5-oAuthToken"),
-					"secret" : "",
-					"code" : app.store.localStorage.get("data-html5-oAuthCode")
-				}
+				"properties" : properties
 			}, true);
 
 			promise.done(function(resultObject) {

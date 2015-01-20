@@ -37,19 +37,22 @@ var page_create_backup_1 = {
 			// alert(JSON.stringify(resultObject));
 			var list = $(app.template.get("listA", "responsive"));
 			$.each(resultObject, function(index, pluginJson) {
-				// alert(JSON.stringify(pluginJson));
+				// alert(JSON.stringify(pluginJson.authDataDescription.properties));
 				var authRequired = null, authType = null, pluginId = pluginJson.pluginId, redirectUrl = null;
 				// configuration type
 				if (pluginJson.authDataDescription != undefined) {
 					// needs to authenticate
 					authRequired = true;
 					authType = pluginJson.authDataDescription.configType;
-					if (authType == "oauth")
+					if (authType == "oauth") {
 						redirectUrl = pluginJson.authDataDescription.redirectURL;
-					// alert(redirectUrl);
+						// alert(redirectUrl);
+						app.sess.setObject(pluginId, pluginJson.authDataDescription.properties, "session_CreateSource");
+					}
 				} else {
 					authRequired = false;
 				}
+
 				list.append(app.ni.list.thumbnail({
 					href : "#",
 					imageSrc : app.img.getUrlById(pluginId + "Large"),
@@ -131,7 +134,7 @@ var page_create_backup_1 = {
 										switch (callerElement.attr("data-html5-authType")) {
 										case 'oauth':
 											var url = callerElement.attr("data-html5-oAuthUrl");
-											//alert(url);
+											// alert(url);
 											var promise = null;
 											// alert(url);
 											promise = app.oa.generic(url);
@@ -140,7 +143,7 @@ var page_create_backup_1 = {
 											// $(this).attr("data-html5-pluginId"));
 
 											promise.done(function(oAuthQuery) {
-												//alert(oAuthQuery);
+												// alert(oAuthQuery);
 												app.store.localStorage.set("data-html5-oAuthQuery", oAuthQuery);
 												app.help.navigation.redirect("create_backup_1_oAuthFinished.html", "slide");
 

@@ -16,9 +16,14 @@ var page_create_backup_2_oAuthFinished = {
 		var pagePanel = $('div#page-panel');
 
 		if (app.detect.isDesktop()) {
-			app.store.localStorage.set("data-html5-oAuthQuery", window.location.href.split('?')[1]);
+			try {
+				app.store.localStorage.set("data-html5-oAuthQuery", window.location.href.split('?')[1].split('&')[0]);
+			} catch (e) {
+				app.store.localStorage.set("data-html5-oAuthQuery", "");
+			}
 		}
-		//alert("oauth token: " + app.store.localStorage.get("data-html5-oAuthToken"));
+		// alert("oauth token: " +
+		// app.store.localStorage.get("data-html5-oAuthToken"));
 
 		content.append(app.ni.element.h1({
 			"text" : app.lang.string("headline", "page.create_backup_2_oAuthFinished"),
@@ -58,7 +63,17 @@ var page_create_backup_2_oAuthFinished = {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 
 		$(page_create_backup_2_oAuthFinished.config.pageId).on("click", "#btnCreateAuthData", function(event) {
-			var promise = app.rc.getJson("createAuthdata", {
+			var properties, storedProperties, promise;
+			properties = {
+				"oAuthQuery" : app.store.localStorage.get("data-html5-oAuthQuery")
+			};
+			storedProperties = app.sess.getObject(app.store.localStorage.get("data-html5-pluginId"), "session_CreateSink");
+
+			for ( var key in storedProperties) {
+				properties[key] = storedProperties[key];
+			}
+
+			promise = app.rc.getJson("createAuthdata", {
 				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
 				"name" : $("#txtName").val(),
 				"properties" : {
@@ -67,7 +82,7 @@ var page_create_backup_2_oAuthFinished = {
 			}, true);
 
 			promise.done(function(resultObject) {
-				//alert(JSON.stringify(resultObject));
+				// alert(JSON.stringify(resultObject));
 				app.store.localStorage.set("data-html5-authdataId", resultObject.id);
 				app.help.navigation.redirect("create_backup_2_newSink.html");
 			});

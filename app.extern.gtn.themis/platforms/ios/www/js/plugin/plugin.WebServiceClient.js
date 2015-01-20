@@ -103,27 +103,27 @@ var plugin_WebServiceClient = {
 			} else if (dataType.toLowerCase() == "json") {
 				app.debug.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax() - case: contentType = application/json; charset=utf-8", 60);
 				app.debug.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax() - create json object", 60);
-				var obj = {};
-				var pairs = data.split('&');
+				var obj = {}, pairs = data.split('&');
 				for (i in pairs) {
 					var indexOfEquals = pairs[i].indexOf('='), paramKey, paramValue;
 					paramKey = pairs[i].substring(0, indexOfEquals);
 					paramValue = pairs[i].substring(indexOfEquals + 1);
-					//var split = pairs[i].split('=');
-					//alert(paramKey);
-					//alert(paramValue);
+					// var split = pairs[i].split('=');
+					// alert(paramKey);
+					// alert(paramValue);
 					if (paramValue.substr(0, 1) == "{" || paramValue.substr(0, 1) == "[") {
 						try {
 							app.debug.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax() - map json/array object: key = " + paramKey, 20);
-							app.debug.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax() - map json/array object: value = " + paramValue, 20);
+							app.debug
+									.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax() - map json/array object: value = " + paramValue, 20);
 							paramValue = JSON.parse(paramValue);
 							obj[paramKey] = paramValue;
 						} catch (e) {
 							app.debug.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax() - Ein parameter ist nicht gesetzt: " + paramKey, 9);
 						}
 					} else {
-						app.debug
-								.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax() - set to json object: " + paramKey + "=" + paramValue, 20);
+						app.debug.alert("plugin.WebServiceClient.js ~ plugin_WebServiceClient.getAjax() - set to json object: " + paramKey + "=" + paramValue,
+								20);
 						obj[paramKey] = paramValue;
 					}
 

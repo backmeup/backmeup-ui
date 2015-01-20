@@ -43,8 +43,10 @@ var page_create_backup_2 = {
 					// needs to authenticate
 					authRequired = true;
 					authType = pluginJson.authDataDescription.configType;
-					if (authType == "oauth")
+					if (authType == "oauth") {
 						redirectUrl = pluginJson.authDataDescription.redirectURL;
+						app.sess.setObject(pluginId, pluginJson.authDataDescription.properties, "session_CreateSink");
+					}
 				} else {
 					authRequired = false;
 				}

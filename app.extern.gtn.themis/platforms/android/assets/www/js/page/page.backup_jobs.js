@@ -31,7 +31,7 @@ var page_backup_jobs = {
 				"expand" : "true"
 			} ], [ "getQueuedBackupjobs", {
 				"expand" : "true"
-			} ] ], true);
+			} ] ], true, 3);
 
 			promise
 					.done(function(resultObject) {

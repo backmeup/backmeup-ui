@@ -56,9 +56,9 @@ var page_login = {
 		/*
 		 * content.append(app.ni.checkbox({ "id" : "cbxSaveCedentials" }));
 		 */
-		form.append(app.ni.element.a({
+		form.append(app.ni.button.submit({
 			"id" : "btnLogin",
-			"text" : app.lang.string("login", "actions"),
+			"value" : app.lang.string("login", "actions"),
 			"classes" : [ 'ui-btn' ],
 			"attributes" : {
 				"href" : "#"
@@ -96,10 +96,11 @@ var page_login = {
 	setEvents : function(container) {
 
 		$(page_login.config.pageId).on(
-				"click",
-				"#btnLogin",
+				"submit",
+				"#frmLogin",
 				function(event) {
 					app.debug.alert("page_" + page_register.config.name + " #btnRegister click", 25);
+					event.preventDefault();
 					if (!app.help.validate.username(container.find("#txtUsername").val())) {
 						app.notify.alert(app.lang.string("bad_username", "notifications"), false, app.lang.string("login", "headlines"), app.lang.string("ok",
 								"actions"))

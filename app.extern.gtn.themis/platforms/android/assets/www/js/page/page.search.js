@@ -84,7 +84,7 @@ var page_search = {
 			app.store.localStorage.set("data-html5-themis-search-value", $("#txtSearch").val());
 			page_search.updateSearchDiv($("#divSearchResults"));
 		});
-		
+
 		$(this.config.pageId).on("click", "#btnSearch", function(event) {
 			app.store.localStorage.set("data-html5-themis-search-value", $("#txtSearch").val());
 			page_search.updateSearchDiv($("#divSearchResults"));
@@ -99,7 +99,8 @@ var page_search = {
 		app.template.append("div[data-role=content]", "app-loader-bubble");
 
 		var promise = app.rc.getJson("search", {
-			//"userId" : 8,// app.store.localStorage.get("data-html5-themis-username"),
+			// "userId" : 8,//
+			// app.store.localStorage.get("data-html5-themis-username"),
 			"query" : app.store.localStorage.get("data-html5-themis-search-value")
 		}, true);
 
@@ -107,107 +108,46 @@ var page_search = {
 			app.notify.alert(app.lang.string("search_error", "texts"), false, app.lang.string("search", "headlines"), app.lang.string("ok", "actions"));
 		});
 
-		promise
-				.done(function(resultObject) {
+		promise.done(function(resultObject) {
 
-					var list = $(app.template.get("listB", "responsive"));
-					var searchElement = app.ni.element.li();
-					searchElement.append(app.ni.element.img({
-						"attributes" : {
-							"src" : "test.jpg"
-						}
-					}));
-					var textContainer = app.ni.element.div();
-					textContainer.append(app.ni.element.h2({
-						"classes" : [ 'list-B-headline' ],
-						"text" : "Pearl ist eine freie..."
-					}));
-					textContainer
-							.append(app.ni.element
-									.p({
-										"classes" : [ 'list-B-text' ],
-										"text" : "plattform­unabhängige und inter­pretierte Programmier­sprache (Skript­sprache), die mehrere Programmier­paradigmen unter­stützt. Der Linguist Larry Wall entwarf sie 1987 als Synthese aus C, awk, den Unix-­Befehlen und anderen Einflüssen. Ursprüng­lich als Werkzeug zur Verar­beitung und Manipu­lation von Textdateien insbesondere bei System- und Netzwerk­administration vorgesehen (zum Beispiel Auswertung von Logdateien), hat Perl auch ..."
-									}));
-					textContainer.append(app.ni.element.p({
-						"classes" : [ 'list-B-status' ],
-						"text" : "Statuszeile mit links"
-					}));
-					searchElement.append(textContainer);
-					list.append(searchElement);
-					// ----
-					var searchElement = app.ni.element.li();
-					searchElement.append(app.ni.element.img({
-						"attributes" : {
-							"src" : "test.jpg"
-						}
-					}));
-					var textContainer = app.ni.element.div();
-					textContainer.append(app.ni.element.h2({
-						"classes" : [ 'list-B-headline' ],
-						"text" : "Pearl ist eine freie..."
-					}));
-					textContainer
-							.append(app.ni.element
-									.p({
-										"classes" : [ 'list-B-text' ],
-										"text" : "plattform­unabhängige und inter­pretierte Programmier­sprache (Skript­sprache), die mehrere Programmier­paradigmen unter­stützt. Der Linguist Larry Wall entwarf sie 1987 als Synthese aus C, awk, den Unix-­Befehlen und anderen Einflüssen. Ursprüng­lich als Werkzeug zur Verar­beitung und Manipu­lation von Textdateien insbesondere bei System- und Netzwerk­administration vorgesehen (zum Beispiel Auswertung von Logdateien), hat Perl auch ..."
-									}));
-					textContainer.append(app.ni.element.p({
-						"classes" : [ 'list-B-status' ],
-						"text" : "Statuszeile mit links"
-					}));
-					searchElement.append(textContainer);
-					list.append(searchElement);
-					var searchElement = app.ni.element.li();
-					searchElement.append(app.ni.element.img({
-						"attributes" : {
-							"src" : "test.jpg"
-						}
-					}));
-					var textContainer = app.ni.element.div();
-					textContainer.append(app.ni.element.h2({
-						"classes" : [ 'list-B-headline' ],
-						"text" : "Pearl ist eine freie..."
-					}));
-					textContainer
-							.append(app.ni.element
-									.p({
-										"classes" : [ 'list-B-text' ],
-										"text" : "plattform­unabhängige und inter­pretierte Programmier­sprache (Skript­sprache), die mehrere Programmier­paradigmen unter­stützt. Der Linguist Larry Wall entwarf sie 1987 als Synthese aus C, awk, den Unix-­Befehlen und anderen Einflüssen. Ursprüng­lich als Werkzeug zur Verar­beitung und Manipu­lation von Textdateien insbesondere bei System- und Netzwerk­administration vorgesehen (zum Beispiel Auswertung von Logdateien), hat Perl auch ..."
-									}));
-					textContainer.append(app.ni.element.p({
-						"classes" : [ 'list-B-status' ],
-						"text" : "Statuszeile mit links"
-					}));
-					searchElement.append(textContainer);
-					list.append(searchElement);
-					var searchElement = app.ni.element.li();
-					searchElement.append(app.ni.element.img({
-						"attributes" : {
-							"src" : "test.jpg"
-						}
-					}));
-					var textContainer = app.ni.element.div();
-					textContainer.append(app.ni.element.h2({
-						"classes" : [ 'list-B-headline' ],
-						"text" : "Pearl ist eine freie..."
-					}));
-					textContainer
-							.append(app.ni.element
-									.p({
-										"classes" : [ 'list-B-text' ],
-										"text" : "plattform­unabhängige und inter­pretierte Programmier­sprache (Skript­sprache), die mehrere Programmier­paradigmen unter­stützt. Der Linguist Larry Wall entwarf sie 1987 als Synthese aus C, awk, den Unix-­Befehlen und anderen Einflüssen. Ursprüng­lich als Werkzeug zur Verar­beitung und Manipu­lation von Textdateien insbesondere bei System- und Netzwerk­administration vorgesehen (zum Beispiel Auswertung von Logdateien), hat Perl auch ..."
-									}));
-					textContainer.append(app.ni.element.p({
-						"classes" : [ 'list-B-status' ],
-						"text" : "Statuszeile mit links"
-					}));
-					searchElement.append(textContainer);
-					list.append(searchElement);
-					// ----
+			var list = $(app.template.get("listB", "responsive"));
+			// alert(JSON.stringify(resultObject['files']));
+			$.each(resultObject['files'], function(key, singleSearchResult) {
+				var searchElement, textContainer;
 
-					searchResults.append(list);
-				});
+				searchElement = app.ni.element.li();
+
+				searchElement.append(app.ni.element.img({
+					"attributes" : {
+						"src" : "test.jpg"
+					}
+				}));
+
+				textContainer = app.ni.element.div();
+
+				textContainer.append(app.ni.element.h2({
+					"classes" : [ 'list-B-headline' ],
+					"text" : singleSearchResult.title
+				}));
+
+				textContainer.append(app.ni.element.p({
+					"classes" : [ 'list-B-text' ],
+					"text" : "Fulltext"
+				}));
+				textContainer.append(app.ni.element.p({
+					"classes" : [ 'list-B-status' ],
+					"text" : app.ni.element.a({
+						"text" : app.lang.string("jobName", "page.search") + ": " + singleSearchResult.jobName
+					}) + " | " + app.ni.element.a({
+						"text" : app.lang.string("timeStamp", "page.search") + ": " + date("F j, Y, g:i a", singleSearchResult.timeStamp / 1000)
+					})
+				}));
+				searchElement.append(textContainer);
+				list.append(searchElement);
+			});
+
+			searchResults.append(list);
+		});
 		promise.always(function() {
 			$(".app-loader").remove();
 		});

@@ -210,7 +210,9 @@
 	},
 	"org.backmeup.storage":
 	{
-		"Connection String. Currently, set user id here (eg. '1')":"Connection String ???"
+		"Connection String. Currently, set user id here (eg. '1')":"Connection String ???",
+		"Username":"Benutzername",
+		"Password":"Password"
 	},
 	"page.create_backup":
 	{

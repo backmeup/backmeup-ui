@@ -96,7 +96,7 @@ var page_search = {
 
 		searchResults.empty();
 
-		app.template.append("div[data-role=content]", "app-loader-bubble");
+		app.notify.loader.bubbleDiv(true, app.lang.string("loadingText", "page.search"), app.lang.string("loadingHeadline", "page.search"));
 
 		var promise = app.rc.getJson("search", {
 			// "userId" : 8,//

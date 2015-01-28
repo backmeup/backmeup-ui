@@ -66,7 +66,6 @@ var page_create_backup_2 = {
 					}
 				}));
 			});
-
 			content.append(list);
 
 			app.notify.loader.remove();

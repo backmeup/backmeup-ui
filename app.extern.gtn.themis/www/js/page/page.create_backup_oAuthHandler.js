@@ -3,13 +3,12 @@ var page_create_backup_oAuthHandler = {
 
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
-		
+
 	},
 
 	// load the html structure
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
-
 
 		var header = $('div[data-role=header]');
 		var content = $('div[data-role=content]');
@@ -17,7 +16,7 @@ var page_create_backup_oAuthHandler = {
 		var pagePanel = $('div#page-panel');
 		// datasources
 
-		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
+		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading", "headlines"));
 
 	},
 
@@ -131,14 +130,16 @@ var page_create_backup_oAuthHandler = {
 		// completed.
 		pageshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageshow()", 12);
-			var queryString = app.oa.getQueryString(), destinationType = app.store.localStorage.get("data-html5-destinationType");
-			if (destinationType == "source") {
-				app.help.navigation.redirect("create_backup_1_oAuthFinished.html?" + queryString, "slide");
-			} else if (destinationType == "sink") {
-				app.help.navigation.redirect("create_backup_2_oAuthFinished.html?" + queryString, "slide");
-			} else {
-				alert('oAuth Error');
-			}
+			window.setTimeout(function() {
+				var queryString = app.oa.getQueryString(), destinationType = app.store.localStorage.get("data-html5-destinationType");
+				if (destinationType == "source") {
+					app.help.navigation.redirect("create_backup_1_oAuthFinished.html?" + queryString, "slide");
+				} else if (destinationType == "sink") {
+					app.help.navigation.redirect("create_backup_2_oAuthFinished.html?" + queryString, "slide");
+				} else {
+					alert('oAuth Error');
+				}
+			}, 500);
 
 		}
 	}

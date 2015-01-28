@@ -33,7 +33,6 @@ var page_create_backup_1 = {
 			content.append(app.ni.element.p({
 				"text" : app.lang.string("description", "page.create_backup_1")
 			}));
-
 			// alert(JSON.stringify(resultObject));
 			var list = $(app.template.get("listA", "responsive"));
 			$.each(resultObject, function(index, pluginJson) {
@@ -46,13 +45,11 @@ var page_create_backup_1 = {
 					authType = pluginJson.authDataDescription.configType;
 					if (authType == "oauth") {
 						redirectUrl = pluginJson.authDataDescription.redirectURL;
-						// alert(redirectUrl);
 						app.sess.setObject(pluginId, pluginJson.authDataDescription.properties, "session_CreateSource");
 					}
 				} else {
 					authRequired = false;
 				}
-
 				list.append(app.ni.list.thumbnail({
 					href : "#",
 					imageSrc : app.img.getUrlById(pluginId + "Large"),

@@ -129,7 +129,7 @@ $(document).bind("mobileinit", function() {
 
 $(document).ready(function() {
 
-	$('body').append(TextLoader('../js/lapstone.html'));
+	//$('body').append(TextLoader('../js/lapstone.html'));
 
 	var configuration = JsonLoader("../js/lapstone.json");
 	app.config.name = configuration.appname;
@@ -159,7 +159,7 @@ $(document).ready(function() {
 	}
 
 	app.debug.alert("app framework initialized", 30);
-	 $('#LAPSTONE').remove();
+	// $('#LAPSTONE').remove();
 	// app.store.localStorage.clear();
 	// app.store.localStorage.show();
 	// app.notify.add.alert("dasd", "sadsad", "asdsad");

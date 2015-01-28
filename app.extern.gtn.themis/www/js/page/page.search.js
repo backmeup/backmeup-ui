@@ -132,7 +132,7 @@ var page_search = {
 
 				textContainer.append(app.ni.element.p({
 					"classes" : [ 'list-B-text' ],
-					"text" : "Fulltext"
+					"text" : singleSearchResult.preview
 				}));
 				textContainer.append(app.ni.element.p({
 					"classes" : [ 'list-B-status' ],

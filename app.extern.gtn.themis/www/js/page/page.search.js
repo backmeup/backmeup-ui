@@ -149,7 +149,7 @@ var page_search = {
 			searchResults.append(list);
 		});
 		promise.always(function() {
-			$(".app-loader").remove();
+			app.notify.loader.remove();
 		});
 	},
 

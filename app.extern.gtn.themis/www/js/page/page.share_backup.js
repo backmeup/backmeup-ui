@@ -14,7 +14,7 @@ var page_share_backup = {
 		var content = container.find('div[data-role=content]');
 		var navPanel = container.find('div#nav-panel');
 
-		app.template.append("div[data-role=content]", "app-loader-bubble");
+		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
 
 		/*
 		 * var promise = app.rc.getJson("getSuccessfulBackupjobs", { "expand" :
@@ -75,7 +75,7 @@ var page_share_backup = {
 					}
 				}));
 			});
-			$(".app-loader").remove();
+			app.notify.loader.remove();
 			content.append(list);
 
 			list = $(app.template.get("listA", "responsive"));
@@ -93,7 +93,7 @@ var page_share_backup = {
 					}
 				}));
 			});
-			$(".app-loader").remove();
+			app.notify.loader.remove();
 			content.append(list);
 
 			list = $(app.template.get("listA", "responsive"));
@@ -111,14 +111,14 @@ var page_share_backup = {
 					}
 				}));
 			});
-			$(".app-loader").remove();
+			app.notify.loader.remove();
 			content.append(list);
-			$(".app-loader").remove();
+			app.notify.loader.remove();
 			app.help.jQM.enhance(content);
 		});
 
 		promise.fail(function(error) {
-			$(".app-loader").remove();
+			app.notify.loader.remove();
 			alert("ws error: " + error);
 		});
 

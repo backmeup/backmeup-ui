@@ -13,7 +13,7 @@ var plugin_jQueryExtend = {
 		(function($) {
 			// Attrs
 			$.fn.attrs = function(attrs) {
-				var t, j, a, r, p;
+				var t, j, a, r, p, i;
 				t = $(this);
 				if (attrs) {
 					// Set attributes
@@ -30,7 +30,7 @@ var plugin_jQueryExtend = {
 					a = {}, r = t.get(0);
 					if (r) {
 						r = r.attributes;
-						for ( var i in r) {
+						for (i in r) {
 							p = r[i];
 							if (typeof p.nodeValue !== 'undefined')
 								a[p.nodeName] = p.nodeValue;

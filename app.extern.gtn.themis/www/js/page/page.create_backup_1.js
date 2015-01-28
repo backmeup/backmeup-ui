@@ -16,7 +16,7 @@ var page_create_backup_1 = {
 		var pagePanel = $('div#page-panel');
 		// datasources
 
-		app.template.append("div[data-role=content]", "app-loader-bubble");
+		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
 
 		var promise = app.rc.getJson("getSources", {
 			"expandConfigs" : false
@@ -71,7 +71,7 @@ var page_create_backup_1 = {
 			});
 			content.append(list);
 
-			$(".app-loader").remove();
+			app.notify.loader.remove();
 
 			app.help.jQM.enhance(content);
 		});

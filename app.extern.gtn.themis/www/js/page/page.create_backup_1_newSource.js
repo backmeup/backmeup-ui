@@ -31,7 +31,7 @@ var page_create_backup_1_newSource = {
 		var navPanel = $('div#nav-panel');
 		var pagePanel = $('div#page-panel');
 
-		app.template.append("div[data-role=content]", "app-loader-bubble");
+		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
 
 		var promise = app.rc.getJson("getPlugin", {
 			"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
@@ -87,7 +87,7 @@ var page_create_backup_1_newSource = {
 			}));
 
 			content.append(form);
-			$(".app-loader").remove();
+			app.notify.loader.remove();
 			app.help.jQM.enhance(content);
 		});
 
@@ -101,7 +101,7 @@ var page_create_backup_1_newSource = {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 
 		$(page_create_backup_1_newSource.config.pageId).on("click", "#btnCreate", function() {
-			app.template.append("div[data-role=content]", "app-loader-bubble");
+			app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
 
 			var formObject = app.help.form.serialize($("#frmCreateSource")), promise;
 			delete formObject.btnCreate;
@@ -129,7 +129,7 @@ var page_create_backup_1_newSource = {
 			promise.done(function(resultObject) {
 				// alert(JSON.stringify(resultObject));
 				app.store.localStorage.set("data-html5-themis-source-profileid", resultObject.profileId);
-				$(".app-loader").remove();
+				app.notify.loader.remove();
 				app.help.navigation.redirect("create_backup_2.html", "slide");
 			});
 
@@ -147,7 +147,7 @@ var page_create_backup_1_newSource = {
 			 * promise.done(function(resultObject) { //
 			 * alert(JSON.stringify(resultObject));
 			 * app.store.localStorage.set("data-html5-themis-source-profileid",
-			 * resultObject.profileId); $(".app-loader").remove();
+			 * resultObject.profileId); app.notify.loader.remove();
 			 * app.help.navigation.redirect("create_backup_2.html"); });
 			 * 
 			 * promise.fail(function(error) { alert("webservice error: " +
@@ -167,7 +167,7 @@ var page_create_backup_1_newSource = {
 			 * promise.done(function(resultObject) {
 			 * alert(JSON.stringify(resultObject));
 			 * app.store.localStorage.set("data-html5-themis-source-profileid",
-			 * resultObject.profileId); $(".app-loader").remove();
+			 * resultObject.profileId); app.notify.loader.remove();
 			 * app.help.navigation.redirect("create_backup_2.html"); });
 			 * 
 			 * promise.fail(function(error) { alert("webservice error: " +

@@ -15,7 +15,7 @@ var page_create_backup_1_inputAuth = {
 		var navPanel = $('div#nav-panel');
 		var pagePanel = $('div#page-panel');
 
-		app.template.append("div[data-role=content]", "app-loader-bubble");
+		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
 
 		var promise = app.rc.getJson("getPlugin", {
 			"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
@@ -70,7 +70,7 @@ var page_create_backup_1_inputAuth = {
 			}));
 
 			content.append(form);
-			$(".app-loader").remove();
+			app.notify.loader.remove();
 			app.help.jQM.enhance(content);
 		});
 
@@ -85,7 +85,7 @@ var page_create_backup_1_inputAuth = {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 
 		$(page_create_backup_1_inputAuth.config.pageId).on("click", "#btnAuthenticate", function(event) {
-			app.template.append("div[data-role=content]", "app-loader-bubble");
+			app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
 			var formObject = app.help.form.serialize($("#frmCreateSource")), promise;
 			delete formObject.btnAuthenticate;
 			delete formObject.title;
@@ -103,7 +103,7 @@ var page_create_backup_1_inputAuth = {
 				// );
 				app.store.localStorage.set("data-html5-authdataId", resultObject.id);
 				app.store.localStorage.set("data-html5-authdataName", resultObject.name);
-				$(".app-loader").remove();
+				app.notify.loader.remove();
 				app.help.navigation.redirect("create_backup_1_newSource.html", "slide");
 			});
 

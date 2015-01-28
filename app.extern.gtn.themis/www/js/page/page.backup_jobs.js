@@ -18,7 +18,7 @@ var page_backup_jobs = {
 			var navPanel = $('div#nav-panel');
 			var pagePanel = $('div#page-panel');
 
-			app.template.append("div[data-role=content]", "app-loader-bubble");
+			app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
 
 			/*
 			 * var promise = app.rc.getJson("getSuccessfulBackupjobs", {
@@ -74,7 +74,7 @@ var page_backup_jobs = {
 								}
 							}));
 						});
-						$(".app-loader").remove();
+						app.notify.loader.remove();
 						content.append(list);
 
 						content.append(app.ni.element.h2({
@@ -99,7 +99,7 @@ var page_backup_jobs = {
 								}
 							}));
 						});
-						$(".app-loader").remove();
+						app.notify.loader.remove();
 						content.append(list);
 
 						content.append(app.ni.element.h2({
@@ -124,14 +124,14 @@ var page_backup_jobs = {
 								}
 							}));
 						});
-						$(".app-loader").remove();
+						app.notify.loader.remove();
 						content.append(list);
-						$(".app-loader").remove();
+						app.notify.loader.remove();
 						app.help.jQM.enhance(content);
 					});
 
 			promise.fail(function(error) {
-				$(".app-loader").remove();
+				app.notify.loader.remove();
 				alert("ws error: " + error);
 			});
 

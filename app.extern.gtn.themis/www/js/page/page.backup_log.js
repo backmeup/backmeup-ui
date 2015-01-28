@@ -17,7 +17,7 @@ var page_backup_log = {
 			var content = container.find('div[data-role=content]');
 			var navPanel = container.find('div#nav-panel');
 
-			app.template.append("div[data-role=content]", "app-loader-bubble");
+			app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
 
 			var promise = app.rc.getJson("getBackupjob", {
 				"jobId" : app.store.localStorage.get("data-html5-themis-backupid"),
@@ -43,12 +43,12 @@ var page_backup_log = {
 					"classes" : [ 'ui-btn' ]
 				}));
 				
-				$(".app-loader").remove();
+				app.notify.loader.remove();
 				app.help.jQM.enhance(content);
 			});
 
 			promise.fail(function(error) {
-				$(".app-loader").remove();
+				app.notify.loader.remove();
 				alert("ws error: " + error);
 			});
 

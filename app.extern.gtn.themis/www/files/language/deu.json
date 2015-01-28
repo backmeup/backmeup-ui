@@ -80,6 +80,7 @@
 	},
 	"headlines":{
 		"share":"Teilen",
+		"loading":"Laden...",
 		"search_in_backups":"Backups durchsuchen",
 		"activate_account":"Account aktivieren",
 		"backup_jobs_successful":"Erfolgreiche Backupjobs",

@@ -211,7 +211,7 @@ var plugin_Notification = {
 					plugin_Notification.notifications = null;
 				else {
 					// todo more popups
-					 notification = plugin_Notification.notifications['1'];
+					notification = plugin_Notification.notifications['1'];
 					// alert(JSON.stringify(notification));
 					delete plugin_Notification.notifications['1'];
 					setTimeout(function() {
@@ -341,7 +341,7 @@ var plugin_Notification = {
 				if (show) {
 					app.template.append("div[data-role=content]", "app-loader-bubble");
 				} else {
-					$(".app-loader").remove();
+					plugin_Notification.functions.loader.remove();
 				}
 			},
 			bubbleDiv : function(show, text, headline) {
@@ -355,8 +355,11 @@ var plugin_Notification = {
 					}
 					$("div[data-role=content]").append(loader);
 				} else {
-					$(".app-loader").remove();
+					plugin_Notification.functions.loader.remove();
 				}
+			},
+			remove : function() {
+				$(".app-loader").remove();
 			}
 		}
 

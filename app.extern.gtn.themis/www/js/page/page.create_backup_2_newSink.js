@@ -89,7 +89,7 @@ var page_create_backup_2_newSink = {
 			}));
 
 			content.append(form);
-			$(".app-loader").remove();
+			app.notify.loader.remove();
 			app.help.jQM.enhance(content);
 		});
 
@@ -135,7 +135,7 @@ var page_create_backup_2_newSink = {
 				promise.done(function(resultObject) {
 					// alert(JSON.stringify(resultObject));
 					app.store.localStorage.set("data-html5-themis-sink-profileid", resultObject.profileId);
-					$(".app-loader").remove();
+					app.notify.loader.remove();
 					app.help.navigation.redirect("create_backup_3.html", "slide");
 				});
 
@@ -156,7 +156,7 @@ var page_create_backup_2_newSink = {
 				 * promise.done(function(resultObject) { //
 				 * alert(JSON.stringify(resultObject));
 				 * app.store.localStorage.set("data-html5-themis-sink-profileid",
-				 * resultObject.profileId); $(".app-loader").remove();
+				 * resultObject.profileId); app.notify.loader.remove();
 				 * app.help.navigation.redirect("create_backup_3.html"); });
 				 * 
 				 * promise.fail(function(error) { alert("webservice error: " +
@@ -171,7 +171,7 @@ var page_create_backup_2_newSink = {
 				 * "options" : [ "/Documents", "/Photos" ] }, true);
 				 * 
 				 * promise.done(function(resultObject) {
-				 * $(".app-loader").remove();
+				 * app.notify.loader.remove();
 				 * app.help.navigation.redirect("create_backup_3.html"); });
 				 * 
 				 * promise.fail(function(error) { alert("webservice error: " +

@@ -30,7 +30,7 @@ var page_register_4_final = {
 			"text" : app.lang.string("register_4_final", "headlines")
 		}));
 
-		app.template.append("div[data-role=content]", "app-loader-bubble");
+		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
 
 		content.append(app.ni.element.p({
 			"text" : app.ni.element.a({

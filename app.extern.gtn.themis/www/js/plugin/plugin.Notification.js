@@ -80,31 +80,31 @@ var plugin_Notification = {
 		});
 		$(document).on("click", "#btn-alert", function() {
 			$("#popupAlert").popup("close");
-			plugin_Notification.cleanupPopup($("#popupAlert"));
 			if (plugin_Notification.callbackFunction) {
 				plugin_Notification.callbackFunction($("#popupAlert"));
 				plugin_Notification.callbackFunction == null;
 			}
+			plugin_Notification.cleanupPopup($("#popupAlert"));
 			plugin_Notification.popupShow();
 		});
 
 		$(document).on("click", "#btn-dialog-left", function() {
 			$("#popupDialog").popup("close");
-			plugin_Notification.cleanupPopup($("#popupDialog"));
 			if (plugin_Notification.callbackFunctionBtnLeft) {
 				plugin_Notification.callbackFunctionBtnLeft($("#popupDialog"));
 				plugin_Notification.callbackFunctionBtnLeft == null;
 			}
+			plugin_Notification.cleanupPopup($("#popupDialog"));
 			plugin_Notification.popupShow();
 		});
 
 		$(document).on("click", "#btn-dialog-right", function() {
 			$("#popupDialog").popup("close");
-			plugin_Notification.cleanupPopup($("#popupDialog"));
 			if (plugin_Notification.callbackFunctionBtnRight) {
 				plugin_Notification.callbackFunctionBtnRight($("#popupDialog"));
 				plugin_Notification.callbackFunctionBtnRight == null;
 			}
+			plugin_Notification.cleanupPopup($("#popupDialog"));
 			plugin_Notification.popupShow();
 		});
 

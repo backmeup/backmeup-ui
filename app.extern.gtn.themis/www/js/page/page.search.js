@@ -106,6 +106,40 @@ var page_search = {
 			} else {
 				return false;
 			}
+		},
+		getSearchDetails : function(singleSearchResult) {
+			var div = app.ni.element.div({});
+			if (page_search.singleResult.getResultUrl(singleSearchResult)) {
+				div.append(app.ni.element.a({
+					"text" : "Link zum Ergebnis",
+					"attributes" : {
+						"href" : "#",
+						"onclick" : "javascript:window.open('" + page_search.singleResult.getResultUrl(singleSearchResult) + "')"
+					}
+				}));
+			}
+			$.each(singleSearchResult, function(key, value) {
+				if (typeof value === "object") {
+					$.each(value, function(key, value) {
+						div.append(app.ni.element.p({
+							"text" : app.lang.string(key, "page.search") + ": " + value
+						}));
+					});
+				} else {
+					div.append(app.ni.element.p({
+						"text" : app.lang.string(key, "page.search") + ": " + value
+					}));
+				}
+			});
+			return div;
+		},
+		openDetails : function(singleSearchResult) {
+
+			// alert(JSON.stringify(singleSearchResult))
+			app.notify.alert(page_search.singleResult.getSearchDetails(singleSearchResult), app.lang.string("searchDetails", "page.search"),
+					singleSearchResult.title, app.lang.string("back", "actions"), function() {
+					}, 50);
+
 		}
 	},
 
@@ -146,25 +180,21 @@ var page_search = {
 				textContainer = app.ni.element.div();
 
 				// headline + link
-				if (page_search.singleResult.getResultUrl(singleSearchResult)) {
-					textContainer.append(
 
-					app.ni.element.a({
-						"attributes" : {
-							"onclick" : "javascript:window.open('" + page_search.singleResult.getResultUrl(singleSearchResult) + "')"
-						},
-						"text" : app.ni.element.h2({
-							"classes" : [ 'list-B-headline' ],
-							"text" : singleSearchResult.title
-						})
+				textContainer.append(
 
-					}));
-				} else {
-					textContainer.append(app.ni.element.h2({
+				app.ni.element.a({
+					"attributes" : {
+						"href" : "#",
+						"onclick" : "page_search.singleResult.openDetails(" + JSON.stringify(singleSearchResult).split("\"").join("'") + ")"
+					},
+					"text" : app.ni.element.h2({
 						"classes" : [ 'list-B-headline' ],
 						"text" : singleSearchResult.title
-					}));
-				}
+					})
+
+				}));
+
 				textContainer.append(app.ni.element.p({
 					"classes" : [ 'list-B-text' ],
 					"text" : singleSearchResult.preview

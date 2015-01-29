@@ -273,6 +273,7 @@
 		"loadingHeadline":"Laden...",
 		"loadingText":"Die Suchergebnisse werden geladen.",
 		"jobName":"Backupjob",
-		"timeStamp":"Datum"
+		"timeStamp":"Datum",
+		"searchDetails":"Details der Suche"
 	}
 }

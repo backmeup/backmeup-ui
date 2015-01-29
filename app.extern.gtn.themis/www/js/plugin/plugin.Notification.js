@@ -80,6 +80,7 @@ var plugin_Notification = {
 		});
 		$(document).on("click", "#btn-alert", function() {
 			$("#popupAlert").popup("close");
+			plugin_Notification.cleanupPopup($("#popupAlert"));
 			if (plugin_Notification.callbackFunction) {
 				plugin_Notification.callbackFunction($("#popupAlert"));
 				plugin_Notification.callbackFunction == null;
@@ -89,6 +90,7 @@ var plugin_Notification = {
 
 		$(document).on("click", "#btn-dialog-left", function() {
 			$("#popupDialog").popup("close");
+			plugin_Notification.cleanupPopup($("#popupDialog"));
 			if (plugin_Notification.callbackFunctionBtnLeft) {
 				plugin_Notification.callbackFunctionBtnLeft($("#popupDialog"));
 				plugin_Notification.callbackFunctionBtnLeft == null;
@@ -98,6 +100,7 @@ var plugin_Notification = {
 
 		$(document).on("click", "#btn-dialog-right", function() {
 			$("#popupDialog").popup("close");
+			plugin_Notification.cleanupPopup($("#popupDialog"));
 			if (plugin_Notification.callbackFunctionBtnRight) {
 				plugin_Notification.callbackFunctionBtnRight($("#popupDialog"));
 				plugin_Notification.callbackFunctionBtnRight == null;
@@ -131,6 +134,10 @@ var plugin_Notification = {
 		app.debug.alert("plugin_" + this.config.name + ".pageSpecificEvents()", 11);
 
 	},
+	cleanupPopup : function(popup) {
+		popup.find("div[role=main].ui-content").find(":nth-child(2)").replaceWith("<p></p>");
+	},
+
 	// private functions
 	popupShow : function(notification, delay) {
 		// alert(JSON.stringify(plugin_Notification.notifications));
@@ -156,7 +163,6 @@ var plugin_Notification = {
 
 					$("#popupAlert #btn-alert").text(notification.button);
 
-					// $("#popupAlert div.ui-content p").html("");
 					if (typeof notification.text == "object") {
 						$("#popupAlert div.ui-content p").replaceWith(notification.text);
 					} else {

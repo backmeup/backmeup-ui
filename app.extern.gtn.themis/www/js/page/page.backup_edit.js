@@ -61,7 +61,7 @@ var page_backup_edit = {
 				}));
 
 				content.append(app.ni.element.p({
-					"text" : date('F j, Y, g:i a', resultObject.created)
+					"text" : date('F j, Y, g:i a', resultObject.created/1000)
 				}));
 
 				content.append(app.ni.element.h2({
@@ -69,7 +69,7 @@ var page_backup_edit = {
 				}));
 
 				content.append(app.ni.element.p({
-					"text" : date('F j, Y, g:i a', resultObject.modified)
+					"text" : date('F j, Y, g:i a', resultObject.modified/1000)
 				}));
 
 				content.append(app.ni.element.h2({
@@ -77,7 +77,7 @@ var page_backup_edit = {
 				}));
 
 				content.append(app.ni.element.p({
-					"text" : date('F j, Y, g:i a', resultObject.start)
+					"text" : date('F j, Y, g:i a', resultObject.start/100)
 				}));
 
 				content.append(app.ni.element.h2({
@@ -85,7 +85,7 @@ var page_backup_edit = {
 				}));
 
 				content.append(app.ni.element.p({
-					"text" : date('F j, Y, g:i a', resultObject.next)
+					"text" : date('F j, Y, g:i a', resultObject.next/100)
 				}));
 
 				content.append(app.ni.element.h2({

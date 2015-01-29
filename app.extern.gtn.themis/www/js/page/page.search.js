@@ -92,6 +92,16 @@ var page_search = {
 
 	},
 
+	singleResult : {
+		getThumbnail : function(singelSearchResult) {
+			if (singelSearchResult.thumbnailUrl != undefined) {
+				return singelSearchResult.thumbnailUrl;
+			} else {
+				return "xxx.txt";
+			}
+		}
+	},
+
 	updateSearchDiv : function(searchResults) {
 
 		searchResults.empty();
@@ -119,7 +129,7 @@ var page_search = {
 
 				searchElement.append(app.ni.element.img({
 					"attributes" : {
-						"src" : "test.jpg"
+						"src" : page_search.singleResult.getThumbnail(singleSearchResult);
 					}
 				}));
 

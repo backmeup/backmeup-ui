@@ -93,11 +93,18 @@ var page_search = {
 	},
 
 	singleResult : {
-		getThumbnail : function(singelSearchResult) {
-			if (singelSearchResult.thumbnailUrl != undefined) {
-				return singelSearchResult.thumbnailUrl;
+		getThumbnail : function(singleSearchResult) {
+			if (singleSearchResult.thumbnailUrl != undefined) {
+				return singleSearchResult.thumbnailUrl;
 			} else {
-				return "xxx.txt";
+				return false;
+			}
+		},
+		getResultUrl : function(singleSearchResult) {
+			if (singleSearchResult.properties.downloadURL != undefined) {
+				return singleSearchResult.properties.downloadURL;
+			} else {
+				return false;
 			}
 		}
 	},
@@ -127,19 +134,37 @@ var page_search = {
 
 				searchElement = app.ni.element.li();
 
-				searchElement.append(app.ni.element.img({
-					"attributes" : {
-						"src" : page_search.singleResult.getThumbnail(singleSearchResult);
-					}
-				}));
+				// image
+				if (page_search.singleResult.getThumbnail(singleSearchResult)) {
+					searchElement.append(app.ni.element.img({
+						"attributes" : {
+							"src" : page_search.singleResult.getThumbnail(singleSearchResult)
+						}
+					}));
+				}
 
 				textContainer = app.ni.element.div();
 
-				textContainer.append(app.ni.element.h2({
-					"classes" : [ 'list-B-headline' ],
-					"text" : singleSearchResult.title
-				}));
+				// headline + link
+				if (page_search.singleResult.getResultUrl(singleSearchResult)) {
+					textContainer.append(
 
+					app.ni.element.a({
+						"attributes" : {
+							"onclick" : "javascript:window.open('" + page_search.singleResult.getResultUrl(singleSearchResult) + "')"
+						},
+						"text" : app.ni.element.h2({
+							"classes" : [ 'list-B-headline' ],
+							"text" : singleSearchResult.title
+						})
+
+					}));
+				} else {
+					textContainer.append(app.ni.element.h2({
+						"classes" : [ 'list-B-headline' ],
+						"text" : singleSearchResult.title
+					}));
+				}
 				textContainer.append(app.ni.element.p({
 					"classes" : [ 'list-B-text' ],
 					"text" : singleSearchResult.preview

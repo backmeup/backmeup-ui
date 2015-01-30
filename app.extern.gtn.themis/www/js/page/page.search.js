@@ -95,14 +95,15 @@ var page_search = {
 	singleResult : {
 		getThumbnail : function(singleSearchResult) {
 			if (singleSearchResult.thumbnailUrl != undefined) {
-				return singleSearchResult.thumbnailUrl;
+				return singleSearchResult.thumbnailUrl + "?accessToken=" + app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value);
 			} else {
 				return false;
 			}
 		},
 		getResultUrl : function(singleSearchResult) {
 			if (singleSearchResult.properties.downloadURL != undefined) {
-				return singleSearchResult.properties.downloadURL;
+				return singleSearchResult.properties.downloadURL + "?accessToken="
+						+ app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value);
 			} else {
 				return false;
 			}

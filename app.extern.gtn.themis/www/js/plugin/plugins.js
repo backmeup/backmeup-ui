@@ -16,7 +16,6 @@ var plugins = {
 	},
 
 	loadPluginConfig : function() {
-
 		if (app.config.min) {
 			plugins.config = config_json;
 		} else {

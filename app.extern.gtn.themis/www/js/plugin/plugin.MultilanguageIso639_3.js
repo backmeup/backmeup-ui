@@ -78,7 +78,8 @@ var plugin_MultilanguageIso639_3 = {
 				text = plugin_MultilanguageIso639_3.dictionary[id];
 			} else {
 				if (plugin_MultilanguageIso639_3.dictionary[context] == undefined) {
-					text = "context doesn't exist: " + context;
+					// text = "context doesn't exist: " + context;
+					text = id;
 				} else {
 					text = plugin_MultilanguageIso639_3.dictionary[context][id];
 				}

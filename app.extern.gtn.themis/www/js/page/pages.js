@@ -35,7 +35,6 @@ var pages = {
 			pages.config = config_json;
 			dfd.resolve();
 		} else {
-			// var url = "../js/page/pages.json";
 			promise = globalLoader.AsyncJsonLoader("../js/page/pages.json");
 			promise.done(function(json) {
 				pages.config = json;
@@ -44,12 +43,6 @@ var pages = {
 			promise.fail(function() {
 				dfd.reject();
 			});
-			/*
-			 * $.ajax({ url : url, async : false, dataType : "json", success :
-			 * function(json) { pages.config = json; }, error : function(jqXHR,
-			 * textStatus, errorThrown) { alert("Fatal error in pages.js: Can't
-			 * load page. Url: " + url + " Error: " + textStatus); } });
-			 */
 		}
 
 		return dfd.promise();
@@ -137,13 +130,7 @@ var pages = {
 			if (app.config.min) {
 				promises_js.push(pages.onPageLoaded(key));
 			} else {
-				// var url = "../js/page/page." + key + ".js";
 				promises_js.push(globalLoader.AsyncScriptLoader("../js/page/page." + key + ".js"));
-				/*
-				 * $.ajax({ url : url, async : false, dataType : "script",
-				 * success : function(json) { success = }, error : function() {
-				 * alert("Fatal Error: Can't load page: " + url); } });
-				 */
 			}
 		});
 		promiseOfPromises_js = $.when.apply($, promises_js);

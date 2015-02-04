@@ -16,23 +16,45 @@ var plugin_ImageProvider = {
 
 	},
 
+	loadDefinitionFile : function(path) {
+		var dfd = $.Deferred(), promise;
+		promise = globalLoader.AsyncJsonLoader(path);
+		// alert(JSON.stringify(json));
+
+		promise.done(function(json) {
+			$.each(json, function(id, url) {
+				// alert(id + " = " + url);
+				plugin_ImageProvider.images[id] = url;
+			});
+			dfd.resolve();
+		});
+		promise.fail(function() {
+			dfd.reject();
+		});
+
+		return dfd.promise();
+	},
+
 	// called after all plugins are loaded
 	pluginsLoaded : function() {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
-		var dfd = $.Deferred();
+		var dfd = $.Deferred(), promises = Array(), promiseOfPromises;
 
 		$.each(plugin_ImageProvider.config.imgdFiles, function(path, loadFile) {
 			if (loadFile) {
-				var json = globalLoader.JsonLoader(path);
-				// alert(JSON.stringify(json));
-				$.each(json, function(id, url) {
-					// alert(id + " = " + url);
-					plugin_ImageProvider.images[id] = url;
-				});
+				promises.push(plugin_ImageProvider.loadDefinitionFile(path));
 			}
 		});
 
-		dfd.resolve();
+		promiseOfPromises = $.when.apply($, promises);
+
+		promiseOfPromises.done(function() {
+			dfd.resolve();
+		});
+		promiseOfPromises.done(function() {
+			dfd.reject();
+		});
+
 		return dfd.promise();
 	},
 

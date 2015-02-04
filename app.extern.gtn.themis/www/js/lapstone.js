@@ -2,7 +2,7 @@
 var app = {
 	config : {
 		name : "app",
-		min : true,
+		min : false,
 		useJQueryMobile : true,
 		apacheCordova : null
 	},
@@ -275,7 +275,7 @@ var startup = {
 		startup.currentPosition++;
 
 		if (startupDefinition.length > startup.currentPosition) {
-			console.log(startup.currentPosition + ": " + startupDefinition[startup.currentPosition]['status']);
+			//console.log(startup.currentPosition + ": " + startupDefinition[startup.currentPosition]['status']);
 			initialisationPanel.changeStatus(startupDefinition[startup.currentPosition]['status']);
 			promise = startupDefinition[startup.currentPosition]['function'](startupDefinition[startup.currentPosition]['parameter']);
 			promise.done(startup.functionDone);

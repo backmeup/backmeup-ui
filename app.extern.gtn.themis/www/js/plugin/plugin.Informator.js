@@ -39,11 +39,12 @@ var plugin_Informator = {
 		// load the pages' configuartion into html5 storage
 		if (this.config.useHtml5Storage && this.config.savePageConfig) {
 			var global = {};
+			alert("xxxxxxxx");
 			$.each(pages.pageNames, function(key, value) {
 				if (global["page_" + value] == undefined)
 					global["page_" + value] = {};
 				// dirty!! do not use json loader
-				global["page_" + value]['config'] = JsonLoader("../js/page/page." + value + ".json");
+				global["page_" + value]['config'] = globalLoader.JsonLoader("../js/page/page." + value + ".json");
 			});
 			this.loadConfigurationIntoHtml5Storage(global);
 		}

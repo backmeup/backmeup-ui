@@ -13,16 +13,24 @@ var plugin_RestClient = {
 	},
 	pluginsLoaded : function() {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
-		var dfd = $.Deferred();
+		var dfd = $.Deferred(), promises = Array(), promiseOfPromises;
 		// load the webservice definitions
 		$.each(plugin_RestClient.config.wsdFiles, function(path, loadFile) {
 			if (loadFile) {
-				plugin_RestClient.loadDefinitionFile(path);
+				promises.push(plugin_RestClient.loadDefinitionFile(path));
 			}
 		});
 
-		
-		dfd.resolve();
+		promiseOfPromises = $.when.apply($, promises);
+
+		promiseOfPromises.done(function() {
+
+			dfd.resolve();
+		});
+		promiseOfPromises.fail(function() {
+			dfd.reject();
+		});
+
 		return dfd.promise();
 	},
 
@@ -44,6 +52,27 @@ var plugin_RestClient = {
 	},
 	pageSpecificEvents : function(container) {
 		app.debug.alert("Plugin: " + this.config.name + ".pageSpecificEvents()", 5);
+	},
+
+	loadDefinitionFileAsync : function(path) {
+		app.debug.alert("pugin.RestClient.js ~ plugin_RestClient.loadDefinitionFile(" + path + ")", 20);
+		var dfd = $.Deferred(), promise;
+		promise = globalLoader.AsyncJsonLoader(path);
+
+		promise.done(function() {
+			$.each(json, function(name, values) {
+				app.debug.alert("pugin.RestClient.js ~ plugin_RestClient.loadDefinitionFile() - add: " + name, 20);
+				plugin_RestClient.config.webservices[name] = values;
+			});
+			dfd.resolve();
+		});
+		promise.done(function() {
+			dfd.reject();
+		});
+
+		
+
+		return dfd.promise();
 	},
 
 	loadDefinitionFile : function(path) {

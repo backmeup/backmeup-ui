@@ -2,7 +2,9 @@ var page_start = {
 	config : null,
 
 	constructor : function() {
-		;
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 	},
 
 	// load the html structure

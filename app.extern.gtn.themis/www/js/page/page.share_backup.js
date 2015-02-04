@@ -3,7 +3,9 @@ var page_share_backup = {
 
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
-
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 	},
 
 	// load the html structure

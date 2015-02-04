@@ -171,7 +171,7 @@
 		"bad_name":"Dein Name konnte nicht Verifiziert werden.",
 		"insert_login_data":"Gib deine Logindaten an.",
 		"bad_email":"Die E-Mailadresse konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe.",
-		"bad_password":"Das Passwort konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe. (?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\\W]).{8,100}",
+		"bad_password":"Das Passwort entspricht nicht den geforderten Passwortrichtlinien. Bitte verwenden Sie mindestesn ein Sonderzeichen, eine Zahl, einen Großbuchstaben, einen Kleinbuchstaben und 8 Zeichen.",
 		"bad_passwords_not_equal":"Die Passwörter stimmen nicht überein.",
 		"search_error":"Fehler bei der Suche. Bitte versuchen Sie es später erneut."
 	},

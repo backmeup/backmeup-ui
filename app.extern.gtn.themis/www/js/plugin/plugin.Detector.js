@@ -10,25 +10,25 @@ var plugin_Detector = {
 	cssClasses : {},
 	// called by plugins.js
 	constructor : function() {
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 
 	},
 
 	// called after all plugins are loaded
 	pluginsLoaded : function() {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
+		var dfd = $.Deferred();
 
-		try {
-			plugin_Detector.functions.classes.generate();
-			app.debug.alert("Css Classes in body Tag: " + plugin_Detector.functions.classes.classNames(), 60);
-			app.debug.alert(navigator.userAgent, 60);
+		plugin_Detector.functions.classes.generate();
+		app.debug.alert("Css Classes in body Tag: " + plugin_Detector.functions.classes.classNames(), 60);
+		app.debug.alert(navigator.userAgent, 60);
 
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+		success = true;
+
+		dfd.resolve();
+		return dfd.promise();
 	},
 
 	// called after all pages are loaded
@@ -36,15 +36,9 @@ var plugin_Detector = {
 	pagesLoaded : function() {
 		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
 
-		try {
-
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 	},
 
 	// called after pluginsLoaded()

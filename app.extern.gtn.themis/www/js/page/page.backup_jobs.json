@@ -4,5 +4,5 @@
 	"useKeepAlive":true,
 	"loginObligate":true,
 	"contentRefresh":true,
-	"contentRefreshInterval":10000
+	"contentRefreshInterval":600000
 }

@@ -23,6 +23,9 @@ var page_create_backup_1_oAuthFinished = {
 			} catch (e) {
 				app.store.localStorage.set("data-html5-oAuthQuery", "");
 			}
+		} else {
+			console.log("todo");
+			app.store.localStorage.set("data-html5-oAuthQuery", app.store.localStorage.get("data-html5-oAuthQuery").split('&')[0]);
 		}
 		// alert("oauth token: " +
 		// app.store.localStorage.get("data-html5-oAuthToken"));
@@ -73,8 +76,8 @@ var page_create_backup_1_oAuthFinished = {
 			for ( var key in storedProperties) {
 				properties[key] = storedProperties[key];
 			}
-			
-			alert(JSON.stringify(properties))
+
+			//alert(JSON.stringify(properties))
 
 			promise = app.rc.getJson("createAuthdata", {
 				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),

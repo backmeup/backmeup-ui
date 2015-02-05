@@ -91,6 +91,7 @@ var plugin_OAuth = {
 		},
 		getQueryString : function() {
 			try {
+				//console.log("todo");
 				return window.location.href.split('?')[1];
 			} catch (e) {
 				return '';
@@ -116,7 +117,7 @@ var plugin_OAuth = {
 			if (plugin_OAuth.desktopOAuth(url))
 				return;
 			else {
-
+				var dfd = $.Deferred(), loginWindow = window.open(url, '_blank', 'location=yes'), eventCount = 0;
 				$(loginWindow).on('loadstart', function(e) {
 					eventCount++;
 					if (eventCount > 2) {

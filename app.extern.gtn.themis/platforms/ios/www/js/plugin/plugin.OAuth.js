@@ -91,6 +91,7 @@ var plugin_OAuth = {
 		},
 		getQueryString : function() {
 			try {
+				//console.log("todo");
 				return window.location.href.split('?')[1];
 			} catch (e) {
 				return '';

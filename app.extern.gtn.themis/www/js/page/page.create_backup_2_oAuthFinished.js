@@ -23,6 +23,9 @@ var page_create_backup_2_oAuthFinished = {
 			} catch (e) {
 				app.store.localStorage.set("data-html5-oAuthQuery", "");
 			}
+		} else {
+			console.log("todo");
+			app.store.localStorage.set("data-html5-oAuthQuery", app.store.localStorage.get("data-html5-oAuthQuery").split('&')[0]);
 		}
 		// alert("oauth token: " +
 		// app.store.localStorage.get("data-html5-oAuthToken"));

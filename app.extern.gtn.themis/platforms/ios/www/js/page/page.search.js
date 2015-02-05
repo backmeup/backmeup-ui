@@ -117,7 +117,7 @@ var page_search = {
 					"text" : "Link zum Ergebnis",
 					"attributes" : {
 						"href" : "#",
-						"onclick" : "javascript:window.open('" + page_search.singleResult.getResultUrl(singleSearchResult) + "')"
+						"onclick" : "javascript:window.open('" + page_search.singleResult.getResultUrl(singleSearchResult) + "','_blank', 'location=yes')"
 					}
 				}));
 			}

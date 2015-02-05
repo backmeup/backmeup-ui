@@ -73,6 +73,8 @@ var page_create_backup_1_oAuthFinished = {
 			for ( var key in storedProperties) {
 				properties[key] = storedProperties[key];
 			}
+			
+			alert(JSON.stringify(properties))
 
 			promise = app.rc.getJson("createAuthdata", {
 				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
@@ -83,10 +85,10 @@ var page_create_backup_1_oAuthFinished = {
 			promise.done(function(resultObject) {
 				// alert(JSON.stringify(resultObject));
 				app.store.localStorage.set("data-html5-authdataId", resultObject.id);
-				app.help.navigation.redirect("create_backup_1_newSource.html");
+				app.help.navigation.redirect("create_backup_1_newSource.html", "slide");
 			});
 
-			promise.fail(function() {
+			promise.fail(function(error) {
 				alert("ws error");
 			});
 		});

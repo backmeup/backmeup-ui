@@ -4,7 +4,8 @@ var app = {
 		name : "app",
 		min : false,
 		useJQueryMobile : true,
-		apacheCordova : null
+		apacheCordova : null,
+		jQueryMobile : null
 	},
 	addObject : function(name, object) {
 		// alert("Add object to app: " + name);
@@ -24,8 +25,8 @@ function loadPlugins() {
 	// load the plugins file
 	promise = globalLoader.AsyncScriptLoader(url);
 	promise.done(function() {
-		 startup.addFunction("plugin constructor", plugins.constructor, "");
-		//plugins.constructor();
+		startup.addFunction("plugin constructor", plugins.constructor, "");
+		// plugins.constructor();
 		dfd.resolve();
 	});
 	promise.fail(function() {
@@ -47,8 +48,8 @@ function loadPages() {
 	// load pages file
 	promise = globalLoader.AsyncScriptLoader(url);
 	promise.done(function() {
-		 startup.addFunction("page constructor", pages.constructor, "");
-		//pages.constructor();
+		startup.addFunction("page constructor", pages.constructor, "");
+		// pages.constructor();
 		dfd.resolve();
 	});
 	promise.fail(function() {
@@ -79,27 +80,13 @@ function loadConfiguration() {
 
 function enchantPages() {
 	var dfd = $.Deferred(), promise;
+
 	promise = globalLoader.AsyncScriptLoader("../ext/jquery.mobile-1.4.5.min.js");
-	$(document).bind("mobileinit", function() {
-		app.debug.alert("jQuery mobile initialized", 30);
-		$.mobile.ajaxEnabled = true;
-		$.support.cors = true;
-		$.mobile.allowCrossDomainPages = true;
-		$.mobile.page.prototype.options.domCache = false;
 
-		$.mobile.loader.prototype.options.text = "loading";
-		$.mobile.loader.prototype.options.textVisible = false;
-		$.mobile.loader.prototype.options.theme = "a";
-		$.mobile.loader.prototype.options.html = "";
-
-		$.mobile.defaultPageTransition = 'none';
+	promise.done(function() {
+		initialisationPanel.changeStatus("jquery mobile  loaded");
 
 		dfd.resolve();
-	});
-	promise.done(function() {
-		initialisationPanel.changeStatus("jquery mobile loaded");
-
-		// resolve after mobileinit event
 
 	});
 
@@ -153,7 +140,10 @@ var globalLoader = {
 					dataType : "script",
 					timeout : 5000,
 					success : function(data) {
-						dfd.resolve(data);
+						window.setTimeout(function() {
+							dfd.resolve(data);
+						}, 200);
+
 					},
 					error : function(jqXHR, textStatus, errorThrown) {
 						initialisationPanel.changeStatus("Fatal Error: Can't load Script. Url: " + url + " Status: " + textStatus + " Thrown:"
@@ -163,6 +153,21 @@ var globalLoader = {
 					}
 				});
 		return dfd.promise();
+	},
+	ScriptLoader : function(url) {
+		$.ajax({
+			url : url,
+			async : false,
+			dataType : "script",
+			timeout : 5000,
+			success : function(data) {
+
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				alert("Fatal Error: Can't load Script. Url: " + url + " Status: " + textStatus + " Thrown:" + JSON.stringify(jqXHR));
+
+			}
+		});
 	},
 	AsyncTextLoader : function(url) {
 		var dfd = $.Deferred();
@@ -198,12 +203,59 @@ var globalLoader = {
 	}
 }
 
+$(document).bind("mobileinit", function() {
+	app.debug.alert("jQuery mobile initialized", 30);
+	$.mobile.ajaxEnabled = true;
+	$.support.cors = true;
+	$.mobile.allowCrossDomainPages = true;
+	$.mobile.page.prototype.options.domCache = false;
+
+	$.mobile.loader.prototype.options.text = "loading";
+	$.mobile.loader.prototype.options.textVisible = false;
+	$.mobile.loader.prototype.options.theme = "a";
+	$.mobile.loader.prototype.options.html = "";
+
+	$.mobile.defaultPageTransition = 'slide';
+	app.config.jQueryMobile = true;
+});
+
 /* on cordova initialisation */
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-	app.debug.alert("cordova initialized", 30);
+	//alert("cordova initialized", 30);
 	app.config.apacheCordova = true;
+}
+
+function waitForMobileinit() {
+	var dfd = $.Deferred(), interval;
+
+	interval = setInterval(function() {
+		if (app.config.jQueryMobile == true) {
+			dfd.resolve();
+			clearInterval(interval);
+		}
+	}, 50);
+
+	return dfd.promise();
+}
+
+function waitForDeviceready() {
+	var dfd = $.Deferred(), interval;
+	// alert(window.cordova);
+	if (window.cordova) {
+		interval = setInterval(function() {
+			clearInterval(interval);
+			if (app.config.apacheCordova == true) {
+				dfd.resolve();
+
+			}
+		}, 50);
+	} else {
+		dfd.resolve();
+	}
+
+	return dfd.promise();
 }
 
 var initialisationPanel = {
@@ -253,6 +305,16 @@ var startupDefinition = [ {
 	"function" : enchantPages,
 	"parameter" : "",
 	"result" : ""
+}, {
+	"status" : "wait for mobileinit",
+	"function" : waitForMobileinit,
+	"parameter" : "",
+	"result" : ""
+}, {
+	"status" : "wait for deviceready",
+	"function" : waitForDeviceready,
+	"parameter" : "",
+	"result" : ""
 } ]
 
 var startup = {
@@ -271,7 +333,9 @@ var startup = {
 
 	functionDone : function(data) {
 		var promise;
-		//console.log(startup.currentPosition + ": " + startupDefinition[startup.currentPosition]['status'] + " SUCCESSFUL");
+		// console.log(startup.currentPosition + ": " +
+		// startupDefinition[startup.currentPosition]['status'] + "
+		// SUCCESSFUL");
 		startup.currentPosition++;
 
 		if (startupDefinition.length > startup.currentPosition) {
@@ -304,9 +368,9 @@ $(document).ready(function() {
 	var inititalisationPromise = startup.initFramework();
 
 	inititalisationPromise.done(function() {
-		//alert("init done");
+		// alert("init done");
 		setTimeout(function() {
-			
+
 			initialisationPanel.finish()
 		}, 200);
 	});

@@ -84,7 +84,7 @@ var page_create_backup_2_oAuthFinished = {
 			promise.done(function(resultObject) {
 				// alert(JSON.stringify(resultObject));
 				app.store.localStorage.set("data-html5-authdataId", resultObject.id);
-				app.help.navigation.redirect("create_backup_2_newSink.html");
+				app.help.navigation.redirect("create_backup_2_newSink.html", "slide");
 			});
 
 			promise.fail(function() {

@@ -18,7 +18,7 @@ var page_create_backup_1 = {
 		var pagePanel = $('div#page-panel');
 		// datasources
 
-		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
+		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading", "headlines"));
 
 		var promise = app.rc.getJson("getSources", {
 			"expandConfigs" : false
@@ -86,7 +86,7 @@ var page_create_backup_1 = {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 
 		$(page_create_backup_1.config.pageId).on("click", ".authRequired-false", function(event) {
-			app.help.navigation.redirect("create_backup_1_newSource.html");
+			app.help.navigation.redirect("create_backup_1_newSource.html", "slide");
 		});
 		$(page_create_backup_1.config.pageId).on(
 				"click",

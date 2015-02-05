@@ -18,7 +18,7 @@ var page_create_backup_2 = {
 		var pagePanel = $('div#page-panel');
 		// datasources
 
-		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
+		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading", "headlines"));
 
 		var promise = app.rc.getJson("getSinks", {
 			"expandConfigs" : true
@@ -85,7 +85,7 @@ var page_create_backup_2 = {
 
 		// just another dirty part
 		$(page_create_backup_2.config.pageId).on("click", ".authRequired-false", function(event) {
-			app.help.navigation.redirect("create_backup_1_newSource.html");
+			app.help.navigation.redirect("create_backup_1_newSource.html", "slide");
 		});
 
 		$(page_create_backup_2.config.pageId).on(

@@ -16,14 +16,18 @@ var page_create_backup_2_newSink = {
 		var content = $('div[data-role=content]');
 		var navPanel = $('div#nav-panel');
 		var pagePanel = $('div#page-panel');
-		// datasources
 
-		var promise = app.rc.getJson("getPlugin", {
+		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading", "headlines"));
+
+		var promise, hasOptions = null, hasProperties = null;
+
+		promise = app.rc.getJson("getPlugin", {
 			"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
 			"expandConfigs" : true
 		}, true);
 
 		promise.done(function(resultObject) {
+
 			content.append(app.ni.element.h1({
 				"text" : app.lang.string("headline", "page.create_backup_2_newSink"),
 				"styles" : {
@@ -44,43 +48,47 @@ var page_create_backup_2_newSink = {
 				"label" : false
 			});
 
-			form.append(app.ni.text.text({
-				"id" : "txtTitle",
-				"placeholder" : app.lang.string("title", "labels"),
-				"label" : true,
-				"labelText" : app.lang.string("title", "labels"),
-				"container" : true,
-				"attributes" : {
-					"value" : app.lang.string("new datasink", "page.create_backup") + ": " + app.store.localStorage.get("data-html5-pluginId")
-				}
-			}));
 			if (resultObject.propertiesDescription != undefined) {
-				$.each(resultObject.propertiesDescription, function(key, value) {
-					switch (value.type.toLowerCase()) {
-					case 'number':
-						form.append(app.ni.text.number({
-							"name" : value.name,
-							"placeholder" : app.lang.string(value.label, resultObject.pluginId),
-							"label" : true,
-							"labelText" : app.lang.string(value.label, resultObject.pluginId),
-							"container" : true
-						}));
-						break;
-					case 'bool':
-						form.append(app.ni.checkbox.checkbox({
-							"name" : value.name,
-							"placeholder" : app.lang.string(value.label, resultObject.pluginId),
-							"label" : true,
-							"labelText" : app.lang.string(value.label, resultObject.pluginId),
-							"container" : true
-						}));
-						break;
-					default:
-						// alert("Unknown type:" + value.type.toLowerCase());
-						break;
-					}
-				});
+				if (resultObject.propertiesDescription.length > 0) {
+					$.each(resultObject.propertiesDescription, function(key, value) {
+						form.append(app.bmu.print.formElement(value, resultObject.pluginId));
+					});
+					hasProperties = true;
+				} else {
+					hasProperties = false;
+				}
 			}
+
+			if (resultObject.availableOptions != undefined) {
+				if (resultObject.availableOptions.length > 0) {
+					var select = $(app.ni.select.multiple({
+						"id" : "cboOptions",
+						"name" : "options",
+						"label" : true,
+						"labelText" : app.lang.string("selectOptionsLabel", "page.create_backup_2_newSink"),
+						"attributes" : {
+							"data-native-menu" : false
+						}
+					}));
+					select.append(app.ni.select.option({
+						"text" : app.lang.string("selectOptions", "page.create_backup_2_newSink")
+					}));
+					$.each(resultObject.availableOptions, function(key, value) {
+						select.append(app.ni.select.option({
+							"text" : value,
+							"attributes" : {
+								"value" : value
+							}
+						}));
+					});
+
+					form.append(select);
+					hasOptions = true;
+				} else {
+					hasOptions = false;
+				}
+			}
+
 			form.append(app.ni.button.button({
 				"id" : "btnCreate",
 				"placeholder" : app.lang.string("create_sink", "labels"),
@@ -90,9 +98,13 @@ var page_create_backup_2_newSink = {
 				"value" : app.lang.string("create_sink", "actions")
 			}));
 
-			content.append(form);
-			app.notify.loader.remove();
-			app.help.jQM.enhance(content);
+			if (hasProperties || hasOptions) {
+				content.append(form);
+				app.notify.loader.remove();
+				app.help.jQM.enhance(content);
+			} else {
+				page_create_backup_2_newSink.createSinkProfile([], {});
+			}
 		});
 
 		promise.fail(function(resultObject) {
@@ -102,91 +114,54 @@ var page_create_backup_2_newSink = {
 		return true;
 	},
 
-	// set the jquery events
+	createSinkProfile : function(options, properties) {
+		if (app.store.localStorage.get("data-html5-authRequired")) {
+			promise = app.rc.getJson("createSinkProfile", {
+				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
+				"authData" : {
+					"id" : app.store.localStorage.get("data-html5-authdataId")
+				},
+				"properties" : properties,
+				"options" : options
+			}, true);
+		} else {
+			promise = app.rc.getJson("createSinkProfile", {
+				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
+				// "authData" : 1,
+				"properties" : properties,
+				"options" : options
+			}, true);
+		}
+
+		promise.done(function(resultObject) {
+			// alert(JSON.stringify(resultObject));
+			app.store.localStorage.set("data-html5-themis-sink-profileid", resultObject.profileId);
+			app.notify.loader.remove();
+			app.help.navigation.redirect("create_backup_3.html", "slide");
+		});
+
+		promise.fail(function() {
+			alert("Quelle nicht angelegt. WS Error")
+		});
+	},
+
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 
-		try {
+		$(page_create_backup_2_newSink.config.pageId).on("click", "#btnCreate", function() {
 
-			$(page_create_backup_2_newSink.config.pageId).on("click", "#btnCreate", function() {
+			var formObject = app.help.form.serialize($("#frmCreateSink")), promise, options = Array();
+			delete formObject.btnCreate;
 
-				var formObject = app.help.form.serialize($("#frmCreateSink")), promise;
-				delete formObject.btnCreate;
+			if (formObject.options != undefined) {
+				options = formObject.options;
+				delete formObject.options;
 
-				if (app.store.localStorage.get("data-html5-authRequired")) {
-					promise = app.rc.getJson("createSinkProfile", {
-						"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
-						"title" : container.find("#txtTitle").val(),
+			}
 
-						"authData" : {
-							"id" : app.store.localStorage.get("data-html5-authdataId")
-						},
-						"properties" : formObject,
-						"options" : [ "" ]
-					}, true);
-				} else {
-					promise = app.rc.getJson("createSinkProfile", {
-						"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
-						"title" : container.find("#txtTitle").val(),
-						// "authData" : 1,
-						"properties" : formObject,
-						"options" : [ "" ]
-					}, true);
-				}
+			page_create_backup_2_newSink.createSinkProfile(options, formObject);
 
-				promise.done(function(resultObject) {
-					// alert(JSON.stringify(resultObject));
-					app.store.localStorage.set("data-html5-themis-sink-profileid", resultObject.profileId);
-					app.notify.loader.remove();
-					app.help.navigation.redirect("create_backup_3.html", "slide");
-				});
-
-				promise.fail(function() {
-					alert("Quelle nicht angelegt. WS Error")
-				});
-				/*
-				 * app.template.append("div[data-role=content]",
-				 * "app-loader-bubble"); var configType =
-				 * app.store.localStorage.get("data-html5-configtype"); //
-				 * alert(configType); configType = "output"; if (configType ==
-				 * "output") { var promise = app.rc.getJson("createSinkProfile", {
-				 * "pluginId" :
-				 * app.store.localStorage.get("data-html5-themis-pluginid"),
-				 * "title" : container.find("#txtTitle").val(),
-				 * "configProperties" : {}, "options" : [ "" ] }, true);
-				 * 
-				 * promise.done(function(resultObject) { //
-				 * alert(JSON.stringify(resultObject));
-				 * app.store.localStorage.set("data-html5-themis-sink-profileid",
-				 * resultObject.profileId); app.notify.loader.remove();
-				 * app.help.navigation.redirect("create_backup_3.html"); });
-				 * 
-				 * promise.fail(function(error) { alert("webservice error: " +
-				 * error); }); } else if (configType == "oauth") {
-				 * 
-				 * var promise = app.rc.getJson("createSourceProfile", {
-				 * "pluginId" :
-				 * app.store.localStorage.get("data-html5-themis-pluginId"),
-				 * "title" : container.find("#txtTitle").val(),
-				 * "configProperties" : { "token" :
-				 * app.store.localStorage.get("data-html5-themis-oAuthToken") },
-				 * "options" : [ "/Documents", "/Photos" ] }, true);
-				 * 
-				 * promise.done(function(resultObject) {
-				 * app.notify.loader.remove();
-				 * app.help.navigation.redirect("create_backup_3.html"); });
-				 * 
-				 * promise.fail(function(error) { alert("webservice error: " +
-				 * error); }); }
-				 */
-			});
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+		});
 
 	},
 

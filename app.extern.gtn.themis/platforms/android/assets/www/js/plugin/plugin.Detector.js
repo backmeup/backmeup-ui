@@ -46,31 +46,25 @@ var plugin_Detector = {
 	definePluginEvents : function() {
 		app.debug.alert("plugin_" + this.config.name + ".definePluginEvents()", 11);
 
-		try {
-			var dfdCordovaDeviceReady = $.Deferred(), dfdJQueryMobileInit = $.Deferred();
+		var dfdCordovaDeviceReady = $.Deferred(), dfdJQueryMobileInit = $.Deferred();
 
-			// resolve dfdCordovaDeviceReady on deviceready
-			document.addEventListener("deviceready", function() {
-				dfdCordovaDeviceReady.resolve();
-			}, false);
+		// resolve dfdCordovaDeviceReady on deviceready
+		document.addEventListener("deviceready", function() {
+			dfdCordovaDeviceReady.resolve();
+		}, false);
 
-			// resolve dfdJQueryMobileInit on mobileinit
-			$(document).bind("mobileinit", function() {
-				dfdJQueryMobileInit.resolve();
-			});
-			// alert(navigator.userAgent);
-			// when both are ready
-			$.when(dfdCordovaDeviceReady, dfdJQueryMobileInit).then(plugin_Detector.jQueryMobileAndCordovaLoaded);
-			$.when(dfdCordovaDeviceReady).then(plugin_Detector.cordovaLoaded);
-			$.when(dfdJQueryMobileInit).then(plugin_Detector.jQueryMobileLoaded);
+		// resolve dfdJQueryMobileInit on mobileinit
+		$(document).bind("mobileinit", function() {
+			dfdJQueryMobileInit.resolve();
+		});
+		// alert(navigator.userAgent);
+		// when both are ready
+		$.when(dfdCordovaDeviceReady, dfdJQueryMobileInit).then(plugin_Detector.jQueryMobileAndCordovaLoaded);
+		$.when(dfdCordovaDeviceReady).then(plugin_Detector.cordovaLoaded);
+		$.when(dfdJQueryMobileInit).then(plugin_Detector.jQueryMobileLoaded);
 
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+		app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
+		app.debug.log(JSON.stringify(err, null, 4));
 	},
 	// called by pages.js
 	// called for each page after createPage();

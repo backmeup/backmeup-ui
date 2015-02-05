@@ -29,6 +29,10 @@ var page_create_backup_3 = {
 				"text" : app.lang.string("description", "page.create_backup_3")
 			}));
 
+			var promise;
+
+			//promise = app.rc.getJson([ [ "", {} ], [ "", {} ] ]);
+
 			content.append(app.ni.element.h2({
 				"text" : app.lang.string("chosen_datasource", "headlines")
 			}));

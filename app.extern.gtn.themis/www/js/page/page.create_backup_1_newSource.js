@@ -61,17 +61,15 @@ var page_create_backup_1_newSource = {
 				"label" : false
 			});
 
-			form.append(app.ni.text.text({
-				"id" : "txtTitle",
-				"name" : "title",
-				"placeholder" : app.lang.string("title", "labels"),
-				"label" : true,
-				"labelText" : app.lang.string("title", "labels"),
-				"container" : true,
+			var formOptions = app.ni.form.form({
+				"id" : "frmOptions",
 				"attributes" : {
-					"value" : app.lang.string("new datasource", "page.create_backup") + ": " + app.store.localStorage.get("data-html5-pluginId")
-				}
-			}));
+					"action" : "#",
+					"data-ajax" : "false"
+				},
+				"label" : false
+			});
+
 			if (resultObject.propertiesDescription != undefined) {
 				$.each(resultObject.propertiesDescription, function(key, value) {
 					form.append(app.bmu.print.formElement(value, resultObject.pluginId));
@@ -79,19 +77,27 @@ var page_create_backup_1_newSource = {
 			}
 			if (resultObject.availableOptions != undefined) {
 				var select = $(app.ni.select.multiple({
+					"id" : "cboOptions",
+					"name" : "options",
+					"label" : true,
+					"labelText" : app.lang.string("selectOptionsLabel", "page.create_backup_1_newSource"),
 					"attributes" : {
-						
+						"data-native-menu" : false
 					}
 				}));
 				select.append(app.ni.select.option({
-					"text" : app.lang.string("selectOption","page.create_backup_1_newSwource")
+					"text" : app.lang.string("selectOptions", "page.create_backup_1_newSource")
 				}));
 				$.each(resultObject.availableOptions, function(key, value) {
 					select.append(app.ni.select.option({
-						"text" : value
+						"text" : value,
+						"attributes" : {
+							"value" : value
+						}
 					}));
 				});
-				form.append(select);
+
+				formOptions.append(select);
 			}
 
 			form.append(app.ni.button.button({
@@ -105,6 +111,7 @@ var page_create_backup_1_newSource = {
 			}));
 
 			content.append(form);
+			content.append(formOptions);
 			app.notify.loader.remove();
 			app.help.jQM.enhance(content);
 		});
@@ -121,26 +128,27 @@ var page_create_backup_1_newSource = {
 		$(page_create_backup_1_newSource.config.pageId).on("click", "#btnCreate", function() {
 			app.notify.loader.bubbleDiv(true, "", app.lang.string("loading", "headlines"));
 
-			var formObject = app.help.form.serialize($("#frmCreateSource")), promise;
+			var formObject = app.help.form.serialize($("#frmCreateSource")), formOptions = app.help.form.serialize($("#frmOptions")), promise;
 			delete formObject.btnCreate;
+
+			if (formOptions.options == undefined)
+				formOptions.options = Array();
 
 			if (app.store.localStorage.get("data-html5-authRequired")) {
 				promise = app.rc.getJson("createSourceProfile", {
 					"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
-					"title" : container.find("#txtTitle ").val(),
 					"authData" : {
 						"id" : app.store.localStorage.get("data-html5-authdataId")
 					},
 					"properties" : formObject,
-					"options" : [ "" ]
+					"options" : formOptions.options
 				}, true);
 			} else {
 				promise = app.rc.getJson("createSourceProfile", {
 					"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
-					"title" : container.find("#txtTitle ").val(),
 					// "authData" : 1,
 					"properties" : formObject,
-					"options" : [ "" ]
+					"options" : formOptions.options
 				}, true);
 			}
 

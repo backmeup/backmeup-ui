@@ -231,7 +231,9 @@
 	"page.create_backup_1_newSource":
 	{
 		"headline":"Datenquellen Einstellungen",
-		"description":"Wähle Einstellungen für deine Datenquelle."
+		"description":"Wähle Einstellungen für deine Datenquelle.",
+		"selectOptionsLabel":"Optionen wählen",
+		"selectOptions":"Optionen wählen"
 	},
 	"page.create_backup_1_oAuthFinished":
 	{

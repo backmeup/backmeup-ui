@@ -187,6 +187,13 @@ var plugin_HelperFunctions = {
 					} else
 						returnObject[$(HTMLInputElement).attr("name")] = $(HTMLInputElement).val();
 				});
+				container.find("select").each(function(key, HTMLSelectElement) {
+					var array = Array();
+					$(HTMLSelectElement).find("option:selected").each(function(key, value) {
+						array.push($(value).text());
+					});
+					returnObject[$(HTMLSelectElement).attr("name")] = array;
+				});
 				return returnObject;
 			}
 		}

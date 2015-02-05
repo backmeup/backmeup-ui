@@ -306,16 +306,19 @@ var plugin_FormInputDesigner = {
 			multiple : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.select.select()", 20);
 				options = plugin_FormInputDesigner.verifyOptions(options);
+
 				options.attributes['multiple'] = "multiple";
+
 				var type = "select", attributes = plugin_FormInputDesigner.getAttributes(options), output;
 				plugin_FormInputDesigner.addClassToOptions(options, "app-form-select-multiple");
 
 				if (options.text == undefined) {
 					options.text = "";
 				}
-				output = '<' + type + ' ' + attributes + '>' + options.text + '</' + type + '>';
 
-				return $(output);
+
+				output = '<' + type + ' ' + attributes + '>' + options.text + '</' + type + '>';
+				return $( output);
 			},
 			option : function(options) {
 				app.debug.alert("plugin_FormInputDesigner.functions.select.option()", 20);

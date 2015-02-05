@@ -44,16 +44,6 @@ var page_create_backup_2_newSink = {
 				"label" : false
 			});
 
-			form.append(app.ni.text.text({
-				"id" : "txtTitle",
-				"placeholder" : app.lang.string("title", "labels"),
-				"label" : true,
-				"labelText" : app.lang.string("title", "labels"),
-				"container" : true,
-				"attributes" : {
-					"value" : app.lang.string("new datasink", "page.create_backup") + ": " + app.store.localStorage.get("data-html5-pluginId")
-				}
-			}));
 			if (resultObject.propertiesDescription != undefined) {
 				$.each(resultObject.propertiesDescription, function(key, value) {
 					switch (value.type.toLowerCase()) {
@@ -116,8 +106,6 @@ var page_create_backup_2_newSink = {
 				if (app.store.localStorage.get("data-html5-authRequired")) {
 					promise = app.rc.getJson("createSinkProfile", {
 						"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
-						"title" : container.find("#txtTitle").val(),
-
 						"authData" : {
 							"id" : app.store.localStorage.get("data-html5-authdataId")
 						},
@@ -127,7 +115,6 @@ var page_create_backup_2_newSink = {
 				} else {
 					promise = app.rc.getJson("createSinkProfile", {
 						"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
-						"title" : container.find("#txtTitle").val(),
 						// "authData" : 1,
 						"properties" : formObject,
 						"options" : [ "" ]

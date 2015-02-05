@@ -223,7 +223,7 @@ $(document).bind("mobileinit", function() {
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-	alert("cordova initialized", 30);
+	//alert("cordova initialized", 30);
 	app.config.apacheCordova = true;
 }
 

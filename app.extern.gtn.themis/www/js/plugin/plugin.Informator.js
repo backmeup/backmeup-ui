@@ -54,35 +54,16 @@ var plugin_Informator = {
 
 	definePluginEvents : function() {
 
-		try {
-
-			success = true;
-		} catch (err) {
-			success = false;
-		}
-		return success;
 	},
 
 	// called by pages.js
 	afterHtmlInjectedBeforePageComputing : function(container) {
 		app.debug.alert("Plugin: " + this.config.name + ".afterHtmlInjectedBeforePageComputing()", 5);
 
-		try {
-			success = true;
-		} catch (err) {
-			success = false;
-		}
-		return success;
 	},
 	pageSpecificEvents : function(container) {
 		app.debug.alert("Plugin: " + this.config.name + ".pageSpecificEvents()", 5);
 
-		try {
-			success = true;
-		} catch (err) {
-			success = false;
-		}
-		return success;
 	},
 
 	// private functions
@@ -107,7 +88,7 @@ var plugin_Informator = {
 	loadConfigurationIntoHtml5Storage : function(configurationObject, start) {
 		// 1: if property is in html5 storage then use this value
 		// 2: else use property from json file
-
+		console.log("todo !!!!");
 		try {
 			if (!configurationObject || configurationObject == undefined)
 				return;

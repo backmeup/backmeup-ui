@@ -33,7 +33,7 @@ var page_create_backup_1_newSource = {
 		var navPanel = $('div#nav-panel');
 		var pagePanel = $('div#page-panel');
 
-		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
+		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading", "headlines"));
 
 		var promise = app.rc.getJson("getPlugin", {
 			"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
@@ -77,6 +77,22 @@ var page_create_backup_1_newSource = {
 					form.append(app.bmu.print.formElement(value, resultObject.pluginId));
 				});
 			}
+			if (resultObject.availableOptions != undefined) {
+				var select = $(app.ni.select.multiple({
+					"attributes" : {
+						
+					}
+				}));
+				select.append(app.ni.select.option({
+					"text" : app.lang.string("selectOption","page.create_backup_1_newSwource")
+				}));
+				$.each(resultObject.availableOptions, function(key, value) {
+					select.append(app.ni.select.option({
+						"text" : value
+					}));
+				});
+				form.append(select);
+			}
 
 			form.append(app.ni.button.button({
 				"id" : "btnCreate",
@@ -103,7 +119,7 @@ var page_create_backup_1_newSource = {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 
 		$(page_create_backup_1_newSource.config.pageId).on("click", "#btnCreate", function() {
-			app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
+			app.notify.loader.bubbleDiv(true, "", app.lang.string("loading", "headlines"));
 
 			var formObject = app.help.form.serialize($("#frmCreateSource")), promise;
 			delete formObject.btnCreate;

@@ -7,6 +7,6 @@
 	"debugLevel":50,
 	"useDebugArray":false,
 	"debugArray":[1,2,3,4,5,6],
-	"logDebug":true,
+	"logDebug":false,
 	"logDebugLevel":1
 }

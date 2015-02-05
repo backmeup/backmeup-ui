@@ -79,7 +79,7 @@ var page_backup_edit = {
 				}));
 
 				content.append(app.ni.element.p({
-					"text" : date('F j, Y, g:i a', resultObject.start/100)
+					"text" : date('F j, Y, g:i a', resultObject.start/1000)
 				}));
 
 				content.append(app.ni.element.h2({
@@ -87,7 +87,7 @@ var page_backup_edit = {
 				}));
 
 				content.append(app.ni.element.p({
-					"text" : date('F j, Y, g:i a', resultObject.next/100)
+					"text" : date('F j, Y, g:i a', resultObject.next/1000)
 				}));
 
 				content.append(app.ni.element.h2({

@@ -12,6 +12,7 @@
 	"create_backup_2_oAuthFinished":true,
 	"create_backup_2":true,
 	"create_backup_3":true,
+	"create_backup_oAuthHandler":true,
 	"index":true,
 	"job_details":true,
 	"login":true,

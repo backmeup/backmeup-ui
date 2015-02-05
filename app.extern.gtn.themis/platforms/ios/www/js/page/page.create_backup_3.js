@@ -3,7 +3,9 @@ var page_create_backup_3 = {
 
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
-		
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 	},
 
 	// load the html structure
@@ -79,7 +81,7 @@ var page_create_backup_3 = {
 		
 		try {
 			$(container).on("click", "#btnCreateBackup", function() {
-				app.template.append("div[data-role=content]", "app-loader-bubble");
+				app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
 				var promise = app.rc.getJson("createBackupjob", {
 					"jobTitle" : container.find("#txtTitle").val(),
 					"schedule" : "weekly",
@@ -91,7 +93,7 @@ var page_create_backup_3 = {
 
 				promise.done(function(resultObject) {
 					//alert(JSON.stringify(resultObject));
-					$(".app-loader").remove();
+					app.notify.loader.remove();
 					app.store.localStorage.clearHtml5();
 					app.help.navigation.redirect("backup_jobs.html");
 				});

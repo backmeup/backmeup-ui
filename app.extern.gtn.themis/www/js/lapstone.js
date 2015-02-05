@@ -275,7 +275,7 @@ var startup = {
 		startup.currentPosition++;
 
 		if (startupDefinition.length > startup.currentPosition) {
-			//console.log(startup.currentPosition + ": " + startupDefinition[startup.currentPosition]['status']);
+			console.log(startup.currentPosition + ": " + startupDefinition[startup.currentPosition]['status']);
 			initialisationPanel.changeStatus(startupDefinition[startup.currentPosition]['status']);
 			promise = startupDefinition[startup.currentPosition]['function'](startupDefinition[startup.currentPosition]['parameter']);
 			promise.done(startup.functionDone);
@@ -306,6 +306,7 @@ $(document).ready(function() {
 	inititalisationPromise.done(function() {
 		//alert("init done");
 		setTimeout(function() {
+			
 			initialisationPanel.finish()
 		}, 200);
 	});

@@ -55,9 +55,9 @@ var page_create_backup_1 = {
 				list.append(app.ni.list.thumbnail({
 					href : "#",
 					imageSrc : app.img.getUrlById(pluginId + "Large"),
-					title : "Id: " + pluginJson.datasourceProfileId,
+					title : "",
 					headline : pluginJson.title,
-					text : pluginJson.pluginName,
+					text : pluginJson.description,
 					classes : [ 'source', 'authRequired-' + authRequired ],
 					attributes : {
 						"data-html5-authRequired" : authRequired,

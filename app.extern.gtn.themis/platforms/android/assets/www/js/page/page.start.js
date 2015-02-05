@@ -2,7 +2,9 @@ var page_start = {
 	config : null,
 
 	constructor : function() {
-		;
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 	},
 
 	// load the html structure
@@ -15,16 +17,10 @@ var page_start = {
 			var navPanel = container.find('div#nav-panel');
 
 			content.append(app.ni.element.h1({
-				"text" : app.lang.string("start", "headlines")
+				"text" : "Sollte nicht angezeigt werden."
 			}));
 
-			content.append(app.ni.text.text({
-				"id" : "txtEmail",
-				"placeholder" : "" ,
-				"label" : true,
-				"labelText" : "Suche:",
-				"container" : true
-			}));
+			
 
 			success = true;
 		} catch (err) {

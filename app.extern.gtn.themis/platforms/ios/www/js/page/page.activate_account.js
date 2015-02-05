@@ -3,6 +3,9 @@ var page_activate_account = {
 
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 
 	},
 

@@ -7,51 +7,49 @@
 var plugin_Informator = {
 	config : null,
 	constructor : function() {
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 	},
 	pluginsLoaded : function() {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
 
-		try {
-			// load the plugins' configuartion into html5 storage
-			if (this.config.useHtml5Storage && this.config.savePluginConfig) {
-				var global = {};
-				$.each(plugins.pluginNames, function(key, value) {
-					if (global["plugin_" + value] == undefined)
-						global["plugin_" + value] = {};
-					global["plugin_" + value]['config'] = window['plugin_' + value]['config'];
-				});
-				this.loadConfigurationIntoHtml5Storage(global);
-			}
-			success = true;
-		} catch (err) {
-			success = false;
+		var dfd = $.Deferred();
+		// load the plugins' configuartion into html5 storage
+		if (this.config.useHtml5Storage && this.config.savePluginConfig) {
+			var global = {};
+			$.each(plugins.pluginNames, function(key, value) {
+				if (global["plugin_" + value] == undefined)
+					global["plugin_" + value] = {};
+				global["plugin_" + value]['config'] = window['plugin_' + value]['config'];
+			});
+			this.loadConfigurationIntoHtml5Storage(global);
 		}
-		return success;
+
+		dfd.resolve();
+		return dfd.promise();
 	},
 
 	// called after all pages are loaded
 	pagesLoaded : function() {
+		var dfd = $.Deferred();
+
 		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
 
-		try {
-			// load the pages' configuartion into html5 storage
-			if (this.config.useHtml5Storage && this.config.savePageConfig) {
-				var global = {};
-				$.each(pages.pageNames, function(key, value) {
-					if (global["page_" + value] == undefined)
-						global["page_" + value] = {};
-					// dirty!! do not use json loader
-					global["page_" + value]['config'] = JsonLoader("../js/page/page." + value + ".json");
-				});
-				this.loadConfigurationIntoHtml5Storage(global);
-			}
-			success = true;
-		} catch (err) {
-			success = false;
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
+		// load the pages' configuartion into html5 storage
+		if (this.config.useHtml5Storage && this.config.savePageConfig) {
+			var global = {};
+			alert("xxxxxxxx");
+			$.each(pages.pageNames, function(key, value) {
+				if (global["page_" + value] == undefined)
+					global["page_" + value] = {};
+				// dirty!! do not use json loader
+				global["page_" + value]['config'] = globalLoader.JsonLoader("../js/page/page." + value + ".json");
+			});
+			this.loadConfigurationIntoHtml5Storage(global);
 		}
-		return success;
+		dfd.resolve();
+		return dfd.promise();
 	},
 
 	definePluginEvents : function() {

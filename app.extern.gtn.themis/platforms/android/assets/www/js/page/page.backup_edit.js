@@ -3,7 +3,9 @@ var page_backup_edit = {
 
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
-		
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 	},
 
 	// load the html structure
@@ -15,7 +17,7 @@ var page_backup_edit = {
 			var content = container.find('div[data-role=content]');
 			var navPanel = container.find('div#nav-panel');
 
-			app.template.append("div[data-role=content]", "app-loader-bubble");
+			app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
 
 			var promise = app.rc.getJson("getBackupjob", {
 				"jobId" : app.store.localStorage.get("data-html5-themis-backupid"),
@@ -61,7 +63,7 @@ var page_backup_edit = {
 				}));
 
 				content.append(app.ni.element.p({
-					"text" : date('F j, Y, g:i a', resultObject.created)
+					"text" : date('F j, Y, g:i a', resultObject.created/1000)
 				}));
 
 				content.append(app.ni.element.h2({
@@ -69,7 +71,7 @@ var page_backup_edit = {
 				}));
 
 				content.append(app.ni.element.p({
-					"text" : date('F j, Y, g:i a', resultObject.modified)
+					"text" : date('F j, Y, g:i a', resultObject.modified/1000)
 				}));
 
 				content.append(app.ni.element.h2({
@@ -77,7 +79,7 @@ var page_backup_edit = {
 				}));
 
 				content.append(app.ni.element.p({
-					"text" : date('F j, Y, g:i a', resultObject.start)
+					"text" : date('F j, Y, g:i a', resultObject.start/100)
 				}));
 
 				content.append(app.ni.element.h2({
@@ -85,7 +87,7 @@ var page_backup_edit = {
 				}));
 
 				content.append(app.ni.element.p({
-					"text" : date('F j, Y, g:i a', resultObject.next)
+					"text" : date('F j, Y, g:i a', resultObject.next/100)
 				}));
 
 				content.append(app.ni.element.h2({
@@ -105,7 +107,7 @@ var page_backup_edit = {
 					"classes" : [ 'ui-btn' ]
 				}));
 
-				$(".app-loader").remove();
+				app.notify.loader.remove();
 
 				app.help.jQM.enhance(content);
 			});

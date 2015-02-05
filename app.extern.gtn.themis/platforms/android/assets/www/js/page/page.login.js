@@ -2,7 +2,9 @@ var page_login = {
 	config : null,
 
 	constructor : function() {
-		;
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 	},
 
 	// load the html structure
@@ -102,11 +104,11 @@ var page_login = {
 					app.debug.alert("page_" + page_register.config.name + " #btnRegister click", 25);
 					event.preventDefault();
 					if (!app.help.validate.username(container.find("#txtUsername").val())) {
-						app.notify.alert(app.lang.string("bad_username", "notifications"), false, app.lang.string("login", "headlines"), app.lang.string("ok",
-								"actions"))
+						app.notify.alert(app.lang.string("error", "page.login"), false, app.lang.string("error_headline", "page.login"), app.lang.string(
+								"error_button", "page.login"))
 					} else if (!app.help.validate.password(container.find("#txtPassword").val())) {
-						app.notify.alert(app.lang.string("bad_password", "notifications"), false, app.lang.string("login", "headlines"), app.lang.string("ok",
-								"actions"))
+						app.notify.alert(app.lang.string("error", "page.login"), false, app.lang.string("error_headline", "page.login"), app.lang.string(
+								"error_button", "page.login"))
 					} else {
 
 						app.template.append("#btnLogin", "app-loader-bubble-inline-button");
@@ -135,8 +137,8 @@ var page_login = {
 						});
 
 						promise.fail(function(errorObject) {
-							app.notify.alert(app.lang.string("bad_login", "notifications"), app.lang.string("login", "headlines"), false, app.lang.string("ok",
-									"actions"));
+							app.notify.alert(app.lang.string("error", "page.login"), app.lang.string("error_headline", "page.login"), false, app.lang.string(
+									"error_button", "page.login"));
 						});
 					}
 				});

@@ -67,9 +67,9 @@ var page_backup_jobs = {
 							list.append(app.ni.list.thumbnail({
 								href : "backup_edit.html",
 								imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
-								title : "Id: " + jobJson.jobId,
+								title : "",
 								headline : jobJson.jobTitle,
-								text : jobJson.jobTitle,
+								text : "",
 								classes : [ 'job' ],
 								attributes : {
 									"data-html5-themis-backupid" : jobJson.jobId

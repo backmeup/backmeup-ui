@@ -1,314 +1,221 @@
-// app.store.localStorage.clear();
-var app = {
-	config : {
-		name : "app",
-		min : false,
-		useJQueryMobile : true,
-		apacheCordova : null
-	},
-	addObject : function(name, object) {
-		// alert("Add object to app: " + name);
-		app[name] = object;
-	}
-};
-
-function loadPlugins() {
-	var dfd = $.Deferred(), url, promise;
-
-	if (app.config.min) {
-		url = "../js/plugin/all.plugin.min.js";
-	} else {
-		url = "../js/plugin/plugins.js";
-	}
-
-	// load the plugins file
-	promise = globalLoader.AsyncScriptLoader(url);
-	promise.done(function() {
-		//startup.addFunction("plugin constructor", plugins.constructor, "");
-		plugins.constructor();
-		dfd.resolve();
-	});
-	promise.fail(function() {
-		dfd.reject();
-	});
-
-	return dfd.promise();
-}
-
-function loadPages() {
-	var dfd = $.Deferred(), url, promise;
-
-	if (app.config.min) {
-		url = "../js/page/all.page.min.js";
-	} else {
-		url = "../js/page/pages.js";
-	}
-
-	// load pages file
-	promise = globalLoader.AsyncScriptLoader(url);
-	promise.done(function() {
-		//startup.addFunction("page constructor", pages.constructor, "");
-		pages.constructor();
-		dfd.resolve();
-	});
-	promise.fail(function() {
-		dfd.reject();
-	});
-
-	return dfd.promise();
-}
-
-function loadConfiguration() {
-	var dfd = $.Deferred(), promise;
-
-	promise = globalLoader.AsyncJsonLoader("../js/lapstone.json");
-
-	promise.done(function(configuration) {
-		app.config.name = configuration.appname;
-		app.config['startPage'] = configuration.startPage;
-		app.config['startPage_loggedIn'] = configuration.startPage_loggedIn;
-		dfd.resolve();
-	});
-
-	promise.fail(function() {
-		dfd.reject();
-	});
-
-	return dfd.promise();
-}
-
-function enchantPages() {
-	var dfd = $.Deferred(), promise;
-	promise = globalLoader.AsyncScriptLoader("../ext/jquery.mobile-1.4.5.min.js");
-	$(document).bind("mobileinit", function() {
-		app.debug.alert("jQuery mobile initialized", 30);
-		$.mobile.ajaxEnabled = true;
-		$.support.cors = true;
-		$.mobile.allowCrossDomainPages = true;
-		$.mobile.page.prototype.options.domCache = false;
-
-		$.mobile.loader.prototype.options.text = "loading";
-		$.mobile.loader.prototype.options.textVisible = false;
-		$.mobile.loader.prototype.options.theme = "a";
-		$.mobile.loader.prototype.options.html = "";
-
-		$.mobile.defaultPageTransition = 'none';
-
-	//	dfd.resolve();
-	});
-	promise.done(function() {
-		initialisationPanel.changeStatus("jquery mobile loaded");
-
-		// resolve after mobileinit event
-		
-	});
-
-	promise.fail(function() {
-		dfd.reject();
-	});
-
-	return dfd.promise();
-}
-
-var globalLoader = {
-	AsyncJsonLoader : function(url) {
-		var dfd = $.Deferred();
-		$.ajax({
-			url : url,
-			async : true,
-			dataType : "json",
-			timeout : 5000,
-			success : function(data) {
-				dfd.resolve(data);
+var test = {
+	"files" : [
+			{
+				"fileId" : "36:9bdfc1f373f172b73749e9d03dd4a00e:1423063588193",
+				"timeStamp" : 1423063588193,
+				"title" : "accounts.html",
+				"type" : "html",
+				"datasource" : "Neue Datenquelle: org.backmeup.facebook (590)",
+				"jobName" : "asdasd",
+				"preview" : "... zur��ck zur ��bersicht my facebook: Seiten ...",
+				"properties" : {
+					"downloadURL" : "http://themis-storage01.backmeup.at:8080/backmeup-storage-service/download/BMU_facebook_590_04_02_2015_16_26/accounts.html",
+					"backup_sink" : "Neue Datensenke: org.backmeup.storage",
+					"path" : "BMU_facebook_590_04_02_2015_16_26/accounts.html",
+					"file_md5_hash" : "9bdfc1f373f172b73749e9d03dd4a00e"
+				}
 			},
-			error : function(jqXHR, textStatus, errorThrown) {
-				initialisationPanel.changeStatus("Fatal Error: Can't load JSON. Url: " + url + " Status: " + textStatus + " Thrown:" + JSON.stringify(jqXHR));
-				dfd.reject(textStatus);
-			}
-		});
-		return dfd.promise();
-	},
-	JsonLoader : function(url) {
-		var json = null;
-		$.ajax({
-			url : url,
-			async : false,
-			dataType : "json",
-			success : function(data) {
-				// alert(JSON.stringify(data));
-				json = data;
+			{
+				"fileId" : "36:212e4a2710eb5976e32270ad44242a39:1423063588193",
+				"timeStamp" : 1423063588193,
+				"title" : "friendlists.html",
+				"type" : "html",
+				"datasource" : "Neue Datenquelle: org.backmeup.facebook (590)",
+				"jobName" : "asdasd",
+				"preview" : "... zur��ck zur ��bersicht my facebook: Freundesliste ...",
+				"properties" : {
+					"downloadURL" : "http://themis-storage01.backmeup.at:8080/backmeup-storage-service/download/BMU_facebook_590_04_02_2015_16_26/friendlists.html",
+					"backup_sink" : "Neue Datensenke: org.backmeup.storage",
+					"path" : "BMU_facebook_590_04_02_2015_16_26/friendlists.html",
+					"file_md5_hash" : "212e4a2710eb5976e32270ad44242a39"
+				}
 			},
-			error : function(jqXHR, textStatus, errorThrown) {
-				initialisationPanel.changeStatus("Fatal Error: Can't load JSON. Url: " + url + " Status: " + textStatus + " Thrown:" + JSON.stringify(jqXHR));
-			}
-		});
-		return json;
-	},
-	AsyncScriptLoader : function(url) {
-		var dfd = $.Deferred();
-		$.ajax({
-			url : url,
-			async : true,
-			dataType : "script",
-			timeout : 5000,
-			success : function(data) {
-				dfd.resolve(data);
+			{
+				"fileId" : "36:7f0bb051bb44fa5b5bbce5a7729ff35a:1423063588193",
+				"timeStamp" : 1423063588193,
+				"title" : "posts-me.html",
+				"type" : "html",
+				"datasource" : "Neue Datenquelle: org.backmeup.facebook (590)",
+				"jobName" : "asdasd",
+				"preview" : "... zur��ck zur ��bersicht my facebook: Pinwand ...",
+				"properties" : {
+					"downloadURL" : "http://themis-storage01.backmeup.at:8080/backmeup-storage-service/download/BMU_facebook_590_04_02_2015_16_26/posts-me.html",
+					"backup_sink" : "Neue Datensenke: org.backmeup.storage",
+					"path" : "BMU_facebook_590_04_02_2015_16_26/posts-me.html",
+					"file_md5_hash" : "7f0bb051bb44fa5b5bbce5a7729ff35a"
+				}
 			},
-			error : function(jqXHR, textStatus, errorThrown) {
-				initialisationPanel.changeStatus("Fatal Error: Can't load Script. Url: " + url + " Status: " + textStatus + " Thrown:" + JSON.stringify(jqXHR));
-
-				dfd.reject(textStatus);
-			}
-		});
-		return dfd.promise();
-	},
-	AsyncTextLoader : function(url) {
-		var dfd = $.Deferred();
-		$.ajax({
-			url : url,
-			async : false,
-			dataType : "text",
-			success : function(data) {
-				dfd.resolve(data);
+			{
+				"fileId" : "36:43fe2f22c299dd8626e218faac0778f4:1423063588193",
+				"timeStamp" : 1423063588193,
+				"title" : "Martin Kattner963958263617570.jpg",
+				"type" : "other",
+				"thumbnailUrl" : "http://themis-storage01.backmeup.at:8080/backmeup-storage-service/download/BMU_facebook_590_04_02_2015_16_26/Freunde/Fotos/thumbs/1423063588134_Freunde$Fotos$Martin_Kattner963958263617570.jpg_thumb.jpg",
+				"datasource" : "Neue Datenquelle: org.backmeup.facebook (590)",
+				"jobName" : "asdasd",
+				"properties" : {
+					"downloadURL" : "http://themis-storage01.backmeup.at:8080/backmeup-storage-service/download/BMU_facebook_590_04_02_2015_16_26/Freunde/Fotos/Martin Kattner963958263617570.jpg",
+					"source" : "facebook",
+					"backup_sink" : "Neue Datensenke: org.backmeup.storage",
+					"path" : "BMU_facebook_590_04_02_2015_16_26/Freunde/Fotos/Martin Kattner963958263617570.jpg",
+					"parent" : "Martin Kattner963958263617570.html",
+					"destination" : "Freunde/Fotos/Martin Kattner963958263617570.jpg",
+					"file_md5_hash" : "43fe2f22c299dd8626e218faac0778f4"
+				}
 			},
-			error : function(jqXHR, textStatus, errorThrown) {
-				initialisationPanel.changeStatus("Fatal Error: Can't load Text. Url: " + url + " Status: " + textStatus);
-				dfd.reject(textStatus);
-			}
-		});
-		return dfd.promise();
-	},
-	TextLoader : function(url) {
-		var text = null;
-		$.ajax({
-			url : url,
-			async : false,
-			dataType : "text",
-			success : function(data) {
-				// alert(JSON.stringify(data));
-				text = data;
+			{
+				"fileId" : "36:b0dce9a1c46619e6b9527d66eee04dc2:1423063588193",
+				"timeStamp" : 1423063588193,
+				"title" : "list_point.jpg",
+				"type" : "other",
+				"thumbnailUrl" : "http://themis-storage01.backmeup.at:8080/backmeup-storage-service/download/BMU_facebook_590_04_02_2015_16_26/Themes/thumbs/1423063588180_Themes$list_point.jpg_thumb.jpg",
+				"datasource" : "Neue Datenquelle: org.backmeup.facebook (590)",
+				"jobName" : "asdasd",
+				"properties" : {
+					"downloadURL" : "http://themis-storage01.backmeup.at:8080/backmeup-storage-service/download/BMU_facebook_590_04_02_2015_16_26/Themes/list_point.jpg",
+					"backup_sink" : "Neue Datensenke: org.backmeup.storage",
+					"path" : "BMU_facebook_590_04_02_2015_16_26/Themes/list_point.jpg",
+					"file_md5_hash" : "b0dce9a1c46619e6b9527d66eee04dc2"
+				}
 			},
-			error : function(jqXHR, textStatus, errorThrown) {
-				alert("Fatal Error: Can't load TEXT. Url: " + url + " Status: " + textStatus);
-			}
-		});
-		return text;
-	}
+			{
+				"fileId" : "36:902af055cc69650ae35c708936aff384:1423063588193",
+				"timeStamp" : 1423063588193,
+				"title" : "backmeuplogo.jpg",
+				"type" : "other",
+				"thumbnailUrl" : "http://themis-storage01.backmeup.at:8080/backmeup-storage-service/download/BMU_facebook_590_04_02_2015_16_26/Themes/thumbs/1423063588151_Themes$backmeuplogo.jpg_thumb.jpg",
+				"datasource" : "Neue Datenquelle: org.backmeup.facebook (590)",
+				"jobName" : "asdasd",
+				"properties" : {
+					"downloadURL" : "http://themis-storage01.backmeup.at:8080/backmeup-storage-service/download/BMU_facebook_590_04_02_2015_16_26/Themes/backmeuplogo.jpg",
+					"backup_sink" : "Neue Datensenke: org.backmeup.storage",
+					"path" : "BMU_facebook_590_04_02_2015_16_26/Themes/backmeuplogo.jpg",
+					"file_md5_hash" : "902af055cc69650ae35c708936aff384"
+				}
+			},
+			{
+				"fileId" : "36:f7e7542610480001a4dd78880a868c99:1423063588193",
+				"timeStamp" : 1423063588193,
+				"title" : "friends.html",
+				"type" : "html",
+				"datasource" : "Neue Datenquelle: org.backmeup.facebook (590)",
+				"jobName" : "asdasd",
+				"preview" : "... zur��ck zur ��bersicht my facebook: Freunde ...",
+				"properties" : {
+					"downloadURL" : "http://themis-storage01.backmeup.at:8080/backmeup-storage-service/download/BMU_facebook_590_04_02_2015_16_26/friends.html",
+					"backup_sink" : "Neue Datensenke: org.backmeup.storage",
+					"path" : "BMU_facebook_590_04_02_2015_16_26/friends.html",
+					"file_md5_hash" : "f7e7542610480001a4dd78880a868c99"
+				}
+			},
+			{
+				"fileId" : "36:dfbc5d45c0c85b9288801b684c0cd611:1423063588193",
+				"timeStamp" : 1423063588193,
+				"title" : "index.html",
+				"type" : "html",
+				"datasource" : "Neue Datenquelle: org.backmeup.facebook (590)",
+				"jobName" : "asdasd",
+				"preview" : "... my facebook: Index \tMein Profil \tFreunde \tFreundesliste \tGruppen \tPosts \tFotos \tAlben \tSeiten ...",
+				"properties" : {
+					"downloadURL" : "http://themis-storage01.backmeup.at:8080/backmeup-storage-service/download/BMU_facebook_590_04_02_2015_16_26/index.html",
+					"backup_sink" : "Neue Datensenke: org.backmeup.storage",
+					"path" : "BMU_facebook_590_04_02_2015_16_26/index.html",
+					"file_md5_hash" : "dfbc5d45c0c85b9288801b684c0cd611"
+				}
+			},
+			{
+				"fileId" : "36:8767a8579d9eb4b4f487e13adaeb300e:1423063588193",
+				"timeStamp" : 1423063588193,
+				"title" : "Martin Kattner963958263617570.html",
+				"type" : "html",
+				"datasource" : "Neue Datenquelle: org.backmeup.facebook (590)",
+				"jobName" : "asdasd",
+				"preview" : "... zur��ck zur ��bersicht my facebook: Mein Profil  \tUsername\tMartin Kattner \tE-Mail\tmartin.kattner@gmail.com \tGeschlecht\tmale \tLink\thttps://www.facebook.com/app_scoped_user_id/963958263617570/ ...",
+				"properties" : {
+					"downloadURL" : "http://themis-storage01.backmeup.at:8080/backmeup-storage-service/download/BMU_facebook_590_04_02_2015_16_26/Freunde/Martin Kattner963958263617570.html",
+					"source" : "facebook",
+					"backup_sink" : "Neue Datensenke: org.backmeup.storage",
+					"path" : "BMU_facebook_590_04_02_2015_16_26/Freunde/Martin Kattner963958263617570.html",
+					"modified" : "29.05.2014 17:38:28 CEST",
+					"destination" : "Freunde/Martin Kattner963958263617570.html",
+					"file_md5_hash" : "8767a8579d9eb4b4f487e13adaeb300e"
+				}
+			},
+			{
+				"fileId" : "36:7c2a0a8ce0daf61564f2143f369e0320:1423063588193",
+				"timeStamp" : 1423063588193,
+				"title" : "photos.html",
+				"type" : "html",
+				"datasource" : "Neue Datenquelle: org.backmeup.facebook (590)",
+				"jobName" : "asdasd",
+				"preview" : "... zur��ck zur ��bersicht my facebook: Fotos ...",
+				"properties" : {
+					"downloadURL" : "http://themis-storage01.backmeup.at:8080/backmeup-storage-service/download/BMU_facebook_590_04_02_2015_16_26/photos.html",
+					"backup_sink" : "Neue Datensenke: org.backmeup.storage",
+					"path" : "BMU_facebook_590_04_02_2015_16_26/photos.html",
+					"file_md5_hash" : "7c2a0a8ce0daf61564f2143f369e0320"
+				}
+			},
+			{
+				"fileId" : "36:747a367f21c4f0bd144bac46d74209c4:1423063588193",
+				"timeStamp" : 1423063588193,
+				"title" : "groups.html",
+				"type" : "html",
+				"datasource" : "Neue Datenquelle: org.backmeup.facebook (590)",
+				"jobName" : "asdasd",
+				"preview" : "... zur��ck zur ��bersicht my facebook: Gruppen ...",
+				"properties" : {
+					"downloadURL" : "http://themis-storage01.backmeup.at:8080/backmeup-storage-service/download/BMU_facebook_590_04_02_2015_16_26/groups.html",
+					"backup_sink" : "Neue Datensenke: org.backmeup.storage",
+					"path" : "BMU_facebook_590_04_02_2015_16_26/groups.html",
+					"file_md5_hash" : "747a367f21c4f0bd144bac46d74209c4"
+				}
+			},
+			{
+				"fileId" : "36:bd1fe962f9200e11fcf36f713f9d27e1:1423063588193",
+				"timeStamp" : 1423063588193,
+				"title" : "albums.html",
+				"type" : "html",
+				"datasource" : "Neue Datenquelle: org.backmeup.facebook (590)",
+				"jobName" : "asdasd",
+				"preview" : "... zur��ck zur ��bersicht my facebook: Alben ...",
+				"properties" : {
+					"downloadURL" : "http://themis-storage01.backmeup.at:8080/backmeup-storage-service/download/BMU_facebook_590_04_02_2015_16_26/albums.html",
+					"backup_sink" : "Neue Datensenke: org.backmeup.storage",
+					"path" : "BMU_facebook_590_04_02_2015_16_26/albums.html",
+					"file_md5_hash" : "bd1fe962f9200e11fcf36f713f9d27e1"
+				}
+			},
+			{
+				"fileId" : "36:26714bf776f42d753ac48c398e857ce1:1423063588193",
+				"timeStamp" : 1423063588193,
+				"title" : "facebooklogo.jpg",
+				"type" : "other",
+				"thumbnailUrl" : "http://themis-storage01.backmeup.at:8080/backmeup-storage-service/download/BMU_facebook_590_04_02_2015_16_26/Themes/thumbs/1423063588164_Themes$facebooklogo.jpg_thumb.jpg",
+				"datasource" : "Neue Datenquelle: org.backmeup.facebook (590)",
+				"jobName" : "asdasd",
+				"properties" : {
+					"downloadURL" : "http://themis-storage01.backmeup.at:8080/backmeup-storage-service/download/BMU_facebook_590_04_02_2015_16_26/Themes/facebooklogo.jpg",
+					"backup_sink" : "Neue Datensenke: org.backmeup.storage",
+					"path" : "BMU_facebook_590_04_02_2015_16_26/Themes/facebooklogo.jpg",
+					"file_md5_hash" : "26714bf776f42d753ac48c398e857ce1"
+				}
+			} ],
+	"bySource" : [ {
+		"title" : "Neue Datenquelle: org.backmeup.facebook (590)",
+		"count" : 13
+	} ],
+	"byType" : [ {
+		"title" : "other",
+		"count" : 4
+	}, {
+		"title" : "html",
+		"count" : 9
+	} ],
+	"byJob" : [ {
+		"title" : "asdasd (1423063588193)",
+		"count" : 13
+	} ],
+	"searchQuery" : "*",
+	"progress" : 0
 }
-
-/* on cordova initialisation */
-document.addEventListener("deviceready", onDeviceReady, false);
-
-function onDeviceReady() {
-	app.debug.alert("cordova initialized", 30);
-	app.config.apacheCordova = true;
-}
-
-var initialisationPanel = {
-	start : function() {
-		var dfd = $.Deferred(), promise;
-
-		promise = globalLoader.AsyncTextLoader('../js/lapstone.html');
-		promise.done(function(data) {
-			$('body').append(data);
-			dfd.resolve();
-		});
-		promise.fail(function(e) {
-			dfd.reject();
-		});
-		return dfd.promise();
-	},
-	changeStatus : function(status) {
-		$("#LAPSTONE .lapstone-status").text(status);
-	},
-	finish : function() {
-		$("#LAPSTONE").remove();
-	}
-}
-
-var startupDefinition = [ {
-	"status" : "start initialisation",
-	"function" : initialisationPanel.start,
-	"parameter" : "",
-	"result" : ""
-}, {
-	"status" : "load configuration",
-	"function" : loadConfiguration,
-	"parameter" : "",
-	"result" : ""
-}, {
-	"status" : "load plugins",
-	"function" : loadPlugins,
-	"parameter" : "",
-	"result" : ""
-}, {
-	"status" : "load pages",
-	"function" : loadPages,
-	"parameter" : "",
-	"result" : ""
-}, {
-	"status" : "enchant pages",
-	"function" : enchantPages,
-	"parameter" : "",
-	"result" : ""
-} ]
-
-var startup = {
-	currentPosition : 0,
-	dfd : $.Deferred(),
-	promise : null,
-
-	addFunction : function(status, func, parameter) {
-		startupDefinition.splice(startup.currentPosition + 1, 0, {
-			"status" : status,
-			"function" : func,
-			"parameter" : parameter,
-			"result" : ""
-		});
-	},
-
-	functionDone : function(data) {
-		var promise;
-		console.log(startup.currentPosition + ": " + startupDefinition[startup.currentPosition]['status'] + " SUCCESSFUL");
-		startup.currentPosition++;
-
-		if (startupDefinition.length > startup.currentPosition) {
-			console.log(startup.currentPosition + ": " + startupDefinition[startup.currentPosition]['status']);
-			initialisationPanel.changeStatus(startupDefinition[startup.currentPosition]['status']);
-			promise = startupDefinition[startup.currentPosition]['function'](startupDefinition[startup.currentPosition]['parameter']);
-			promise.done(startup.functionDone);
-			promise.fail(startup.functionFail);
-			alert('next')
-		} else {
-			startup.dfd.resolve();
-		}
-	},
-
-	functionFail : function() {
-		console.log(startup.currentPosition + ": " + startupDefinition[startup.currentPosition]['status'] + " FAILED");
-		startup.dfd.reject();
-	},
-
-	initFramework : function() {
-		var promise = startupDefinition[0]['function'](startupDefinition[0]['parameter']);
-		promise.done(startup.functionDone);
-		promise.fail(startup.functionFail);
-		return startup.dfd.promise();
-	}
-}
-
-// jquery loaded
-$(document).ready(function() {
-	var inititalisationPromise = startup.initFramework();
-
-	inititalisationPromise.done(function() {
-		alert("init done");
-		setTimeout(function() {
-		//	initialisationPanel.finish()
-		}, 200);
-	});
-
-	inititalisationPromise.fail(function() {
-		alert("framework fail");
-	});
-});

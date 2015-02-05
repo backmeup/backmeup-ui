@@ -3,7 +3,9 @@ var page_create_backup_2_oAuthFinished = {
 
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
-
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 	},
 
 	// load the html structure
@@ -76,9 +78,7 @@ var page_create_backup_2_oAuthFinished = {
 			promise = app.rc.getJson("createAuthdata", {
 				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
 				"name" : $("#txtName").val(),
-				"properties" : {
-					"oAuthQuery" : app.store.localStorage.get("data-html5-oAuthQuery")
-				}
+				"properties" : properties
 			}, true);
 
 			promise.done(function(resultObject) {

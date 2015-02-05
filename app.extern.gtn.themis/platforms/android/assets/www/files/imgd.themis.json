@@ -7,5 +7,8 @@
 	"org.backmeup.moodleLarge":"../files/image/logo.moodle.jpg",
 	"org.backmeup.skydriveLarge":"../files/image/logo.skydrive.jpg",
 	"org.backmeup.storageLarge":"../files/image/logo.storage.jpg",
-	"org.backmeup.twitterLarge":"../files/image/logo.twitter.jpg"
+	"org.backmeup.twitterLarge":"../files/image/logo.twitter.jpg",
+	"search.text":"",
+	"search.pdf":"",
+	"search.other":""
 }

@@ -2,5 +2,7 @@
 	"name":"backup_jobs",
 	"shortname":"backup_jobs",
 	"useKeepAlive":true,
-	"loginObligate":true
+	"loginObligate":true,
+	"contentRefresh":true,
+	"contentRefreshInterval":10000
 }

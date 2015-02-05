@@ -80,6 +80,7 @@
 	},
 	"headlines":{
 		"share":"Teilen",
+		"loading":"Laden...",
 		"search_in_backups":"Backups durchsuchen",
 		"activate_account":"Account aktivieren",
 		"backup_jobs_successful":"Erfolgreiche Backupjobs",
@@ -170,7 +171,7 @@
 		"bad_name":"Dein Name konnte nicht Verifiziert werden.",
 		"insert_login_data":"Gib deine Logindaten an.",
 		"bad_email":"Die E-Mailadresse konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe.",
-		"bad_password":"Das Passwort konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe. (?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\\W]).{8,100}",
+		"bad_password":"Das Passwort entspricht nicht den geforderten Passwortrichtlinien. Bitte verwenden Sie mindestesn ein Sonderzeichen, eine Zahl, einen Großbuchstaben, einen Kleinbuchstaben und 8 Zeichen.",
 		"bad_passwords_not_equal":"Die Passwörter stimmen nicht überein.",
 		"search_error":"Fehler bei der Suche. Bitte versuchen Sie es später erneut."
 	},
@@ -210,7 +211,9 @@
 	},
 	"org.backmeup.storage":
 	{
-		"Connection String. Currently, set user id here (eg. '1')":"Connection String ???"
+		"Connection String. Currently, set user id here (eg. '1')":"Connection String ???",
+		"Username":"Benutzername",
+		"Password":"Password"
 	},
 	"page.create_backup":
 	{
@@ -237,7 +240,7 @@
 	},
 	"page.create_backup_1":
 	{
-		"headline":"Backup erstellen (Direkt auf git geändert)",
+		"headline":"Backup erstellen",
 		"description":"Wähle eine Quelle für dein Backup."
 	},
 	"page.create_backup_2_inputAuth":
@@ -265,9 +268,18 @@
 		"headline":"Backup abschließen",
 		"description":"Einstellungen für das Backup."
 	},
+	"page.login":
+	{
+		"error_headline":"Einloggen",
+		"error":"Benutzername oder Passwort falsch.",
+		"error_button":"Ok"
+	},
 	"page.search":
 	{
+		"loadingHeadline":"Laden...",
+		"loadingText":"Die Suchergebnisse werden geladen.",
 		"jobName":"Backupjob",
-		"timeStamp":"Datum"
+		"timeStamp":"Datum",
+		"searchDetails":"Details der Suche"
 	}
 }

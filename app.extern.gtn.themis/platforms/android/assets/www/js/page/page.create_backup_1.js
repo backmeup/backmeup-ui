@@ -3,7 +3,9 @@ var page_create_backup_1 = {
 
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
-
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 	},
 
 	// load the html structure
@@ -16,7 +18,7 @@ var page_create_backup_1 = {
 		var pagePanel = $('div#page-panel');
 		// datasources
 
-		app.template.append("div[data-role=content]", "app-loader-bubble");
+		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
 
 		var promise = app.rc.getJson("getSources", {
 			"expandConfigs" : false
@@ -33,7 +35,6 @@ var page_create_backup_1 = {
 			content.append(app.ni.element.p({
 				"text" : app.lang.string("description", "page.create_backup_1")
 			}));
-
 			// alert(JSON.stringify(resultObject));
 			var list = $(app.template.get("listA", "responsive"));
 			$.each(resultObject, function(index, pluginJson) {
@@ -46,31 +47,30 @@ var page_create_backup_1 = {
 					authType = pluginJson.authDataDescription.configType;
 					if (authType == "oauth") {
 						redirectUrl = pluginJson.authDataDescription.redirectURL;
-						// alert(redirectUrl);
 						app.sess.setObject(pluginId, pluginJson.authDataDescription.properties, "session_CreateSource");
 					}
 				} else {
 					authRequired = false;
 				}
-
 				list.append(app.ni.list.thumbnail({
 					href : "#",
 					imageSrc : app.img.getUrlById(pluginId + "Large"),
-					title : "Id: " + pluginJson.datasourceProfileId,
+					title : "",
 					headline : pluginJson.title,
-					text : pluginJson.pluginName,
+					text : pluginJson.description,
 					classes : [ 'source', 'authRequired-' + authRequired ],
 					attributes : {
 						"data-html5-authRequired" : authRequired,
 						"data-html5-oAuthUrl" : redirectUrl,
 						"data-html5-pluginId" : pluginId,
-						"data-html5-authType" : authType
+						"data-html5-authType" : authType,
+						"data-html5-destinationType" : "source"
 					}
 				}));
 			});
 			content.append(list);
 
-			$(".app-loader").remove();
+			app.notify.loader.remove();
 
 			app.help.jQM.enhance(content);
 		});

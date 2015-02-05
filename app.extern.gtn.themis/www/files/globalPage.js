@@ -158,14 +158,7 @@ var globalPage = {
 				}
 			})));
 
-			ul.append(app.ni.element.li().append(app.ni.element.a({
-				"id" : "navShowLog",
-				"text" : "UI Log File",
-				"attributes" : {
-					"href" : "#",
-
-				}
-			})));
+			
 
 			ul.append(app.ni.element.li().append(app.ni.element.a({
 				"id" : "navPageNewBackup",
@@ -185,14 +178,7 @@ var globalPage = {
 				}
 			})));
 
-			ul.append(app.ni.element.li().append(app.ni.element.a({
-				"id" : "navPageHome",
-				"text" : app.lang.string("home", "actions"),
-				"attributes" : {
-					"href" : "static-index.html",
-
-				}
-			})));
+			
 
 			if (!app.sess.loggedIn())
 				ul.append(app.ni.element.li().append(app.ni.element.a({

@@ -2,7 +2,9 @@ var page_register = {
 	config : null,
 
 	constructor : function() {
-		;
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 	},
 
 	// load the html structure

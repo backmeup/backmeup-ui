@@ -3,7 +3,9 @@ var page_create_backup_2_inputAuth = {
 
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
-
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 	},
 
 	// load the html structure
@@ -15,7 +17,7 @@ var page_create_backup_2_inputAuth = {
 		var navPanel = $('div#nav-panel');
 		var pagePanel = $('div#page-panel');
 
-		app.template.append("div[data-role=content]", "app-loader-bubble");
+		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
 
 		var promise = app.rc.getJson("getPlugin", {
 			"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
@@ -70,7 +72,7 @@ var page_create_backup_2_inputAuth = {
 			}));
 
 			content.append(form);
-			$(".app-loader").remove();
+			app.notify.loader.remove();
 			app.help.jQM.enhance(content);
 		});
 
@@ -84,7 +86,7 @@ var page_create_backup_2_inputAuth = {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 
 		$(page_create_backup_2_inputAuth.config.pageId).on("click", "#btnAuthenticate", function(event) {
-			app.template.append("div[data-role=content]", "app-loader-bubble");
+			app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
 			var formObject = app.help.form.serialize($("#frmCreateSource")), promise;
 			// alert(JSON.stringify(formObject));
 			delete formObject.btnAuthenticate;
@@ -102,7 +104,7 @@ var page_create_backup_2_inputAuth = {
 				// );
 				app.store.localStorage.set("data-html5-authdataId", resultObject.id);
 				app.store.localStorage.set("data-html5-authdataName", resultObject.name);
-				$(".app-loader").remove();
+				app.notify.loader.remove();
 				app.help.navigation.redirect("create_backup_2_newSink.html", "slide");
 			});
 

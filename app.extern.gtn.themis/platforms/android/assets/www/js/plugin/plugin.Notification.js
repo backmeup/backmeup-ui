@@ -14,12 +14,18 @@ var plugin_Notification = {
 
 	// called by plugins.js
 	constructor : function() {
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 
 	},
 
 	// called after all plugins are loaded
 	pluginsLoaded : function() {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 
 	},
 
@@ -27,6 +33,7 @@ var plugin_Notification = {
 	// caller pages.js
 	pagesLoaded : function() {
 		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
+		var dfd = $.Deferred();
 		window.setTimeout(function() {
 			if (plugin_Notification.config.enablePushNotifications && app.config.apacheCordova && app.sess.loggedIn() == true) {
 				app.debug.alert("plugin_Notification.pagesLoaded() register device on licence and push server", 20);
@@ -63,6 +70,9 @@ var plugin_Notification = {
 				app.debug.alert("plugin_Notification.pagesLoaded() do not register device on licence and push server", 20);
 			}
 		}, 5000);
+
+		dfd.resolve();
+		return dfd.promise();
 	},
 
 	// called after pluginsLoaded()
@@ -84,6 +94,7 @@ var plugin_Notification = {
 				plugin_Notification.callbackFunction($("#popupAlert"));
 				plugin_Notification.callbackFunction == null;
 			}
+			plugin_Notification.cleanupPopup($("#popupAlert"));
 			plugin_Notification.popupShow();
 		});
 
@@ -93,6 +104,7 @@ var plugin_Notification = {
 				plugin_Notification.callbackFunctionBtnLeft($("#popupDialog"));
 				plugin_Notification.callbackFunctionBtnLeft == null;
 			}
+			plugin_Notification.cleanupPopup($("#popupDialog"));
 			plugin_Notification.popupShow();
 		});
 
@@ -102,6 +114,7 @@ var plugin_Notification = {
 				plugin_Notification.callbackFunctionBtnRight($("#popupDialog"));
 				plugin_Notification.callbackFunctionBtnRight == null;
 			}
+			plugin_Notification.cleanupPopup($("#popupDialog"));
 			plugin_Notification.popupShow();
 		});
 
@@ -131,6 +144,10 @@ var plugin_Notification = {
 		app.debug.alert("plugin_" + this.config.name + ".pageSpecificEvents()", 11);
 
 	},
+	cleanupPopup : function(popup) {
+		popup.find("div[role=main].ui-content").find(":nth-child(2)").replaceWith("<p></p>");
+	},
+
 	// private functions
 	popupShow : function(notification, delay) {
 		// alert(JSON.stringify(plugin_Notification.notifications));
@@ -156,7 +173,6 @@ var plugin_Notification = {
 
 					$("#popupAlert #btn-alert").text(notification.button);
 
-					// $("#popupAlert div.ui-content p").html("");
 					if (typeof notification.text == "object") {
 						$("#popupAlert div.ui-content p").replaceWith(notification.text);
 					} else {
@@ -187,7 +203,6 @@ var plugin_Notification = {
 					$("#popupDialog #btn-dialog-left").text(notification.buttonLeft);
 					$("#popupDialog #btn-dialog-right").text(notification.buttonRight);
 
-					
 					if (typeof notification.text == "object") {
 						$("#popupDialog div.ui-content p").html(notification.text);
 					} else {
@@ -212,7 +227,7 @@ var plugin_Notification = {
 					plugin_Notification.notifications = null;
 				else {
 					// todo more popups
-					var notification = plugin_Notification.notifications['1'];
+					notification = plugin_Notification.notifications['1'];
 					// alert(JSON.stringify(notification));
 					delete plugin_Notification.notifications['1'];
 					setTimeout(function() {
@@ -336,6 +351,32 @@ var plugin_Notification = {
 			}
 		},
 		push_onNotification : function() {
+		},
+		loader : {
+			bubble : function(show) {
+				if (show) {
+					app.template.append("div[data-role=content]", "app-loader-bubble");
+				} else {
+					plugin_Notification.functions.loader.remove();
+				}
+			},
+			bubbleDiv : function(show, text, headline) {
+				if (show) {
+					var loader = app.template.get("app-loader-bubbleDiv");
+					if (text != undefined) {
+						loader.find("p").text(text);
+					}
+					if (headline != undefined) {
+						loader.find("h1").text(headline)
+					}
+					$("div[data-role=content]").append(loader);
+				} else {
+					plugin_Notification.functions.loader.remove();
+				}
+			},
+			remove : function() {
+				$(".app-loader").remove();
+			}
 		}
 
 	}

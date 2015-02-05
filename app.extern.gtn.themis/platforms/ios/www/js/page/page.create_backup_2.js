@@ -3,7 +3,9 @@ var page_create_backup_2 = {
 
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
-
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 	},
 
 	// load the html structure
@@ -16,7 +18,7 @@ var page_create_backup_2 = {
 		var pagePanel = $('div#page-panel');
 		// datasources
 
-		app.template.append("div[data-role=content]", "app-loader-bubble");
+		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
 
 		var promise = app.rc.getJson("getSinks", {
 			"expandConfigs" : true
@@ -53,22 +55,22 @@ var page_create_backup_2 = {
 				list.append(app.ni.list.thumbnail({
 					href : "#",
 					imageSrc : app.img.getUrlById(pluginId + "Large"),
-					title : "Id: " + pluginJson.datasourceProfileId,
+					title : "",
 					headline : pluginJson.title,
-					text : pluginJson.pluginName,
+					text : pluginJson.description,
 					classes : [ 'source', 'authRequired-' + authRequired ],
 					attributes : {
 						"data-html5-authRequired" : authRequired,
 						"data-html5-oAuthUrl" : redirectUrl,
 						"data-html5-pluginId" : pluginId,
-						"data-html5-authType" : authType
+						"data-html5-authType" : authType,
+						"data-html5-destinationType" : "sink"
 					}
 				}));
 			});
-
 			content.append(list);
 
-			$(".app-loader").remove();
+			app.notify.loader.remove();
 
 			app.help.jQM.enhance(content);
 		});

@@ -13,132 +13,189 @@ var app = {
 };
 
 function loadPlugins() {
-	var success = true;
+	var dfd = $.Deferred(), url, promise;
 
-	// load plugins
-	var url;
 	if (app.config.min) {
 		url = "../js/plugin/all.plugin.min.js";
 	} else {
 		url = "../js/plugin/plugins.js";
 	}
 
-	$.ajax({
-		url : url,
-		dataType : "script",
-		async : false,
-		success : function(data, textStatus, jqXHR) {
-			;
-		},
-		error : function(jqXHR, textStatus, errorThrown) {
-			alert("Fatal error in javascriptLoader.js: Can't load file. Url: " + url + " Error: " + textStatus);
-			alert(errorThrown);
-			success = false;
-		}
+	// load the plugins file
+	promise = globalLoader.AsyncScriptLoader(url);
+	promise.done(function() {
+		 startup.addFunction("plugin constructor", plugins.constructor, "");
+		//plugins.constructor();
+		dfd.resolve();
 	});
-	plugins.constructor();
+	promise.fail(function() {
+		dfd.reject();
+	});
 
-	return success;
+	return dfd.promise();
 }
 
 function loadPages() {
-	var success = true;
-	// load pages
-	var url;
+	var dfd = $.Deferred(), url, promise;
+
 	if (app.config.min) {
 		url = "../js/page/all.page.min.js";
 	} else {
 		url = "../js/page/pages.js";
 	}
 
-	$.ajax({
-		url : url,
-		dataType : "script",
-		async : false,
-		success : function(data, textStatus, jqXHR) {
-			;
-		},
-		error : function(jqXHR, textStatus, errorThrown) {
-			alert("Fatal error in javascriptLoader.js: Can't load the pages. Url: " + url + " Error: " + textStatus);
-			alert(errorThrown);
-			success = false;
-		}
+	// load pages file
+	promise = globalLoader.AsyncScriptLoader(url);
+	promise.done(function() {
+		 startup.addFunction("page constructor", pages.constructor, "");
+		//pages.constructor();
+		dfd.resolve();
+	});
+	promise.fail(function() {
+		dfd.reject();
 	});
 
-	pages.constructor();
-
-	return success;
+	return dfd.promise();
 }
 
-$(document).ready(function() {
+function loadConfiguration() {
+	var dfd = $.Deferred(), promise;
 
-	var configuration = JsonLoader("../js/lapstone.json");
-	app.config.name = configuration.appname;
-	app.config['startPage'] = configuration.startPage;
-	app.config['startPage_loggedIn'] = configuration.startPage_loggedIn;
+	promise = globalLoader.AsyncJsonLoader("../js/lapstone.json");
 
-	var success = true;
-	success = loadPlugins();
-	success = loadPages();
+	promise.done(function(configuration) {
+		app.config.name = configuration.appname;
+		app.config['startPage'] = configuration.startPage;
+		app.config['startPage_loggedIn'] = configuration.startPage_loggedIn;
+		dfd.resolve();
+	});
 
-	// load jQuery mobile
-	if (app.config.useJQueryMobile) {
-		var url = "../ext/jquery.mobile-1.4.4.min.js";
+	promise.fail(function() {
+		dfd.reject();
+	});
+
+	return dfd.promise();
+}
+
+function enchantPages() {
+	var dfd = $.Deferred(), promise;
+	promise = globalLoader.AsyncScriptLoader("../ext/jquery.mobile-1.4.5.min.js");
+	$(document).bind("mobileinit", function() {
+		app.debug.alert("jQuery mobile initialized", 30);
+		$.mobile.ajaxEnabled = true;
+		$.support.cors = true;
+		$.mobile.allowCrossDomainPages = true;
+		$.mobile.page.prototype.options.domCache = false;
+
+		$.mobile.loader.prototype.options.text = "loading";
+		$.mobile.loader.prototype.options.textVisible = false;
+		$.mobile.loader.prototype.options.theme = "a";
+		$.mobile.loader.prototype.options.html = "";
+
+		$.mobile.defaultPageTransition = 'none';
+
+		dfd.resolve();
+	});
+	promise.done(function() {
+		initialisationPanel.changeStatus("jquery mobile loaded");
+
+		// resolve after mobileinit event
+
+	});
+
+	promise.fail(function() {
+		dfd.reject();
+	});
+
+	return dfd.promise();
+}
+
+var globalLoader = {
+	AsyncJsonLoader : function(url) {
+		var dfd = $.Deferred();
 		$.ajax({
 			url : url,
-			dataType : "script",
-			async : false,
-			success : function(data, textStatus, jqXHR) {
-				;
+			async : true,
+			dataType : "json",
+			timeout : 5000,
+			success : function(data) {
+				dfd.resolve(data);
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
-				alert("Fatal error in javascriptLoader.js: Can't load jQuery mobile. Url: " + url + " Error: " + textStatus);
-				alert(errorThrown);
-				success = false;
+				initialisationPanel.changeStatus("Fatal Error: Can't load JSON. Url: " + url + " Status: " + textStatus + " Thrown:" + JSON.stringify(jqXHR));
+				dfd.reject(textStatus);
 			}
 		});
+		return dfd.promise();
+	},
+	JsonLoader : function(url) {
+		var json = null;
+		$.ajax({
+			url : url,
+			async : false,
+			dataType : "json",
+			success : function(data) {
+				// alert(JSON.stringify(data));
+				json = data;
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				initialisationPanel.changeStatus("Fatal Error: Can't load JSON. Url: " + url + " Status: " + textStatus + " Thrown:" + JSON.stringify(jqXHR));
+			}
+		});
+		return json;
+	},
+	AsyncScriptLoader : function(url) {
+		var dfd = $.Deferred();
+		$
+				.ajax({
+					url : url,
+					async : true,
+					dataType : "script",
+					timeout : 5000,
+					success : function(data) {
+						dfd.resolve(data);
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						initialisationPanel.changeStatus("Fatal Error: Can't load Script. Url: " + url + " Status: " + textStatus + " Thrown:"
+								+ JSON.stringify(jqXHR));
+
+						dfd.reject(textStatus);
+					}
+				});
+		return dfd.promise();
+	},
+	AsyncTextLoader : function(url) {
+		var dfd = $.Deferred();
+		$.ajax({
+			url : url,
+			async : false,
+			dataType : "text",
+			success : function(data) {
+				dfd.resolve(data);
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				initialisationPanel.changeStatus("Fatal Error: Can't load Text. Url: " + url + " Status: " + textStatus);
+				dfd.reject(textStatus);
+			}
+		});
+		return dfd.promise();
+	},
+	TextLoader : function(url) {
+		var text = null;
+		$.ajax({
+			url : url,
+			async : false,
+			dataType : "text",
+			success : function(data) {
+				// alert(JSON.stringify(data));
+				text = data;
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				alert("Fatal Error: Can't load TEXT. Url: " + url + " Status: " + textStatus);
+			}
+		});
+		return text;
 	}
-
-	app.debug.alert("app framework initialized", 30);
-
-	// app.store.localStorage.clear();
-	// app.store.localStorage.show();
-	// app.notify.add.alert("dasd", "sadsad", "asdsad");
-
-});
-
-function JsonLoader(url) {
-	var json = null;
-	$.ajax({
-		url : url,
-		async : false,
-		dataType : "json",
-		success : function(data) {
-			// alert(JSON.stringify(data));
-			json = data;
-		},
-		error : function(jqXHR, textStatus, errorThrown) {
-			alert("Fatal Error: Can't load JSON. Url: " + url + " Status: " + textStatus + " Thrown:" + JSON.stringify(jqXHR));
-		}
-	});
-	return json;
-}
-
-function TextLoader(url) {
-	var text = null;
-	$.ajax({
-		url : url,
-		async : false,
-		dataType : "text",
-		success : function(data) {
-			// alert(JSON.stringify(data));
-			text = data;
-		},
-		error : function(jqXHR, textStatus, errorThrown) {
-			alert("Fatal Error: Can't load TEXT. Url: " + url + " Status: " + textStatus);
-		}
-	});
-	return text;
 }
 
 /* on cordova initialisation */
@@ -149,17 +206,112 @@ function onDeviceReady() {
 	app.config.apacheCordova = true;
 }
 
-$(document).bind("mobileinit", function() {
-	app.debug.alert("jQuery mobile initialized", 30);
-	$.mobile.ajaxEnabled = true;
-	$.support.cors = true;
-	$.mobile.allowCrossDomainPages = true;
-	$.mobile.page.prototype.options.domCache = false;
+var initialisationPanel = {
+	start : function() {
+		var dfd = $.Deferred(), promise;
 
-	$.mobile.loader.prototype.options.text = "loading";
-	$.mobile.loader.prototype.options.textVisible = false;
-	$.mobile.loader.prototype.options.theme = "a";
-	$.mobile.loader.prototype.options.html = "";
+		promise = globalLoader.AsyncTextLoader('../js/lapstone.html');
+		promise.done(function(data) {
+			$('body').append(data);
+			dfd.resolve();
+		});
+		promise.fail(function(e) {
+			dfd.reject();
+		});
+		return dfd.promise();
+	},
+	changeStatus : function(status) {
+		$("#LAPSTONE .lapstone-status").text(status);
+	},
+	finish : function() {
+		$("#LAPSTONE").remove();
+	}
+}
 
-	$.mobile.defaultPageTransition = 'none';
+var startupDefinition = [ {
+	"status" : "start initialisation",
+	"function" : initialisationPanel.start,
+	"parameter" : "",
+	"result" : ""
+}, {
+	"status" : "load configuration",
+	"function" : loadConfiguration,
+	"parameter" : "",
+	"result" : ""
+}, {
+	"status" : "load plugins",
+	"function" : loadPlugins,
+	"parameter" : "",
+	"result" : ""
+}, {
+	"status" : "load pages",
+	"function" : loadPages,
+	"parameter" : "",
+	"result" : ""
+}, {
+	"status" : "enchant pages",
+	"function" : enchantPages,
+	"parameter" : "",
+	"result" : ""
+} ]
+
+var startup = {
+	currentPosition : 0,
+	dfd : $.Deferred(),
+	promise : null,
+
+	addFunction : function(status, func, parameter) {
+		startupDefinition.splice(startup.currentPosition + 1, 0, {
+			"status" : status,
+			"function" : func,
+			"parameter" : parameter,
+			"result" : ""
+		});
+	},
+
+	functionDone : function(data) {
+		var promise;
+		//console.log(startup.currentPosition + ": " + startupDefinition[startup.currentPosition]['status'] + " SUCCESSFUL");
+		startup.currentPosition++;
+
+		if (startupDefinition.length > startup.currentPosition) {
+			console.log(startup.currentPosition + ": " + startupDefinition[startup.currentPosition]['status']);
+			initialisationPanel.changeStatus(startupDefinition[startup.currentPosition]['status']);
+			promise = startupDefinition[startup.currentPosition]['function'](startupDefinition[startup.currentPosition]['parameter']);
+			promise.done(startup.functionDone);
+			promise.fail(startup.functionFail);
+			// alert('next')
+		} else {
+			startup.dfd.resolve();
+		}
+	},
+
+	functionFail : function() {
+		console.log(startup.currentPosition + ": " + startupDefinition[startup.currentPosition]['status'] + " FAILED");
+		startup.dfd.reject();
+	},
+
+	initFramework : function() {
+		var promise = startupDefinition[0]['function'](startupDefinition[0]['parameter']);
+		promise.done(startup.functionDone);
+		promise.fail(startup.functionFail);
+		return startup.dfd.promise();
+	}
+}
+
+// jquery loaded
+$(document).ready(function() {
+	var inititalisationPromise = startup.initFramework();
+
+	inititalisationPromise.done(function() {
+		//alert("init done");
+		setTimeout(function() {
+			
+			initialisationPanel.finish()
+		}, 200);
+	});
+
+	inititalisationPromise.fail(function() {
+		alert("framework fail");
+	});
 });

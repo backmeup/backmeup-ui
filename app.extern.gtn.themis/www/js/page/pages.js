@@ -1,6 +1,7 @@
 var pages = {
 	config : null,
 	pageNames : [],
+	refreshInterval : null,
 	constructor : function() {
 		var dfd = $.Deferred();
 
@@ -388,12 +389,36 @@ var pages = {
 			},
 			pagebeforehide : function(event, container) {
 				app.debug.alert("pages.js ~ plugin.eventFunctions.everyPage.pagebeforehide(" + event + ", " + container + ")", 5);
+
+				app.debug.alert("pages.js ~ plugin.eventFunctions.everyPage.pagehide: clear refresh interval", 5);
+				if (pages.refreshInterval != null) {
+					clearInterval(pages.refreshInterval);
+					pages.refreshInterval = null;
+				}
 			},
 			pagebeforeload : function(event, container) {
 				app.debug.alert("pages.js ~ plugin.eventFunctions.everyPage.pagebeforeload(" + event + ", " + container + ")", 5);
 			},
 			pagebeforeshow : function(event, container) {
-				app.debug.alert("pages.js ~ plugin.eventFunctions.everyPage.pagechange(" + event + ", " + container + ")", 5);
+				app.debug.alert("pages.js ~ plugin.eventFunctions.everyPage.pagebeforeshow(" + event + ", " + container + ")", 5);
+
+				app.debug.alert("pages.js ~ plugin.eventFunctions.everyPage.pagebeforeshow: check refresh interval", 5);
+				if (window['page_' + container.attr('id')].config.contentRefresh == true) {
+					app.debug.alert("pages.js ~ plugin.eventFunctions.everyPage.pagebeforeshow: set refresh interval every "
+							+ window['page_' + container.attr('id')].config.contentRefreshInterval + " ms", 5);
+
+					pages.refreshInterval = window.setInterval(function() {
+					//	$().empty();
+						
+						$('div[data-role=content]').children().fadeOut(500).promise().then(function() {
+						    $('div[data-role=content]').empty();
+						    window['page_' + container.attr('id')].creator();
+						});
+						
+						
+						
+					}, window['page_' + container.attr('id')].config.contentRefreshInterval);
+				}
 			},
 			pagechange : function(event, container) {
 				app.debug.alert("pages.js ~ plugin.eventFunctions.everyPage.pagechange(" + event + ", " + container + ")", 5);
@@ -407,6 +432,7 @@ var pages = {
 			pagehide : function(event, container) {
 				app.debug.alert("pages.js ~ plugin.eventFunctions.everyPage.pagehide(" + event + ", " + container + ")", 5);
 
+				app.debug.alert("pages.js ~ plugin.eventFunctions.everyPage.pagehide: clear page specific event delegates", 5);
 				$("#" + container.attr("id")).off();
 				$(document).off("#" + container.attr("id"));
 

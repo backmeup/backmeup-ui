@@ -2,22 +2,29 @@
  * Plugin:
  * 
  * @version 1.0
- * @namespace 
+ * @namespace
  */
 var plugin_jQueryExtend = {
 	config : null,
 	constructor : function() {
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 	},
 	pluginsLoaded : function() {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
+
+		var dfd = $.Deferred();
+		
 		(function($) {
 			// Attrs
 			$.fn.attrs = function(attrs) {
-				var t = $(this);
+				var t, j, a, r, p, i;
+				t = $(this);
 				if (attrs) {
 					// Set attributes
 					t.each(function(i, e) {
-						var j = $(e);
+						j = $(e);
 						for ( var attr in attrs) {
 							j.attr(attr, attrs[attr]);
 						}
@@ -26,11 +33,11 @@ var plugin_jQueryExtend = {
 					return t;
 				} else {
 					// Get attributes
-					var a = {}, r = t.get(0);
+					a = {}, r = t.get(0);
 					if (r) {
 						r = r.attributes;
-						for ( var i in r) {
-							var p = r[i];
+						for (i in r) {
+							p = r[i];
 							if (typeof p.nodeValue !== 'undefined')
 								a[p.nodeName] = p.nodeValue;
 						}
@@ -39,13 +46,18 @@ var plugin_jQueryExtend = {
 				}
 			};
 		})(jQuery);
+		dfd.resolve();
+		return dfd.promise();
 	},
-	
+
 	// called after all pages are loaded
 	pagesLoaded : function() {
 		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
+		var dfd = $.Deferred();
+		dfd.resolve();
+		return dfd.promise();
 	},
-	
+
 	definePluginEvents : function() {
 	},
 

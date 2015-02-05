@@ -110,14 +110,14 @@ var page_create_backup_2_newSink = {
 							"id" : app.store.localStorage.get("data-html5-authdataId")
 						},
 						"properties" : formObject,
-						"options" : [ "" ]
+						"options" : []
 					}, true);
 				} else {
 					promise = app.rc.getJson("createSinkProfile", {
 						"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
 						// "authData" : 1,
 						"properties" : formObject,
-						"options" : [ "" ]
+						"options" : []
 					}, true);
 				}
 

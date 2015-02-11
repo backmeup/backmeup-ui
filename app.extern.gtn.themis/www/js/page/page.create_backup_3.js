@@ -12,33 +12,53 @@ var page_create_backup_3 = {
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 
-		try {
-			var header = $('div[data-role=header]');
-			var content = $('div[data-role=content]');
-			var navPanel = $('div#nav-panel');
-			var pagePanel = $('div#page-panel');
-			// datasources
-			content.append(app.ni.element.h1({
-				"text" : app.lang.string("headline", "page.create_backup_3"),
-				"styles" : {
-					"clear" : "both"
-				}
-			}));
+		var header = $('div[data-role=header]');
+		var content = $('div[data-role=content]');
+		var navPanel = $('div#nav-panel');
+		var pagePanel = $('div#page-panel');
+		// datasources
+		content.append(app.ni.element.h1({
+			"text" : app.lang.string("headline", "page.create_backup_3"),
+			"styles" : {
+				"clear" : "both"
+			}
+		}));
 
-			content.append(app.ni.element.p({
-				"text" : app.lang.string("description", "page.create_backup_3")
-			}));
+		content.append(app.ni.element.p({
+			"text" : app.lang.string("description", "page.create_backup_3")
+		}));
 
-			var promise;
+		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading", "headlines"));
+		var promiseSink, promiseSource;
 
-			//promise = app.rc.getJson([ [ "", {} ], [ "", {} ] ]);
+		promiseSource = app.rc.getJson([ [ "getPluginConfiguration", {
+			"pluginId" : app.store.localStorage.get("data-html5-source-pluginId"),
+			"configId" : app.store.localStorage.get("data-html5-themis-source-profileid"),
+			"expandConfigs" : true
+		} ], [ "getPlugin", {
+			"pluginId" : app.store.localStorage.get("data-html5-source-pluginId"),
+			"expandConfigs" : true
+		} ] ], true);
+
+		promiseSink = app.rc.getJson([ [ "getPluginConfiguration", {
+			"pluginId" : app.store.localStorage.get("data-html5-sink-pluginId"),
+			"configId" : app.store.localStorage.get("data-html5-themis-sink-profileid"),
+			"expandConfigs" : true
+		} ], [ "getPlugin", {
+			"pluginId" : app.store.localStorage.get("data-html5-sink-pluginId"),
+			"expandConfigs" : true
+		} ] ], true);
+
+		$.when(promiseSource, promiseSink).done(function(sourceResult, sinkResult) {
+			// alert(sourceResult.getPlugin.title)
 
 			content.append(app.ni.element.h2({
 				"text" : app.lang.string("chosen_datasource", "headlines")
 			}));
 
 			content.append(app.ni.element.p({
-				"text" : app.store.localStorage.get("data-html5-themis-source-profileid")
+				"text" : sourceResult.getPlugin.title + " - " // +
+																// sourceResult.getPluginConfiguration.authData.name
 			}));
 
 			content.append(app.ni.element.h2({
@@ -46,7 +66,8 @@ var page_create_backup_3 = {
 			}));
 
 			content.append(app.ni.element.p({
-				"text" : app.store.localStorage.get("data-html5-themis-sink-profileid")
+				"text" : sinkResult.getPlugin.title + " - " // +
+															// sinkResult.getPluginConfiguration.authData.name
 			}));
 
 			content.append(app.ni.element.h2({
@@ -70,13 +91,14 @@ var page_create_backup_3 = {
 				"value" : app.lang.string("create_backup", "actions")
 			}));
 
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+			app.notify.loader.remove();
+
+			app.help.jQM.enhance(content);
+		});
+		$.when(promiseSource, promiseSource).fail(function() {
+			alert('ws error ');
+		});
+
 	},
 
 	// set the jquery events

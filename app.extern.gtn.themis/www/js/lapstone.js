@@ -81,7 +81,7 @@ function loadConfiguration() {
 function enchantPages() {
 	var dfd = $.Deferred(), promise;
 
-	promise = globalLoader.AsyncScriptLoader("../ext/jquery.mobile-1.4.5.min.js");
+	promise = globalLoader.AsyncScriptLoader("../ext/jQueryMobile/jquery.mobile.min.js");
 
 	promise.done(function() {
 		initialisationPanel.changeStatus("jquery mobile  loaded");

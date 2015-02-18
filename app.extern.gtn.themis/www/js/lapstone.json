@@ -2,5 +2,6 @@
 	"appname":"themis-app",
 	"version":"1.0.0",
 	"startPage":"static-index.html",
-	"startPage_loggedIn":"search.html"
+	"startPage_loggedIn":"search.html",
+	"badConnectionPage":"badConnection.html"
 }

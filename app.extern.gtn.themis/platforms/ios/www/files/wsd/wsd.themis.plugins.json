@@ -58,5 +58,15 @@
 		"url":"/backmeup-service-rest/plugins/{pluginId}?expandConfigs={expandConfigs}",
 		"method":"get",
 		"timeout":"7000"
+	},
+	"getPluginOptions":{
+		"url":"/backmeup-service-rest/plugins/{pluginId}?authData={authData}&expandConfigs={expandConfigs}",
+		"method":"get",
+		"timeout":"7000"
+	},
+	"getPluginConfiguration":{
+		"url":"/backmeup-service-rest/plugins/{pluginId}/{configId}?expandConfigs={expandConfigs}",
+		"method":"get",
+		"timeout":"7000"
 	}
 }

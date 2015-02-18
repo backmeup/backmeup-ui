@@ -63,6 +63,7 @@ var page_create_backup_1 = {
 						"data-html5-authRequired" : authRequired,
 						"data-html5-oAuthUrl" : redirectUrl,
 						"data-html5-pluginId" : pluginId,
+						"data-html5-source-pluginId" : pluginId,
 						"data-html5-authType" : authType,
 						"data-html5-destinationType" : "source"
 					}

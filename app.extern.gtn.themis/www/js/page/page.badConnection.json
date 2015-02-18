@@ -1,0 +1,7 @@
+{
+	"name":"badConnection",
+	"shortname":"badConnection",
+	"useKeepAlive":false,
+	"loginObligate":false,
+	"isGlobalPage":false
+}

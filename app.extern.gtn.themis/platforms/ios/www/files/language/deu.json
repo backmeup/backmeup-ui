@@ -253,7 +253,8 @@
 	"page.create_backup_2_newSink":
 	{
 		"headline":"Datensenken Einstellungen",
-		"description":"Wähle Einstellungen für deine Datensenke."
+		"description":"Wähle Einstellungen für deine Datensenke.",
+		"selectOptions":"Optionen wählen"
 	},
 	"page.create_backup_2_oAuthFinished":
 	{

@@ -1,3 +1,22 @@
+/*
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+/**
+ * @author Martin Kattner <martin.kattner@gmail.com>
+ */
+
 var pages = {
 	config : null,
 	pageNames : [],
@@ -515,6 +534,7 @@ var pages = {
 			},
 			pagebeforeshow : function(event, container, staticContainer) {
 				app.debug.alert("pages.js ~ plugin.eventFunctions.staticInlinePage.pagechange(" + event + ", " + container + ")", 5);
+
 			},
 			pagechange : function(event, container, staticContainer) {
 				app.debug.alert("pages.js ~ plugin.eventFunctions.staticInlinePage.pagechange(" + event + ", " + container + ")", 5);
@@ -574,11 +594,13 @@ var pages = {
 										.alert(
 												"pages.js ~ Can't load page because keepAlive failed. Check your connection. You'll be redirected to the index.html page.",
 												60);
-								app.notify.add.alert(app.lang.string("bad_connection_text", "app-keepAlive"), false, app.lang.string("bad_connection_headline",
-										"app-keepAlive"), app.lang.string("ok", "actions"));
-								app.store.localStorage.clearHtml5();
-								$(document).off();
-								app.help.navigation.redirect(app.config.startPage);
+								// app.notify.add.alert(app.lang.string("bad_connection_text",
+								// "app-keepAlive"), false,
+								// app.lang.string("bad_connection_headline","app-keepAlive"),
+								// app.lang.string("ok", "actions"));
+								// app.store.localStorage.clearHtml5();
+								// $(document).off();
+								app.help.navigation.redirect(app.config.badConnectionPage, "slideup");
 							}
 						} else {
 							app.debug.alert(

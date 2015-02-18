@@ -19,11 +19,18 @@ var page_create_backup_1_newSource = {
 		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading", "headlines"));
 
 		var promise, hasOptions = null, hasProperties = null;
-		promise = app.rc.getJson("getPlugin", {
-			"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
-			"expandConfigs" : true
-		}, true);
-
+		if (app.store.localStorage.get("data-html5-authrequired")) {
+			promise = app.rc.getJson("getPluginOptions", {
+				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
+				"authData" : app.store.localStorage.get("data-html5-authdataId"),
+				"expandConfigs" : true
+			}, true);
+		} else {
+			promise = app.rc.getJson("getPlugin", {
+				"pluginId" : app.store.localStorage.get("data-html5-pluginId"),
+				"expandConfigs" : true
+			}, true);
+		}
 		promise.done(function(resultObject) {
 			content.append(app.ni.element.h1({
 				"text" : app.lang.string("headline", "page.create_backup_1_newSource"),

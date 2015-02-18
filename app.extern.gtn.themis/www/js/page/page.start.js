@@ -10,31 +10,22 @@ var page_start = {
 	// load the html structure
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
+
+		app.template.overwrite("#" + container.attr("id"), "JQueryMobilePlainPage");
+		var content = container.find('div[data-role=content]');
+
+		content.append(app.ni.element.h1({
+			"text" : "Sollte nicht angezeigt werden."
+		}));
+
 		
-		try {
-			var header = container.find('div[data-role=header]');
-			var content = container.find('div[data-role=content]');
-			var navPanel = container.find('div#nav-panel');
 
-			content.append(app.ni.element.h1({
-				"text" : "Sollte nicht angezeigt werden."
-			}));
-
-			
-
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
 	},
 
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
-		
+
 	},
 
 	events : {
@@ -116,7 +107,13 @@ var page_start = {
 		// Triggered on the �toPage� after the transition animation has
 		// completed.
 		pageshow : function(event, container) {
-
+			window.setTimeout(function() {
+				if (app.sess.loggedIn()) {
+					app.help.navigation.redirect(app.config.startPage_loggedIn, "slideup");
+				} else {
+					app.help.navigation.redirect(app.config.startPage, "slideup");
+				}
+			}, 1000);
 		}
 	}
 };

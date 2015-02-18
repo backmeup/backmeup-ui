@@ -65,6 +65,10 @@ function loadConfiguration() {
 	promise = globalLoader.AsyncJsonLoader("../js/lapstone.json");
 
 	promise.done(function(configuration) {
+		$.each(configuration, function(k, v) {
+			app.config[k] = v
+		});
+
 		app.config.name = configuration.appname;
 		app.config['startPage'] = configuration.startPage;
 		app.config['startPage_loggedIn'] = configuration.startPage_loggedIn;
@@ -223,7 +227,7 @@ $(document).bind("mobileinit", function() {
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-	//alert("cordova initialized", 30);
+	// alert("cordova initialized", 30);
 	app.config.apacheCordova = true;
 }
 

@@ -17,6 +17,7 @@
  * @author Martin Kattner <martin.kattner@gmail.com>
  */
 
+
 // app.store.localStorage.clear();
 var app = {
 	config : {

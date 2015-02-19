@@ -116,15 +116,15 @@ var page_search = {
 	singleResult : {
 		getThumbnail : function(singleSearchResult) {
 			if (singleSearchResult.thumbnailUrl != undefined) {
-				return singleSearchResult.thumbnailUrl + "&accessToken=" + app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value);
+				return singleSearchResult.thumbnailUrl + "&accessToken=" + encodeURIComponent(app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value));
 			} else {
 				return false;
 			}
 		},
 		getResultUrl : function(singleSearchResult) {
-			if (singleSearchResult.properties.downloadURL != undefined) {
-				return singleSearchResult.properties.downloadURL + "&accessToken="
-						+ app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value);
+			if (singleSearchResult.downloadUrl != undefined) {
+				return singleSearchResult.downloadUrl + "&accessToken="
+						+ encodeURIComponent(app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value));
 			} else {
 				return false;
 			}

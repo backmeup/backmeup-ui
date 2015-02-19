@@ -116,15 +116,16 @@ var page_search = {
 	singleResult : {
 		getThumbnail : function(singleSearchResult) {
 			if (singleSearchResult.thumbnailUrl != undefined) {
-				return singleSearchResult.thumbnailUrl + "&accessToken=" + encodeURIComponent(app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value));
+				return singleSearchResult.thumbnailUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage
+						.get(plugin_WebServiceClient.config.headerToken.value)));
 			} else {
 				return false;
 			}
 		},
 		getResultUrl : function(singleSearchResult) {
 			if (singleSearchResult.downloadUrl != undefined) {
-				return singleSearchResult.downloadUrl + "&accessToken="
-						+ encodeURIComponent(app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value));
+				return singleSearchResult.downloadUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage
+						.get(plugin_WebServiceClient.config.headerToken.value)));
 			} else {
 				return false;
 			}

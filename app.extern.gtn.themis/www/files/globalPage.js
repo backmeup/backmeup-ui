@@ -345,6 +345,7 @@ var globalPage = {
 						window.setTimeout(function() {
 							if (location.href.split("/").slice(-1)[0] == "search.html") {
 								//alert("on search page");
+								$("#txtSearch").val(app.store.localStorage.get("data-html5-themis-search-value"));
 								page_search.updateSearchDiv($("#divSearchResults"));
 							} else {
 								//alert("not on search page");

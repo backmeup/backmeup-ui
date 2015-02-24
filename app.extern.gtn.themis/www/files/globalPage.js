@@ -343,7 +343,13 @@ var globalPage = {
 						var searchText = $(popup).find("#txtNavSearch").val();
 						app.store.localStorage.set("data-html5-themis-search-value", searchText);
 						window.setTimeout(function() {
-							app.help.navigation.redirect("search.html", "none");
+							if (location.href.split("/").slice(-1)[0] == "search.html") {
+								//alert("on search page");
+								page_search.updateSearchDiv($("#divSearchResults"));
+							} else {
+								//alert("not on search page");
+								app.help.navigation.redirect("search.html", "none");
+							}
 						}, 10);
 					}, function(popup) {
 						;

@@ -3,6 +3,7 @@
 	"shortname":"backup_jobs",
 	"useKeepAlive":true,
 	"loginObligate":true,
+	"isGlobalPage":true,
 	"contentRefresh":true,
 	"contentRefreshInterval":600000
 }

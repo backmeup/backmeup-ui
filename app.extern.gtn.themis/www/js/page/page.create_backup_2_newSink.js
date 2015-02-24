@@ -109,7 +109,9 @@ var page_create_backup_2_newSink = {
 					});
 
 					form.append(select);
-					hasOptions = true;
+					// defined by developer team: a sink profile has no options
+					// hasOptions = true;
+					hasOptions = false;
 				} else {
 					hasOptions = false;
 				}

@@ -1,3 +1,22 @@
+/*
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+/**
+ * @author Martin Kattner <martin.kattner@gmail.com>
+ */
+
 var page_search = {
 	config : null,
 
@@ -97,15 +116,16 @@ var page_search = {
 	singleResult : {
 		getThumbnail : function(singleSearchResult) {
 			if (singleSearchResult.thumbnailUrl != undefined) {
-				return singleSearchResult.thumbnailUrl + "&accessToken=" + app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value);
+				return singleSearchResult.thumbnailUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage
+						.get(plugin_WebServiceClient.config.headerToken.value)));
 			} else {
 				return false;
 			}
 		},
 		getResultUrl : function(singleSearchResult) {
-			if (singleSearchResult.properties.downloadURL != undefined) {
-				return singleSearchResult.properties.downloadURL + "&accessToken="
-						+ app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value);
+			if (singleSearchResult.downloadUrl != undefined) {
+				return singleSearchResult.downloadUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage
+						.get(plugin_WebServiceClient.config.headerToken.value)));
 			} else {
 				return false;
 			}

@@ -1,3 +1,23 @@
+/*
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+/**
+ * @author Martin Kattner <martin.kattner@gmail.com>
+ */
+
+
 /**
  * Plugin:
  * 
@@ -258,8 +278,10 @@ var plugin_WebServiceClient = {
 				+ app.store.localStorage.get("config.plugin_WebServiceClient.config.keepAlive.error.text"), 50);
 		if (!plugin_WebServiceClient.config.keepAlive.isAlive) {
 			app.debug.alert("KeepAlive request failed.\nReason: " + plugin_WebServiceClient.config.keepAlive.error.text + "\nTime: " + wsDuration, 60);
+			$("[data-role=page]").trigger("connectionisdead", wsDuration);
+		} else if (plugin_WebServiceClient.config.keepAlive.isAlive) {
+			$("[data-role=page]").trigger("connectionisalive", wsDuration);
 		}
-
 	},
 
 	keepAliveError : function(jqXHR, textStatus, errorThrown) {
@@ -271,6 +293,7 @@ var plugin_WebServiceClient = {
 		app.info.set("plugin_WebServiceClient.config.keepAlive.error.text", "Webservice Error: ");
 		app.debug.alert("KeepAlive request failed.\nReason: " + plugin_WebServiceClient.config.keepAlive.error.text + "\nTime: " + wsDuration + "\n\n"
 				+ JSON.stringify(errorThrown, null, 4), 60);
+		$("[data-role=page]").trigger("connectionisdead", wsDuration);
 	},
 
 	keepAliveAjax : function(url, data, type, method, timeout) {

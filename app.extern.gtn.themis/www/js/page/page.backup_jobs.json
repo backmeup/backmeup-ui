@@ -5,5 +5,5 @@
 	"loginObligate":true,
 	"isGlobalPage":true,
 	"contentRefresh":true,
-	"contentRefreshInterval":600000
+	"contentRefreshInterval":30000
 }

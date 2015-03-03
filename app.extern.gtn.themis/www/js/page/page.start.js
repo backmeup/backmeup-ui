@@ -34,7 +34,7 @@ var page_start = {
 		var content = container.find('div[data-role=content]');
 
 		content.append(app.ni.element.h1({
-			"text" : "Sollte nicht angezeigt werden."
+			"text" : "Sie werden weitergeleitet."
 		}));
 
 		

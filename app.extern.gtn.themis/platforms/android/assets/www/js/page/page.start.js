@@ -1,3 +1,22 @@
+/*
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+/**
+ * @author Martin Kattner <martin.kattner@gmail.com>
+ */
+
 var page_start = {
 	config : null,
 
@@ -10,31 +29,22 @@ var page_start = {
 	// load the html structure
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
+
+		app.template.overwrite("#" + container.attr("id"), "JQueryMobilePlainPage");
+		var content = container.find('div[data-role=content]');
+
+		content.append(app.ni.element.h1({
+			"text" : "Sie werden weitergeleitet."
+		}));
+
 		
-		try {
-			var header = container.find('div[data-role=header]');
-			var content = container.find('div[data-role=content]');
-			var navPanel = container.find('div#nav-panel');
 
-			content.append(app.ni.element.h1({
-				"text" : "Sollte nicht angezeigt werden."
-			}));
-
-			
-
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
 	},
 
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
-		
+
 	},
 
 	events : {
@@ -116,7 +126,13 @@ var page_start = {
 		// Triggered on the �toPage� after the transition animation has
 		// completed.
 		pageshow : function(event, container) {
-
+			window.setTimeout(function() {
+				if (app.sess.loggedIn()) {
+					app.help.navigation.redirect(app.config.startPage_loggedIn, "slideup");
+				} else {
+					app.help.navigation.redirect(app.config.startPage, "slideup");
+				}
+			}, 1000);
 		}
 	}
 };

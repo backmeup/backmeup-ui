@@ -1,5 +1,15 @@
 {
-	"appname":"themis-app",
-	"startPage":"static-index.html",
-	"startPage_loggedIn":"search.html"
+	"name": "themis-app",
+	"title": "Themis",
+	"version": 
+	{
+		"app": "0.0.1",
+		"lapstone": "0.0.1",
+		"update": false
+	},
+
+	"startPage": "static-index.html",
+	"startPage_loggedIn": "search.html",
+	"badConnectionPage": "badConnection.html",
+	"startPage_firstStart": "static-index.html"
 }

@@ -20,7 +20,7 @@ body.app-desktop div[data-role=page][data-isglobalpage=false] div[data-role=cont
 	margin-left: -95px;
 }
 
-body.app-desktop div[data-role=page][data-isglobalpage=false] div[data-role=content] h1{
+body.app-desktop div[data-role=page][data-isglobalpage=false] div[data-role=content] h1 {
 	margin-left: 70px;
 }
 
@@ -35,7 +35,14 @@ div[data-role=page][data-isglobalpage=true] div[data-role=content] {
 body.app-desktop div#app-header {
 	background-image: url("../images/bg_head.jpg");
 	border: none;
-	height: 170px;
+	height: 65px;
+	text-align: center;
+}
+
+body.app-desktop div#app-header>img {
+	display:inline-block;
+	height: 40px;	
+	margin-top:14px;
 }
 
 /* jQuery Mobile panel = page specific menu */
@@ -47,7 +54,7 @@ body.app-desktop div#nav-panel {
 body.app-desktop div#nav-panel>ul {
 	display: block;
 	width: 100%;
-	background-color: #dbdbdb;
+	background-color: #ededed;
 	text-align: center;
 	margin: 0;
 	padding: 0;
@@ -82,7 +89,7 @@ body.app-desktop div#page-panel {
 	width: 700px;
 	left: 50%;
 	z-index: 10000;
-	background-color: #dbdbdb;
+	background-color: #ededed;
 }
 
 /**/

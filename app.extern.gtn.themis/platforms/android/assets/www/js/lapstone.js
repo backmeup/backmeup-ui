@@ -1,8 +1,28 @@
+/*
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+
+/**
+ * @author Martin Kattner <martin.kattner@gmail.com>
+ */
+
 // app.store.localStorage.clear();
+// window.localStorage.clear();
 var app = {
 	config : {
 		name : "app",
-		min : false,
+		min : true,
 		useJQueryMobile : true,
 		apacheCordova : null,
 		jQueryMobile : null
@@ -65,9 +85,41 @@ function loadConfiguration() {
 	promise = globalLoader.AsyncJsonLoader("../js/lapstone.json");
 
 	promise.done(function(configuration) {
-		app.config.name = configuration.appname;
-		app.config['startPage'] = configuration.startPage;
-		app.config['startPage_loggedIn'] = configuration.startPage_loggedIn;
+		$.each(configuration, function(k, v) {
+			app.config[k] = v
+		});
+
+		if (configuration.name === undefined)
+			console.warn("lapstone.json has no 'name' property.");
+
+		if (configuration.title === undefined)
+			console.warn("lapstone.json has no 'title' property.");
+
+		if (configuration.version === undefined) {
+			console.warn("lapstone.json has no 'version' property.");
+		} else {
+			if (configuration.version.app === undefined)
+				console.warn("lapstone.json has no 'version.app' property.");
+
+			if (configuration.version.lapstone === undefined)
+				console.warn("lapstone.json has no 'version.lapstone' property.");
+
+			if (configuration.version.update === undefined)
+				console.warn("lapstone.json has no 'version.update' property.");
+		}
+
+		if (configuration.startPage === undefined)
+			console.warn("lapstone.json has no 'startPage' property.");
+
+		if (configuration.startPage_firstStart === undefined)
+			console.warn("lapstone.json has no 'startPage_firstStart' property.");
+
+		if (configuration.startPage_loggedIn === undefined)
+			console.warn("lapstone.json has no 'startPage_loggedIn' property.");
+
+		if (configuration.badConnectionPage === undefined)
+			console.warn("lapstone.json has no 'badConnectionPage' property.");
+
 		dfd.resolve();
 	});
 
@@ -78,10 +130,62 @@ function loadConfiguration() {
 	return dfd.promise();
 }
 
+function updateFramework() {
+	var dfd = $.Deferred();
+
+	var currentLapstoneVersion, oldLapstoneVersion, currentAppVersion, oldAppVersion;
+
+	currentAppVersion = app.config.version.app;
+	currentLapstoneVersion = app.config.version.lapstone;
+
+	plugin_Informator.loadConfigurationIntoHtml5Storage({
+		"app" : {
+			"config" : app.config
+		}
+	});
+
+	oldLapstoneVersion = app.config.version.lapstone;
+	oldAppVersion = app.config.version.app;
+
+	if (app.config.version.update === true) {
+		console.warn("update done");
+	}
+	// alert(currentAppVersion + oldAppVersion + currentLapstoneVersion +
+	// oldLapstoneVersion);
+	if (currentLapstoneVersion != oldLapstoneVersion || currentAppVersion != oldAppVersion) {
+		console.warn("TODO Lastone || App Version Update");
+		// alert("do update")
+		app.info.set("app.config.version.update", true);
+
+		app.info.set("app.config.version.app", currentAppVersion);
+		app.info.set("app.config.version.lapstone", currentLapstoneVersion);
+		// reload
+
+		location.reload();
+	}
+
+	dfd.resolve();
+	return dfd.promise();
+}
+
+function cacheAjax() {
+	var cache, update;
+	if (JSON.parse(window.localStorage.getItem(app.config.name + ".informator-config.app.config.version.update")) !== null) {
+		update = JSON.parse(window.localStorage.getItem(app.config.name + ".informator-config.app.config.version.update"));
+		//console.warn("update: " + update)
+		cache = !update;
+	} else {
+		cache = false;
+	}
+	true;
+	//console.warn("cache: " + cache);
+	return cache;
+}
+
 function enchantPages() {
 	var dfd = $.Deferred(), promise;
 
-	promise = globalLoader.AsyncScriptLoader("../ext/jquery.mobile-1.4.5.min.js");
+	promise = globalLoader.AsyncScriptLoader("../ext/jQueryMobile/jquery.mobile.min.js");
 
 	promise.done(function() {
 		initialisationPanel.changeStatus("jquery mobile  loaded");
@@ -101,6 +205,7 @@ var globalLoader = {
 	AsyncJsonLoader : function(url) {
 		var dfd = $.Deferred();
 		$.ajax({
+			cache : cacheAjax(),
 			url : url,
 			async : true,
 			dataType : "json",
@@ -116,8 +221,12 @@ var globalLoader = {
 		return dfd.promise();
 	},
 	JsonLoader : function(url) {
+		console
+				.warn("Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. URL: "
+						+ url);
 		var json = null;
 		$.ajax({
+			cache : cacheAjax(),
 			url : url,
 			async : false,
 			dataType : "json",
@@ -135,6 +244,7 @@ var globalLoader = {
 		var dfd = $.Deferred();
 		$
 				.ajax({
+					cache : cacheAjax(),
 					url : url,
 					async : true,
 					dataType : "script",
@@ -155,7 +265,11 @@ var globalLoader = {
 		return dfd.promise();
 	},
 	ScriptLoader : function(url) {
+		console
+				.warn("Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. URL: "
+						+ url);
 		$.ajax({
+			cache : cacheAjax(),
 			url : url,
 			async : false,
 			dataType : "script",
@@ -172,6 +286,7 @@ var globalLoader = {
 	AsyncTextLoader : function(url) {
 		var dfd = $.Deferred();
 		$.ajax({
+			cache : cacheAjax(),
 			url : url,
 			async : false,
 			dataType : "text",
@@ -186,8 +301,12 @@ var globalLoader = {
 		return dfd.promise();
 	},
 	TextLoader : function(url) {
+		console
+				.warn("Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. URL: "
+						+ url);
 		var text = null;
 		$.ajax({
+			cache : cacheAjax(),
 			url : url,
 			async : false,
 			dataType : "text",
@@ -223,7 +342,7 @@ $(document).bind("mobileinit", function() {
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-	//alert("cordova initialized", 30);
+	// alert("cordova initialized", 30);
 	app.config.apacheCordova = true;
 }
 
@@ -259,12 +378,14 @@ function waitForDeviceready() {
 }
 
 var initialisationPanel = {
+	panel : null,
 	start : function() {
 		var dfd = $.Deferred(), promise;
 
 		promise = globalLoader.AsyncTextLoader('../js/lapstone.html');
 		promise.done(function(data) {
-			$('body').append(data);
+			initialisationPanel.panel = data;
+			initialisationPanel.show();
 			dfd.resolve();
 		});
 		promise.fail(function(e) {
@@ -272,46 +393,59 @@ var initialisationPanel = {
 		});
 		return dfd.promise();
 	},
+	show : function(status) {
+		$('body').append(initialisationPanel.panel);
+		if (status !== undefined)
+			initialisationPanel.changeStatus(status);
+	},
+	hide : function() {
+		$("#LAPSTONE").remove();
+	},
 	changeStatus : function(status) {
 		$("#LAPSTONE .lapstone-status").text(status);
 	},
 	finish : function() {
-		$("#LAPSTONE").remove();
+		initialisationPanel.hide();
 	}
 }
 
 var startupDefinition = [ {
-	"status" : "start initialisation",
+	"status" : "",
 	"function" : initialisationPanel.start,
 	"parameter" : "",
 	"result" : ""
 }, {
-	"status" : "load configuration",
+	"status" : "",
 	"function" : loadConfiguration,
 	"parameter" : "",
 	"result" : ""
 }, {
-	"status" : "load plugins",
+	"status" : "",
 	"function" : loadPlugins,
 	"parameter" : "",
 	"result" : ""
 }, {
-	"status" : "load pages",
+	"status" : "",
 	"function" : loadPages,
 	"parameter" : "",
 	"result" : ""
 }, {
-	"status" : "enchant pages",
+	"status" : "",
+	"function" : updateFramework,
+	"parameter" : "",
+	"result" : ""
+}, {
+	"status" : "",
 	"function" : enchantPages,
 	"parameter" : "",
 	"result" : ""
 }, {
-	"status" : "wait for mobileinit",
+	"status" : "",
 	"function" : waitForMobileinit,
 	"parameter" : "",
 	"result" : ""
 }, {
-	"status" : "wait for deviceready",
+	"status" : "",
 	"function" : waitForDeviceready,
 	"parameter" : "",
 	"result" : ""
@@ -371,11 +505,25 @@ $(document).ready(function() {
 		// alert("init done");
 		setTimeout(function() {
 
-			initialisationPanel.finish()
+			initialisationPanel.finish();
+			console.log("TODO - cleanup framework loading");
 		}, 200);
 	});
 
 	inititalisationPromise.fail(function() {
 		alert("framework fail");
 	});
+
+	inititalisationPromise.always(function() {
+		// alert();
+		app.info.set("app.config.version.update", false);
+	});
+
 });
+
+function handleOpenURL(url) {
+	// TODO: parse the url, and do something
+	setTimeout(function() {
+		alert(url);
+	}, 0);
+}

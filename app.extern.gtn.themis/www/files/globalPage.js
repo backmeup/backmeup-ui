@@ -276,6 +276,7 @@ var globalPage = {
 		footer.attr("data-position", "fixed");
 		footer.attr("data-tap-toggle", "false");
 		footer.attr("id", "app-footer");
+		footer.attr("data-id", "fixFooter");
 
 		/*
 		 * desktop specific operations

@@ -172,13 +172,13 @@ function cacheAjax() {
 	var cache, update;
 	if (JSON.parse(window.localStorage.getItem(app.config.name + ".informator-config.app.config.version.update")) !== null) {
 		update = JSON.parse(window.localStorage.getItem(app.config.name + ".informator-config.app.config.version.update"));
-		//console.warn("update: " + update)
+		// console.warn("update: " + update)
 		cache = !update;
 	} else {
 		cache = false;
 	}
 	true;
-	//console.warn("cache: " + cache);
+	// console.warn("cache: " + cache);
 	return cache;
 }
 

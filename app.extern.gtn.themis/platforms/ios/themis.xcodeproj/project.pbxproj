@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		076E4C3177E3418D9C08AD60 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CD8084BC5614E4DB570DF86 /* CoreMotion.framework */; };
 		1797CAC59AC24A25A721B14E /* CDVSound.m in Sources */ = {isa = PBXBuildFile; fileRef = C9EFCE8E424B4F669200101C /* CDVSound.m */; };
@@ -595,7 +596,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = themis;
-				PROVISIONING_PROFILE = "4687DB3B-238A-4D29-9485-BC6E2E479802";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -625,7 +626,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = themis;
-				PROVISIONING_PROFILE = "4687DB3B-238A-4D29-9485-BC6E2E479802";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

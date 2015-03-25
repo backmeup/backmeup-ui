@@ -20,6 +20,8 @@
 var page_start = {
 	config : null,
 
+	elements : {},
+
 	constructor : function() {
 		var dfd = $.Deferred();
 		dfd.resolve();
@@ -33,13 +35,43 @@ var page_start = {
 		initialisationPanel.show("");
 
 	},
+	async : {
+		promise : null,// to implement
+
+		result : null,
+
+		elements : null,
+
+		creator : function(container) {
+			var dfd = $.Deferred();
+			dfd.resolve();
+			return dfd.promise();
+		},
+
+		call : function(container) {
+			return app.rc.getJson();
+		},
+
+		done : function(container) {
+		},
+
+		fail : function(container) {
+			alert("WS fails: " + JSON.stringify(this.result));
+		},
+
+		always : function(container) {
+		},
+
+		abort : function(container) {
+		}
+	},
 
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 
 	},
-
+	functions : {},
 	events : {
 
 		// Triggered twice during the page change cyle: First prior to any page

@@ -1,288 +1,330 @@
 {
-	"app-session":{
-		"login_obligate_headline":"Login",
-		"login_obligate_text":"Du kannst die gewünschte Seite nicht Öffnen, weil Du nicht eingelogged bist."
-	},
-	"app-keepAlive":{
-		"bad_connection_headline":"Verbindungsfehler",
-		"bad_connection_text":"Etwas stimmt mit deiner Internetverbindung nicht."
-	},
-	"actions":{
-		"administrate":"Backups",
-		"new_source_profile":"Neues Profil anlegen",
-		"backmeup":"Backup",
-		"create_backup":"Backupjob erstellen",
-		"create_source":"Datenquelle erstellen",
-		"create_sink":"Datensenke erstellen",
-		"home":"Startseite",
-		"more":"...Mehr",
-		"login":"Einloggen",
-		"logout":"Ausloggen",
-		"submit":"Absenden",
-		"okay":"Okay",
-		"ok":"Okay",
-		"cancel":"Abbrechen",
-		"reset":"Zurücksetzen",
-		"register":"Registrieren",
-		"login":"Einloggen",
-		"register":"Registrieren",
-		"verify_email":"E-Mail bestätigen",
-		"resend_verification_key":"Bestätigungs-E-Mail erneut senden",
-		"clear_html5_storage":"Appdaten löschen",
-		"backup_edit":"Backup editieren",
-		"backup_delete":"Backup löschen",
-		"backup_jobs":"Backup Jobs",
-		"backup_log":"Backup-Log",
-		"columntoggle":"Spalten",
-		"menu":"Menü",
-		"top":"Top",
-		"search":"Suchen",
-		"back":"Zurück",
-		"menu_close":"Menü schließen",
-		"settings":"Einstellungen",
-		"share":"Teilen",
-		"zip_archive":"Zip Archiv",
-		"incoming_share":"Eingehendes Backup",
-		"incoming_shares":"Eingehende Backups",
-		"accept":"annehmen",
-		"decline":"ablehnen",
-		"finish":"fertig",
-		"create_authdata":"Authentifizierung speichern",
-		"lost_password":"Passwort vergessen?",
-		"lets_go":"Los geht's",
-		"accept_terms":"Nutzungsbedingungen akzeptieren",
-		"continue":"Weiter"
-	},
-	"labels":{
-		"authdata_name":"Name",
-		"create_authdata":"Authentifizierung speichern",
-		"title":"Titel",
-		"create_backup":"Backupjob erstellen",
-		"create_source":"Datenquelle erstellen",
-		"create_sink":"Datensenke erstellen",
-		"firstname":"Vorname",
-		"lastname":"Nachname",
-		"job_title":"Backup Name",
-		"password":"Passwort",
-		"password_rpt":"Passwort wiederholen",
-		"username":"Benutzername",
-		"save_username_and_password":"Benutzername und Passwort speichern",
-		"login":"Einloggen",
-		"email":"E-Mail",
-		"register":"Registrieren",
-		"verification_key":"Bestätigungscode",
-		"verify_email":"E-Mail bestätigen",
-		"search":"Suche"
-	},
-	"links":{
-		"terms":"AGBs",
-		"privacy_policy":"Datenschutzrichtlinien"
-	},
-	"headlines":{
-		"share":"Teilen",
-		"loading":"Laden...",
-		"search_in_backups":"Backups durchsuchen",
-		"activate_account":"Account aktivieren",
-		"backup_jobs_successful":"Erfolgreiche Backupjobs",
-		"backup_jobs_queued":"Warteschlange",
-		"backup_jobs_running":"Laufende Backupjobs",
-		"backup_job_status":"Status",
-		"backup_hold":"Hold",
-		"backup_schedule":"Schedule",
-		"backup_created":"Erstelldatum",
-		"backup_modified":"Letzte Änderung",
-		"backup_start":"Anlegedatum",
-		"backup_next":"Nächste Ausführung",
-		"backup_delay":"Verzögerung",
-		"choose_profile":"Wähle dein Profil",
-		"existing_datasources":"Vorhandene Datenquellen",
-		"new_datasource":"Neue Datenquelle erstellen",
-		"new_backup":"Neues Backup erstellen",
-		"existing_datasinks":"Vorhandene Datensenken",
-		"chosen_datasource":"Gewählte Datenquelle",
-		"chosen_datasink":"Gewählte Datensenke",
-		"job_settings":"Weitere Backup Einstellmöglichkeiten",
-		"new_datasink":"Neue Datensenke erstellen",
-		"backup_log":"Backup-Log",
-		"backup_edit":"Backup bearbeiten",
-		"datasource":"Datenquelle",
-		"datasink":"Speicherziel",
-		"job_status":"Backupstatus",
-		"job_details":"Detailansicht Backup Job",
-		"user_settings":"Benutzer Einstellungen",
-		"bad_connection":"Schlechte Verbindung",
-		"verify_email":"E-Mail-Adresse bestätigen",
-		"login":"Einloggen",
-		"register":"Registrieren",
-		"start":"Backmeup & Themis",
-		"bad_login":"Fehler beim Login.",
-		"bad_register":"Fehler bei der Registrierung",
-		"create_backup":"Backup erstellen",
-		"backup_jobs":"Backup Jobs",
-		"zip_archive":"Zip Archiv",
-		"index":"Backmeup & Themis",
-		"settings":"Einstellungen",
-		"clear_html5_storage":"Appdaten löschen",
-		"logout":"Abgemeldet",
-		"message":"Text",
-		"timestamp":"Zeit",
-		"index":"Index",
-		"type":"Art",
-		"search":"Suchen",
-		"search_backup":"Backups durchsuchen",
-		"select_datasource":"Datenquelle auswählen",
-		"select_datasink":"Speicherziel auswählen",
-		"share_backup":"Backup Teilen",
-		"backup_options":"Backupoptionen",
-		"backup_to_share":"Diese Backups können geteilt werden",
-		"incoming_share":"Eingehendes Backup",
-		"incoming_shares":"Eingehende Backups",
-		"register_1_terms":"Nutzungsbedingungen",
-		"register_2_name":"Name",
-		"register_2_credentials":"Login Daten",
-		"register_4_final":"Registrieren"
-	},
-	"notifications":{
-		"bad_connection":"Der Verbindungsaufbau zum Themis-Server dauert zu lange. Sie werden zur Startseite weitergeleitet.",
-		"bad_login":"Es ist ein Fehler beim Login aufgetreten. Bitte überprüfen Sie ihren Benutzernamen und ihr Passwort.",
-		"bad_email":"Die E-Mailadresse konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe.",
-		"bad_password":"Das Passwort konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe. (?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\\W]).{8,100}",
-		"bad_register":"Fehler bei der Registrierung. Bitte versuchen Sie es erneut.",
-		"bad_verify_email":"Die E-Mail Adresse %mail% konnte nicht bestätigt werden. Bitte überprüfen Sie ihren Aktivierungscode.",
-		"resend_verification_mail":"Die Bestätigungs-E-Mail wurde erneut verschickt.",
-		"user_not_activated":"Ihr Benutzer wurde noch nicht aktiviert.",
-		"clear_html5_storage":"Ihre personenbezogenen Appdaten wurden erfolgreich gelöscht.",
-		"varification_key_resend":"Die Aktivierungs-E-Mail wurde erneut gesendet.",
-		"bad_firstname":"Der Vorname muss aus mindestens 2 Buchstaben und maximal 99 Buchstben bestehen.",
-		"bad_lastname":"Der Nachname muss aus mindestens 2 Buchstaben und maximal 99 Buchstben bestehen.",
-		"bad_username":"Der Benutzername muss aus mindestens 2 Buchstaben und maximal 99 Buchstben bestehen.",
-		"bad_password_equal":"Die Passwörter stimmen nicht überein."
-	},
-	"texts":{
-		"verify_email":"Eine E-Mail mit einem Bestätigungs-Code wurde an Ihre E-Mail-Adresse geschickt. Bitte geben Sie den Bestätigungs-Code ein oder klicken Sie den Bestätigungs-Link um Ihre E-Mail zu verifizieren.",
-		"select_datasource":"Bitte wählen Sie ein bestehendes Datenquellen-Profil (aus einem vorangegangenem Backup) oder wählen Sie eine neue Datenquelle aus der Liste unten.",
-		"multilanguage":"Das ist ein dynamischer mehrsprachiger Text auf einer static-inline Seite",
-		"getstarted":"Get Started!",
-		"incoming_share":"Die Person ___ gibt ihnen ein Facebook backup frei. Möchten Sie dieses annehmen?",
-		"share_backup":"Du kannst dieses Backup teilen, indem Du die E-Mail Adresse des Empängers eingibst",
-		"register":"Registriere dich in nur wenigen Schritten bei backmeup",
-		"accept_terms":"Mit der Registrierung stimmst du den %terms% und den %privacy_policy% von notifyme zu.",
-		"what_is_your_name":"Registriere Dich mit deinem echten Namen damit Dich deine Freunde leichter finden",
-		"bad_name":"Dein Name konnte nicht Verifiziert werden.",
-		"insert_login_data":"Gib deine Logindaten an.",
-		"bad_email":"Die E-Mailadresse konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe.",
-		"bad_password":"Das Passwort entspricht nicht den geforderten Passwortrichtlinien. Bitte verwenden Sie mindestesn ein Sonderzeichen, eine Zahl, einen Großbuchstaben, einen Kleinbuchstaben und 8 Zeichen.",
-		"bad_passwords_not_equal":"Die Passwörter stimmen nicht überein.",
-		"search_error":"Fehler bei der Suche. Bitte versuchen Sie es später erneut."
-	},
-	"themisIds":{
-		"info":"Info",
-		"job_failed":"Fehler"
-	},
-	"org.backmeup.dropbox":{
-		"The password of your E-Mail account":""
-	},
-	"org.backmeup.filegenerator":{
-		"text":"text",
-		"text.paragraphs":"text.paragraphs",
-		"image":"image",
-		"image.size":"image.size",
-		"pdf":"pdf",
-		"pdf.paragraphs":"pdf.paragraphs",
-		"binary":"binary",
-		"binary.size":"binary.size",
-		"generator.files":"generator.files"
-	},
-	"org.backmeup.mail":{
-		"Username":"Benutzername",
-		"Password":"Passwort",
-		"Type":"Type",
-		"Host":"Host",
-		"Port":"Port",
-		"SSL":"SSL",
-		"The username of your E-Mail account":"The username of your E-Mail account",
-		"The password of your E-Mail account":"The password of your E-Mail account",
-		"IMAP or POP3":"IMAP or POP3",
-		"The hostname of your E-Mail server":"The hostname of your E-Mail server",
-		"The port on which the plugin should connect to the E-Mail server":"The port on which the plugin should connect to the E-Mail server",
-		"Use SSL (encrypted connection)":"Use SSL (encrypted connection)",
-		"imap":"IMAP",
-		"pop3":"POP3"
-	},
-	"org.backmeup.storage":
+	"view": 
 	{
-		"Connection String. Currently, set user id here (eg. '1')":"Connection String ???",
-		"Username":"Benutzername",
-		"Password":"Password"
+		"Themis": "Themis",
+		"search": "Suche",
+		"backup_jobs": "Backup Jobs",
+		"share_backup": "Teilen & Vererben"
 	},
-	"page.create_backup":
+
+	"app-session": 
 	{
-		"datasource":"Datenquelle",
-		"datadink":"Datensenke",
-		"new authentication":"Neue Authentifizierungsdaten",
-		"new datasource":"Neue Datenquelle",
-		"new datasink":"Neue Datensenke"
+		"login_obligate_headline": "Login",
+		"login_obligate_text": "Du kannst die gewünschte Seite nicht Öffnen, weil Du nicht eingelogged bist."
 	},
-	"page.create_backup_1_inputAuth":
+
+	"app-keepAlive": 
 	{
-		"headline":"Authentifizierungsdaten",
-		"description":"Gib die Authentifizierungsdaten ein."
+		"bad_connection_headline": "Verbindungsfehler",
+		"bad_connection_text": "Etwas stimmt mit deiner Internetverbindung nicht."
 	},
-	"page.create_backup_1_newSource":
+
+	"actions": 
 	{
-		"headline":"Datenquellen Einstellungen",
-		"description":"Wähle Einstellungen für deine Datenquelle.",
-		"selectOptionsLabel":"Optionen wählen",
-		"selectOptions":"Optionen wählen"
+		"administrate": "Backups",
+		"new_source_profile": "Neues Profil anlegen",
+		"backmeup": "Backup",
+		"create_backup": "Backupjob erstellen",
+		"create_source": "Datenquelle erstellen",
+		"create_sink": "Datensenke erstellen",
+		"home": "Startseite",
+		"more": "...Mehr",
+		"login": "Einloggen",
+		"logout": "Ausloggen",
+		"submit": "Absenden",
+		"okay": "Okay",
+		"ok": "Okay",
+		"cancel": "Abbrechen",
+		"reset": "Zurücksetzen",
+		"register": "Registrieren",
+		"verify_email": "E-Mail bestätigen",
+		"resend_verification_key": "Bestätigungs-E-Mail erneut senden",
+		"clear_html5_storage": "Appdaten löschen",
+		"backup_edit": "Backup editieren",
+		"backup_delete": "Backup löschen",
+		"backup_jobs": "Backup Jobs",
+		"backup_log": "Backup-Log",
+		"columntoggle": "Spalten",
+		"menu": "Menü",
+		"top": "Top",
+		"search": "Suchen",
+		"back": "Zurück",
+		"menu_close": "Menü schließen",
+		"settings": "Einstellungen",
+		"share": "Teilen",
+		"zip_archive": "Zip Archiv",
+		"incoming_share": "Eingehendes Backup",
+		"incoming_shares": "Eingehende Backups",
+		"accept": "annehmen",
+		"decline": "ablehnen",
+		"finish": "fertig",
+		"create_authdata": "Authentifizierung speichern",
+		"lost_password": "Passwort vergessen?",
+		"lets_go": "Los geht's",
+		"accept_terms": "Nutzungsbedingungen akzeptieren",
+		"continue": "Weiter"
 	},
-	"page.create_backup_1_oAuthFinished":
+
+	"labels": 
 	{
-		"headline":"oAuth Autentifizierung abgeschlossen",
-		"description":"Gib der Autentifizierung einen namen"
+		"authdata_name": "Name",
+		"create_authdata": "Authentifizierung speichern",
+		"title": "Titel",
+		"create_backup": "Backupjob erstellen",
+		"create_source": "Datenquelle erstellen",
+		"create_sink": "Datensenke erstellen",
+		"firstname": "Vorname",
+		"lastname": "Nachname",
+		"job_title": "Backup Name",
+		"password": "Passwort",
+		"password_rpt": "Passwort wiederholen",
+		"username": "Benutzername",
+		"save_username_and_password": "Benutzername und Passwort speichern",
+		"login": "Einloggen",
+		"email": "E-Mail",
+		"register": "Registrieren",
+		"verification_key": "Bestätigungscode",
+		"verify_email": "E-Mail bestätigen",
+		"search": "Suche"
 	},
-	"page.create_backup_1":
+
+	"links": 
 	{
-		"headline":"Backup erstellen",
-		"description":"Wähle eine Quelle für dein Backup."
+		"terms": "AGBs",
+		"privacy_policy": "Datenschutzrichtlinien"
 	},
-	"page.create_backup_2_inputAuth":
+
+	"headlines": 
 	{
-		"headline":"Authentifizierungsdaten",
-		"description":"Gib die Authentifizierungsdaten ein."
+		"share": "Teilen",
+		"loading": "Laden...",
+		"search_in_backups": "Backups durchsuchen",
+		"activate_account": "Account aktivieren",
+		"backup_jobs_successful": "Erfolgreiche Backupjobs",
+		"backup_jobs_queued": "Warteschlange",
+		"backup_jobs_running": "Laufende Backupjobs",
+		"backup_job_status": "Status",
+		"backup_hold": "Hold",
+		"backup_schedule": "Schedule",
+		"backup_created": "Erstelldatum",
+		"backup_modified": "Letzte Änderung",
+		"backup_start": "Anlegedatum",
+		"backup_next": "Nächste Ausführung",
+		"backup_delay": "Verzögerung",
+		"choose_profile": "Wähle dein Profil",
+		"existing_datasources": "Vorhandene Datenquellen",
+		"new_datasource": "Neue Datenquelle erstellen",
+		"new_backup": "Neues Backup erstellen",
+		"existing_datasinks": "Vorhandene Datensenken",
+		"chosen_datasource": "Gewählte Datenquelle",
+		"chosen_datasink": "Gewählte Datensenke",
+		"job_settings": "Weitere Backup Einstellmöglichkeiten",
+		"new_datasink": "Neue Datensenke erstellen",
+		"backup_log": "Backup-Log",
+		"backup_edit": "Backup bearbeiten",
+		"datasource": "Datenquelle",
+		"datasink": "Speicherziel",
+		"job_status": "Backupstatus",
+		"job_details": "Detailansicht Backup Job",
+		"user_settings": "Benutzer Einstellungen",
+		"bad_connection": "Schlechte Verbindung",
+		"verify_email": "E-Mail-Adresse bestätigen",
+		"login": "Einloggen",
+		"register": "Registrieren",
+		"start": "Backmeup & Themis",
+		"bad_login": "Fehler beim Login.",
+		"bad_register": "Fehler bei der Registrierung",
+		"create_backup": "Backup erstellen",
+		"backup_jobs": "Backup Jobs",
+		"zip_archive": "Zip Archiv",
+		"index": "Backmeup & Themis",
+		"settings": "Einstellungen",
+		"clear_html5_storage": "Appdaten löschen",
+		"logout": "Abgemeldet",
+		"message": "Text",
+		"timestamp": "Zeit",
+		"index": "Index",
+		"type": "Art",
+		"search": "Suchen",
+		"search_backup": "Backups durchsuchen",
+		"select_datasource": "Datenquelle auswählen",
+		"select_datasink": "Speicherziel auswählen",
+		"share_backup": "Backup Teilen",
+		"backup_options": "Backupoptionen",
+		"backup_to_share": "Diese Backups können geteilt werden",
+		"incoming_share": "Eingehendes Backup",
+		"incoming_shares": "Eingehende Backups",
+		"register_1_terms": "Nutzungsbedingungen",
+		"register_2_name": "Name",
+		"register_2_credentials": "Login Daten",
+		"register_4_final": "Registrieren"
 	},
-	"page.create_backup_2_newSink":
+
+	"notifications": 
 	{
-		"headline":"Datensenken Einstellungen",
-		"description":"Wähle Einstellungen für deine Datensenke.",
-		"selectOptions":"Optionen wählen"
+		"bad_connection": "Der Verbindungsaufbau zum Themis-Server dauert zu lange. Sie werden zur Startseite weitergeleitet.",
+		"bad_login": "Es ist ein Fehler beim Login aufgetreten. Bitte überprüfen Sie ihren Benutzernamen und ihr Passwort.",
+		"bad_email": "Die E-Mailadresse konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe.",
+		"bad_password": "Das Passwort konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe. (?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\\W]).{8,100}",
+		"bad_register": "Fehler bei der Registrierung. Bitte versuchen Sie es erneut.",
+		"bad_verify_email": "Die E-Mail Adresse %mail% konnte nicht bestätigt werden. Bitte überprüfen Sie ihren Aktivierungscode.",
+		"resend_verification_mail": "Die Bestätigungs-E-Mail wurde erneut verschickt.",
+		"user_not_activated": "Ihr Benutzer wurde noch nicht aktiviert.",
+		"clear_html5_storage": "Ihre personenbezogenen Appdaten wurden erfolgreich gelöscht.",
+		"varification_key_resend": "Die Aktivierungs-E-Mail wurde erneut gesendet.",
+		"bad_firstname": "Der Vorname muss aus mindestens 2 Buchstaben und maximal 99 Buchstben bestehen.",
+		"bad_lastname": "Der Nachname muss aus mindestens 2 Buchstaben und maximal 99 Buchstben bestehen.",
+		"bad_username": "Der Benutzername muss aus mindestens 2 Buchstaben und maximal 99 Buchstben bestehen.",
+		"bad_password_equal": "Die Passwörter stimmen nicht überein."
 	},
-	"page.create_backup_2_oAuthFinished":
+
+	"texts": 
 	{
-		"headline":"oAuth Autentifizierung abgeschlossen",
-		"description":"Gib der Autentifizierung einen namen"
+		"verify_email": "Eine E-Mail mit einem Bestätigungs-Code wurde an Ihre E-Mail-Adresse geschickt. Bitte geben Sie den Bestätigungs-Code ein oder klicken Sie den Bestätigungs-Link um Ihre E-Mail zu verifizieren.",
+		"select_datasource": "Bitte wählen Sie ein bestehendes Datenquellen-Profil (aus einem vorangegangenem Backup) oder wählen Sie eine neue Datenquelle aus der Liste unten.",
+		"multilanguage": "Das ist ein dynamischer mehrsprachiger Text auf einer static-inline Seite",
+		"getstarted": "Get Started!",
+		"incoming_share": "Die Person ___ gibt ihnen ein Facebook backup frei. Möchten Sie dieses annehmen?",
+		"share_backup": "Du kannst dieses Backup teilen, indem Du die E-Mail Adresse des Empängers eingibst",
+		"register": "Registriere dich in nur wenigen Schritten bei backmeup",
+		"accept_terms": "Mit der Registrierung stimmst du den %terms% und den %privacy_policy% von notifyme zu.",
+		"what_is_your_name": "Registriere Dich mit deinem echten Namen damit Dich deine Freunde leichter finden",
+		"bad_name": "Dein Name konnte nicht Verifiziert werden.",
+		"insert_login_data": "Gib deine Logindaten an.",
+		"bad_email": "Die E-Mailadresse konnte nicht verifiziert werden. Bitte überprüfen Sie ihre Eingebe.",
+		"bad_password": "Das Passwort entspricht nicht den geforderten Passwortrichtlinien. Bitte verwenden Sie mindestesn ein Sonderzeichen, eine Zahl, einen Großbuchstaben, einen Kleinbuchstaben und 8 Zeichen.",
+		"bad_passwords_not_equal": "Die Passwörter stimmen nicht überein.",
+		"search_error": "Fehler bei der Suche. Bitte versuchen Sie es später erneut."
 	},
-	"page.create_backup_2":
+
+	"themisIds": 
 	{
-		"headline":"Datensenke wählen",
-		"description":"Wähle eine Senke (=Speicherort) für dein Backup. "
+		"info": "Info",
+		"job_failed": "Fehler"
 	},
-	"page.create_backup_3":
+
+	"org.backmeup.dropbox": 
 	{
-		"headline":"Backup abschließen",
-		"description":"Einstellungen für das Backup."
+		"The password of your E-Mail account": ""
 	},
-	"page.login":
+
+	"org.backmeup.filegenerator": 
 	{
-		"error_headline":"Einloggen",
-		"error":"Benutzername oder Passwort falsch.",
-		"error_button":"Ok"
+		"text": "text",
+		"text.paragraphs": "text.paragraphs",
+		"image": "image",
+		"image.size": "image.size",
+		"pdf": "pdf",
+		"pdf.paragraphs": "pdf.paragraphs",
+		"binary": "binary",
+		"binary.size": "binary.size",
+		"generator.files": "generator.files"
 	},
-	"page.search":
+
+	"org.backmeup.mail": 
 	{
-		"loadingHeadline":"Laden...",
-		"loadingText":"Die Suchergebnisse werden geladen.",
-		"jobName":"Backupjob",
-		"timeStamp":"Datum",
-		"searchDetails":"Details der Suche"
+		"Username": "Benutzername",
+		"Password": "Passwort",
+		"Type": "Type",
+		"Host": "Host",
+		"Port": "Port",
+		"SSL": "SSL",
+		"The username of your E-Mail account": "The username of your E-Mail account",
+		"The password of your E-Mail account": "The password of your E-Mail account",
+		"IMAP or POP3": "IMAP or POP3",
+		"The hostname of your E-Mail server": "The hostname of your E-Mail server",
+		"The port on which the plugin should connect to the E-Mail server": "The port on which the plugin should connect to the E-Mail server",
+		"Use SSL (encrypted connection)": "Use SSL (encrypted connection)",
+		"imap": "IMAP",
+		"pop3": "POP3"
+	},
+
+	"org.backmeup.storage": 
+	{
+		"Connection String. Currently, set user id here (eg. '1')": "Connection String ???",
+		"Username": "Benutzername",
+		"Password": "Password"
+	},
+
+	"page.create_backup": 
+	{
+		"datasource": "Datenquelle",
+		"datadink": "Datensenke",
+		"new authentication": "Neue Authentifizierungsdaten",
+		"new datasource": "Neue Datenquelle",
+		"new datasink": "Neue Datensenke"
+	},
+
+	"page.create_backup_1_inputAuth": 
+	{
+		"headline": "Authentifizierungsdaten",
+		"description": "Gib die Authentifizierungsdaten ein."
+	},
+
+	"page.create_backup_1_newSource": 
+	{
+		"headline": "Datenquellen Einstellungen",
+		"description": "Wähle Einstellungen für deine Datenquelle.",
+		"selectOptionsLabel": "Optionen wählen",
+		"selectOptions": "Optionen wählen"
+	},
+
+	"page.create_backup_1_oAuthFinished": 
+	{
+		"headline": "oAuth Autentifizierung abgeschlossen",
+		"description": "Gib der Autentifizierung einen namen"
+	},
+
+	"page.create_backup_1": 
+	{
+		"headline": "Backup erstellen",
+		"description": "Wähle eine Quelle für dein Backup."
+	},
+
+	"page.create_backup_2_inputAuth": 
+	{
+		"headline": "Authentifizierungsdaten",
+		"description": "Gib die Authentifizierungsdaten ein."
+	},
+
+	"page.create_backup_2_newSink": 
+	{
+		"headline": "Datensenken Einstellungen",
+		"description": "Wähle Einstellungen für deine Datensenke.",
+		"selectOptions": "Optionen wählen"
+	},
+
+	"page.create_backup_2_oAuthFinished": 
+	{
+		"headline": "oAuth Autentifizierung abgeschlossen",
+		"description": "Gib der Autentifizierung einen namen"
+	},
+
+	"page.create_backup_2": 
+	{
+		"headline": "Datensenke wählen",
+		"description": "Wähle eine Senke (=Speicherort) für dein Backup. "
+	},
+
+	"page.create_backup_3": 
+	{
+		"headline": "Backup abschließen",
+		"description": "Einstellungen für das Backup."
+	},
+
+	"page.login": 
+	{
+		"error_headline": "Einloggen",
+		"error": "Benutzername oder Passwort falsch.",
+		"error_button": "Ok"
+	},
+
+	"page.search": 
+	{
+		"loadingHeadline": "Laden...",
+		"loadingText": "Die Suchergebnisse werden geladen.",
+		"jobName": "Backupjob",
+		"timeStamp": "Datum",
+		"searchDetails": "Details der Suche"
 	}
 }

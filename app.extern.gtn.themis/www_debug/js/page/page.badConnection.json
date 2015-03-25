@@ -1,0 +1,11 @@
+{
+	"name":"badConnection",
+	"shortname":"badConnection",
+	"template": "",
+	"useKeepAlive": false,
+	"loginObligate": false,
+	"isGlobalPage": false,
+	"contentRefresh": false,
+	"contentRefreshInterval": 0,
+	"asyncLoading": false
+}

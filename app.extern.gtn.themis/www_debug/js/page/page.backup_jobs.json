@@ -1,0 +1,11 @@
+{
+	"name": "backup_jobs",
+	"shortname": "backup_jobs",
+	"template": "",
+	"useKeepAlive": true,
+	"loginObligate": true,
+	"isGlobalPage": true,
+	"contentRefresh": true,
+	"contentRefreshInterval": 30000,
+	"asyncLoading": false
+}

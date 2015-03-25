@@ -1,0 +1,45 @@
+.app-responsive-list-B {
+	width: 100%;
+	padding: 0;
+}
+
+.app-responsive-list-B li {
+	list-style: none;
+	display: inline-block;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+.app-responsive-list-B li img {
+	display: inline-block;
+	width: 10%;
+	vertical-align: middle;
+}
+
+.app-responsive-list-B li div {
+	display: inline-block;
+	margin-left: 9px;
+	width: 85%;
+	vertical-align: top;
+}
+
+.app-responsive-list-B li div h2.list-B-headline,
+app-responsive-list-B li div h2.list-B-headline>a {
+	color: blue;
+	font-size: 20px;
+	margin: 0;
+	padding: 0;
+}
+
+.app-responsive-list-B li div p.list-B-text {
+	font-size: 15px;
+	margin: 0;
+	padding: 0;
+}
+
+.app-responsive-list-B li div p.list-B-status {
+	color: green;
+	font-size: 17px;
+	margin: 0;
+	padding: 0;
+}

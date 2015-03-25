@@ -1,0 +1,11 @@
+{
+	"name":"create_backup_2_oAuthFinished",
+	"shortname":"create_backup_2_oAuthFinished",
+	"template": "",
+	"useKeepAlive": true,
+	"loginObligate": true,
+	"isGlobalPage": true,
+	"contentRefresh": false,
+	"contentRefreshInterval": 0,
+	"asyncLoading": false
+}

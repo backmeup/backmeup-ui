@@ -1,0 +1,11 @@
+{
+	"name":"share_backup",
+	"shortname":"share_backup",
+	"template": "",
+	"useKeepAlive": true,
+	"loginObligate": true,
+	"isGlobalPage": true,
+	"contentRefresh": false,
+	"contentRefreshInterval": 0,
+	"asyncLoading": false
+}

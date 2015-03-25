@@ -1,0 +1,11 @@
+{
+	"name":"verify_email",
+	"shortname":"verify_email",
+	"template": "",
+	"useKeepAlive": true,
+	"loginObligate": false,
+	"isGlobalPage": true,
+	"contentRefresh": false,
+	"contentRefreshInterval": 0,
+	"asyncLoading": false
+}

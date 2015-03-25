@@ -343,7 +343,14 @@ var globalPage = {
 						var searchText = $(popup).find("#txtNavSearch").val();
 						app.store.localStorage.set("data-html5-themis-search-value", searchText);
 						window.setTimeout(function() {
-							app.help.navigation.redirect("search.html", "none");
+							if (location.href.split("/").slice(-1)[0] == "search.html") {
+								// alert("on search page");
+								$("#txtSearch").val(app.store.localStorage.get("data-html5-themis-search-value"));
+								page_search.updateSearchDiv($("#divSearchResults"));
+							} else {
+								// alert("not on search page");
+								app.help.navigation.redirect("search.html", "none");
+							}
 						}, 10);
 					}, function(popup) {
 						;
@@ -352,8 +359,9 @@ var globalPage = {
 
 		$(document).on('click', '#navPageLogout', function() {
 			app.sess.loggedIn(false);
-			app.store.localStorage.clear();
-			app.help.navigation.redirectAndReload("static-index.html");
+			// app.store.localStorage.clear();
+			app.sess.destroyAll();
+			app.help.navigation.redirect("static-index.html", "slide");
 		});
 	},
 

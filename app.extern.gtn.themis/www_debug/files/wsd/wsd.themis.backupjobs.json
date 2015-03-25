@@ -1,0 +1,37 @@
+{
+	"template":{
+		"url":"string url",
+		"method":"string method",
+		"timeout":"int timeout"
+	},
+	"getAllBackupjobs":{
+		"url":"/backmeup-service-rest/backupjobs/",
+		"method":"get",
+		"timeout":"7000"
+	},
+	"getQueuedBackupjobs":{
+		"url":"/backmeup-service-rest/backupjobs?jobStatus=queued&expand={expand}",
+		"method":"get",
+		"timeout":"7000"
+	},
+	"getRunningBackupjobs":{
+		"url":"/backmeup-service-rest/backupjobs?jobStatus=running&expand={expand}",
+		"method":"get",
+		"timeout":"7000"
+	},
+	"getSuccessfulBackupjobs":{
+		"url":"/backmeup-service-rest/backupjobs?jobStatus=successful&expand={expand}",
+		"method":"get",
+		"timeout":"7000"
+	},
+	"getBackupjob":{
+		"url":"/backmeup-service-rest/backupjobs/{jobId}?expandUser={expandUser}&expandToken={expandToken}&expandProfiles={expandProfiles}&expandProtocol={expandProtocol}",
+		"method":"get",
+		"timeout":"7000"
+	},
+	"createBackupjob":{
+		"url":"/backmeup-service-rest/backupjobs?jobTitle={jobTitle}&schedule={schedule}&start={start}&source={source}&actions={actions}&sink={sink}",
+		"method":"post",
+		"timeout":"7000"
+	}
+}

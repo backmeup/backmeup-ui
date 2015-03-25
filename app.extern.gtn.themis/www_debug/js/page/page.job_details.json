@@ -1,0 +1,11 @@
+{
+	"name":"job_details",
+	"shortname":"job_details",
+	"template": "",
+	"useKeepAlive": true,
+	"loginObligate": true,
+	"isGlobalPage": true,
+	"contentRefresh": false,
+	"contentRefreshInterval": 0,
+	"asyncLoading": false
+}

@@ -1,0 +1,71 @@
+body {
+	font-family: ssp_proregular, sans-serif;
+}
+
+.error {
+	color: red;
+}
+
+body img {
+	height: auto;
+	display: block;
+	max-width: 100% !important;
+}
+
+p,a,label,input {
+	font-size: 12px !important;
+	font-weight: normal !important;
+	text-decoration: none !important;
+}
+
+p.app-subtext1 {
+	position: absolute;
+	width: 100%;
+	left: 0px;
+	bottom: 30px;
+	text-align: center;
+}
+
+p.app-subtext2 {
+	position: absolute;
+	width: 100%;
+	left: 0px;
+	bottom: 60px;
+	text-align: center;
+}
+
+body .ui-content h1 {
+	text-transform: uppercase;
+	color: #696969;
+	font-weight: normal;
+}
+
+body .ui-content h2 {
+	color: #003c69;
+	font-weight: normal;
+}
+
+body.app-desktop  div[data-role=content] {
+	
+}
+
+body .push-center {
+	text-align: center;
+}
+
+body .push-center * {
+	margin: 0 auto;
+}
+
+.ui-page-theme-a div[data-role=content] .ui-btn,html div[data-role=content] .ui-bar-a .ui-btn,html .ui-body-a div[data-role=content] .ui-btn,html body div[data-role=content] .ui-group-theme-a .ui-btn,html head+body div[data-role=content] .ui-btn.ui-btn-a,.ui-page-theme-a div[data-role=content] .ui-btn:visited,html div[data-role=content] .ui-bar-a .ui-btn:visited,html .ui-body-a div[data-role=content] .ui-btn:visited,html body div[data-role=content] .ui-group-theme-a .ui-btn:visited,html head+body div[data-role=content] .ui-btn.ui-btn-a:visited {
+	background-color: #006dcc;
+	background-image: linear-gradient(to bottom, #ef8422, #e46d25);
+	background-repeat: repeat-x;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	border-style: none;
+	color: #ffffff;
+	text-shadow: none !important;
+	border-radius: 5px;
+	font-weight: normal;
+	letter-spacing: 0.05rem;
+}

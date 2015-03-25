@@ -1,0 +1,11 @@
+{
+	"name":"login",
+	"shortname":"login",
+	"template": "",
+	"useKeepAlive": true,
+	"loginObligate": false,
+	"isGlobalPage": false,
+	"contentRefresh": false,
+	"contentRefreshInterval": 0,
+	"asyncLoading": false
+}

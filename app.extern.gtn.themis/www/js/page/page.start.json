@@ -1,7 +1,0 @@
-{
-	"name":"start",
-	"shortname":"start",
-	"useKeepAlive":true,
-	"loginObligate":false,
-	"isGlobalPage":false
-}

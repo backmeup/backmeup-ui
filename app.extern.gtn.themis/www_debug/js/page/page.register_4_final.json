@@ -1,0 +1,11 @@
+{
+	"name":"register_4_final",
+	"shortname":"register_4_final",
+	"template": "",
+	"useKeepAlive": true,
+	"loginObligate": false,
+	"isGlobalPage": false,
+	"contentRefresh": false,
+	"contentRefreshInterval": 0,
+	"asyncLoading": false
+}

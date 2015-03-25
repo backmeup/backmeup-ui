@@ -1,0 +1,91 @@
+{
+	"name":"HtmlTemplates",
+	"shortname":"template",
+	"templates":{
+		"JQueryMobilePageStructure":		
+		{
+			"url":			"../template/JQueryMobilePageStructure.html",
+			"elements":		
+			{
+				"content":	"div[data-role=content]"
+			}
+		},
+		
+		"JQueryMobilePlainPage":			
+		{
+			"url":			"../template/JQueryMobilePlainPage.html",
+			"elements":		
+			{
+				"content":	"div[data-role=content]"
+			}
+		},
+		
+		"JQueryMobileHeaderPage":			
+		{
+			"url":			"../template/JQueryMobileHeaderPage.html",
+			"elements":		
+			{
+				"content":	"div[data-role=content]"
+			}
+		},
+		
+		"JQueryMobileNavigationPanel":			
+		{
+			"url":				"../template/JQueryMobileNavigationPanel.html"
+		},
+		
+		"JQueryMobilePopupDialog":			
+		{
+			"url":				"../template/JQueryMobilePopupDialog.html"
+		},
+		
+		"JQueryMobilePopupAlert":						
+		{
+			"url":			"../template/JQueryMobilePopupAlert.html"
+		},
+		
+		"app-loader-bubble":							
+		{
+			"url":			"../template/app.loader.bubble.html"
+		},
+		
+		"app-loader-bubble-inline-button":				
+		{
+			"url":			"../template/app.loader.bubble.inline-button.html"
+		},
+		
+		"app-loader-bubbleDiv":							
+		{
+			"url":			"../template/app.loader.bubbleDiv.html"
+		},
+		
+		"themis":{
+			"ThemisHeaderContent":			
+			{
+				"url":			"../template/ThemisHeaderContent.html"
+			},
+			
+			"ThemisNavigationPanelContent":			
+			{
+				"url":			"../template/ThemisNavigationPanelContent.html"
+			}
+		},
+		
+		"responsive":{
+			"grid-33-33-33":			
+			{
+				"url":			"../template/app.responsive.grid.33.33.33.html"
+			},
+			
+			"listA":			
+			{
+				"url":			"../template/app.responsive.list.A.html"
+			},
+			
+			"listB":			
+			{
+				"url":			"../template/app.responsive.list.B.html"
+			}
+		}
+	}
+}

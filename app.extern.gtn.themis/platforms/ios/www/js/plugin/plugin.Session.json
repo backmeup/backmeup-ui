@@ -1,6 +1,0 @@
-{
-	"name":"Session",
-	"shortname":"sess",
-	"loginHtml5StorageKey":"loggedin",
-	"sessionHTML5StoragePrefix":"sessionPluginValue-"
-}

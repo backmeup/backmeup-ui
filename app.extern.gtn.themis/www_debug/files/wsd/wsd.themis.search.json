@@ -1,0 +1,13 @@
+
+{
+	"template":{
+		"url":"string url",
+		"method":"string method",
+		"timeout":"int timeout"
+	},
+	"search":{
+        "url":"/backmeup-service-rest/search?query={query}",
+        "method":"get",
+        "timeout":"30000"
+	}
+}

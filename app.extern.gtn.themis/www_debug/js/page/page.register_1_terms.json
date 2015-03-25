@@ -1,0 +1,11 @@
+{
+	"name":"register_1_terms",
+	"shortname":"register_1_terms",
+	"template": "",
+	"useKeepAlive": true,
+	"loginObligate": false,
+	"isGlobalPage": false,
+	"contentRefresh": false,
+	"contentRefreshInterval": 0,
+	"asyncLoading": false
+}

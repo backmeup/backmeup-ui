@@ -33,9 +33,13 @@ if [ -n "$1" ]
 		rm $1/www/js/page/page.*.js
 		rm $1/www/js/page/page.*.json
 		
-		echo "- delete unuses files"
+		echo "- delete unused files"
 		rm $1/www/js/_minifyer.sh
 		rm $1/www/js/_release.sh
+		
+		cp $1/lapstone/ios/image/icons/* $1/platforms/ios/elove/Resources/icons
+		cp $1/lapstone/ios/image/splash/* $1/platforms/ios/elove/Resources/splash
+		cp $1/lapstone/android/image/ $1/platforms/android/res/
 		
 		sudo chmod -R 774 $1
        	sudo chown -R $USER $1

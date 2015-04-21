@@ -7,6 +7,7 @@
 		"../files/wsd/wsd.themis.logs.json":true,
 		"../files/wsd/wsd.themis.plugins.json":true,
 		"../files/wsd/wsd.themis.search.json":true,
+		"../files/wsd/wsd.themis.sharing.json":true,
 		"../files/wsd/wsd.themis.users.json":true
 	},
 	"webservices":{

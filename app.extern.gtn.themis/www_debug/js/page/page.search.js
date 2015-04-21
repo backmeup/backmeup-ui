@@ -22,8 +22,6 @@ var page_search = {
 
 	elements : null,
 
-
-
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
 		var dfd = $.Deferred();
@@ -55,8 +53,7 @@ var page_search = {
 
 		form.append(app.ni.text.text({
 			"id" : "txtSearch",
-			"placeholder" : (app.store.localStorage.get("data-html5-themis-search-value")) ? app.store.localStorage.get("data-html5-themis-search-value")
-					: app.lang.string("search", "labels"),
+			"placeholder" : (app.store.localStorage.get("data-html5-themis-search-value")) ? app.store.localStorage.get("data-html5-themis-search-value") : app.lang.string("search", "labels"),
 			"label" : false,
 			"labelText" : app.lang.string("search", "labels"),
 			"container" : false
@@ -93,7 +90,6 @@ var page_search = {
 
 	},
 
-
 	async : {
 		promise : null,// to implement
 
@@ -124,7 +120,6 @@ var page_search = {
 		}
 	},
 
-
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
@@ -135,6 +130,11 @@ var page_search = {
 				this.select();
 			}
 		});
+
+		$(this.config.pageId).on("click", "#btnApplyFilter", function() {
+			//app.store.localStorage.set("data-html5-themis-search-value", $("#txtSearch").val());
+			page_search.updateSearchDiv($("#divSearchResults"));
+		}),
 
 		$(this.config.pageId).on("submit", "#frmSearch", function(event) {
 			event.preventDefault();
@@ -150,34 +150,94 @@ var page_search = {
 	},
 
 	singleResult : {
+
+		getFilters : function(resultObject) {
+			var div = app.ni.element.div({
+				id : "divFilter"
+			}), select;
+
+			$.each(resultObject, function(key, filterObject) {
+				if (key.substring(0, 2) === "by") {
+					select = app.ni.select.single({
+						id : key,
+						classes : [ 'app-search-filter' ],
+						label : true,
+						labelText : "asd"
+					});
+					select.append(app.ni.select.option({
+						text : app.lang.string(key, "page.search"),
+						value : ""
+					}));
+
+					$.each(filterObject, function(key, filterValue) {
+						select.append(app.ni.select.option({
+							text : filterValue.title,
+							value : filterValue.title
+						}));
+					});
+
+					div.append(select);
+				}
+			});
+
+			div.append(app.ni.element.a({
+				id : "btnApplyFilter",
+				text : app.lang.string("apply filter", "page.search"),
+				classes : [ 'ui-btn' ]
+			}));
+
+			return div;
+		},
+
 		getThumbnail : function(singleSearchResult) {
 			if (singleSearchResult.thumbnailUrl != undefined) {
-				return singleSearchResult.thumbnailUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage
-						.get(plugin_WebServiceClient.config.headerToken.value)));
+				return singleSearchResult.thumbnailUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)));
 			} else {
 				return false;
 			}
 		},
 		getResultUrl : function(singleSearchResult) {
 			if (singleSearchResult.downloadUrl != undefined) {
-				return singleSearchResult.downloadUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage
-						.get(plugin_WebServiceClient.config.headerToken.value)));
+				return singleSearchResult.downloadUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)));
 			} else {
 				return false;
 			}
 		},
 		getSearchDetails : function(singleSearchResult) {
-			var div = app.ni.element.div({});
+			var div = app.ni.element.div({
+				classes : [ 'app-themis-searchresult' ]
+			});
+
+			div.append(app.ni.element.a({
+				text : app.lang.string("share item", "page.search"),
+				classes : [ 'ui-btn', 'ui-btn-inline' ],
+				attributes : {
+					onclick : "javascript:page_search.singleResult.openSharing(" + JSON.stringify(singleSearchResult).split("\"").join("'") + ")"
+				}
+			}));
+
+			div.append(app.ni.element.a({
+				text : app.lang.string("close search details", "page.search"),
+				classes : [ 'ui-btn', 'ui-btn-inline' ],
+				attributes : {
+					onclick : "javascript:app.notify.close.alert()"
+				}
+			}));
+
 			if (page_search.singleResult.getResultUrl(singleSearchResult)) {
+
 				div.append(app.ni.element.a({
-					"text" : "Link zum Ergebnis",
+					"text" : app.lang.string("open file in new browser window", "page.search"),
 					"attributes" : {
 						"href" : "#",
 						"onclick" : "javascript:window.open('" + page_search.singleResult.getResultUrl(singleSearchResult) + "','_blank', 'location=yes')"
-					}
+					},
+					classes : [ 'ui-btn', 'ui-btn-inline' ]
 				}));
 			}
+
 			$.each(singleSearchResult, function(key, value) {
+
 				if (typeof value === "object") {
 					$.each(value, function(key, value) {
 						div.append(app.ni.element.p({
@@ -192,27 +252,66 @@ var page_search = {
 			});
 			return div;
 		},
+
 		openDetails : function(singleSearchResult) {
 
 			// alert(JSON.stringify(singleSearchResult))
-			app.notify.alert(page_search.singleResult.getSearchDetails(singleSearchResult), app.lang.string("searchDetails", "page.search"),
-					singleSearchResult.title, app.lang.string("back", "actions"), function() {
-					}, 50);
+			app.notify.alert(page_search.singleResult.getSearchDetails(singleSearchResult), singleSearchResult.title, false, app.lang.string("back", "actions"), function() {
+			}, 50);
+
+		},
+
+		getSharingContent : function(singleSearchResult) {
+			var div = app.ni.element.div({
+				classes : [ 'app-themis-searchresult' ]
+			});
+
+			div.append(app.ni.text.text({
+				id : "txtUserId",
+				placeholder : app.lang.string("userid", "page.search"),
+				label : true,
+				labelText : app.lang.string("userid", "page.search"),
+				container : false
+			}))
+
+			return div;
+		},
+
+		openSharing : function(singleSearchResult) {
+			app.notify.close.all().done(function() {
+				app.notify.dialog(page_search.singleResult.getSharingContent(singleSearchResult), singleSearchResult.title, false, app.lang.string("share item", "page.search"), app.lang.string("don't share item", "page.share"), function() {
+					// share item
+					app.rc.getJson("shareDocument", {
+						withUserId : parseInt($("#txtUserId").val()),
+						policyValue : app.store.localStorage.get("data-html5-fileid")
+					}, true).done(function() {
+						alert("done")
+					}).fail(function() {
+						alert("fail")
+					});
+				}, function() {
+					// don't share item
+				}, 50);
+			});
 
 		}
 	},
 
 	updateSearchDiv : function(searchResults) {
 
-		searchResults.empty();
+		
 
 		app.notify.loader.bubbleDiv(true, app.lang.string("loadingText", "page.search"), app.lang.string("loadingHeadline", "page.search"));
-
-		var promise = app.rc.getJson("search", {
+		var promise = app.rc.getJson("searchWithFilters", {
 			// "userId" : 8,//
 			// app.store.localStorage.get("data-html5-themis-username"),
-			"query" : app.store.localStorage.get("data-html5-themis-search-value")
+			query : app.store.localStorage.get("data-html5-themis-search-value"),
+			source : ($('#bySource').length > 0) ? $('#bySource option:selected').val() : "",
+			type : ($('#byType').length > 0) ? $('#byType option:selected').val() : "",
+			job : ($('#byJob').length > 0) ? $('#byJob option:selected').val() : ""
 		}, true);
+		
+		searchResults.empty();
 
 		promise.fail(function() {
 			app.notify.alert(app.lang.string("search_error", "texts"), false, app.lang.string("search", "headlines"), app.lang.string("ok", "actions"));
@@ -220,57 +319,42 @@ var page_search = {
 
 		promise.done(function(resultObject) {
 
-			var list = $(app.template.get("listB", "responsive"));
+			var list = $(app.template.get("listA", "responsive"));
+
+			list.append(page_search.singleResult.getFilters(resultObject))
+
 			// alert(JSON.stringify(resultObject['files']));
 			$.each(resultObject['files'], function(key, singleSearchResult) {
-				var searchElement, textContainer;
 
-				searchElement = app.ni.element.li();
+				list.append(app.ni.list.thumbnail({
+					href : "#",
+					imageSrc : (page_search.singleResult.getThumbnail(singleSearchResult)) ? page_search.singleResult.getThumbnail(singleSearchResult) : " ",
+					title : (singleSearchResult.isSharing) ? app.lang.string("shared item", "page.search") : app.lang.string("own item", "page.search"),
+					headline : singleSearchResult.title,
+					text : singleSearchResult.preview,
+					classes : [ 'job' ],
+					attributes : {
+						"onclick" : "page_search.singleResult.openDetails(" + JSON.stringify(singleSearchResult).split("\"").join("'") + ")",
+						"data-html5-datasink" : singleSearchResult.datasink,
+						"data-html5-datasource" : singleSearchResult.datasource,
+						"data-html5-fileid" : singleSearchResult.fileId,
+						"data-html5-issharing" : singleSearchResult.isSharing,
+						"data-html5-jobname" : singleSearchResult.jobName,
+						"data-html5-ownerid" : singleSearchResult.ownerId,
+						"data-html5-properties-destiantion" : singleSearchResult.properties.destiantion,
+						"data-html5-properties-path" : singleSearchResult.properties.path,
+						"data-html5-properties-source" : singleSearchResult.properties.source,
+						"data-html5-timestamp" : singleSearchResult.timestamp,
+						"data-html5-title" : singleSearchResult.title,
+						"data-html5-type" : singleSearchResult.type
 
-				// image
-				if (page_search.singleResult.getThumbnail(singleSearchResult)) {
-					searchElement.append(app.ni.element.img({
-						"attributes" : {
-							"src" : page_search.singleResult.getThumbnail(singleSearchResult)
-						}
-					}));
-				}
-
-				textContainer = app.ni.element.div();
-
-				// headline + link
-
-				textContainer.append(
-
-				app.ni.element.a({
-					"attributes" : {
-						"href" : "#",
-						"onclick" : "page_search.singleResult.openDetails(" + JSON.stringify(singleSearchResult).split("\"").join("'") + ")"
-					},
-					"text" : app.ni.element.h2({
-						"classes" : [ 'list-B-headline' ],
-						"text" : singleSearchResult.title
-					})
-
+					}
 				}));
 
-				textContainer.append(app.ni.element.p({
-					"classes" : [ 'list-B-text' ],
-					"text" : singleSearchResult.preview
-				}));
-				textContainer.append(app.ni.element.p({
-					"classes" : [ 'list-B-status' ],
-					"text" : app.ni.element.a({
-						"text" : app.lang.string("jobName", "page.search") + ": " + singleSearchResult.jobName
-					}) + " | " + app.ni.element.a({
-						"text" : app.lang.string("timeStamp", "page.search") + ": " + date("F j, Y, g:i a", singleSearchResult.timeStamp / 1000)
-					})
-				}));
-				searchElement.append(textContainer);
-				list.append(searchElement);
 			});
 
 			searchResults.append(list);
+			app.help.jQM.enhance(searchResults);
 		});
 		promise.always(function() {
 			app.notify.loader.remove();
@@ -278,8 +362,6 @@ var page_search = {
 	},
 
 	functions : {},
-
-	
 
 	events : {
 

@@ -1,4 +1,24 @@
 {
 	"name": "KeepAlive",
-	"shortname": "alive"
+	"shortname": "alive",
+	"dependencies": 
+	[
+		"WebServiceClient"
+	],
+
+	"useKeepAlive": true,
+	"server": "backmeup",
+	"intervalInS": 14,
+	"path": "keepAlive.json",
+	"method": "get",
+	"type": "json",
+	"timeout": "12000",
+	"lastDuration": null,
+	"isAlive": true,
+	"maximumResponseTime": 13000,
+	"error": 
+	{
+		"text": "",
+		"code": 0
+	}
 }

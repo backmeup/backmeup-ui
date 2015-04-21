@@ -325,6 +325,8 @@
 		"loadingText": "Die Suchergebnisse werden geladen.",
 		"jobName": "Backupjob",
 		"timeStamp": "Datum",
-		"searchDetails": "Details der Suche"
+		"searchDetails": "Details der Suche",
+		"own item":"Eigene Datei",
+		"shared item":"Geteilte Datei"
 	}
 }

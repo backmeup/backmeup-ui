@@ -30,11 +30,11 @@ var plugins = {
 		var dfd = $.Deferred();
 
 		// reverse order
-		startup.addFunction("", plugins.callPluginEvents, "");
-		startup.addFunction("", plugins.callPluginsLoadedEvent, "");
-		startup.addFunction("", plugins.loadPlugins, "");
-		startup.addFunction("", plugins.verifyPluginNames, "");
-		startup.addFunction("", plugins.loadPluginConfig, "");
+		startup.addFunction("lapstone is defining the plugins' events", plugins.callPluginEvents, "");
+		startup.addFunction("lapstone is calling the plugins' loaded event", plugins.callPluginsLoadedEvent, "");
+		startup.addFunction("lapstone is loading the plugins", plugins.loadPlugins, "");
+		startup.addFunction("lapstone us verifying the plugins' configuration", plugins.verifyPluginNames, "");
+		startup.addFunction("lapstone is loading the plugins' configuration", plugins.loadPluginConfig, "");
 		dfd.resolve();
 		return dfd.promise();
 	},

@@ -22,8 +22,6 @@ var page_login = {
 
 	elements : null,
 
-
-
 	constructor : function() {
 		var dfd = $.Deferred();
 		dfd.resolve();
@@ -117,7 +115,6 @@ var page_login = {
 		}));
 	},
 
-
 	async : {
 		promise : null,// to implement
 
@@ -148,62 +145,58 @@ var page_login = {
 		}
 	},
 
-
 	// set the jquery events
 	setEvents : function(container) {
 
-		$(page_login.config.pageId).on(
-				"submit",
-				"#frmLogin",
-				function(event) {
-					app.debug.alert("page_" + page_register.config.name + " #btnRegister click", 25);
-					event.preventDefault();
-					if (!app.help.validate.username(container.find("#txtUsername").val())) {
-						app.notify.alert(app.lang.string("error", "page.login"), false, app.lang.string("error_headline", "page.login"), app.lang.string(
-								"error_button", "page.login"))
-					} else if (!app.help.validate.password(container.find("#txtPassword").val())) {
-						app.notify.alert(app.lang.string("error", "page.login"), false, app.lang.string("error_headline", "page.login"), app.lang.string(
-								"error_button", "page.login"))
-					} else {
+		$(page_login.config.pageId).on("submit", "#frmLogin", function(event) {
+			app.debug.alert("page_" + page_register.config.name + " #btnRegister click", 25);
+			event.preventDefault();
+			if (!app.help.validate.username(container.find("#txtUsername").val())) {
+				app.notify.alert(app.lang.string("error", "page.login"), false, app.lang.string("error_headline", "page.login"), app.lang.string("error_button", "page.login"))
+			} else if (!app.help.validate.password(container.find("#txtPassword").val())) {
+				app.notify.alert(app.lang.string("error", "page.login"), false, app.lang.string("error_headline", "page.login"), app.lang.string("error_button", "page.login"))
+			} else {
 
-						app.template.append("#btnLogin", "app-loader-bubble-inline-button");
+				app.template.append("#btnLogin", "app-loader-bubble-inline-button");
 
-						var promise = app.rc.getJson("authenticate", {
-							"username" : container.find("#txtUsername").val(),
-							"password" : encodeURIComponent(container.find("#txtPassword").val())
+				var promise = app.rc.getJson("authenticate", {
+					"username" : container.find("#txtUsername").val(),
+					"password" : encodeURIComponent(container.find("#txtPassword").val())
+				}, true);
+
+				promise.always(function() {
+					container.find(".bubblingG-inline-button").remove();
+				});
+
+				promise.done(function(json) {
+					if (json.accessToken != undefined) {
+						// alert(JSON.stringify(json));
+						app.store.localStorage.clearHtml5();
+						app.sess.loggedIn(true);
+						// app.store.localStorage.set("data-html5-themis-username",
+						// container.find("#txtUsername").val());
+						app.store.localStorage.set("themis-token", json.accessToken);
+						
+						app.rc.getJson("search", {
+							"query" : "startup indexer"
 						}, true);
-
-						promise.always(function() {
-							container.find(".bubblingG-inline-button").remove();
-						});
-
-						promise.done(function(json) {
-							if (json.accessToken != undefined) {
-								// alert(JSON.stringify(json));
-								app.store.localStorage.clearHtml5();
-								app.sess.loggedIn(true);
-								// app.store.localStorage.set("data-html5-themis-username",
-								// container.find("#txtUsername").val());
-								app.store.localStorage.set("themis-token", json.accessToken);
-								app.help.navigation.redirect(app.config.startPage_loggedIn, "slideup");
-							} else {
-								alert("Benutzername oder Passwort falsch.");
-							}
-						});
-
-						promise.fail(function(errorObject) {
-							app.notify.alert(app.lang.string("error", "page.login"), app.lang.string("error_headline", "page.login"), false, app.lang.string(
-									"error_button", "page.login"));
-						});
+						
+						app.help.navigation.redirect(app.config.startPage_loggedIn, "slideup");
+					} else {
+						alert("Benutzername oder Passwort falsch.");
 					}
 				});
 
-	},
+				promise.fail(function(errorObject) {
+					app.notify.alert(app.lang.string("error", "page.login"), app.lang.string("error_headline", "page.login"), false, app.lang.string("error_button", "page.login"));
+				});
+			}
+		});
 
+	},
 
 	functions : {},
 
-	
 	events : {
 
 		// Triggered twice during the page change cyle: First prior to any page

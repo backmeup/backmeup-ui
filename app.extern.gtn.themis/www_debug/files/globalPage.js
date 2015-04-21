@@ -296,6 +296,7 @@ var globalPage = {
 			// footer.css("display", "none");
 
 			footer.removeAttr("data-position");
+			footer.remove();
 
 			// $(document).off("mouseenter", "#navBtnNavMore");
 			$(document).on("mouseenter", "#navBtnNavMore", function() {

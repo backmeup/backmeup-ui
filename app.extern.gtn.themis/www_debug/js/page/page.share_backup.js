@@ -22,8 +22,6 @@ var page_share_backup = {
 
 	elements : null,
 
-
-
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
 		var dfd = $.Deferred();
@@ -39,20 +37,14 @@ var page_share_backup = {
 		var content = container.find('div[data-role=content]');
 		var navPanel = container.find('div#nav-panel');
 
-		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
+		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading", "headlines"));
 
 		/*
 		 * var promise = app.rc.getJson("getSuccessfulBackupjobs", { "expand" :
 		 * "true" }, true);
 		 */
 
-		var promise = app.rc.getJson([ [ "getRunningBackupjobs", {
-			"expand" : "true"
-		} ], [ "getSuccessfulBackupjobs", {
-			"expand" : "true"
-		} ], [ "getQueuedBackupjobs", {
-			"expand" : "true"
-		} ] ], true);
+		var promise = app.rc.getJson([ [ "ownedShares", {} ], [ "incomingShares", {} ] ], true);
 
 		content.append(app.ni.element.h1({
 			"text" : app.lang.string("share_backup", "headlines")
@@ -78,66 +70,64 @@ var page_share_backup = {
 
 		promise.done(function(resultObject) {
 
-			var runningBackupjobs = resultObject["getRunningBackupjobs"], successfulBackupjobs = resultObject["getSuccessfulBackupjobs"], queuedBackupjobs = resultObject["getQueuedBackupjobs"];
+			var incomingShares = resultObject["incomingShares"], ownedShares = resultObject["ownedShares"];
 
 			content.append(app.ni.element.h2({
-				"text" : app.lang.string("backup_to_share", "headlines")
+				"text" : app.lang.string("my incoming shares", "headlines")
 			}));
 
 			// alert(JSON.stringify(resultObject));
 			var list = $(app.template.get("listA", "responsive"));
-			$.each(successfulBackupjobs, function(index, jobJson) {
+
+			$.each(incomingShares, function(index, incomingShare) {
 				// alert(JSON.stringify(jobJson));
 				list.append(app.ni.list.thumbnail({
-					href : "#",
 					imageSrc : "",
-					title : "Id: " + jobJson.jobId,
-					headline : jobJson.jobTitle,
-					text : jobJson.jobTitle,
+					title : "Date",
+					headline : incomingShare.policy,
+					text : "",
 					classes : [ 'job' ],
 					attributes : {
-						"data-html5-themis-backupid" : jobJson.jobId
+						"data-html5-themis-fromuserid" : incomingShare.fromUserID,
+						"data-html5-themis-withuserid" : incomingShare.withUserID,
+						"data-html5-themis-policy" : incomingShare.policy,
+						"data-html5-themis-searchelementid" : incomingShare.policyCreationDate,
+						"data-html5-themis-policycreationdate" : incomingShare.policyCreationDate,
 					}
 				}));
 			});
+
 			app.notify.loader.remove();
 			content.append(list);
+			
+		
+			
+			content.append(app.ni.element.h2({
+				"text" : app.lang.string("my owned shares", "headlines")
+			}));
 
 			list = $(app.template.get("listA", "responsive"));
-			$.each(queuedBackupjobs, function(index, jobJson) {
+
+			$.each(ownedShares, function(index, ownedShare) {
 				// alert(JSON.stringify(jobJson));
 				list.append(app.ni.list.thumbnail({
-					href : "#",
 					imageSrc : "",
-					title : "Id: " + jobJson.jobId,
-					headline : jobJson.jobTitle,
-					text : jobJson.jobTitle,
+					title : "Date",
+					headline : ownedShare.policy,
+					text : "",
 					classes : [ 'job' ],
 					attributes : {
-						"data-html5-themis-backupid" : jobJson.jobId
+						"data-html5-themis-fromuserid" : ownedShare.fromUserID,
+						"data-html5-themis-withuserid" : ownedShare.withUserID,
+						"data-html5-themis-policy" : ownedShare.policy,
+						"data-html5-themis-searchelementid" : ownedShare.policyCreationDate,
+						"data-html5-themis-policycreationdate" : ownedShare.policyCreationDate,
 					}
 				}));
 			});
-			app.notify.loader.remove();
+
 			content.append(list);
 
-			list = $(app.template.get("listA", "responsive"));
-			$.each(runningBackupjobs, function(index, jobJson) {
-				// alert(JSON.stringify(jobJson));
-				list.append(app.ni.list.thumbnail({
-					href : "#",
-					imageSrc : "",
-					title : "Id: " + jobJson.jobId,
-					headline : jobJson.jobTitle,
-					text : jobJson.jobTitle,
-					classes : [ 'job' ],
-					attributes : {
-						"data-html5-themis-backupid" : jobJson.jobId
-					}
-				}));
-			});
-			app.notify.loader.remove();
-			content.append(list);
 			app.notify.loader.remove();
 			app.help.jQM.enhance(content);
 		});
@@ -148,7 +138,6 @@ var page_share_backup = {
 		});
 
 	},
-
 
 	async : {
 		promise : null,// to implement
@@ -180,27 +169,34 @@ var page_share_backup = {
 		}
 	},
 
-
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 
-		$(this.config.pageId).on("click", "#btnIncomingShare", function(event) {
-			app.notify.dialog(app.lang.string("incoming_share", "texts"), app.lang.string("incoming_share", "headlines"), app.lang.string("incoming_share", "headlines"), app.lang.string("accept", "actions"), app.lang.string("decline", "actions"), function() {
-				alert('accept')
-			}, function() {
-				alert('decline');
-			});
-		});
+		$(this.config.pageId).on(
+				"click",
+				"#btnIncomingShare",
+				function(event) {
+					app.notify.dialog(app.lang.string("incoming_share", "texts"), app.lang.string("incoming_share", "headlines"), app.lang.string("incoming_share", "headlines"), app.lang.string("accept", "actions"), app.lang.string("decline",
+							"actions"), function() {
+						alert('accept')
+					}, function() {
+						alert('decline');
+					});
+				});
 
-		$(this.config.pageId).on("click", ".incoming_backup", function(event) {
-			app.notify.close();
-			app.notify.dialog(app.lang.string("incoming_share", "texts"), app.lang.string("incoming_share", "headlines"), app.lang.string("incoming_share", "headlines"), app.lang.string("accept", "actions"), app.lang.string("decline", "actions"), function() {
-				alert('accept')
-			}, function() {
-				alert('decline');
-			});
-		});
+		$(this.config.pageId).on(
+				"click",
+				".incoming_backup",
+				function(event) {
+					app.notify.close();
+					app.notify.dialog(app.lang.string("incoming_share", "texts"), app.lang.string("incoming_share", "headlines"), app.lang.string("incoming_share", "headlines"), app.lang.string("accept", "actions"), app.lang.string("decline",
+							"actions"), function() {
+						alert('accept')
+					}, function() {
+						alert('decline');
+					});
+				});
 
 		$(this.config.pageId).on("click", "#btnIncomingShares", function(event) {
 			app.notify.alert(app.ni.element.a({
@@ -226,26 +222,12 @@ var page_share_backup = {
 			});
 		});
 
-		$(this.config.pageId).on("click", ".job", function(event) {
-			app.notify.dialog(app.lang.string("share_backup", "texts") + app.ni.text.text({
-				"id" : "txtEmail",
-				"placeholder" : app.lang.string("email", "labels"),
-				"label" : true,
-				"labelText" : app.lang.string("email", "labels"),
-				"container" : true
-			}), app.lang.string("share", "headlines"), app.lang.string("share", "headlines"), app.lang.string("share", "actions"), app.lang.string("cancel", "actions"), function() {
-				alert('accept')
-			}, function() {
-				alert('decline');
-			});
-		});
+		
 
 	},
 
-
 	functions : {},
 
-	
 	events : {
 
 		// Triggered twice during the page change cyle: First prior to any page

@@ -19,10 +19,41 @@
 		"method": "post",
 		"timeout": "30000"
 	},
+
 	"shareAll": 
 	{
 		"url": "/backmeup-service-rest/sharing/add/json?withUserId={withUserId}&policyType=AllInklOld&policyValue={policyValue}",
 		"method": "post",
 		"timeout": "30000"
+	},
+
+	"ownedShares": 
+	{
+		"url": "/backmeup-service-rest/sharing/owned",
+		"method": "get",
+		"timeout": "30000"
+	},
+
+	"incomingShares": 
+	{
+		"url": "/backmeup-service-rest/sharing/incoming",
+		"method": "get",
+		"timeout": "30000"
+	},
+
+	"deleteOwnShare": 
+	{
+		"url": "/backmeup-service-rest/sharing/remove?policyID={policyID}",
+		"method": "delete",
+		"timeout": "30000"
+	},
+
+	"deleteAllOwnedShares": 
+	{
+		"url": "/backmeup-service-rest/sharing/remove/all",
+		"method": "delete",
+		"timeout": "30000"
 	}
+	
+	
 }

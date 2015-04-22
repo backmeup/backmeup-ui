@@ -1,27 +1,27 @@
 {
 	"shareDocument": 
 	{
-		"url": "/backmeup-service-rest/sharing/add?withUserId={withUserId}&policyType=Document&policyValue={policyValue}",
+		"url": "/backmeup-service-rest/sharing/add/json?withUserId={withUserId}&policyType=Document&policyValue={policyValue}",
 		"method": "post",
 		"timeout": "30000"
 	},
 
 	"shareBackup": 
 	{
-		"url": "/backmeup-service-rest/sharing/add?withUserId={withUserId}&policyType=Backup&policyValue={policyValue}",
+		"url": "/backmeup-service-rest/sharing/add/json?withUserId={withUserId}&policyType=Backup&policyValue={policyValue}",
 		"method": "post",
 		"timeout": "30000"
 	},
 
 	"shareNew": 
 	{
-		"url": "/backmeup-service-rest/sharing/add?withUserId={withUserId}&policyType=AllFromNow&policyValue={policyValue}",
+		"url": "/backmeup-service-rest/sharing/add/json?withUserId={withUserId}&policyType=AllFromNow&policyValue={policyValue}",
 		"method": "post",
 		"timeout": "30000"
 	},
 	"shareAll": 
 	{
-		"url": "/backmeup-service-rest/sharing/add?withUserId={withUserId}&policyType=AllInklOld&policyValue={policyValue}",
+		"url": "/backmeup-service-rest/sharing/add/json?withUserId={withUserId}&policyType=AllInklOld&policyValue={policyValue}",
 		"method": "post",
 		"timeout": "30000"
 	}

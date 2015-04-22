@@ -137,6 +137,13 @@ var page_search = {
 			page_search.updateSearchDiv($("#divSearchResults"));
 		}),
 
+		$(this.config.pageId).on("click", "#btnRemoveFilter", function() {
+			// app.store.localStorage.set("data-html5-themis-search-value",
+			// $("#txtSearch").val());
+			$('.app-search-filter option:selected').val("");
+			page_search.updateSearchDiv($("#divSearchResults"));
+		}),
+
 		$(this.config.pageId).on("submit", "#frmSearch", function(event) {
 			event.preventDefault();
 			app.store.localStorage.set("data-html5-themis-search-value", $("#txtSearch").val());
@@ -177,7 +184,8 @@ var page_search = {
 					$.each(filterObject, function(key, filterValue) {
 						select.append(app.ni.select.option({
 							text : filterValue.title,
-							value : filterValue.title
+							value : filterValue.title,
+							selected : (filterObject.length == 1) ? true : false
 						}));
 					});
 
@@ -191,14 +199,21 @@ var page_search = {
 				classes : [ 'ui-btn', 'ui-btn-inline' ]
 			}));
 
+			div.append(app.ni.element.a({
+				id : "btnRemoveFilter",
+				text : app.lang.string("remove filter", "page.search"),
+				classes : [ 'ui-btn', 'ui-btn-inline' ]
+			}));
+
 			return div;
 		},
 
 		getThumbnail : function(singleSearchResult) {
-			if (singleSearchResult.thumbnailUrl != undefined) {
-				return singleSearchResult.thumbnailUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)));
-			}
-
+			var imgUrl;
+			if ((imgUrl = singleSearchResult.thumbnailUrl) != undefined) {
+				return imgUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)));
+			} else if ((imgUrl = app.img.getUrlById("search." + singleSearchResult.type)) != "search." + singleSearchResult.type)
+				return imgUrl;
 			else {
 				return false;
 			}
@@ -272,7 +287,7 @@ var page_search = {
 
 		getSharingContent : function(singleSearchResult) {
 			var div = app.ni.element.div({
-				classes : [ 'app-themis-searchresult' ]
+				classes : [ 'app-themis-sharing' ]
 			});
 
 			div.append(app.ni.text.text({

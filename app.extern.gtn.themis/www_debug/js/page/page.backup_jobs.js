@@ -22,8 +22,6 @@ var page_backup_jobs = {
 
 	elements : null,
 
-
-
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
 		var dfd = $.Deferred();
@@ -43,7 +41,7 @@ var page_backup_jobs = {
 			var navPanel = $('div#nav-panel');
 			var pagePanel = $('div#page-panel');
 
-			app.notify.loader.bubbleDiv(true, "", app.lang.string("loading","headlines"));
+			app.notify.loader.bubbleDiv(true, "", app.lang.string("loading", "headlines"));
 
 			/*
 			 * var promise = app.rc.getJson("getSuccessfulBackupjobs", {
@@ -58,102 +56,104 @@ var page_backup_jobs = {
 				"expand" : "true"
 			} ] ], true, 3);
 
-			promise
-					.done(function(resultObject) {
+			promise.done(function(resultObject) {
 
-						var runningBackupjobs = resultObject["getRunningBackupjobs"], successfulBackupjobs = resultObject["getSuccessfulBackupjobs"], queuedBackupjobs = resultObject["getQueuedBackupjobs"];
+				var runningBackupjobs = resultObject["getRunningBackupjobs"], successfulBackupjobs = resultObject["getSuccessfulBackupjobs"], queuedBackupjobs = resultObject["getQueuedBackupjobs"];
 
-						//alert(JSON.stringify(resultObject));
-						content.append(app.ni.element.h1({
-							"text" : app.lang.string("backup_jobs", "headlines")
-						}));
+				// alert(JSON.stringify(resultObject));
+				content.append(app.ni.element.h1({
+					"text" : app.lang.string("backup_jobs", "headlines")
+				}));
 
-						content.append(app.ni.element.a({
-							"id" : "btnNewBackup",
-							"text" : app.lang.string("create_backup", "actions"),
-							"attributes" : {
-								"href" : "create_backup_1.html"
-							},
-							"classes" : [ 'ui-btn' ]
-						}));
+				content.append(app.ni.element.a({
+					"id" : "btnNewBackup",
+					"text" : app.lang.string("create_backup", "actions"),
+					"attributes" : {
+						"href" : "create_backup_1.html"
+					},
+					"classes" : [ 'ui-btn' ]
+				}));
 
-						content.append(app.ni.element.h2({
-							"text" : app.lang.string("backup_jobs_successful", "headlines"),
-							"styles" : {
-								"clear" : "both"
-							}
-						}));
+				content.append(app.ni.element.h2({
+					"text" : app.lang.string("backup_jobs_successful", "headlines"),
+					"styles" : {
+						"clear" : "both"
+					}
+				}));
 
-						// alert(JSON.stringify(resultObject));
-						var list = $(app.template.get("listA", "responsive"));
-						$.each(successfulBackupjobs, function(index, jobJson) {
-							list.append(app.ni.list.thumbnail({
-								href : "backup_edit.html",
-								imageSrc : app.img.getUrlById("org.backmeup.facebook.job." + jobJson.jobStatus),
-								title : jobJson.jobStatus,
-								headline : jobJson.jobTitle,
-								text : "",
-								classes : [ 'job' ],
-								attributes : {
-									"data-html5-themis-backupid" : jobJson.jobId
-								}
-							}));
-						});
-						app.notify.loader.remove();
-						content.append(list);
+				// alert(JSON.stringify(resultObject));
+				var list = $(app.template.get("listA", "responsive"));
+				$.each(successfulBackupjobs, function(index, jobJson) {
+					list.append(app.ni.list.thumbnail({
+						href : "#",
+						imageSrc : app.img.getUrlById("org.backmeup.facebook.job." + jobJson.jobStatus),
+						title : jobJson.jobStatus,
+						headline : jobJson.jobTitle,
+						text : "",
+						classes : [ 'job' ],
+						attributes : {
+							"data-html5-themis-backupid" : jobJson.jobId,
+							"data-html5-themis-backuptitle" : jobJson.jobTitle
+						}
+					}));
+				});
+				app.notify.loader.remove();
+				content.append(list);
 
-						content.append(app.ni.element.h2({
-							"text" : app.lang.string("backup_jobs_queued", "headlines"),
-							"styles" : {
-								"clear" : "both"
-							}
-						}));
+				content.append(app.ni.element.h2({
+					"text" : app.lang.string("backup_jobs_queued", "headlines"),
+					"styles" : {
+						"clear" : "both"
+					}
+				}));
 
-						list = $(app.template.get("listA", "responsive"));
-						$.each(queuedBackupjobs, function(index, jobJson) {
-							// alert(JSON.stringify(jobJson));
-							list.append(app.ni.list.thumbnail({
-								href : "backup_edit.html",
-								imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
-								title : "Id: " + jobJson.jobId,
-								headline : jobJson.jobTitle,
-								text : jobJson.jobTitle,
-								classes : [ 'job' ],
-								attributes : {
-									"data-html5-themis-backupid" : jobJson.jobId
-								}
-							}));
-						});
-						app.notify.loader.remove();
-						content.append(list);
+				list = $(app.template.get("listA", "responsive"));
+				$.each(queuedBackupjobs, function(index, jobJson) {
+					// alert(JSON.stringify(jobJson));
+					list.append(app.ni.list.thumbnail({
+						href : "#",
+						imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
+						title : "Id: " + jobJson.jobId,
+						headline : jobJson.jobTitle,
+						text : jobJson.jobTitle,
+						classes : [ 'job' ],
+						attributes : {
+							"data-html5-themis-backupid" : jobJson.jobId,
+							"data-html5-themis-backuptitle" : jobJson.jobTitle
+						}
+					}));
+				});
+				app.notify.loader.remove();
+				content.append(list);
 
-						content.append(app.ni.element.h2({
-							"text" : app.lang.string("backup_jobs_running", "headlines"),
-							"styles" : {
-								"clear" : "both"
-							}
-						}));
+				content.append(app.ni.element.h2({
+					"text" : app.lang.string("backup_jobs_running", "headlines"),
+					"styles" : {
+						"clear" : "both"
+					}
+				}));
 
-						list = $(app.template.get("listA", "responsive"));
-						$.each(runningBackupjobs, function(index, jobJson) {
-							// alert(JSON.stringify(jobJson));
-							list.append(app.ni.list.thumbnail({
-								href : "backup_edit.html",
-								imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
-								title : "Id: " + jobJson.jobId,
-								headline : jobJson.jobTitle,
-								text : jobJson.jobTitle,
-								classes : [ 'job' ],
-								attributes : {
-									"data-html5-themis-backupid" : jobJson.jobId
-								}
-							}));
-						});
-						app.notify.loader.remove();
-						content.append(list);
-						app.notify.loader.remove();
-						app.help.jQM.enhance(content);
-					});
+				list = $(app.template.get("listA", "responsive"));
+				$.each(runningBackupjobs, function(index, jobJson) {
+					// alert(JSON.stringify(jobJson));
+					list.append(app.ni.list.thumbnail({
+						href : "#",
+						imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
+						title : "Id: " + jobJson.jobId,
+						headline : jobJson.jobTitle,
+						text : jobJson.jobTitle,
+						classes : [ 'job' ],
+						attributes : {
+							"data-html5-themis-backupid" : jobJson.jobId,
+							"data-html5-themis-backuptitle" : jobJson.jobTitle
+						}
+					}));
+				});
+				app.notify.loader.remove();
+				content.append(list);
+				app.notify.loader.remove();
+				app.help.jQM.enhance(content);
+			});
 
 			promise.fail(function(error) {
 				app.notify.loader.remove();
@@ -168,7 +168,6 @@ var page_backup_jobs = {
 		}
 		return success;
 	},
-
 
 	async : {
 		promise : null,// to implement
@@ -200,17 +199,76 @@ var page_backup_jobs = {
 		}
 	},
 
-
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 
+		$(page_backup_jobs.config.pageId).on("click", ".job", function(event) {
+			var title = $(this).attr("data-html5-themis-backuptitle");
+			app.notify.alert(page_backup_jobs.functions.getAlertContent(), title, false, app.lang.string("backup job alert - go back", "page.backup_jobs"), false, 10)
+		});
+
+		$(page_backup_jobs.config.pageId).on("click", "#btnBackupjobDetails", function(event) {
+			app.nav.redirect("backup_edit.html", "none");
+		});
+
+		$(page_backup_jobs.config.pageId).on("click", "#btnSharBackupjob", function(event) {
+			var title = app.store.localStorage.get("data-html5-themis-backuptitle");
+			app.notify.close.all().done(function() {
+				app.notify.dialog(page_backup_jobs.functions.getSharingContent(), title, false, app.lang.string("share backup", "page.backup_jobs"), app.lang.string("don't share item", "page.backup_jobs"), function() {
+					// share item
+					app.rc.getJson("shareBackup", {
+						withUserId : parseInt($("#txtUserId").val()),
+						policyValue : app.store.localStorage.get("data-html5-themis-backupid")
+					}, true).done(function() {
+						alert("done")
+					}).fail(function() {
+						alert("fail")
+					});
+				}, function() {
+					// don't share item
+				}, 50);
+			});
+		});
 	},
 
+	functions : {
+		getSharingContent : function() {
+			var div = app.ni.element.div({
+				classes : [ 'app-themis-sharing' ]
+			});
 
-	functions : {},
+			div.append(app.ni.text.text({
+				id : "txtUserId",
+				placeholder : app.lang.string("userid", "page.backup_jobs"),
+				label : true,
+				labelText : app.lang.string("userid", "page.backup_jobs"),
+				container : false
+			}))
 
-	
+			return div;
+		},
+		getAlertContent : function() {
+			var div = app.ni.element.div({
+				classes : [ 'job-alert-div' ]
+			});
+
+			div.append(app.ni.element.a({
+				id : "btnBackupjobDetails",
+				text : app.lang.string("backupjob details", "page.backup_jobs"),
+				classes : [ 'ui-btn', 'ui-btn-inline' ]
+			}));
+
+			div.append(app.ni.element.a({
+				id : "btnSharBackupjob",
+				text : app.lang.string("share backupjob", "page.backup_jobs"),
+				classes : [ 'ui-btn', 'ui-btn-inline' ]
+			}));
+
+			return div;
+		}
+	},
+
 	events : {
 
 		// Triggered twice during the page change cyle: First prior to any page

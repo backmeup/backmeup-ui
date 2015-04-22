@@ -132,7 +132,8 @@ var page_search = {
 		});
 
 		$(this.config.pageId).on("click", "#btnApplyFilter", function() {
-			//app.store.localStorage.set("data-html5-themis-search-value", $("#txtSearch").val());
+			// app.store.localStorage.set("data-html5-themis-search-value",
+			// $("#txtSearch").val());
 			page_search.updateSearchDiv($("#divSearchResults"));
 		}),
 
@@ -161,6 +162,10 @@ var page_search = {
 					select = app.ni.select.single({
 						id : key,
 						classes : [ 'app-search-filter' ],
+						attributes : {
+							"data-inline" : "true",
+							"data-mini" : "true"
+						},
 						label : true,
 						labelText : "asd"
 					});
@@ -183,7 +188,7 @@ var page_search = {
 			div.append(app.ni.element.a({
 				id : "btnApplyFilter",
 				text : app.lang.string("apply filter", "page.search"),
-				classes : [ 'ui-btn' ]
+				classes : [ 'ui-btn', 'ui-btn-inline' ]
 			}));
 
 			return div;
@@ -192,10 +197,13 @@ var page_search = {
 		getThumbnail : function(singleSearchResult) {
 			if (singleSearchResult.thumbnailUrl != undefined) {
 				return singleSearchResult.thumbnailUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)));
-			} else {
+			}
+
+			else {
 				return false;
 			}
 		},
+
 		getResultUrl : function(singleSearchResult) {
 			if (singleSearchResult.downloadUrl != undefined) {
 				return singleSearchResult.downloadUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)));
@@ -203,6 +211,7 @@ var page_search = {
 				return false;
 			}
 		},
+
 		getSearchDetails : function(singleSearchResult) {
 			var div = app.ni.element.div({
 				classes : [ 'app-themis-searchresult' ]
@@ -299,8 +308,6 @@ var page_search = {
 
 	updateSearchDiv : function(searchResults) {
 
-		
-
 		app.notify.loader.bubbleDiv(true, app.lang.string("loadingText", "page.search"), app.lang.string("loadingHeadline", "page.search"));
 		var promise = app.rc.getJson("searchWithFilters", {
 			// "userId" : 8,//
@@ -310,7 +317,7 @@ var page_search = {
 			type : ($('#byType').length > 0) ? $('#byType option:selected').val() : "",
 			job : ($('#byJob').length > 0) ? $('#byJob option:selected').val() : ""
 		}, true);
-		
+
 		searchResults.empty();
 
 		promise.fail(function() {

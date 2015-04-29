@@ -20,7 +20,7 @@
 		"timeout": "30000"
 	},
 
-	"shareNew": 
+	"shareAllFromNow": 
 	{
 		"url": "/backmeup-service-rest/sharing/add/json?withUserId={withUserId}&policyType=AllFromNow&policyValue={policyValue}&name={name}&description={description}",
 		"method": "post",

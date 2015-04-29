@@ -33,140 +33,145 @@ var page_backup_jobs = {
 	creator : function(container) {
 		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 
-		try {
-			app.debug.alert("page_" + this.config.name + ".creator()", 10);
+		app.debug.alert("page_" + this.config.name + ".creator()", 10);
 
-			var header = $('div[data-role=header]');
-			var content = $('div[data-role=content]');
-			var navPanel = $('div#nav-panel');
-			var pagePanel = $('div#page-panel');
+		var header = $('div[data-role=header]');
+		var content = $('div[data-role=content]');
+		var navPanel = $('div#nav-panel');
+		var pagePanel = $('div#page-panel');
 
-			app.notify.loader.bubbleDiv(true, "", app.lang.string("loading", "headlines"));
+		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading", "headlines"));
 
-			/*
-			 * var promise = app.rc.getJson("getSuccessfulBackupjobs", {
-			 * "expand" : "true" }, true);
-			 */
+		/*
+		 * var promise = app.rc.getJson("getSuccessfulBackupjobs", { "expand" :
+		 * "true" }, true);
+		 */
 
-			var promise = app.rc.getJson([ [ "getRunningBackupjobs", {
-				"expand" : "true"
-			} ], [ "getSuccessfulBackupjobs", {
-				"expand" : "true"
-			} ], [ "getQueuedBackupjobs", {
-				"expand" : "true"
-			} ] ], true, 3);
+		var promise = app.rc.getJson([ [ "getRunningBackupjobs", {
+			"expand" : "true"
+		} ], [ "getSuccessfulBackupjobs", {
+			"expand" : "true"
+		} ], [ "getQueuedBackupjobs", {
+			"expand" : "true"
+		} ] ], true, 3);
 
-			promise.done(function(resultObject) {
+		promise.done(function(resultObject) {
 
-				var runningBackupjobs = resultObject["getRunningBackupjobs"], successfulBackupjobs = resultObject["getSuccessfulBackupjobs"], queuedBackupjobs = resultObject["getQueuedBackupjobs"];
+			var runningBackupjobs = resultObject["getRunningBackupjobs"], successfulBackupjobs = resultObject["getSuccessfulBackupjobs"], queuedBackupjobs = resultObject["getQueuedBackupjobs"];
 
-				// alert(JSON.stringify(resultObject));
-				content.append(app.ni.element.h1({
-					"text" : app.lang.string("backup_jobs", "headlines")
-				}));
+			// alert(JSON.stringify(resultObject));
+			content.append(app.ni.element.h1({
+				"text" : app.lang.string("backup_jobs", "headlines")
+			}));
 
-				content.append(app.ni.element.a({
-					"id" : "btnNewBackup",
-					"text" : app.lang.string("create_backup", "actions"),
-					"attributes" : {
-						"href" : "create_backup_1.html"
-					},
-					"classes" : [ 'ui-btn' ]
-				}));
+			content.append(app.ni.element.a({
+				"id" : "btnNewBackup",
+				"text" : app.lang.string("create_backup", "actions"),
+				"attributes" : {
+					"href" : "create_backup_1.html"
+				},
+				"classes" : [ 'ui-btn', 'ui-btn-inline' ]
+			}));
 
-				content.append(app.ni.element.h2({
-					"text" : app.lang.string("backup_jobs_successful", "headlines"),
-					"styles" : {
-						"clear" : "both"
+			content.append(app.ni.element.a({
+				"id" : "btnShareAll",
+				"text" : app.lang.string("share all", "page.backup_jobs"),
+				"classes" : [ 'ui-btn', 'ui-btn-inline' ]
+			}));
+
+			content.append(app.ni.element.a({
+				"id" : "btnShareAllFromNow",
+				"text" : app.lang.string("share all from now", "page.backup_jobs"),
+				"classes" : [ 'ui-btn', 'ui-btn-inline' ]
+			}));
+
+			content.append(app.ni.element.h2({
+				"text" : app.lang.string("backup_jobs_successful", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
+			}));
+
+			// alert(JSON.stringify(resultObject));
+			var list = $(app.template.get("listA", "responsive"));
+			$.each(successfulBackupjobs, function(index, jobJson) {
+				list.append(app.ni.list.thumbnail({
+					href : "#",
+					imageSrc : app.img.getUrlById("org.backmeup.facebook.job." + jobJson.jobStatus),
+					title : jobJson.jobStatus,
+					headline : jobJson.jobTitle,
+					text : "",
+					classes : [ 'job' ],
+					attributes : {
+						"data-html5-themis-backupid" : jobJson.jobId,
+						"data-html5-themis-backuptitle" : jobJson.jobTitle
 					}
 				}));
-
-				// alert(JSON.stringify(resultObject));
-				var list = $(app.template.get("listA", "responsive"));
-				$.each(successfulBackupjobs, function(index, jobJson) {
-					list.append(app.ni.list.thumbnail({
-						href : "#",
-						imageSrc : app.img.getUrlById("org.backmeup.facebook.job." + jobJson.jobStatus),
-						title : jobJson.jobStatus,
-						headline : jobJson.jobTitle,
-						text : "",
-						classes : [ 'job' ],
-						attributes : {
-							"data-html5-themis-backupid" : jobJson.jobId,
-							"data-html5-themis-backuptitle" : jobJson.jobTitle
-						}
-					}));
-				});
-				app.notify.loader.remove();
-				content.append(list);
-
-				content.append(app.ni.element.h2({
-					"text" : app.lang.string("backup_jobs_queued", "headlines"),
-					"styles" : {
-						"clear" : "both"
-					}
-				}));
-
-				list = $(app.template.get("listA", "responsive"));
-				$.each(queuedBackupjobs, function(index, jobJson) {
-					// alert(JSON.stringify(jobJson));
-					list.append(app.ni.list.thumbnail({
-						href : "#",
-						imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
-						title : "Id: " + jobJson.jobId,
-						headline : jobJson.jobTitle,
-						text : jobJson.jobTitle,
-						classes : [ 'job' ],
-						attributes : {
-							"data-html5-themis-backupid" : jobJson.jobId,
-							"data-html5-themis-backuptitle" : jobJson.jobTitle
-						}
-					}));
-				});
-				app.notify.loader.remove();
-				content.append(list);
-
-				content.append(app.ni.element.h2({
-					"text" : app.lang.string("backup_jobs_running", "headlines"),
-					"styles" : {
-						"clear" : "both"
-					}
-				}));
-
-				list = $(app.template.get("listA", "responsive"));
-				$.each(runningBackupjobs, function(index, jobJson) {
-					// alert(JSON.stringify(jobJson));
-					list.append(app.ni.list.thumbnail({
-						href : "#",
-						imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
-						title : "Id: " + jobJson.jobId,
-						headline : jobJson.jobTitle,
-						text : jobJson.jobTitle,
-						classes : [ 'job' ],
-						attributes : {
-							"data-html5-themis-backupid" : jobJson.jobId,
-							"data-html5-themis-backuptitle" : jobJson.jobTitle
-						}
-					}));
-				});
-				app.notify.loader.remove();
-				content.append(list);
-				app.notify.loader.remove();
-				app.help.jQM.enhance(content);
 			});
 
-			promise.fail(function(error) {
-				app.notify.loader.remove();
-				alert("ws error: " + error);
-			});
+			app.notify.loader.remove();
+			content.append(list);
 
-			success = true;
-		} catch (err) {
-			app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-			app.debug.log(JSON.stringify(err, null, 4));
-			success = false;
-		}
-		return success;
+			content.append(app.ni.element.h2({
+				"text" : app.lang.string("backup_jobs_queued", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
+			}));
+
+			list = $(app.template.get("listA", "responsive"));
+			$.each(queuedBackupjobs, function(index, jobJson) {
+				// alert(JSON.stringify(jobJson));
+				list.append(app.ni.list.thumbnail({
+					href : "#",
+					imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
+					title : "Id: " + jobJson.jobId,
+					headline : jobJson.jobTitle,
+					text : jobJson.jobTitle,
+					classes : [ 'job' ],
+					attributes : {
+						"data-html5-themis-backupid" : jobJson.jobId,
+						"data-html5-themis-backuptitle" : jobJson.jobTitle
+					}
+				}));
+			});
+			app.notify.loader.remove();
+			content.append(list);
+
+			content.append(app.ni.element.h2({
+				"text" : app.lang.string("backup_jobs_running", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
+			}));
+
+			list = $(app.template.get("listA", "responsive"));
+			$.each(runningBackupjobs, function(index, jobJson) {
+				// alert(JSON.stringify(jobJson));
+				list.append(app.ni.list.thumbnail({
+					href : "#",
+					imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
+					title : "Id: " + jobJson.jobId,
+					headline : jobJson.jobTitle,
+					text : jobJson.jobTitle,
+					classes : [ 'job' ],
+					attributes : {
+						"data-html5-themis-backupid" : jobJson.jobId,
+						"data-html5-themis-backuptitle" : jobJson.jobTitle
+					}
+				}));
+			});
+			app.notify.loader.remove();
+			content.append(list);
+			app.notify.loader.remove();
+			app.help.jQM.enhance(content);
+		});
+
+		promise.fail(function(error) {
+			app.notify.loader.remove();
+			alert("ws error: " + error);
+		});
+
 	},
 
 	async : {
@@ -231,6 +236,55 @@ var page_backup_jobs = {
 				}, 50);
 			});
 		});
+
+		$(page_backup_jobs.config.pageId).on(
+				"click",
+				"#btnShareAllFromNow",
+				function(event) {
+					app.notify.close.all().done(
+							function() {
+								app.notify.dialog(page_search.singleResult.getSharingInputs(), app.lang.string("share all from now", "page.backup_jobs"), false, app.lang.string("share backup", "page.backup_jobs"), app.lang.string("don't share item",
+										"page.backup_jobs"), function() {
+									// share item
+									app.rc.getJson("shareAllFromNow", {
+										withUserId : parseInt($("#txtShareUserId").val()),
+										name : $("#txtShareName").val(),
+										policyValue : ""
+									}, true).done(function() {
+										alert("done")
+									}).fail(function() {
+										alert("fail")
+									});
+								}, function() {
+									// don't share item
+								}, 50);
+							});
+				});
+
+		$(page_backup_jobs.config.pageId).on(
+				"click",
+				"#btnShareAll",
+				function(event) {
+					app.notify.close.all().done(
+							function() {
+								app.notify.dialog(page_search.singleResult.getSharingInputs(), app.lang.string("share all from now", "page.backup_jobs"), false, app.lang.string("share backup", "page.backup_jobs"), app.lang.string("don't share item",
+										"page.backup_jobs"), function() {
+									// share item
+									app.rc.getJson("shareAll", {
+										withUserId : parseInt($("#txtShareUserId").val()),
+										name : $("#txtShareName").val(),
+										policyValue : ""
+									}, true).done(function() {
+										alert("done")
+									}).fail(function() {
+										alert("fail")
+									});
+								}, function() {
+									// don't share item
+								}, 50);
+							});
+				});
+
 	},
 
 	functions : {
@@ -266,14 +320,6 @@ var page_backup_jobs = {
 		pagebeforechange : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforechange()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered on the page being initialized, before most plugin
@@ -281,14 +327,6 @@ var page_backup_jobs = {
 		pagebeforecreate : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforecreate()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered on the �fromPage� we are transitioning away from, before
@@ -297,28 +335,12 @@ var page_backup_jobs = {
 		pagebeforehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforehide()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered before any load request is made.
 		pagebeforeload : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeload()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered on the �toPage� we are transitioning to, before the actual
@@ -326,14 +348,6 @@ var page_backup_jobs = {
 		pagebeforeshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeshow()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// This event is triggered after the changePage() request has finished
@@ -342,28 +356,12 @@ var page_backup_jobs = {
 		pagechange : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagechange()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered when the changePage() request fails to load the page.
 		pagechangefailed : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagechangefailed()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered when the page has been created in the DOM (via ajax or
@@ -373,44 +371,18 @@ var page_backup_jobs = {
 		// markup.
 		pagecreate : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagecreate()", 12);
-
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered on the �fromPage� after the transition animation has
 		// completed.
 		pagehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagehide()", 12);
-
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered on the page being initialized, after initialization occurs.
 		pageinit : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageinit()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered after the page is successfully loaded and inserted into the
@@ -418,28 +390,12 @@ var page_backup_jobs = {
 		pageload : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageload()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered if the page load request failed.
 		pageloadfailed : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageloadfailed()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered just before the framework attempts to remove an external
@@ -448,29 +404,12 @@ var page_backup_jobs = {
 		pageremove : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageremove()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered on the �toPage� after the transition animation has
 		// completed.
 		pageshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageshow()", 12);
-
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 
 		}
 	}

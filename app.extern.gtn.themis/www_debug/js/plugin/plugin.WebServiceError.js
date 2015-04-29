@@ -109,8 +109,8 @@ var plugin_WebServiceError = {
 
 			var errorName = null;
 
-		//	alert(typeof exception + " " + JSON.stringify(exception));
-			
+			app.debug.alert("plugin.WebServiceError.js ~ plugin_WebServiceError.functions.getExceptionConfig()" + JSON.stringify(exception));
+
 			if (exception.statusText === "error" && exception.readyState === 0 && exception.status === 0) {
 				errorName = "timeout";
 			} else if (exception.error != undefined) {

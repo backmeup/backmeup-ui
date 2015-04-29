@@ -85,7 +85,7 @@ var page_badConnection = {
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
-		$(this.config.pageId).on("connectionisalive", function(event, duration) {
+		$(this.config.pageId).on("connectionisalive", function(event) {
 			app.help.navigation.back();
 		});
 	},

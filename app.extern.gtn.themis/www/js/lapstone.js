@@ -21,14 +21,14 @@
 // window.localStorage.clear();
 var app = {
 	config : {
-		name : "app",
+		// name : "app",
 		min : true,
 		useJQueryMobile : true,
 		apacheCordova : null,
 		jQueryMobile : null
 	},
 	addObject : function(name, object) {
-		// alert("Add object to app: " + name);
+		console.log("Deprecated Function!");
 		app[name] = object;
 	}
 };
@@ -695,15 +695,15 @@ $(document).ready(function() {
 		// alert("init done");
 		setTimeout(function() {
 			initialisationPanel.finish();
-			console.log("TODO - cleanup framework loading");
+
+		//	console.clear();
 		}, 200);
-	});
-
-	inititalisationPromise.fail(function() {
-		alert("framework fail");
-	});
-
-	inititalisationPromise.always(function() {
+	}).fail(function() {
+		if (confirm("App loading failed. Confirm to reload the app."))
+			location.reload();
+		else
+			alert("App loading failed. Close the app and restart again");
+	}).always(function() {
 		// alert();
 		app.info.set("app.config.version.update", false);
 	});

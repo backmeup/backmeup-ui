@@ -43,8 +43,7 @@ var plugin_KeepAlive = {
 
 		if (plugin_KeepAlive.config.useKeepAlive) {
 			app.debug.alert("plugin.KeepAlive.js ~ plugin_KeepAlive.pluginsLoaded() case: plugin_KeepAlive.config.useKeepAlive == true", 5);
-			app.debug.alert(
-					"plugin.KeepAlive.js ~ plugin_KeepAlive.pluginsLoaded() call: plugin_KeepAlive.keepAliveRequest() to make a first keepAlive request", 5);
+			app.debug.alert("plugin.KeepAlive.js ~ plugin_KeepAlive.pluginsLoaded() call: plugin_KeepAlive.keepAliveRequest() to make a first keepAlive request", 5);
 			plugin_KeepAlive.keepAliveRequest();
 			app.debug.alert("plugin.KeepAlive.js ~ plugin_KeepAlive.pluginsLoaded() initialize the keepAlive interval: plugin_KeepAlive.interval ", 5);
 			plugin_KeepAlive.interval = window.setInterval("plugin_KeepAlive.keepAliveRequest()", plugin_KeepAlive.config.intervalInS * 1000);
@@ -85,6 +84,14 @@ var plugin_KeepAlive = {
 
 	},
 	// private functionsstartTime : 0.0,
+	eventTriggering : function() {
+		app.debug.alert("plugin.KeepAlive.js ~ plugin_KeepAlive.eventTriggering()", 14);
+		if (!plugin_KeepAlive.config.isAlive) {
+			$("[data-role=page]").trigger("connectionisdead");
+		} else if (plugin_KeepAlive.config.isAlive) {
+			$("[data-role=page]").trigger("connectionisalive");
+		}
+	},
 
 	ajaxSuccess : function(data, textStatus, jqXHR) {
 		app.debug.alert("plugin.KeepAlive.js ~ plugin_KeepAlive.ajaxSuccess()", 14);
@@ -100,20 +107,11 @@ var plugin_KeepAlive = {
 			app.info.set("plugin_KeepAlive.config.error.code", 0);
 			app.info.set("plugin_KeepAlive.config.error.text", "No error");
 		}
-		app.debug.alert("plugin.KeepAlive.js ~ plugin_KeepAlive.ajaxSuccess() value: plugin_KeepAlive.config.lastDuration = "
-				+ app.store.localStorage.get("config.plugin_KeepAlive.config.lastDuration"), 50);
-		app.debug.alert("plugin.KeepAlive.js ~ plugin_KeepAlive.ajaxSuccess() value: plugin_KeepAlive.config.isAlive = "
-				+ app.store.localStorage.get("config.plugin_KeepAlive.config.isAlive"), 50);
-		app.debug.alert("plugin.KeepAlive.js ~ plugin_KeepAlive.ajaxSuccess() value: plugin_KeepAlive.config.error.code = "
-				+ app.store.localStorage.get("config.plugin_KeepAlive.config.error.code"), 50);
-		app.debug.alert("plugin.KeepAlive.js ~ plugin_KeepAlive.ajaxSuccess() value: plugin_KeepAlive.config.error.text = "
-				+ app.store.localStorage.get("config.plugin_KeepAlive.config.error.text"), 50);
-		if (!plugin_KeepAlive.config.isAlive) {
-			app.debug.alert("KeepAlive request failed.\nReason: " + plugin_KeepAlive.config.error.text + "\nTime: " + wsDuration, 60);
-			$("[data-role=page]").trigger("connectionisdead", wsDuration);
-		} else if (plugin_KeepAlive.config.isAlive) {
-			$("[data-role=page]").trigger("connectionisalive", wsDuration);
-		}
+		app.debug.alert("plugin.KeepAlive.js ~ plugin_KeepAlive.ajaxSuccess() value: plugin_KeepAlive.config.lastDuration = " + app.store.localStorage.get("config.plugin_KeepAlive.config.lastDuration"), 50);
+		app.debug.alert("plugin.KeepAlive.js ~ plugin_KeepAlive.ajaxSuccess() value: plugin_KeepAlive.config.isAlive = " + app.store.localStorage.get("config.plugin_KeepAlive.config.isAlive"), 50);
+		app.debug.alert("plugin.KeepAlive.js ~ plugin_KeepAlive.ajaxSuccess() value: plugin_KeepAlive.config.error.code = " + app.store.localStorage.get("config.plugin_KeepAlive.config.error.code"), 50);
+		app.debug.alert("plugin.KeepAlive.js ~ plugin_KeepAlive.ajaxSuccess() value: plugin_KeepAlive.config.error.text = " + app.store.localStorage.get("config.plugin_KeepAlive.config.error.text"), 50);
+		plugin_KeepAlive.eventTriggering();
 	},
 
 	ajaxError : function(jqXHR, textStatus, errorThrown) {
@@ -123,9 +121,8 @@ var plugin_KeepAlive = {
 		app.info.set("plugin_KeepAlive.config.isAlive", false);
 		app.info.set("plugin_KeepAlive.config.error.code", 1);
 		app.info.set("plugin_KeepAlive.config.error.text", "Webservice Error: ");
-		app.debug.alert("KeepAlive request failed.\nReason: " + plugin_KeepAlive.config.error.text + "\nTime: " + wsDuration + "\n\n"
-				+ JSON.stringify(errorThrown, null, 4), 60);
-		$("[data-role=page]").trigger("connectionisdead", wsDuration);
+		app.debug.alert("plugin.KeepAlive.js ~ plugin_KeepAlive.ajaxSuccess() - KeepAlive request failed.\nReason: " + plugin_KeepAlive.config.error.text + "\nTime: " + wsDuration + "\n\n" + JSON.stringify(errorThrown, null, 4), 60);
+		plugin_KeepAlive.eventTriggering();
 	},
 
 	ajax : function(url, data, type, method, timeout) {
@@ -195,6 +192,10 @@ var plugin_KeepAlive = {
 	functions : {
 		isAlive : function() {
 			return plugin_KeepAlive.config.isAlive;
+		},
+		
+		badConnectionHandler:function(){
+			app.help.navigation.redirect(app.config.badConnectionPage, "slideup");
 		}
 	}
 };

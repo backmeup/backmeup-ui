@@ -71,6 +71,57 @@ var plugin_HtmlView = {
 	 * 
 	 */
 	functions : {
-
+		page : {
+			width : function(minimum, maximum) {
+				var val = parseInt($("div[data-role=page]").css("width"));
+				if (val > maximum)
+					return maximum;
+				else if (val < minimum)
+					return minimum;
+				return val;
+			},
+			height : function(minimum, maximum) {
+				var val = parseInt($("div[data-role=page]").css("height"));
+				if (val > maximum)
+					return maximum
+				return val;
+			}
+		},
+		content : {
+			width : function(minimum, maximum) {
+				var val = parseInt($("div[data-role=content]").css("width"));
+				if (val > maximum)
+					return maximum;
+				else if (val < minimum)
+					return minimum;
+				return val;
+			},
+			height : function(minimum, maximum) {
+				var val = parseInt($("div[data-role=content]").css("height"));
+				if (val > maximum)
+					return maximum;
+				else if (val < minimum)
+					return minimum;
+				return val;
+			}
+		},
+		window : {
+			width : function(minimum, maximum) {
+				var val = parseInt($(window).width());
+				if (val > maximum)
+					return maximum;
+				else if (val < minimum)
+					return minimum;
+				return val;
+			},
+			height : function(minimum, maximum) {
+				var val = parseInt($(window).height());
+				if (val > maximum)
+					return maximum;
+				else if (val < minimum)
+					return minimum;
+				return val;
+			}
+		}
 	}
 };

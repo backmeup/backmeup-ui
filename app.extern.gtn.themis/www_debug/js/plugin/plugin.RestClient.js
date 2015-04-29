@@ -404,7 +404,7 @@ var plugin_RestClient = {
 					return dfd.promise();
 				}
 			} else {
-				alert("Rest Client: bad internet connection");
+				app.alive.badConnectionHandler();
 			}
 			return null;
 		}

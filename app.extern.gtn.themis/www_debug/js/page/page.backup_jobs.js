@@ -215,10 +215,11 @@ var page_backup_jobs = {
 		$(page_backup_jobs.config.pageId).on("click", "#btnSharBackupjob", function(event) {
 			var title = app.store.localStorage.get("data-html5-themis-backuptitle");
 			app.notify.close.all().done(function() {
-				app.notify.dialog(page_backup_jobs.functions.getSharingContent(), title, false, app.lang.string("share backup", "page.backup_jobs"), app.lang.string("don't share item", "page.backup_jobs"), function() {
+				app.notify.dialog(page_search.singleResult.getSharingInputs(), title, false, app.lang.string("share backup", "page.backup_jobs"), app.lang.string("don't share item", "page.backup_jobs"), function() {
 					// share item
 					app.rc.getJson("shareBackup", {
-						withUserId : parseInt($("#txtUserId").val()),
+						withUserId : parseInt($("#txtShareUserId").val()),
+						name : $("#txtShareName").val(),
 						policyValue : app.store.localStorage.get("data-html5-themis-backupid")
 					}, true).done(function() {
 						alert("done")
@@ -233,21 +234,7 @@ var page_backup_jobs = {
 	},
 
 	functions : {
-		getSharingContent : function() {
-			var div = app.ni.element.div({
-				classes : [ 'app-themis-sharing' ]
-			});
 
-			div.append(app.ni.text.text({
-				id : "txtUserId",
-				placeholder : app.lang.string("userid", "page.backup_jobs"),
-				label : true,
-				labelText : app.lang.string("userid", "page.backup_jobs"),
-				container : false
-			}))
-
-			return div;
-		},
 		getAlertContent : function() {
 			var div = app.ni.element.div({
 				classes : [ 'job-alert-div' ]

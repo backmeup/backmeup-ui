@@ -83,25 +83,25 @@ var page_share_backup = {
 				// alert(JSON.stringify(jobJson));
 				list.append(app.ni.list.thumbnail({
 					imageSrc : "",
-					title : "Date",
-					headline : incomingShare.policy,
-					text : "",
+					title : app.lang.string("date", "page.share_backup") + " " + date("d.m.Y", incomingShare.policyCreationDate / 1000),
+					headline : (incomingShare.name != undefined) ? incomingShare.name : app.lang.string(incomingShare.policy, "page.share_backup"),
+					text : (incomingShare.description != undefined) ? incomingShare.description : "no description for backup",
 					classes : [ 'job' ],
 					attributes : {
 						"data-html5-themis-fromuserid" : incomingShare.fromUserID,
 						"data-html5-themis-withuserid" : incomingShare.withUserID,
 						"data-html5-themis-policy" : incomingShare.policy,
-						"data-html5-themis-searchelementid" : incomingShare.policyCreationDate,
+						"data-html5-themis-searchelementid" : incomingShare.sharedElementID,
 						"data-html5-themis-policycreationdate" : incomingShare.policyCreationDate,
+						"data-html5-themis-numberOfSharedDocuments" : incomingShare.numberOfSharedDocuments,
+						"data-html5-themis-name" : incomingShare.name,
 					}
 				}));
 			});
 
 			app.notify.loader.remove();
 			content.append(list);
-			
-		
-			
+
 			content.append(app.ni.element.h2({
 				"text" : app.lang.string("my owned shares", "headlines")
 			}));
@@ -112,16 +112,18 @@ var page_share_backup = {
 				// alert(JSON.stringify(jobJson));
 				list.append(app.ni.list.thumbnail({
 					imageSrc : "",
-					title : "Date",
-					headline : ownedShare.policy,
-					text : "",
+					title : app.lang.string("date", "page.share_backup") + " " + date("d.m.Y", ownedShare.policyCreationDate / 1000),
+					headline : (ownedShare.name != undefined) ? ownedShare.name : app.lang.string(ownedShare.policy, "page.share_backup"),
+					text : (ownedShare.description != undefined) ? ownedShare.description : "no description for backup",
 					classes : [ 'job' ],
 					attributes : {
 						"data-html5-themis-fromuserid" : ownedShare.fromUserID,
 						"data-html5-themis-withuserid" : ownedShare.withUserID,
 						"data-html5-themis-policy" : ownedShare.policy,
-						"data-html5-themis-searchelementid" : ownedShare.policyCreationDate,
+						"data-html5-themis-searchelementid" : ownedShare.sharedElementID,
 						"data-html5-themis-policycreationdate" : ownedShare.policyCreationDate,
+						"data-html5-themis-numberOfSharedDocuments" : ownedShare.numberOfSharedDocuments,
+						"data-html5-themis-name" : ownedShare.name,
 					}
 				}));
 			});
@@ -221,8 +223,6 @@ var page_share_backup = {
 				alert('finish');
 			});
 		});
-
-		
 
 	},
 

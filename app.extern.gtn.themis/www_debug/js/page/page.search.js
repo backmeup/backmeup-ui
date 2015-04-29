@@ -144,6 +144,10 @@ var page_search = {
 			page_search.updateSearchDiv($("#divSearchResults"));
 		}),
 
+		$(this.config.pageId).on("click", "#btnShareSearchResult", function() {
+			page_search.singleResult.shareDocumentGroup();
+		});
+
 		$(this.config.pageId).on("submit", "#frmSearch", function(event) {
 			event.preventDefault();
 			app.store.localStorage.set("data-html5-themis-search-value", $("#txtSearch").val());
@@ -205,6 +209,12 @@ var page_search = {
 				classes : [ 'ui-btn', 'ui-btn-inline' ]
 			}));
 
+			div.append(app.ni.element.a({
+				id : "btnShareSearchResult",
+				text : app.lang.string("share search result", "page.search"),
+				classes : [ 'ui-btn', 'ui-btn-inline' ]
+			}));
+
 			return div;
 		},
 
@@ -236,7 +246,7 @@ var page_search = {
 				text : app.lang.string("share item", "page.search"),
 				classes : [ 'ui-btn', 'ui-btn-inline' ],
 				attributes : {
-					onclick : "javascript:page_search.singleResult.openSharing(" + JSON.stringify(singleSearchResult).split("\"").join("'") + ")"
+					onclick : "javascript:page_search.singleResult.shareDocument(" + JSON.stringify(singleSearchResult).split("\"").join("'") + ")"
 				}
 			}));
 
@@ -285,29 +295,73 @@ var page_search = {
 
 		},
 
-		getSharingContent : function(singleSearchResult) {
+		getSharingInputs : function() {
 			var div = app.ni.element.div({
 				classes : [ 'app-themis-sharing' ]
 			});
 
 			div.append(app.ni.text.text({
-				id : "txtUserId",
-				placeholder : app.lang.string("userid", "page.search"),
+				id : "txtShareName",
+				placeholder : app.lang.string("share name", "page.search"),
 				label : true,
-				labelText : app.lang.string("userid", "page.search"),
+				labelText : app.lang.string("sahre name", "page.search"),
 				container : false
-			}))
+			}));
+
+			div.append(app.ni.text.text({
+				id : "txtShareDescription",
+				placeholder : app.lang.string("share description", "page.search"),
+				label : true,
+				labelText : app.lang.string("share description", "page.search"),
+				container : false
+			}));
+
+			div.append(app.ni.text.text({
+				id : "txtShareUserId",
+				placeholder : app.lang.string("share userid", "page.search"),
+				label : true,
+				labelText : app.lang.string("share userid", "page.search"),
+				container : false
+			}));
 
 			return div;
 		},
 
-		openSharing : function(singleSearchResult) {
+		shareDocument : function(singleSearchResult) {
 			app.notify.close.all().done(function() {
-				app.notify.dialog(page_search.singleResult.getSharingContent(singleSearchResult), singleSearchResult.title, false, app.lang.string("share item", "page.search"), app.lang.string("don't share item", "page.share"), function() {
+				app.notify.dialog(page_search.singleResult.getSharingInputs(), singleSearchResult.title, false, app.lang.string("share item", "page.search"), app.lang.string("don't share item", "page.share"), function() {
 					// share item
 					app.rc.getJson("shareDocument", {
-						withUserId : parseInt($("#txtUserId").val()),
-						policyValue : app.store.localStorage.get("data-html5-fileid")
+						withUserId : parseInt($("#txtShareUserId").val()),
+						policyValue : app.store.localStorage.get("data-html5-fileid"),
+						name : $("#txtShareName").val(),
+						description : $("#txtShareDescription").val()
+					}, true).done(function() {
+						alert("done")
+					}).fail(function() {
+						alert("fail")
+					});
+				}, function() {
+					// don't share item
+				}, 50);
+			});
+
+		},
+
+		shareDocumentGroup : function() {
+			app.notify.close.all().done(function() {
+				app.notify.dialog(page_search.singleResult.getSharingInputs(), app.lang.string("share search result", "page.search"), false, app.lang.string("share item", "page.search"), app.lang.string("don't share item", "page.share"), function() {
+					// share item
+					var documentArray = [];
+					$('.app-search-item').each(function(index, element) {
+						documentArray.push($(element).attr('data-html5-fileid'));
+					})
+//					alert(JSON.stringify(documentArray));
+					app.rc.getJson("shareDocumentGroup", {
+						withUserId : parseInt($("#txtShareUserId").val()),
+						policyValue : documentArray,
+						name : $("#txtShareName").val(),
+						description : $("#txtShareDescription").val()
 					}, true).done(function() {
 						alert("done")
 					}).fail(function() {
@@ -354,7 +408,7 @@ var page_search = {
 					title : (singleSearchResult.isSharing) ? app.lang.string("shared item", "page.search") : app.lang.string("own item", "page.search"),
 					headline : singleSearchResult.title,
 					text : singleSearchResult.preview,
-					classes : [ 'job' ],
+					classes : [ 'job', 'app-search-item' ],
 					attributes : {
 						"onclick" : "page_search.singleResult.openDetails(" + JSON.stringify(singleSearchResult).split("\"").join("'") + ")",
 						"data-html5-datasink" : singleSearchResult.datasink,

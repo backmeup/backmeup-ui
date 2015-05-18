@@ -64,12 +64,15 @@ var page_share_backup = {
 			$.each(incomingShares, function(index, incomingShare) {
 				// alert(JSON.stringify(jobJson));
 				list.append(app.ni.list.thumbnail({
+					href : "#",
 					imageSrc : "",
 					title : app.lang.string("date", "page.share_backup") + " " + date("d.m.Y", incomingShare.policyCreationDate / 1000),
 					headline : (incomingShare.name != undefined) ? incomingShare.name : app.lang.string(incomingShare.policy, "page.share_backup"),
 					text : (incomingShare.description != undefined) ? incomingShare.description : "no description for backup",
-					classes : [ 'job' ],
+					classes : [ 'incoming-share' ],
 					attributes : {
+						"json" : JSON.stringify(incomingShare).split("\"").join("'"),
+						"data-html5-themis-id" : incomingShare.id,
 						"data-html5-themis-fromuserid" : incomingShare.fromUserID,
 						"data-html5-themis-withuserid" : incomingShare.withUserID,
 						"data-html5-themis-policy" : incomingShare.policy,
@@ -77,6 +80,7 @@ var page_share_backup = {
 						"data-html5-themis-policycreationdate" : incomingShare.policyCreationDate,
 						"data-html5-themis-numberOfSharedDocuments" : incomingShare.numberOfSharedDocuments,
 						"data-html5-themis-name" : incomingShare.name,
+						"data-html5-themis-approvedBySharingpartner" : incomingShare.approvedBySharingpartner
 					}
 				}));
 			});
@@ -93,12 +97,15 @@ var page_share_backup = {
 			$.each(ownedShares, function(index, ownedShare) {
 				// alert(JSON.stringify(jobJson));
 				list.append(app.ni.list.thumbnail({
+					href : "#",
 					imageSrc : "",
 					title : app.lang.string("date", "page.share_backup") + " " + date("d.m.Y", ownedShare.policyCreationDate / 1000),
 					headline : (ownedShare.name != undefined) ? ownedShare.name : app.lang.string(ownedShare.policy, "page.share_backup"),
 					text : (ownedShare.description != undefined) ? ownedShare.description : "no description for backup",
-					classes : [ 'job' ],
+					classes : [ 'owned-share' ],
 					attributes : {
+						"json" : JSON.stringify(ownedShare).split("\"").join("'"),
+						"data-html5-themis-id" : ownedShare.id,
 						"data-html5-themis-fromuserid" : ownedShare.fromUserID,
 						"data-html5-themis-withuserid" : ownedShare.withUserID,
 						"data-html5-themis-policy" : ownedShare.policy,
@@ -106,6 +113,7 @@ var page_share_backup = {
 						"data-html5-themis-policycreationdate" : ownedShare.policyCreationDate,
 						"data-html5-themis-numberOfSharedDocuments" : ownedShare.numberOfSharedDocuments,
 						"data-html5-themis-name" : ownedShare.name,
+						"data-html5-themis-approvedBySharingpartner" : ownedShare.approvedBySharingpartner
 					}
 				}));
 			});
@@ -157,11 +165,97 @@ var page_share_backup = {
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 
-	
+		$(document).on('click', '.owned-share', function(event) {
+			var share = JSON.parse($(this).attr('json').split("'").join('"')), text = page_share_backup.functions.ownedShareOperatios(share);
+			ttttttt = text;
+			app.notify.alert(text, false, app.lang.string("share details", "page.share_backup"), app.lang.string("close details", "page.share_backup"), false, 50)
+
+		});
+
+		$(document).on('click', '.incoming-share', function(event) {
+			var share = JSON.parse($(this).attr('json').split("'").join('"'));
+			app.notify.alert(page_share_backup.functions.incomingShareOperatios(share), false, app.lang.string("share details", "page.share_backup"), app.lang.string("close details", "page.share_backup"), false, 50)
+		});
+
+		$(document).on('click', '.app-share-accept', function(event) {
+			app.notify.close.all().done(function() {
+				app.rc.getJson('approveIncomingShare', {
+					policyID : app.store.localStorage.get("data-html5-themis-id")
+				}, true).done(function() {
+					alert("done");
+				}).fail(function() {
+					alert("fail");
+				});
+			});
+		});
+
+		$(document).on('click', '.app-share-decline', function(event) {
+			app.notify.close.all().done(function() {
+				app.rc.getJson('declineIncomingShare', {
+					policyID : app.store.localStorage.get("data-html5-themis-id")
+				}, true).done(function() {
+					alert("done");
+				}).fail(function() {
+					alert("fail");
+				});
+			});
+		});
+
+		$(document).on('click', '.app-share-delete', function(event) {
+			app.notify.close.all().done(function() {
+				app.rc.getJson('deleteOwnShare', {
+					policyID : app.store.localStorage.get("data-html5-themis-id")
+				}, true).done(function() {
+					alert("done");
+				}).fail(function() {
+					alert("fail");
+				});
+			});
+		});
 
 	},
 
-	functions : {},
+	functions : {
+		incomingShareOperatios : function(share) {
+			var div = app.ni.element.div({});
+			if (!share.approvedBySharingpartner) {
+				div.append(app.ni.element.a({
+					classes : [ 'ui-btn', 'ui-btn-inline', 'app-share-accept' ],
+					text : app.lang.string("accept share", "page.share_backup")
+				}));
+			}
+
+			div.append(app.ni.element.a({
+				classes : [ 'ui-btn', 'ui-btn-inline', 'app-share-decline' ],
+				text : app.lang.string("decline share", "page.share_backup")
+			}));
+
+			div.append(page_share_backup.functions.getShareDetails(share));
+			return div;
+		},
+
+		ownedShareOperatios : function(share) {
+			var div = app.ni.element.div({});
+
+			div.append(app.ni.element.a({
+				classes : [ 'ui-btn', 'ui-btn-inline', 'app-share-delete' ],
+				text : app.lang.string("revoke share", "page.share_backup")
+			}));
+
+			div.append(page_share_backup.functions.getShareDetails(share));
+			return div;
+		},
+
+		getShareDetails : function(share) {
+			var div = app.ni.element.div({});
+			$.each(share, function(key, value) {
+				div.append(app.ni.element.p({
+					text : key + ": " + value
+				}));
+			});
+			return div;
+		}
+	},
 
 	events : {
 

@@ -65,8 +65,8 @@
 	
 	"approveIncomingShare": 
 	{
-		"url": "/backmeup-service-rest/sharing/incoming/approval/json?approve=false&policyID={policyID}",
-		"method": "delete",
+		"url": "/backmeup-service-rest/sharing/incoming/approval/json?approve=true&policyID={policyID}",
+		"method": "post",
 		"timeout": "30000"
 	},
 	
@@ -74,7 +74,7 @@
 	"declineIncomingShare": 
 	{
 		"url": "/backmeup-service-rest/sharing/incoming/approval/json?approve=false&policyID={policyID}",
-		"method": "delete",
+		"method": "post",
 		"timeout": "30000"
 	}
 }

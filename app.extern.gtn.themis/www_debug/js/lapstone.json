@@ -8,6 +8,7 @@
 		"update": false
 	},
 
+	"min": false,
 	"startPage": "static-index.html",
 	"startPage_loggedIn": "search.html",
 	"badConnectionPage": "badConnection.html",

@@ -116,6 +116,11 @@ var plugin_WebServiceClient = {
 					app.debug.alert("pugin.RestClient.js ~ plugin_RestClient.getPath() - set in path: " + key + " = " + encodeURI(value), 20);
 					data = data.replace('{' + key + '}', encodeURIComponent(value));
 				});
+				console.log(data);
+
+				url += "?" + data;
+				data = '';
+				contentType = "text/plain";
 
 			} // end if
 			else if (dataType.toLowerCase() == "json") {

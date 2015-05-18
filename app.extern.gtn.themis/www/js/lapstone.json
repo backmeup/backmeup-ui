@@ -3,11 +3,12 @@
 	"title": "Themis",
 	"version": 
 	{
-		"app": "0.0.1",
+		"app": "0.0.5",
 		"lapstone": "0.0.1",
 		"update": false
 	},
 
+	"min": true,
 	"startPage": "static-index.html",
 	"startPage_loggedIn": "search.html",
 	"badConnectionPage": "badConnection.html",

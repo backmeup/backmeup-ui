@@ -131,11 +131,11 @@ var plugin_KeepAlive = {
 			$.ajax({
 				cache : false,
 				url : url,
-				data : data,// ?key=value
-				dataType : type, // json
+				data : data,
+				dataType : type, 
 				async : true,
-				method : method, // post
-				timeout : timeout, // 5000
+				method : method, 
+				timeout : timeout, 
 				success : plugin_KeepAlive.ajaxSuccess,
 				error : plugin_KeepAlive.ajaxError
 			});

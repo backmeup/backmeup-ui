@@ -15,7 +15,7 @@
 
 	"searchWithFilters": 
 	{
-		"url": "/backmeup-service-rest/search?query={query}&source={source}&type={type}&job={job}",
+		"url": "/backmeup-service-rest/search?query={query}&source={source}&type={type}&job={job}&owner={owner}",
 		"method": "get",
 		"timeout": "30000"
 	}

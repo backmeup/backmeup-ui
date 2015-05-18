@@ -356,10 +356,10 @@ var page_search = {
 					$('.app-search-item').each(function(index, element) {
 						documentArray.push($(element).attr('data-html5-fileid'));
 					})
-//					alert(JSON.stringify(documentArray));
+					// alert(JSON.stringify(documentArray));
 					app.rc.getJson("shareDocumentGroup", {
 						withUserId : parseInt($("#txtShareUserId").val()),
-						policyValue : documentArray,
+						policyValue : JSON.stringify(documentArray).split('"').join(''),
 						name : $("#txtShareName").val(),
 						description : $("#txtShareDescription").val()
 					}, true).done(function() {
@@ -384,7 +384,8 @@ var page_search = {
 			query : app.store.localStorage.get("data-html5-themis-search-value"),
 			source : ($('#bySource').length > 0) ? $('#bySource option:selected').val() : "",
 			type : ($('#byType').length > 0) ? $('#byType option:selected').val() : "",
-			job : ($('#byJob').length > 0) ? $('#byJob option:selected').val() : ""
+			job : ($('#byJob').length > 0) ? $('#byJob option:selected').val() : "",
+			owner : ($('#byOwner').length > 0) ? $('#byOwner option:selected').val() : ""
 		}, true);
 
 		searchResults.empty();

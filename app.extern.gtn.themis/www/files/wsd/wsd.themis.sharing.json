@@ -60,5 +60,21 @@
 		"url": "/backmeup-service-rest/sharing/remove/all",
 		"method": "delete",
 		"timeout": "30000"
+	},
+	
+	
+	"approveIncomingShare": 
+	{
+		"url": "/backmeup-service-rest/sharing/incoming/approval/json?approve=false&policyID={policyID}",
+		"method": "delete",
+		"timeout": "30000"
+	},
+	
+	
+	"declineIncomingShare": 
+	{
+		"url": "/backmeup-service-rest/sharing/incoming/approval/json?approve=false&policyID={policyID}",
+		"method": "delete",
+		"timeout": "30000"
 	}
 }

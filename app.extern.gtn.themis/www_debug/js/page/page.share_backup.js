@@ -50,24 +50,6 @@ var page_share_backup = {
 			"text" : app.lang.string("share_backup", "headlines")
 		}));
 
-		content.append(app.ni.element.a({
-			"id" : "btnIncomingShare",
-			"text" : app.lang.string("incoming_share", "actions"),
-			"attributes" : {
-				"href" : "#"
-			},
-			"classes" : [ 'ui-btn' ]
-		}));
-
-		content.append(app.ni.element.a({
-			"id" : "btnIncomingShares",
-			"text" : app.lang.string("incoming_shares", "actions"),
-			"attributes" : {
-				"href" : "#"
-			},
-			"classes" : [ 'ui-btn' ]
-		}));
-
 		promise.done(function(resultObject) {
 
 			var incomingShares = resultObject["incomingShares"], ownedShares = resultObject["ownedShares"];
@@ -175,54 +157,7 @@ var page_share_backup = {
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 
-		$(this.config.pageId).on(
-				"click",
-				"#btnIncomingShare",
-				function(event) {
-					app.notify.dialog(app.lang.string("incoming_share", "texts"), app.lang.string("incoming_share", "headlines"), app.lang.string("incoming_share", "headlines"), app.lang.string("accept", "actions"), app.lang.string("decline",
-							"actions"), function() {
-						alert('accept')
-					}, function() {
-						alert('decline');
-					});
-				});
-
-		$(this.config.pageId).on(
-				"click",
-				".incoming_backup",
-				function(event) {
-					app.notify.close();
-					app.notify.dialog(app.lang.string("incoming_share", "texts"), app.lang.string("incoming_share", "headlines"), app.lang.string("incoming_share", "headlines"), app.lang.string("accept", "actions"), app.lang.string("decline",
-							"actions"), function() {
-						alert('accept')
-					}, function() {
-						alert('decline');
-					});
-				});
-
-		$(this.config.pageId).on("click", "#btnIncomingShares", function(event) {
-			app.notify.alert(app.ni.element.a({
-				"text" : app.lang.string("incoming_share", "actions"),
-				"attributes" : {
-					"href" : "#"
-				},
-				"classes" : [ 'ui-btn', 'incoming_backup' ]
-			}) + app.ni.element.a({
-				"text" : app.lang.string("incoming_share", "actions"),
-				"attributes" : {
-					"href" : "#"
-				},
-				"classes" : [ 'ui-btn', 'incoming_backup' ]
-			}) + app.ni.element.a({
-				"text" : app.lang.string("incoming_share", "actions"),
-				"attributes" : {
-					"href" : "#"
-				},
-				"classes" : [ 'ui-btn', 'incoming_backup' ]
-			}), app.lang.string("incoming_shares", "headlines"), app.lang.string("incoming_shares", "headlines"), app.lang.string("finish", "actions"), function() {
-				alert('finish');
-			});
-		});
+	
 
 	},
 
@@ -238,29 +173,12 @@ var page_share_backup = {
 		pagebeforechange : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforechange()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered on the page being initialized, before most plugin
 		// auto-initialization occurs.
 		pagebeforecreate : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforecreate()", 12);
-
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered on the �fromPage� we are transitioning away from, before
@@ -269,28 +187,12 @@ var page_share_backup = {
 		pagebeforehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforehide()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered before any load request is made.
 		pagebeforeload : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeload()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered on the �toPage� we are transitioning to, before the actual
@@ -298,14 +200,6 @@ var page_share_backup = {
 		pagebeforeshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagebeforeshow()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// This event is triggered after the changePage() request has finished
@@ -314,28 +208,12 @@ var page_share_backup = {
 		pagechange : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagechange()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered when the changePage() request fails to load the page.
 		pagechangefailed : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagechangefailed()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered when the page has been created in the DOM (via ajax or
@@ -346,14 +224,6 @@ var page_share_backup = {
 		pagecreate : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagecreate()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered on the �fromPage� after the transition animation has
@@ -361,28 +231,12 @@ var page_share_backup = {
 		pagehide : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pagehide()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered on the page being initialized, after initialization occurs.
 		pageinit : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageinit()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered after the page is successfully loaded and inserted into the
@@ -390,28 +244,12 @@ var page_share_backup = {
 		pageload : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageload()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered if the page load request failed.
 		pageloadfailed : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageloadfailed()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered just before the framework attempts to remove an external
@@ -420,29 +258,12 @@ var page_share_backup = {
 		pageremove : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageremove()", 12);
 
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 		},
 
 		// Triggered on the �toPage� after the transition animation has
 		// completed.
 		pageshow : function(event, container) {
 			app.debug.alert("page_" + $(container).attr('id') + ".pageshow()", 12);
-
-			try {
-				success = true;
-			} catch (err) {
-				app.debug.alert("Fatal exception!\n\n" + JSON.stringify(err, null, 4), 50);
-				app.debug.log(JSON.stringify(err, null, 4));
-				success = false;
-			}
-			return success;
 
 		}
 	}

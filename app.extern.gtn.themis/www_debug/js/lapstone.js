@@ -22,7 +22,6 @@
 var app = {
 	config : {
 		// name : "app",
-		min : false,
 		useJQueryMobile : true,
 		apacheCordova : null,
 		jQueryMobile : null
@@ -108,6 +107,9 @@ function loadConfiguration() {
 			if (configuration.version.update === undefined)
 				console.warn("lapstone.json has no 'version.update' property.");
 		}
+
+		if (configuration.min === undefined)
+			console.warn("lapstone.json has no 'min' property.");
 
 		if (configuration.startPage === undefined)
 			console.warn("lapstone.json has no 'startPage' property.");
@@ -426,7 +428,12 @@ var globalLoader = {
 			attempts = globalLoader.globalAttempts;
 
 		var cssLink;
-		cssLink = "<link rel='stylesheet' type='text/css' href='" + url + "'>";
+
+		if (!cacheAjax())
+			cssLink = '<link rel="stylesheet" type="text/css" href="' + url + '?_=' + new Date().getTime() + '">';
+		else
+			cssLink = "<link rel='stylesheet' type='text/css' href='" + url + "'>";
+
 		$("head").append(cssLink);
 		dfd.resolve();
 		return dfd.promise();
@@ -434,7 +441,12 @@ var globalLoader = {
 
 	StyleLoader : function(url, attempts, attempt) {
 		var css, cssLink;
-		cssLink = "<link rel='stylesheet' type='text/css' href='" + url + "'>";
+
+		if (!cacheAjax())
+			cssLink = '<link rel="stylesheet" type="text/css" href="' + url + '?_=' + new Date().getTime() + '">';
+		else
+			cssLink = "<link rel='stylesheet' type='text/css' href='" + url + "'>";
+
 		$("head").append(cssLink);
 	}
 }
@@ -696,7 +708,7 @@ $(document).ready(function() {
 		setTimeout(function() {
 			initialisationPanel.finish();
 
-		//	console.clear();
+			// console.clear();
 		}, 200);
 	}).fail(function() {
 		if (confirm("App loading failed. Confirm to reload the app."))

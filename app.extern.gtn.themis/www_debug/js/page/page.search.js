@@ -157,23 +157,30 @@ var page_search = {
 		$(this.config.pageId).on("click", "#btnTagModeOn", function(event) {
 			event.preventDefault();
 			alert('tag mode on');
-			// if tag mode on
-			// alle suchergebnisse umwandlen
+			$('.app-search-item').each(function(index, element) {
+				$(element).find('.ul-li-aslide').attr("data-text", $(element).find('.ul-li-aslide').text());
+				$(element).find('.ul-li-aslide').html(app.ni.checkbox.checkbox({}));
+			});
 
 		});
+
 		$(this.config.pageId).on("click", "#btnTagModeOff", function(event) {
 			event.preventDefault();
 			alert('tag mode off');
-			// if tag mode on
-			// alle suchergebnisse umwandlen
-
+			$('.app-search-item').each(function(index, element) {
+				$(element).find('.ul-li-aslide').text($(element).find('.ul-li-aslide').attr("data-text"));
+				// $(element).find('.ul-li-aslide').html(app.ni.checkbox.checkbox({}));
+			});
 		});
 
 		$(this.config.pageId).on("click", "#btnAddToCollection", function(event) {
 			event.preventDefault();
+			var documentIdArray = [];
 			alert('add selected to collection');
-			// if tag mode on
-			// alle suchergebnisse umwandlen
+			$('.app-search-item .ul-li-aslide input[type=checkbox]').each(function(index, element) {
+				documentIdArray.push($(element).parent().parent().attr("data-html5-fileid"));
+			});
+			alert(JSON.stringify(documentIdArray));
 
 		});
 		$(this.config.pageId).on("click", "#btnSearch", function(event) {

@@ -164,7 +164,7 @@ var page_create_backup_3 = {
 			app.notify.loader.bubbleDiv(true, "", app.lang.string("loading", "headlines"));
 			var promise = app.rc.getJson("createBackupjob", {
 				"jobTitle" : container.find("#txtTitle").val(),
-				"schedule" : "weekly",
+				"schedule" : "WEEKLY",
 				"start" : Date.now(),
 				"source" : app.store.localStorage.get("data-html5-themis-source-profileid"),
 				"actions" : [],

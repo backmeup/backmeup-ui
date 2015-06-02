@@ -183,13 +183,19 @@ $(document).ready(
 							editor.inputId++;
 							divTranslation.append(inputTranslation);
 
-							if (languageObject[contextId][translationId] == undefined) {
+							if (languageObject[contextId] == undefined) {
 								inputTranslation.val("");
 								inputTranslation.attr("data-original", "");
 								inputTranslation.addClass("notranslation");
 							} else {
-								inputTranslation.val(languageObject[contextId][translationId]);
-								inputTranslation.attr("data-original", languageObject[contextId][translationId]);
+								if (languageObject[contextId][translationId] == undefined) {
+									inputTranslation.val("");
+									inputTranslation.attr("data-original", "");
+									inputTranslation.addClass("notranslation");
+								} else {
+									inputTranslation.val(languageObject[contextId][translationId]);
+									inputTranslation.attr("data-original", languageObject[contextId][translationId]);
+								}
 							}
 							inputTranslation.addClass("column");
 						});
@@ -203,11 +209,14 @@ $(document).ready(
 // shortcuts
 $(document).on('keydown', 'input, textarea', function(e) {
 	// You may replace `c` with whatever key you want
+	
 	if ((e.ctrlKey || e.metaKey) && (String.fromCharCode(e.which) === '1')) {
+		e.preventDefault();
 		$('#divFixedEdit').css('display', 'block');
 		$('[data-id=' + $(this).attr('id') + ']').focus();
 		$('[data-id=' + $(this).attr('id') + ']').attr('tabindex', $(this).attr('id'));
 	} else if ((e.ctrlKey || e.metaKey) && (String.fromCharCode(e.which) === '2')) {
+		e.preventDefault();
 		var id = $(this).attr('data-id');
 		$('#' + id).focus();
 		$('#divFixedEdit').css('display', 'none');

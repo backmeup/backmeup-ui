@@ -71,8 +71,8 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li,span,div,input,textarea {
 	margin: 0 0 5px 0;
 }
 
-#divFixedHeader>#divHeader .column{
-	background-color: #bbb;
+#divFixedHeader>#divHeader .column {
+	
 }
 
 #divFixedHeader>#divHeader>#divFirstHeader>h1 {
@@ -80,11 +80,17 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li,span,div,input,textarea {
 	padding-top: 10px;
 	border-top-left-radius: 7px;
 	border-top-right-radius: 7px;
+	border-top: 1px solid #000;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
 }
 
 #divFixedHeader>#divHeader>#divSecondHeader>div.column {
 	height: 30px;
 	vertical-align: top;
+	border-bottom: 1px solid #000;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
 }
 
 #divFixedHeader>#divHeader>#divSecondHeader>div.column img {
@@ -110,7 +116,7 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li,span,div,input,textarea {
 }
 
 #divEditor>.divContext {
-	margin: 5px 0 0 0;
+	margin: 10px 0 0 0;
 }
 
 #divEditor>.divContext>.divContextOperations {
@@ -120,12 +126,14 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li,span,div,input,textarea {
 #divEditor>.divContext>.divContextOperations>h1 {
 	display: inline-block;
 	font-size: 16px;
-	background-color: #e38c2d;
 	padding-top: 7px;
 	padding-bottom: 5px;
-	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	border-top-left-radius: 5px;
+	border-top: 1px solid #000;
+	border-bottom: 1px solid #000;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
 }
 
 #divEditor>.divContext>.divTranslation {
@@ -144,7 +152,10 @@ h1,h2,h3,h4,h5,h6,p,ul,ol,li,span,div,input,textarea {
 }
 
 #divEditor>.divContext>.divTranslation>input.column {
-	background-color: #ebc137;
+	background-color: #FFF;
+	border-bottom: 1px solid #000;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
 }
 
 #divEditor>.divContext>.divTranslation:last-of-type>input {

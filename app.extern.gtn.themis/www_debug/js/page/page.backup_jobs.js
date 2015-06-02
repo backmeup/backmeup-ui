@@ -43,129 +43,156 @@ var page_backup_jobs = {
 		app.notify.loader.bubbleDiv(true, "", app.lang.string("loading", "headlines"));
 
 		/*
-		 * var promise = app.rc.getJson("getSuccessfulBackupjobs", { "expand" :
+		 * var promise = app.rc.getJson("getBackupjobsPaused", { "expand" :
 		 * "true" }, true);
 		 */
 
-		var promise = app.rc.getJson([ [ "getRunningBackupjobs", {
+		var promise = app.rc.getJson([ [ "getBackupjobsActive", {
 			"expand" : "true"
-		} ], [ "getSuccessfulBackupjobs", {
+		} ], [ "getBackupjobsPaused", {
 			"expand" : "true"
-		} ], [ "getQueuedBackupjobs", {
+		} ], [ "getBackupjobsCreated", {
+			"expand" : "true"
+		} ], [ "getBackupjobsNeedUserInteraction", {
 			"expand" : "true"
 		} ] ], true, 3);
 
-		promise.done(function(resultObject) {
+		promise
+				.done(function(resultObject) {
+					var activeBackupjobs = resultObject["getBackupjobsActive"], needUserInteraction = resultObject["getBackupjobsNeedUserInteraction"], pausedBackupjobs = resultObject["getBackupjobsPaused"], createdBackupjobs = resultObject["getBackupjobsCreated"];
 
-			var runningBackupjobs = resultObject["getRunningBackupjobs"], successfulBackupjobs = resultObject["getSuccessfulBackupjobs"], queuedBackupjobs = resultObject["getQueuedBackupjobs"];
+					// alert(JSON.stringify(resultObject));
+					content.append(app.ni.element.h1({
+						"text" : app.lang.string("backup_jobs", "headlines")
+					}));
 
-			// alert(JSON.stringify(resultObject));
-			content.append(app.ni.element.h1({
-				"text" : app.lang.string("backup_jobs", "headlines")
-			}));
+					content.append(app.ni.element.a({
+						"id" : "btnNewBackup",
+						"text" : app.lang.string("create_backup", "actions"),
+						"attributes" : {
+							"href" : "create_backup_1.html"
+						},
+						"classes" : [ 'ui-btn', 'ui-btn-inline' ]
+					}));
 
-			content.append(app.ni.element.a({
-				"id" : "btnNewBackup",
-				"text" : app.lang.string("create_backup", "actions"),
-				"attributes" : {
-					"href" : "create_backup_1.html"
-				},
-				"classes" : [ 'ui-btn', 'ui-btn-inline' ]
-			}));
+					content.append(app.ni.element.a({
+						"id" : "btnShareAll",
+						"text" : app.lang.string("share all", "page.backup_jobs"),
+						"classes" : [ 'ui-btn', 'ui-btn-inline' ]
+					}));
 
-			content.append(app.ni.element.a({
-				"id" : "btnShareAll",
-				"text" : app.lang.string("share all", "page.backup_jobs"),
-				"classes" : [ 'ui-btn', 'ui-btn-inline' ]
-			}));
+					content.append(app.ni.element.a({
+						"id" : "btnShareAllFromNow",
+						"text" : app.lang.string("share all from now", "page.backup_jobs"),
+						"classes" : [ 'ui-btn', 'ui-btn-inline' ]
+					}));
 
-			content.append(app.ni.element.a({
-				"id" : "btnShareAllFromNow",
-				"text" : app.lang.string("share all from now", "page.backup_jobs"),
-				"classes" : [ 'ui-btn', 'ui-btn-inline' ]
-			}));
+					content.append(app.ni.element.h2({
+						"text" : app.lang.string("paused backup jobs", "headlines"),
+						"styles" : {
+							"clear" : "both"
+						}
+					}));
 
-			content.append(app.ni.element.h2({
-				"text" : app.lang.string("backup_jobs_successful", "headlines"),
-				"styles" : {
-					"clear" : "both"
-				}
-			}));
+					// alert(JSON.stringify(resultObject));
+					var list = $(app.template.get("listA", "responsive"));
+					$.each(pausedBackupjobs, function(index, jobJson) {
+						list.append(app.ni.list.thumbnail({
+							href : "#",
+							imageSrc : app.img.getUrlById("org.backmeup.facebook.job." + jobJson.jobStatus),
+							title : jobJson.jobStatus,
+							headline : jobJson.jobTitle,
+							text : "",
+							classes : [ 'job' ],
+							attributes : {
+								"data-html5-themis-backupid" : jobJson.jobId,
+								"data-html5-themis-backuptitle" : jobJson.jobTitle
+							}
+						}));
+					});
 
-			// alert(JSON.stringify(resultObject));
-			var list = $(app.template.get("listA", "responsive"));
-			$.each(successfulBackupjobs, function(index, jobJson) {
-				list.append(app.ni.list.thumbnail({
-					href : "#",
-					imageSrc : app.img.getUrlById("org.backmeup.facebook.job." + jobJson.jobStatus),
-					title : jobJson.jobStatus,
-					headline : jobJson.jobTitle,
-					text : "",
-					classes : [ 'job' ],
-					attributes : {
-						"data-html5-themis-backupid" : jobJson.jobId,
-						"data-html5-themis-backuptitle" : jobJson.jobTitle
-					}
-				}));
-			});
+					app.notify.loader.remove();
+					content.append(list);
 
-			app.notify.loader.remove();
-			content.append(list);
+					content.append(app.ni.element.h2({
+						"text" : app.lang.string("created backup jobs", "headlines"),
+						"styles" : {
+							"clear" : "both"
+						}
+					}));
 
-			content.append(app.ni.element.h2({
-				"text" : app.lang.string("backup_jobs_queued", "headlines"),
-				"styles" : {
-					"clear" : "both"
-				}
-			}));
+					list = $(app.template.get("listA", "responsive"));
+					$.each(createdBackupjobs, function(index, jobJson) {
+						// alert(JSON.stringify(jobJson));
+						list.append(app.ni.list.thumbnail({
+							href : "#",
+							imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
+							title : "Id: " + jobJson.jobId,
+							headline : jobJson.jobTitle,
+							text : jobJson.jobTitle,
+							classes : [ 'job' ],
+							attributes : {
+								"data-html5-themis-backupid" : jobJson.jobId,
+								"data-html5-themis-backuptitle" : jobJson.jobTitle
+							}
+						}));
+					});
+					content.append(list);
 
-			list = $(app.template.get("listA", "responsive"));
-			$.each(queuedBackupjobs, function(index, jobJson) {
-				// alert(JSON.stringify(jobJson));
-				list.append(app.ni.list.thumbnail({
-					href : "#",
-					imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
-					title : "Id: " + jobJson.jobId,
-					headline : jobJson.jobTitle,
-					text : jobJson.jobTitle,
-					classes : [ 'job' ],
-					attributes : {
-						"data-html5-themis-backupid" : jobJson.jobId,
-						"data-html5-themis-backuptitle" : jobJson.jobTitle
-					}
-				}));
-			});
-			app.notify.loader.remove();
-			content.append(list);
+					content.append(app.ni.element.h2({
+						"text" : app.lang.string("active backup jobs", "headlines"),
+						"styles" : {
+							"clear" : "both"
+						}
+					}));
 
-			content.append(app.ni.element.h2({
-				"text" : app.lang.string("backup_jobs_running", "headlines"),
-				"styles" : {
-					"clear" : "both"
-				}
-			}));
+					list = $(app.template.get("listA", "responsive"));
+					$.each(activeBackupjobs, function(index, jobJson) {
+						// alert(JSON.stringify(jobJson));
+						list.append(app.ni.list.thumbnail({
+							href : "#",
+							imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
+							title : "Id: " + jobJson.jobId,
+							headline : jobJson.jobTitle,
+							text : jobJson.jobTitle,
+							classes : [ 'job' ],
+							attributes : {
+								"data-html5-themis-backupid" : jobJson.jobId,
+								"data-html5-themis-backuptitle" : jobJson.jobTitle
+							}
+						}));
+					});
+					content.append(list);
+					
+					
+					content.append(app.ni.element.h2({
+						"text" : app.lang.string("need user interaction", "headlines"),
+						"styles" : {
+							"clear" : "both"
+						}
+					}));
 
-			list = $(app.template.get("listA", "responsive"));
-			$.each(runningBackupjobs, function(index, jobJson) {
-				// alert(JSON.stringify(jobJson));
-				list.append(app.ni.list.thumbnail({
-					href : "#",
-					imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
-					title : "Id: " + jobJson.jobId,
-					headline : jobJson.jobTitle,
-					text : jobJson.jobTitle,
-					classes : [ 'job' ],
-					attributes : {
-						"data-html5-themis-backupid" : jobJson.jobId,
-						"data-html5-themis-backuptitle" : jobJson.jobTitle
-					}
-				}));
-			});
-			app.notify.loader.remove();
-			content.append(list);
-			app.notify.loader.remove();
-			app.help.jQM.enhance(content);
-		});
+					list = $(app.template.get("listA", "responsive"));
+					$.each(needUserInteraction, function(index, jobJson) {
+						// alert(JSON.stringify(jobJson));
+						list.append(app.ni.list.thumbnail({
+							href : "#",
+							imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
+							title : "Id: " + jobJson.jobId,
+							headline : jobJson.jobTitle,
+							text : jobJson.jobTitle,
+							classes : [ 'job' ],
+							attributes : {
+								"data-html5-themis-backupid" : jobJson.jobId,
+								"data-html5-themis-backuptitle" : jobJson.jobTitle
+							}
+						}));
+					});
+					content.append(list);
+					
+					app.notify.loader.remove();
+					app.help.jQM.enhance(content);
+				});
 
 		promise.fail(function(error) {
 			app.notify.loader.remove();

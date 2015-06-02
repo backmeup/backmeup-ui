@@ -154,6 +154,28 @@ var page_search = {
 			page_search.updateSearchDiv($("#divSearchResults"));
 		});
 
+		$(this.config.pageId).on("click", "#btnTagModeOn", function(event) {
+			event.preventDefault();
+			alert('tag mode on');
+			// if tag mode on
+			// alle suchergebnisse umwandlen
+
+		});
+		$(this.config.pageId).on("click", "#btnTagModeOff", function(event) {
+			event.preventDefault();
+			alert('tag mode off');
+			// if tag mode on
+			// alle suchergebnisse umwandlen
+
+		});
+
+		$(this.config.pageId).on("click", "#btnAddToCollection", function(event) {
+			event.preventDefault();
+			alert('add selected to collection');
+			// if tag mode on
+			// alle suchergebnisse umwandlen
+
+		});
 		$(this.config.pageId).on("click", "#btnSearch", function(event) {
 			app.store.localStorage.set("data-html5-themis-search-value", $("#txtSearch").val());
 			page_search.updateSearchDiv($("#divSearchResults"));
@@ -212,6 +234,24 @@ var page_search = {
 			div.append(app.ni.element.a({
 				id : "btnShareSearchResult",
 				text : app.lang.string("share search result", "page.search"),
+				classes : [ 'ui-btn', 'ui-btn-inline' ]
+			}));
+
+			div.append(app.ni.element.a({
+				id : "btnTagModeOn",
+				text : app.lang.string("tag monde on", "page.search"),
+				classes : [ 'ui-btn', 'ui-btn-inline' ]
+			}));
+
+			div.append(app.ni.element.a({
+				id : "btnTagModeOff",
+				text : app.lang.string("tag monde off", "page.search"),
+				classes : [ 'ui-btn', 'ui-btn-inline' ]
+			}));
+
+			div.append(app.ni.element.a({
+				id : "btnAddToCollection",
+				text : app.lang.string("add selected to collection", "page.search"),
 				classes : [ 'ui-btn', 'ui-btn-inline' ]
 			}));
 
@@ -385,7 +425,8 @@ var page_search = {
 			source : ($('#bySource').length > 0) ? $('#bySource option:selected').val() : "",
 			type : ($('#byType').length > 0) ? $('#byType option:selected').val() : "",
 			job : ($('#byJob').length > 0) ? $('#byJob option:selected').val() : "",
-			owner : ($('#byOwner').length > 0) ? $('#byOwner option:selected').val() : ""
+			owner : ($('#byOwner').length > 0) ? $('#byOwner option:selected').val() : "",
+			tag : ($('#byTag').length > 0) ? $('#byTag option:selected').val() : ""
 		}, true);
 
 		searchResults.empty();

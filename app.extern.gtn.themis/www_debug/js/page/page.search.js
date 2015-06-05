@@ -184,7 +184,7 @@ var page_search = {
 			});
 		});
 
-		$(this.config.pageId).on("click", "#btnAddToCollection", function(event) {
+		$(this.config.pageId).on("click", "#btnCreateCollection", function(event) {
 			event.preventDefault();
 			var documentIdArray = [];
 			// alert('add selected to collection');
@@ -195,6 +195,19 @@ var page_search = {
 			page_search.singleResult.createCollection(documentIdArray);
 
 		});
+
+		$(this.config.pageId).on("click", "#btnAddToCollection", function(event) {
+			event.preventDefault();
+			var documentIdArray = [];
+			// alert('add selected to collection');
+			$('.app-search-item .ui-li-aside input[type=checkbox]:checked').each(function(index, element) {
+				documentIdArray.push($(element).parent().parent().attr("data-html5-fileid"));
+			});
+			// alert(JSON.stringify(documentIdArray));
+			page_search.singleResult.addToCollection(documentIdArray);
+
+		});
+
 		$(this.config.pageId).on("click", "#btnSearch", function(event) {
 			app.store.localStorage.set("data-html5-themis-search-value", $("#txtSearch").val());
 			page_search.updateSearchDiv($("#divSearchResults"));
@@ -269,8 +282,14 @@ var page_search = {
 			}));
 
 			div.append(app.ni.element.a({
-				id : "btnAddToCollection",
+				id : "btnCreateCollection",
 				text : app.lang.string("create new collection", "page.search"),
+				classes : [ 'ui-btn', 'ui-btn-inline' ]
+			}));
+
+			div.append(app.ni.element.a({
+				id : "btnAddToCollection",
+				text : app.lang.string("add to collection", "page.search"),
 				classes : [ 'ui-btn', 'ui-btn-inline' ]
 			}));
 
@@ -410,6 +429,26 @@ var page_search = {
 			return div;
 		},
 
+		getAddToCollectionInputs : function(collections) {
+			var div = app.ni.element.div({
+				classes : [ 'app-themis-collections' ]
+			}), select = $(app.ni.select.single({
+				"id" : "cboCollections",
+				"name" : "collections",
+				"label" : true,
+				"labelText" : app.lang.string("select collection", "page.search"),
+			}));
+
+			$.each(collections, function(index, collection) {
+				select.append(app.ni.select.option({
+					text : collection.name + " - " + collection.decription,
+					value : collection.collectionId
+				}));
+			});
+			div.append(select);
+			return div;
+		},
+
 		shareDocument : function(singleSearchResult) {
 			app.notify.close.all().done(function() {
 				app.notify.dialog(page_search.singleResult.getSharingInputs(), singleSearchResult.title, false, app.lang.string("share item", "page.search"), app.lang.string("don't share item", "page.share"), function() {
@@ -448,6 +487,33 @@ var page_search = {
 					// don't share item
 				}, 50);
 			});
+
+		},
+
+		addToCollection : function(documentIds) {
+			app.notify.close.all().done(
+					function() {
+						app.rc.getJson("getCollections", {}, true).done(
+								function(collections) {
+
+									app.notify.dialog(page_search.singleResult.getAddToCollectionInputs(collections), app.lang.string("add to collection", "page.search"), false, app.lang.string("add to collection", "page.search"), app.lang.string(
+											"cancel", "page.share"), function() {
+										// share item
+										 app.rc.getJson("addToCollection", {
+											documentIds : documentIds,
+											collId : $("#cboCollections option:selected").val(),
+										}, true).done(function() {
+											alert("done")
+										}).fail(function() {
+											alert("fail")
+										});
+									}, function() {
+										// don't share item
+									}, 50);
+								}).fail(function() {
+							alert("fail");
+						});
+					});
 
 		},
 

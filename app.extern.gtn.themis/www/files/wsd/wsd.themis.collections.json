@@ -11,5 +11,12 @@
 		"url": "/backmeup-service-rest/collections",
 		"method": "get",
 		"timeout": "30000"
+	},
+
+	"addToCollection": 
+	{
+		"url": "/backmeup-service-rest/collections/{collId}/adddocuments/json?documentIds={documentIds}",
+		"method": "post",
+		"timeout": "30000"
 	}
 }

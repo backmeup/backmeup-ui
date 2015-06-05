@@ -191,7 +191,6 @@ var page_share_backup = {
 
 		$(document).on('click', '.owned-share', function(event) {
 			var share = JSON.parse($(this).attr('json').split("'").join('"')), text = page_share_backup.functions.ownedShareOperatios(share);
-			ttttttt = text;
 			app.notify.alert(text, false, app.lang.string("share details", "page.share_backup"), app.lang.string("close details", "page.share_backup"), false, 50)
 
 		});

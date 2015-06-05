@@ -44,7 +44,7 @@ var page_share_backup = {
 		 * "true" }, true);
 		 */
 
-		var promise = app.rc.getJson([ [ "ownedShares", {} ], [ "incomingShares", {} ] ], true);
+		var promise = app.rc.getJson([ [ "ownedShares", {} ], [ "incomingShares", {} ], [ "getCollections", {} ] ], true);
 
 		content.append(app.ni.element.h1({
 			"text" : app.lang.string("share_backup", "headlines")
@@ -52,7 +52,7 @@ var page_share_backup = {
 
 		promise.done(function(resultObject) {
 
-			var incomingShares = resultObject["incomingShares"], ownedShares = resultObject["ownedShares"];
+			var incomingShares = resultObject["incomingShares"], ownedShares = resultObject["ownedShares"], collections = resultObject["getCollections"];
 
 			content.append(app.ni.element.h2({
 				"text" : app.lang.string("my incoming shares", "headlines")
@@ -114,6 +114,30 @@ var page_share_backup = {
 						"data-html5-themis-numberOfSharedDocuments" : ownedShare.numberOfSharedDocuments,
 						"data-html5-themis-name" : ownedShare.name,
 						"data-html5-themis-approvedBySharingpartner" : ownedShare.approvedBySharingpartner
+					}
+				}));
+			});
+
+			content.append(list);
+
+			// collections
+			content.append(app.ni.element.h2({
+				"text" : app.lang.string("my collections", "headlines")
+			}));
+
+			list = $(app.template.get("listA", "responsive"));
+			// alert(JSON.stringify(collections))
+			$.each(collections, function(index, collection) {
+				// alert(JSON.stringify(collection));
+				list.append(app.ni.list.thumbnail({
+					href : "#",
+					imageSrc : "",
+					title : app.lang.string("date", "page.share_backup") + " " + date("d.m.Y", collection.collectionCreationDate / 1000),
+					headline : (collection.name != undefined) ? collection.name : app.lang.string(collection.policy, "page.share_backup"),
+					text : (collection.description != undefined) ? collection.description : "test test test",
+					classes : [ 'collection' ],
+					attributes : {
+						"json" : JSON.stringify(collection).split("\"").join("'")
 					}
 				}));
 			});

@@ -156,31 +156,43 @@ var page_search = {
 
 		$(this.config.pageId).on("click", "#btnTagModeOn", function(event) {
 			event.preventDefault();
-			alert('tag mode on');
+			// alert('tag mode on');
 			$('.app-search-item').each(function(index, element) {
-				$(element).find('.ul-li-aslide').attr("data-text", $(element).find('.ul-li-aslide').text());
-				$(element).find('.ul-li-aslide').html(app.ni.checkbox.checkbox({}));
+				$(element).find('.ui-li-aside').attr("data-text", $(element).find('.ui-li-aside').text());
+				$(element).find('.ui-li-aside').html(app.ni.checkbox.checkbox({}));
+				$(element).replaceWith($(element)[0].outerHTML.replace("onclick=", "onclick_disable="));
 			});
 
 		});
 
+		$(this.config.pageId).on("click", ".app-search-item", function(event) {
+			var checkbox = $(this).find('input[type=checkbox]');
+			if (checkbox.length > 0) {
+				if (checkbox.prop("checked"))
+					checkbox.prop("checked", false);
+				else
+					checkbox.prop("checked", true);
+			}
+		});
+
 		$(this.config.pageId).on("click", "#btnTagModeOff", function(event) {
 			event.preventDefault();
-			alert('tag mode off');
+			// alert('tag mode off');
 			$('.app-search-item').each(function(index, element) {
-				$(element).find('.ul-li-aslide').text($(element).find('.ul-li-aslide').attr("data-text"));
-				// $(element).find('.ul-li-aslide').html(app.ni.checkbox.checkbox({}));
+				$(element).find('.ui-li-aside').text($(element).find('.ui-li-aside').attr("data-text"));
+				$(element).replaceWith($(element)[0].outerHTML.replace("onclick_disable=", "onclick="));
 			});
 		});
 
 		$(this.config.pageId).on("click", "#btnAddToCollection", function(event) {
 			event.preventDefault();
 			var documentIdArray = [];
-			alert('add selected to collection');
-			$('.app-search-item .ul-li-aslide input[type=checkbox]').each(function(index, element) {
+			// alert('add selected to collection');
+			$('.app-search-item .ui-li-aside input[type=checkbox]:checked').each(function(index, element) {
 				documentIdArray.push($(element).parent().parent().attr("data-html5-fileid"));
 			});
-			alert(JSON.stringify(documentIdArray));
+			// alert(JSON.stringify(documentIdArray));
+			page_search.singleResult.createCollection(documentIdArray);
 
 		});
 		$(this.config.pageId).on("click", "#btnSearch", function(event) {
@@ -258,7 +270,7 @@ var page_search = {
 
 			div.append(app.ni.element.a({
 				id : "btnAddToCollection",
-				text : app.lang.string("add selected to collection", "page.search"),
+				text : app.lang.string("create new collection", "page.search"),
 				classes : [ 'ui-btn', 'ui-btn-inline' ]
 			}));
 
@@ -374,6 +386,30 @@ var page_search = {
 			return div;
 		},
 
+		getCollectionInputs : function() {
+			var div = app.ni.element.div({
+				classes : [ 'app-themis-collections' ]
+			});
+
+			div.append(app.ni.text.text({
+				id : "txtCollectionName",
+				placeholder : app.lang.string("collection name", "page.search"),
+				label : true,
+				labelText : app.lang.string("collection name", "page.search"),
+				container : false
+			}));
+
+			div.append(app.ni.text.text({
+				id : "txtCollectionDescription",
+				placeholder : app.lang.string("collection description", "page.search"),
+				label : true,
+				labelText : app.lang.string("collection description", "page.search"),
+				container : false
+			}));
+
+			return div;
+		},
+
 		shareDocument : function(singleSearchResult) {
 			app.notify.close.all().done(function() {
 				app.notify.dialog(page_search.singleResult.getSharingInputs(), singleSearchResult.title, false, app.lang.string("share item", "page.search"), app.lang.string("don't share item", "page.share"), function() {
@@ -383,6 +419,26 @@ var page_search = {
 						policyValue : app.store.localStorage.get("data-html5-fileid"),
 						name : $("#txtShareName").val(),
 						description : $("#txtShareDescription").val()
+					}, true).done(function() {
+						alert("done")
+					}).fail(function() {
+						alert("fail")
+					});
+				}, function() {
+					// don't share item
+				}, 50);
+			});
+
+		},
+
+		createCollection : function(documentIds) {
+			app.notify.close.all().done(function() {
+				app.notify.dialog(page_search.singleResult.getCollectionInputs(), app.lang.string("create collection", "page.search"), false, app.lang.string("create collection", "page.search"), app.lang.string("cancel", "page.share"), function() {
+					// share item
+					app.rc.getJson("createCollection", {
+						documentIds : documentIds,
+						name : $("#txtCollectionName").val(),
+						description : $("#txtCollectionDescription").val()
 					}, true).done(function() {
 						alert("done")
 					}).fail(function() {

@@ -15,28 +15,28 @@
 
 	"getBackupjobsCreated": 
 	{
-		"url": "/backmeup-service-rest/backupjobs?jobStatus=CREATED&expand={expand}",
+		"url": "/backmeup-service-rest/backupjobs?status=CREATED",
 		"method": "get",
 		"timeout": "7000"
 	},
 
 	"getBackupjobsActive": 
 	{
-		"url": "/backmeup-service-rest/backupjobs?jobStatus=ACTIVE&expand={expand}",
+		"url": "/backmeup-service-rest/backupjobs?status=ACTIVE",
 		"method": "get",
 		"timeout": "7000"
 	},
 
 	"getBackupjobsPaused": 
 	{
-		"url": "/backmeup-service-rest/backupjobs?jobStatus=PAUSED&expand={expand}",
+		"url": "/backmeup-service-rest/backupjobs?status=PAUSED",
 		"method": "get",
 		"timeout": "7000"
 	},
 
 	"getBackupjobsNeedUserInteraction": 
 	{
-		"url": "/backmeup-service-rest/backupjobs?jobStatus=NEEDS_USER_INTERACTION&expand={expand}",
+		"url": "/backmeup-service-rest/backupjobs?status=NEEDS_USER_INTERACTION",
 		"method": "get",
 		"timeout": "7000"
 	},

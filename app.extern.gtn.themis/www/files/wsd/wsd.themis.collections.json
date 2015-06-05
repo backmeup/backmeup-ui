@@ -1,0 +1,15 @@
+{
+	"createCollection": 
+	{
+		"url": "/backmeup-service-rest/collections/json?name={name}&decription={decription}&documentIds={documentIds}",
+		"method": "post",
+		"timeout": "30000"
+	},
+
+	"getCollections": 
+	{
+		"url": "/backmeup-service-rest/collections",
+		"method": "get",
+		"timeout": "30000"
+	}
+}

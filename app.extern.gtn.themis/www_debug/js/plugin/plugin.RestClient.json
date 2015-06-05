@@ -8,7 +8,8 @@
 		"../files/wsd/wsd.themis.plugins.json":true,
 		"../files/wsd/wsd.themis.search.json":true,
 		"../files/wsd/wsd.themis.sharing.json":true,
-		"../files/wsd/wsd.themis.users.json":true
+		"../files/wsd/wsd.themis.users.json":true,
+		"../files/wsd/wsd.themis.collections.json":true
 	},
 	"webservices":{
 		"template":{

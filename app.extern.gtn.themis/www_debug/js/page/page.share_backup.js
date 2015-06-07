@@ -137,7 +137,8 @@ var page_share_backup = {
 					text : (collection.description != undefined) ? collection.description : "test test test",
 					classes : [ 'collection' ],
 					attributes : {
-						"json" : JSON.stringify(collection).split("\"").join("'")
+						"json" : JSON.stringify(collection).split("\"").join("'"),
+						"data-html5-collectionId" : collection.collectionId
 					}
 				}));
 			});
@@ -189,18 +190,18 @@ var page_share_backup = {
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 
-		$(document).on('click', '.owned-share', function(event) {
+		$(this.config.pageId).on('click', '.owned-share', function(event) {
 			var share = JSON.parse($(this).attr('json').split("'").join('"')), text = page_share_backup.functions.ownedShareOperatios(share);
 			app.notify.alert(text, false, app.lang.string("share details", "page.share_backup"), app.lang.string("close details", "page.share_backup"), false, 50)
 
 		});
 
-		$(document).on('click', '.incoming-share', function(event) {
+		$(this.config.pageId).on('click', '.incoming-share', function(event) {
 			var share = JSON.parse($(this).attr('json').split("'").join('"'));
 			app.notify.alert(page_share_backup.functions.incomingShareOperatios(share), false, app.lang.string("share details", "page.share_backup"), app.lang.string("close details", "page.share_backup"), false, 50)
 		});
 
-		$(document).on('click', '.app-share-accept', function(event) {
+		$(this.config.pageId).on('click', '.app-share-accept', function(event) {
 			app.notify.close.all().done(function() {
 				app.rc.getJson('approveIncomingShare', {
 					policyID : app.store.localStorage.get("data-html5-themis-id")
@@ -212,7 +213,7 @@ var page_share_backup = {
 			});
 		});
 
-		$(document).on('click', '.app-share-decline', function(event) {
+		$(this.config.pageId).on('click', '.app-share-decline', function(event) {
 			app.notify.close.all().done(function() {
 				app.rc.getJson('declineIncomingShare', {
 					policyID : app.store.localStorage.get("data-html5-themis-id")
@@ -224,7 +225,7 @@ var page_share_backup = {
 			});
 		});
 
-		$(document).on('click', '.app-share-delete', function(event) {
+		$(this.config.pageId).on('click', '.app-share-delete', function(event) {
 			app.notify.close.all().done(function() {
 				app.rc.getJson('deleteOwnShare', {
 					policyID : app.store.localStorage.get("data-html5-themis-id")
@@ -234,6 +235,34 @@ var page_share_backup = {
 					alert("fail");
 				});
 			});
+		});
+
+		$(this.config.pageId).on(
+				'click',
+				'.app-collection-share',
+				function(event) {
+
+					plugin_Notification.functions.dialog(page_search.singleResult.getSharingInputs(), false, app.lang.string("share collection", "page.share_backup"), app.lang.string("cancel", "page.share_backup"), app.lang.string(
+							"share collection", "page.share_backup"), false, function() {
+						app.rc.getJson("shareCollection", {
+							withUserId : parseInt($("#txtShareUserId").val()),
+							policyValue : app.store.localStorage.get("data-html5-collectionId"),
+							name : $("#txtShareName").val(),
+							description : $("#txtShareDescription").val()
+						}, true).done(function() {
+							alert("done")
+						}).fail(function() {
+							alert("fail")
+						});
+					}, 80);
+
+				});
+
+		$(this.config.pageId).on('click', '.collection', function(event) {
+			var collection = JSON.parse($(this).attr('json').split("'").join('"'));
+			// alert(JSON.stringify(collection));
+			app.notify.alert(page_share_backup.functions.collectionOperations(collection), false, app.lang.string("collection details", "page.share_backup"), app.lang.string("close details", "page.share_backup"), false, 50)
+
 		});
 
 	},
@@ -266,6 +295,28 @@ var page_share_backup = {
 			}));
 
 			div.append(page_share_backup.functions.getShareDetails(share));
+			return div;
+		},
+
+		collectionOperations : function(collection) {
+			var div = app.ni.element.div({});
+
+			div.append(app.ni.element.a({
+				classes : [ 'ui-btn', 'ui-btn-inline', 'app-collection-share' ],
+				text : app.lang.string("share collection", "page.share_backup")
+			}));
+
+			div.append(page_share_backup.functions.getCollectionDetails(collection));
+			return div;
+		},
+
+		getCollectionDetails : function(collection) {
+			var div = app.ni.element.div({});
+			$.each(collection, function(key, value) {
+				div.append(app.ni.element.p({
+					text : key + ": " + value
+				}));
+			});
 			return div;
 		},
 

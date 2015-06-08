@@ -132,46 +132,10 @@ var globalPage = {
 				})));
 
 			ul.append(app.ni.element.li().append(app.ni.element.a({
-				"id" : "navPageBackupJobs",
-				"text" : app.lang.string("incoming_share", "actions"),
-				"attributes" : {
-					"href" : "share_backup.html",
-
-				}
-			})));
-
-			ul.append(app.ni.element.li().append(app.ni.element.a({
-				"id" : "navPageBackupJobs",
-				"text" : app.lang.string("backup_jobs", "actions"),
-				"attributes" : {
-					"href" : "backup_jobs.html",
-
-				}
-			})));
-
-			ul.append(app.ni.element.li().append(app.ni.element.a({
-				"id" : "navPageZipArchive",
-				"text" : app.lang.string("zip_archive", "actions"),
-				"attributes" : {
-					"href" : "zip_archive.html",
-
-				}
-			})));
-
-			ul.append(app.ni.element.li().append(app.ni.element.a({
 				"id" : "navPageNewBackup",
 				"text" : app.lang.string("create_backup", "actions"),
 				"attributes" : {
 					"href" : "create_backup_1.html",
-
-				}
-			})));
-
-			ul.append(app.ni.element.li().append(app.ni.element.a({
-				"id" : "navPageSettings",
-				"text" : app.lang.string("settings", "actions"),
-				"attributes" : {
-					"href" : "settings.html",
 
 				}
 			})));

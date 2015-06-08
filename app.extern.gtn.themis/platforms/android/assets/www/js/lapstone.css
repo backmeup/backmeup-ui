@@ -1,0 +1,34 @@
+#LAPSTONE {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+	background: linear-gradient(to right, #1E5799 0%, #0065AA 40%, #0065AA 60%, #004F82 100%);
+	text-align: center;
+	z-index: 1000;
+}
+
+#LAPSTONE>div#lapstone-content {
+	position: relative;
+	top: 20%;
+}
+
+#LAPSTONE>div#lapstone-content>.lapstone-status {
+	display: none;
+}
+
+#LAPSTONE>div#lapstone-progress {
+	position: fixed;
+	z-index: 1001;
+	width: 100%;
+	bottom: 10px;
+}
+
+/* 64x64px .png image */
+#LAPSTONE>div#lapstone-progress>.lapstone-startup-image {
+	background: transparent;
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+}

@@ -1,0 +1,36 @@
+{
+	"createCollection": 
+	{
+		"url": "/backmeup-service-rest/collections/json?name={name}&description={description}&documentIds={documentIds}",
+		"method": "post",
+		"timeout": "30000"
+	},
+
+	"getCollections": 
+	{
+		"url": "/backmeup-service-rest/collections",
+		"method": "get",
+		"timeout": "30000"
+	},
+	
+	"getCollectionsContainingDocuments": 
+	{
+		"url": "/backmeup-service-rest/collections",
+		"method": "get",
+		"timeout": "30000"
+	},
+
+	"addToCollection": 
+	{
+		"url": "/backmeup-service-rest/collections/{collId}/adddocuments/json?collectionId={collectionId}&documentIds={documentIds}",
+		"method": "post",
+		"timeout": "30000"
+	},
+
+	"removeFromCollection": 
+	{
+		"url": "/backmeup-service-rest/collections/{collId}/removedocuments/json?collectionId={collectionId}&documentIds={documentIds}",
+		"method": "delete",
+		"timeout": "30000"
+	}
+}

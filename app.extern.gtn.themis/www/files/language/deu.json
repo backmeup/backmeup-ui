@@ -1,6 +1,12 @@
 {
 	"view": 
 	{
+		"register": "Registrieren",
+		"register_1_terms": "Registrieren",
+		"register_2_name": "Registrieren",
+		"register_3_credentials": "Registrieren",
+		"register_4_final": "Registrieren",
+		"activate_account": "Registrieren",
 		"static-index": "Startseite",
 		"login": "Login",
 		"create_backup_1_newSource": "Backup erstellen",
@@ -13,6 +19,17 @@
 		"share_backup": "Teilen & Vererben",
 		"create_backup_1": "Backup erstellen",
 		"backup_edit": "Backup bearbeiten"
+	},
+
+	"page.backup_jobs": 
+	{
+		"backupjob details": "Backupjob Details",
+		"share backupjob": "Backupjob teilen",
+		"backup job alert - go back": "Abbrechen",
+		"share all": "Alles teilen",
+		"share all from now": "Alles ab jetzt teilen",
+		"share backup": "Backup teilen",
+		"don't share item": "Nicht teilen"
 	},
 
 	"org.backmeup.filegenerator": 
@@ -86,14 +103,6 @@
 	{
 		"don't share item": "Nicht teilen",
 		"cancel": "Abbrechen"
-	},
-
-	"page.backup_jobs": 
-	{
-		"share all": "Alles teilen",
-		"share all from now": "Alles ab jetzt teilen",
-		"share backup": "Backup teilen",
-		"don't share item": "Nicht teilen"
 	},
 
 	"headlines": 
@@ -189,7 +198,7 @@
 		"create_source": "Datenquelle erstellen",
 		"create_sink": "Datensenke erstellen",
 		"home": "Startseite",
-		"more": "...Mehr",
+		"more": "Menü",
 		"login": "Einloggen",
 		"logout": "Ausloggen",
 		"submit": "Absenden",

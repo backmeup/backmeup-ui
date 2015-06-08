@@ -1,13 +1,22 @@
-
 {
-	"template":{
-		"url":"string url",
-		"method":"string method",
-		"timeout":"int timeout"
+	"template": 
+	{
+		"url": "string url",
+		"method": "string method",
+		"timeout": "int timeout"
 	},
-	"search":{
-        "url":"/backmeup-service-rest/search?query={query}",
-        "method":"get",
-        "timeout":"30000"
+
+	"search": 
+	{
+		"url": "/backmeup-service-rest/search?query={query}",
+		"method": "get",
+		"timeout": "30000"
+	},
+
+	"searchWithFilters": 
+	{
+		"url": "/backmeup-service-rest/search?query={query}&source={source}&type={type}&job={job}&owner={owner}&tag={tag}",
+		"method": "get",
+		"timeout": "30000"
 	}
 }

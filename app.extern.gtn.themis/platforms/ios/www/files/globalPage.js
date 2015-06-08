@@ -132,46 +132,10 @@ var globalPage = {
 				})));
 
 			ul.append(app.ni.element.li().append(app.ni.element.a({
-				"id" : "navPageBackupJobs",
-				"text" : app.lang.string("incoming_share", "actions"),
-				"attributes" : {
-					"href" : "share_backup.html",
-
-				}
-			})));
-
-			ul.append(app.ni.element.li().append(app.ni.element.a({
-				"id" : "navPageBackupJobs",
-				"text" : app.lang.string("backup_jobs", "actions"),
-				"attributes" : {
-					"href" : "backup_jobs.html",
-
-				}
-			})));
-
-			ul.append(app.ni.element.li().append(app.ni.element.a({
-				"id" : "navPageZipArchive",
-				"text" : app.lang.string("zip_archive", "actions"),
-				"attributes" : {
-					"href" : "zip_archive.html",
-
-				}
-			})));
-
-			ul.append(app.ni.element.li().append(app.ni.element.a({
 				"id" : "navPageNewBackup",
 				"text" : app.lang.string("create_backup", "actions"),
 				"attributes" : {
 					"href" : "create_backup_1.html",
-
-				}
-			})));
-
-			ul.append(app.ni.element.li().append(app.ni.element.a({
-				"id" : "navPageSettings",
-				"text" : app.lang.string("settings", "actions"),
-				"attributes" : {
-					"href" : "settings.html",
 
 				}
 			})));
@@ -296,6 +260,7 @@ var globalPage = {
 			// footer.css("display", "none");
 
 			footer.removeAttr("data-position");
+			footer.remove();
 
 			// $(document).off("mouseenter", "#navBtnNavMore");
 			$(document).on("mouseenter", "#navBtnNavMore", function() {
@@ -331,38 +296,34 @@ var globalPage = {
 			app.notify.alert(text, "UI Log File", "UI Log File");
 		}),
 
-		$(document).on(
-				"click",
-				"#ftrBtnNavSearch, #navBtnNavSearch",
-				function() {
-					var search = $("<div></div>");
-					search.append(app.ni.text.search({
-						"id" : "txtNavSearch"
-					}));
-					app.notify.dialog(search, false, app.lang.string("search_backup", "headlines"), app.lang.string("search", "actions"), app.lang.string(
-							"cancel", "actions"), function(popup) {
-						var searchText = $(popup).find("#txtNavSearch").val();
-						app.store.localStorage.set("data-html5-themis-search-value", searchText);
-						window.setTimeout(function() {
-							if (location.href.split("/").slice(-1)[0] == "search.html") {
-								// alert("on search page");
-								$("#txtSearch").val(app.store.localStorage.get("data-html5-themis-search-value"));
-								page_search.updateSearchDiv($("#divSearchResults"));
-							} else {
-								// alert("not on search page");
-								app.help.navigation.redirect("search.html", "none");
-							}
-						}, 10);
-					}, function(popup) {
-						;
-					}, 100);
-				});
+		$(document).on("click", "#ftrBtnNavSearch, #navBtnNavSearch", function() {
+			var search = $("<div></div>");
+			search.append(app.ni.text.search({
+				"id" : "txtNavSearch"
+			}));
+			app.notify.dialog(search, false, app.lang.string("search_backup", "headlines"), app.lang.string("search", "actions"), app.lang.string("cancel", "actions"), function(popup) {
+				var searchText = $(popup).find("#txtNavSearch").val();
+				app.store.localStorage.set("data-html5-themis-search-value", searchText);
+				window.setTimeout(function() {
+					if (location.href.split("/").slice(-1)[0] == "search.html") {
+						// alert("on search page");
+						$("#txtSearch").val(app.store.localStorage.get("data-html5-themis-search-value"));
+						page_search.updateSearchDiv($("#divSearchResults"));
+					} else {
+						// alert("not on search page");
+						app.help.navigation.redirect("search.html", "none");
+					}
+				}, 10);
+			}, function(popup) {
+				;
+			}, 100);
+		});
 
 		$(document).on('click', '#navPageLogout', function() {
 			app.sess.loggedIn(false);
-			// app.store.localStorage.clear();
-			app.sess.destroyAll();
-			app.help.navigation.redirect("static-index.html", "slide");
+			localStorage.clear();
+
+			app.help.navigation.redirect("static-index.html");
 		});
 	},
 

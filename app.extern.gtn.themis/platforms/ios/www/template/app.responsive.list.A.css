@@ -1,4 +1,12 @@
 /* A bit custom styling */
+.ui-listview.app-responsive-list-A li .ui-btn {
+	background-image: linear-gradient(to bottom, #eeeeee, #dddddd);
+}
+
+.ui-listview.app-responsive-list-A li {
+	margin-bottom: 5px;
+}
+
 .ui-listview.app-responsive-list-A li .ui-btn p {
 	color: #000;
 }
@@ -6,6 +14,7 @@
 .ui-listview.app-responsive-list-A li .ui-btn .ui-li-aside {
 	color: #000;
 }
+
 /* First breakpoint is 48em (768px). 3 column layout. Tiles 250x250 pixels incl. margin at the breakpoint. */
 @media ( min-width : 48em ) {
 	.my-page .ui-content {
@@ -26,7 +35,7 @@
 	}
 	.ui-listview.app-responsive-list-A li.ui-li-has-thumb .ui-li-thumb {
 		height: auto; /* To keep aspect ratio. */
-		max-width: 100%;
+		width: 100%;
 		max-height: none;
 	}
 	/* Make all list items and anchors inherit the border-radius from the UL. */
@@ -46,6 +55,10 @@
 		left: 0;
 		right: 0;
 	}
+	.ui-listview.app-responsive-list-A p.ui-li-responsive-p {
+		height: 35%;
+	}
+
 	/* Text position */
 	.ui-listview.app-responsive-list-A h2 {
 		font-size: 1.25em;
@@ -62,7 +75,7 @@
 	}
 	/* Semi transparent background and different position if there is a thumb. The button has overflow hidden so we don't need to set border-radius. */
 	.ui-listview .ui-li-has-thumb h2,.ui-listview .ui-li-has-thumb p {
-		background: rgba(255, 255, 255, .7);
+		background: rgba(255, 235, 205, .7);
 	}
 	.ui-listview .ui-li-has-thumb h2 {
 		bottom: 35%;

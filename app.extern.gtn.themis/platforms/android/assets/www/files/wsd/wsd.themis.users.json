@@ -7,6 +7,6 @@
 	"register":{
 		"url":"/backmeup-service-rest/users?username={username}&firstname={firstname}&lastname={lastname}&email={email}&password={password}",
 		"method":"post",
-		"timeout":"7000"
+		"timeout":"17000"
 	}
 }

@@ -22,8 +22,6 @@ var page_create_backup_2 = {
 
 	elements : null,
 
-
-
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
 		var dfd = $.Deferred();
@@ -77,7 +75,7 @@ var page_create_backup_2 = {
 				}
 				list.append(app.ni.list.thumbnail({
 					href : "#",
-					imageSrc : app.img.getUrlById(pluginId),
+					imageSrc : app.img.getUrlById("sink_" + pluginId),
 					title : "",
 					headline : pluginJson.title,
 					text : pluginJson.description,
@@ -102,7 +100,6 @@ var page_create_backup_2 = {
 		success = true;
 
 	},
-
 
 	async : {
 		promise : null,// to implement
@@ -134,7 +131,6 @@ var page_create_backup_2 = {
 		}
 	},
 
-
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
@@ -144,96 +140,90 @@ var page_create_backup_2 = {
 			app.help.navigation.redirect("create_backup_1_newSource.html", "slide");
 		});
 
-		$(page_create_backup_2.config.pageId).on(
-				"click",
-				".authRequired-true",
-				function(event) {
+		$(page_create_backup_2.config.pageId).on("click", ".authRequired-true", function(event) {
 
-					var callerElement = $(this).clone(), promise, authDataList;
+			var callerElement = $(this).clone(), promise, authDataList;
 
-					// get existing auths
-					promise = app.rc.getJson("getAuthdataForPlugin", {
-						"pluginId" : callerElement.attr("data-html5-pluginId")
-					}, true);
+			// get existing auths
+			promise = app.rc.getJson("getAuthdataForPlugin", {
+				"pluginId" : callerElement.attr("data-html5-pluginId")
+			}, true);
 
-					promise.fail(function() {
-						alert("ws error");
-					});
+			promise.fail(function() {
+				alert("ws error");
+			});
 
-					promise.done(function(resultObject) {
-						// alert(JSON.stringify(resultObject));
+			promise.done(function(resultObject) {
+				// alert(JSON.stringify(resultObject));
 
-						authDataList = app.ni.element.ul({
-							"attributes" : {
-								"data-role" : "listview",
-								"data-inset" : "true"
-							}
-						});
-						$.each(resultObject, function(key, currentAuthdata) {
-							authDataList.append(app.ni.element.li({
-								"text" : app.ni.element.a({
-									"text" : currentAuthdata.name,
-									"attributes" : {
-										"href" : "create_backup_2_newSink.html",
-										"data-transition" : "slide",
-										"data-html5-authdataId" : currentAuthdata.id,
-										"data-html5-authdataName" : currentAuthdata.name,
-									},
-									"classes" : []
-								})
-							}));
-
-						});
-
-						app.notify.dialog(authDataList, app.lang.string("choose_profile", "headlines"), false,
-								app.lang.string("new_source_profile", "actions"), app.lang.string("cancel", "actions"), function(popup) {
-									window.setTimeout(function() {
-										switch (callerElement.attr("data-html5-authType")) {
-										case 'oauth':
-											var url = callerElement.attr("data-html5-oAuthUrl");
-											var promise = null;
-											// alert(url);
-											promise = app.oa.generic(url);
-
-											// app.store.localStorage.set("data-html5-themis-pluginid",
-											// $(this).attr("data-html5-pluginId"));
-
-											promise.done(function(oAuthQuery) {
-												// alert(oAuthQuery);
-												app.store.localStorage.set("data-html5-oAuthQuery", oAuthQuery);
-												app.help.navigation.redirect("create_backup_2_oAuthFinished.html", "slide");
-
-											});
-
-											promise.fail(function(error) {
-												alert("oAuth error: " + error);
-											});
-
-											break;
-
-										case 'input':
-											app.help.navigation.redirect("create_backup_2_inputAuth.html", "slide");
-											break;
-										default:
-											alert("not implemented");
-										}
-
-									}, 10);
-								}, function(popup) {
-									;
-								}, 0);
-
-						// alert($(this).attr("data-html5-oAuthUrl"));
-
-					});
+				authDataList = app.ni.element.ul({
+					"attributes" : {
+						"data-role" : "listview",
+						"data-inset" : "true"
+					}
 				});
+				$.each(resultObject, function(key, currentAuthdata) {
+					authDataList.append(app.ni.element.li({
+						"text" : app.ni.element.a({
+							"text" : currentAuthdata.name,
+							"attributes" : {
+								"href" : "create_backup_2_newSink.html",
+								"data-transition" : "slide",
+								"data-html5-authdataId" : currentAuthdata.id,
+								"data-html5-authdataName" : currentAuthdata.name,
+							},
+							"classes" : []
+						})
+					}));
+
+				});
+
+				app.notify.dialog(authDataList, app.lang.string("choose_profile", "headlines"), false, app.lang.string("new_source_profile", "actions"), app.lang.string("cancel", "actions"), function(popup) {
+					window.setTimeout(function() {
+						switch (callerElement.attr("data-html5-authType")) {
+						case 'oauth':
+							var url = callerElement.attr("data-html5-oAuthUrl");
+							var promise = null;
+							// alert(url);
+							promise = app.oa.generic(url);
+
+							// app.store.localStorage.set("data-html5-themis-pluginid",
+							// $(this).attr("data-html5-pluginId"));
+
+							promise.done(function(oAuthQuery) {
+								// alert(oAuthQuery);
+								app.store.localStorage.set("data-html5-oAuthQuery", oAuthQuery);
+								app.help.navigation.redirect("create_backup_2_oAuthFinished.html", "slide");
+
+							});
+
+							promise.fail(function(error) {
+								alert("oAuth error: " + error);
+							});
+
+							break;
+
+						case 'input':
+							app.help.navigation.redirect("create_backup_2_inputAuth.html", "slide");
+							break;
+						default:
+							alert("not implemented");
+						}
+
+					}, 10);
+				}, function(popup) {
+					;
+				}, 0);
+
+				// alert($(this).attr("data-html5-oAuthUrl"));
+
+			});
+		});
 
 	},
 
-
 	functions : {},
 
-	
 	events : {
 
 		// Triggered twice during the page change cyle: First prior to any page

@@ -68,7 +68,7 @@ var page_share_backup = {
 				// alert(JSON.stringify(jobJson));
 				list.append(app.ni.list.thumbnail({
 					href : "#",
-					imageSrc : "",
+					imageSrc : app.img.getUrlById("incoming_" + incomingShare.policy + "_" + incomingShare.approvedBySharingpartner),
 					title : app.lang.string("date", "page.share_backup") + " " + date("d.m.Y", incomingShare.policyCreationDate / 1000),
 					headline : (incomingShare.name != undefined) ? incomingShare.name : app.lang.string(incomingShare.policy, "page.share_backup"),
 					text : (incomingShare.description != undefined) ? incomingShare.description : "no description for backup",
@@ -104,7 +104,7 @@ var page_share_backup = {
 				// alert(JSON.stringify(jobJson));
 				list.append(app.ni.list.thumbnail({
 					href : "#",
-					imageSrc : "",
+					imageSrc : app.img.getUrlById("incoming_" + ownedShare.policy + "_" + ownedShare.approvedBySharingpartner),
 					title : app.lang.string("date", "page.share_backup") + " " + date("d.m.Y", ownedShare.policyCreationDate / 1000),
 					headline : (ownedShare.name != undefined) ? ownedShare.name : app.lang.string(ownedShare.policy, "page.share_backup"),
 					text : (ownedShare.description != undefined) ? ownedShare.description : "no description for backup",
@@ -140,7 +140,7 @@ var page_share_backup = {
 				// alert(JSON.stringify(collection));
 				list.append(app.ni.list.thumbnail({
 					href : "#",
-					imageSrc : "",
+					imageSrc : app.img.getUrlById("collection"),
 					title : app.lang.string("date", "page.share_backup") + " " + date("d.m.Y", collection.collectionCreationDate / 1000),
 					headline : (collection.name != undefined) ? collection.name : app.lang.string(collection.policy, "page.share_backup"),
 					text : (collection.description != undefined) ? collection.description : "test test test",
@@ -268,12 +268,17 @@ var page_share_backup = {
 				});
 
 		$(this.config.pageId).on('click', '.collection', function(event) {
-			var collection = JSON.parse($(this).attr('json').split("'").join('"'));
+			var collection = JSON.parse($(this).attr('json').split("'").join('"')), searchValue = JSON.stringify(collection.documentIds).replace('[', '').replace(']', '').split(',').join(' OR ').split('"').join('');
+			app.store.localStorage.set("data-html5-themis-search-value-temp", searchValue);
 			// alert(JSON.stringify(collection));
 			app.notify.alert(page_share_backup.functions.collectionOperations(collection), false, app.lang.string("collection details", "page.share_backup"), app.lang.string("close details", "page.share_backup"), false, 50)
 
 		});
 
+		$(this.config.pageId).on('click', '.app-collection-view', function(event) {
+			app.store.localStorage.set("data-html5-themis-search-value", app.store.localStorage.get("data-html5-themis-search-value-temp"));
+			app.nav.redirect("search.html", "none");
+		});
 	},
 
 	functions : {
@@ -313,6 +318,11 @@ var page_share_backup = {
 			div.append(app.ni.element.a({
 				classes : [ 'ui-btn', 'ui-btn-inline', 'app-collection-share' ],
 				text : app.lang.string("share collection", "page.share_backup")
+			}));
+
+			div.append(app.ni.element.a({
+				classes : [ 'ui-btn', 'ui-btn-inline', 'app-collection-view' ],
+				text : app.lang.string("view collection", "page.share_backup")
 			}));
 
 			div.append(page_share_backup.functions.getCollectionDetails(collection));

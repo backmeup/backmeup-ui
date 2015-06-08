@@ -15,5 +15,20 @@
 	"search_html": "../files/img/search/html.png",
 	"search_other": "../files/img/search/other.png",
 	"collection": "../files/img/collection/collection.png",
-	"incoming_AllFromNow_true": "../files/img/sharing/AllFromNow_true.png"
+	"incoming_AllFromNow_true": "../files/img/sharing/incoming/AllFromNow_true.png",
+	"incoming_AllFromNow_false": "../files/img/sharing/incoming/AllFromNow_false.png",
+	"incoming_Backup_true": "../files/img/sharing/incoming/Backup_true.png",
+	"incoming_Backup_false": "../files/img/sharing/incoming/Backup_false.png",
+	"incoming_DocumentGroup_true": "../files/img/sharing/incoming/DocumentGroup_true.png",
+	"incoming_DocumentGroup_false": "../files/img/sharing/incoming/DocumentGroup_false.png",
+	"incoming_AllInklOld_true": "../files/img/sharing/incoming/AllInklOld_true.png",
+	"incoming_AllInklOld_false": "../files/img/sharing/incoming/AllInklOld_false.png",
+	"outgoing_AllFromNow_true": "../files/img/sharing/outgoing/AllFromNow_true.png",
+	"outgoing_AllFromNow_false": "../files/img/sharing/outgoing/AllFromNow_false.png",
+	"outgoing_Backup_true": "../files/img/sharing/outgoing/Backup_true.png",
+	"outgoing_Backup_false": "../files/img/sharing/outgoing/Backup_false.png",
+	"outgoing_DocumentGroup_true": "../files/img/sharing/outgoing/DocumentGroup_true.png",
+	"outgoing_DocumentGroup_false": "../files/img/sharing/outgoing/DocumentGroup_false.png",
+	"outgoing_AllInklOld_true": "../files/img/sharing/outgoing/AllInklOld_true.png",
+	"outgoing_AllInklOld_false": "../files/img/sharing/outgoing/AllInklOld_false.png"
 }

@@ -321,7 +321,7 @@ var page_search = {
 			var imgUrl;
 			if ((imgUrl = singleSearchResult.thumbnailUrl) != undefined) {
 				return imgUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)));
-			} else if ((imgUrl = app.img.getUrlById("search." + singleSearchResult.type)) != "search." + singleSearchResult.type)
+			} else if ((imgUrl = app.img.getUrlById("search_" + singleSearchResult.type)) != "search_" + singleSearchResult.type)
 				return imgUrl;
 			else {
 				return false;

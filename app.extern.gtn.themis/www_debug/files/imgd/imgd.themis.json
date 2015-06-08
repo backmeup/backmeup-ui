@@ -30,5 +30,6 @@
 	"outgoing_DocumentGroup_true": "../files/img/sharing/outgoing/DocumentGroup_true.png",
 	"outgoing_DocumentGroup_false": "../files/img/sharing/outgoing/DocumentGroup_false.png",
 	"outgoing_AllInklOld_true": "../files/img/sharing/outgoing/AllInklOld_true.png",
-	"outgoing_AllInklOld_false": "../files/img/sharing/outgoing/AllInklOld_false.png"
+	"outgoing_AllInklOld_false": "../files/img/sharing/outgoing/AllInklOld_false.png",
+	"search_text": "../files/img/search/text.png"
 }

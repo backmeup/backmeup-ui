@@ -218,10 +218,17 @@ var page_search = {
 	singleResult : {
 
 		getFilters : function(resultObject) {
-			var div = app.ni.element.div({
+			var divFilter = app.ni.element.div({
 				id : "divFilter"
+			}), divCollection = app.ni.element.div({
+				id : "divCollection"
+			}), divSharing = app.ni.element.div({
+				id : "divSharing"
 			}), select;
 
+			divFilter.append(app.ni.element.h2({
+				text : app.lang.string("filter area", "page.search")
+			}));
 			$.each(resultObject, function(key, filterObject) {
 				if (key.substring(0, 2) === "by") {
 					select = app.ni.select.single({
@@ -247,53 +254,67 @@ var page_search = {
 						}));
 					});
 
-					div.append(select);
+					divFilter.append(select);
 				}
 			});
 
-			div.append(app.ni.element.a({
+			divFilter.append(app.ni.element.a({
 				id : "btnApplyFilter",
 				text : app.lang.string("apply filter", "page.search"),
 				classes : [ 'ui-btn', 'ui-btn-inline' ]
 			}));
 
-			div.append(app.ni.element.a({
+			divFilter.append(app.ni.element.a({
 				id : "btnRemoveFilter",
 				text : app.lang.string("remove filter", "page.search"),
 				classes : [ 'ui-btn', 'ui-btn-inline' ]
 			}));
 
-			div.append(app.ni.element.a({
+			divSharing.append(app.ni.element.h2({
+				text : app.lang.string("sharing area", "page.search")
+			}));
+
+			divSharing.append(app.ni.element.a({
 				id : "btnShareSearchResult",
 				text : app.lang.string("share search result", "page.search"),
 				classes : [ 'ui-btn', 'ui-btn-inline' ]
 			}));
 
-			div.append(app.ni.element.a({
+			divCollection.append(app.ni.element.h2({
+				text : app.lang.string("collection area", "page.search")
+			}));
+
+			divCollection.append(app.ni.element.a({
 				id : "btnTagModeOn",
-				text : app.lang.string("tag monde on", "page.search"),
+				text : app.lang.string("tag mode on", "page.search"),
 				classes : [ 'ui-btn', 'ui-btn-inline' ]
 			}));
 
-			div.append(app.ni.element.a({
+			divCollection.append(app.ni.element.a({
 				id : "btnTagModeOff",
-				text : app.lang.string("tag monde off", "page.search"),
+				text : app.lang.string("tag mode off", "page.search"),
 				classes : [ 'ui-btn', 'ui-btn-inline' ]
 			}));
 
-			div.append(app.ni.element.a({
+			divCollection.append(app.ni.element.a({
 				id : "btnCreateCollection",
 				text : app.lang.string("create new collection", "page.search"),
 				classes : [ 'ui-btn', 'ui-btn-inline' ]
 			}));
 
-			div.append(app.ni.element.a({
+			divCollection.append(app.ni.element.a({
 				id : "btnAddToCollection",
 				text : app.lang.string("add to collection", "page.search"),
 				classes : [ 'ui-btn', 'ui-btn-inline' ]
 			}));
 
-			return div;
+			divCollection.append(app.ni.element.a({
+				id : "btnRemoveFromCollection",
+				text : app.lang.string("remove from collection", "page.search"),
+				classes : [ 'ui-btn', 'ui-btn-inline' ]
+			}));
+
+			return $('<div>').append(divFilter).append(divSharing).append(divCollection);
 		},
 
 		getThumbnail : function(singleSearchResult) {
@@ -569,7 +590,7 @@ var page_search = {
 
 			var list = $(app.template.get("listA", "responsive"));
 
-			list.append(page_search.singleResult.getFilters(resultObject))
+			searchResults.append(page_search.singleResult.getFilters(resultObject))
 
 			// alert(JSON.stringify(resultObject['files']));
 			$.each(resultObject['files'], function(key, singleSearchResult) {

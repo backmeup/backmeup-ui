@@ -99,7 +99,7 @@ var page_backup_jobs = {
 					$.each(pausedBackupjobs, function(index, jobJson) {
 						list.append(app.ni.list.thumbnail({
 							href : "#",
-							imageSrc : app.img.getUrlById("org.backmeup.facebook.job." + jobJson.jobStatus),
+							imageSrc : app.img.getUrlById("job_" + jobJson.status),
 							title : jobJson.jobStatus,
 							headline : jobJson.jobTitle,
 							text : "",
@@ -126,7 +126,7 @@ var page_backup_jobs = {
 						// alert(JSON.stringify(jobJson));
 						list.append(app.ni.list.thumbnail({
 							href : "#",
-							imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
+							imageSrc : app.img.getUrlById("job_" + jobJson.status),
 							title : "Id: " + jobJson.jobId,
 							headline : jobJson.jobTitle,
 							text : jobJson.jobTitle,
@@ -151,7 +151,7 @@ var page_backup_jobs = {
 						// alert(JSON.stringify(jobJson));
 						list.append(app.ni.list.thumbnail({
 							href : "#",
-							imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
+							imageSrc : app.img.getUrlById("job_" + jobJson.status),
 							title : "Id: " + jobJson.jobId,
 							headline : jobJson.jobTitle,
 							text : jobJson.jobTitle,
@@ -163,8 +163,7 @@ var page_backup_jobs = {
 						}));
 					});
 					content.append(list);
-					
-					
+
 					content.append(app.ni.element.h2({
 						"text" : app.lang.string("need user interaction", "headlines"),
 						"styles" : {
@@ -177,7 +176,7 @@ var page_backup_jobs = {
 						// alert(JSON.stringify(jobJson));
 						list.append(app.ni.list.thumbnail({
 							href : "#",
-							imageSrc : app.img.getUrlById("org.backmeup.storage" + "Large"),
+							imageSrc : app.img.getUrlById("job_" + jobJson.status),
 							title : "Id: " + jobJson.jobId,
 							headline : jobJson.jobTitle,
 							text : jobJson.jobTitle,
@@ -189,7 +188,7 @@ var page_backup_jobs = {
 						}));
 					});
 					content.append(list);
-					
+
 					app.notify.loader.remove();
 					app.help.jQM.enhance(content);
 				});

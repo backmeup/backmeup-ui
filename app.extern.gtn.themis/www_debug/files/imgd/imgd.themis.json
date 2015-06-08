@@ -23,6 +23,8 @@
 	"incoming_DocumentGroup_false": "../files/img/sharing/incoming/DocumentGroup_false.png",
 	"incoming_AllInklOld_true": "../files/img/sharing/incoming/AllInklOld_true.png",
 	"incoming_AllInklOld_false": "../files/img/sharing/incoming/AllInklOld_false.png",
+	"incoming_TaggedCollection_true": "../files/img/sharing/incoming/TaggedCollection_true.png",
+	"incoming_TaggedCollection_false": "../files/img/sharing/incoming/TaggedCollection_false.png",
 	"outgoing_AllFromNow_true": "../files/img/sharing/outgoing/AllFromNow_true.png",
 	"outgoing_AllFromNow_false": "../files/img/sharing/outgoing/AllFromNow_false.png",
 	"outgoing_Backup_true": "../files/img/sharing/outgoing/Backup_true.png",
@@ -31,5 +33,7 @@
 	"outgoing_DocumentGroup_false": "../files/img/sharing/outgoing/DocumentGroup_false.png",
 	"outgoing_AllInklOld_true": "../files/img/sharing/outgoing/AllInklOld_true.png",
 	"outgoing_AllInklOld_false": "../files/img/sharing/outgoing/AllInklOld_false.png",
+	"outgoing_TaggedCollection_true": "../files/img/sharing/outgoing/TaggedCollection_true.png",
+	"outgoing_TaggedCollection_false": "../files/img/sharing/outgoing/TaggedCollection_false.png",
 	"search_text": "../files/img/search/text.png"
 }

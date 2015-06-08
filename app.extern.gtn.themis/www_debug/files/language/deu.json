@@ -1,10 +1,171 @@
 {
 	"view": 
 	{
+		"static-index": "Startseite",
+		"login": "Login",
+		"create_backup_1_newSource": "Backup erstellen",
+		"create_backup_2": "Backup erstellen",
+		"create_backup_2_newSink": "Backup erstellen",
+		"create_backup_3": "Backup erstellen",
 		"Themis": "Themis",
 		"search": "Suche",
 		"backup_jobs": "Backup Jobs",
-		"share_backup": "Teilen & Vererben"
+		"share_backup": "Teilen & Vererben",
+		"create_backup_1": "Backup erstellen",
+		"backup_edit": "Backup bearbeiten"
+	},
+
+	"org.backmeup.filegenerator": 
+	{
+		"Set the maximum number of files that should be generated": "Anzahl der Dateien",
+		"Generate plain text files": "Testdateien erstellen",
+		"Amout of paragraph in the text file": "Zeilen in der Textdatei",
+		"Generate image files": "Bilder erstellen",
+		"Size (in pixel) of the generated image": "Anzahl der Pixel",
+		"Generate pdf documents": "PDFs erstellen",
+		"Amout of paragraphs in the pdf document": "Zeilen im pdf",
+		"Generate binary files": "Binärdateien erstellen",
+		"Size (in bytes) of the allocated file": "Größe in Bytes",
+		"text": "text",
+		"text.paragraphs": "text.paragraphs",
+		"image": "image",
+		"image.size": "image.size",
+		"pdf": "pdf",
+		"pdf.paragraphs": "pdf.paragraphs",
+		"binary": "binary",
+		"binary.size": "binary.size",
+		"generator.files": "generator.files"
+	},
+
+	"page.share_backup": 
+	{
+		"date": "Datum",
+		"share collection": "Collection teilen",
+		"view collection": "Collection anzeigen",
+		"collection details": "Collection Details",
+		"close details": "Schließen"
+	},
+
+	"page.search": 
+	{
+		"share item": "Dokument teilen",
+		"filter area": "Filter",
+		"bySource": "Quelle",
+		"byType": "Type",
+		"byJob": "Backupjob",
+		"byOwner": "Besitzer",
+		"byTag": "Collection",
+		"apply filter": "Filter anwenden",
+		"remove filter": "Filter entfernen",
+		"sharing area": "Teilen",
+		"share search result": "Suche Teilen",
+		"collection area": "Collection",
+		"tag mode on": "Auswahlmodus ein",
+		"tag mode off": "Auswahlmodus aus",
+		"create new collection": "Neue Collection erstellen",
+		"add to collection": "Zu Collection hinzufügen",
+		"remove from collection": "Aus Collection entfernen",
+		"collection name": "Name der Collection",
+		"collection description": "Beschreibung der Collection",
+		"create collection": "Collection erstellen",
+		"select collection": "Collection auswählen",
+		"loadingHeadline": "Laden...",
+		"loadingText": "Die Suchergebnisse werden geladen.",
+		"jobName": "Backupjob",
+		"timeStamp": "Datum",
+		"searchDetails": "Details der Suche",
+		"own item": "Eigene Datei",
+		"shared item": "Geteilte Datei",
+		"share name": "Share Name",
+		"sahre name": "Share Name",
+		"share description": "Share Beschreibung",
+		"share userid": "User ID"
+	},
+
+	"page.share": 
+	{
+		"don't share item": "Nicht teilen",
+		"cancel": "Abbrechen"
+	},
+
+	"page.backup_jobs": 
+	{
+		"share all": "Alles teilen",
+		"share all from now": "Alles ab jetzt teilen",
+		"share backup": "Backup teilen",
+		"don't share item": "Nicht teilen"
+	},
+
+	"headlines": 
+	{
+		"my incoming shares": "Eingehende Shares",
+		"my owned shares": "Eigene Shares",
+		"my collections": "Meine Collections",
+		"paused backup jobs": "Pausierte Backupjobs",
+		"created backup jobs": "Erstellte Backupjobs",
+		"active backup jobs": "Aktive Backupjobs",
+		"need user interaction": "Interaktion nötig",
+		"share": "Teilen",
+		"loading": "Laden...",
+		"search_in_backups": "Backups durchsuchen",
+		"activate_account": "Account aktivieren",
+		"backup_jobs_successful": "Erfolgreiche Backupjobs",
+		"backup_jobs_queued": "Warteschlange",
+		"backup_jobs_running": "Laufende Backupjobs",
+		"backup_job_status": "Status",
+		"backup_hold": "Hold",
+		"backup_schedule": "Schedule",
+		"backup_created": "Erstelldatum",
+		"backup_modified": "Letzte Änderung",
+		"backup_start": "Anlegedatum",
+		"backup_next": "Nächste Ausführung",
+		"backup_delay": "Verzögerung",
+		"choose_profile": "Wähle dein Profil",
+		"existing_datasources": "Vorhandene Datenquellen",
+		"new_datasource": "Neue Datenquelle erstellen",
+		"new_backup": "Neues Backup erstellen",
+		"existing_datasinks": "Vorhandene Datensenken",
+		"chosen_datasource": "Gewählte Datenquelle",
+		"chosen_datasink": "Gewählte Datensenke",
+		"job_settings": "Weitere Backup Einstellmöglichkeiten",
+		"new_datasink": "Neue Datensenke erstellen",
+		"backup_log": "Backup-Log",
+		"backup_edit": "Backup bearbeiten",
+		"datasource": "Datenquelle",
+		"datasink": "Speicherziel",
+		"job_status": "Backupstatus",
+		"job_details": "Detailansicht Backup Job",
+		"user_settings": "Benutzer Einstellungen",
+		"bad_connection": "Schlechte Verbindung",
+		"verify_email": "E-Mail-Adresse bestätigen",
+		"login": "Einloggen",
+		"register": "Registrieren",
+		"start": "Backmeup & Themis",
+		"bad_login": "Fehler beim Login.",
+		"bad_register": "Fehler bei der Registrierung",
+		"create_backup": "Backup erstellen",
+		"backup_jobs": "Backup Jobs",
+		"zip_archive": "Zip Archiv",
+		"index": "Index",
+		"settings": "Einstellungen",
+		"clear_html5_storage": "Appdaten löschen",
+		"logout": "Abgemeldet",
+		"message": "Text",
+		"timestamp": "Zeit",
+		"type": "Art",
+		"search": "Suchen",
+		"search_backup": "Backups durchsuchen",
+		"select_datasource": "Datenquelle auswählen",
+		"select_datasink": "Speicherziel auswählen",
+		"share_backup": "Backup Teilen",
+		"backup_options": "Backupoptionen",
+		"backup_to_share": "Diese Backups können geteilt werden",
+		"incoming_share": "Eingehendes Backup",
+		"incoming_shares": "Eingehende Backups",
+		"register_1_terms": "Nutzungsbedingungen",
+		"register_2_name": "Name",
+		"register_2_credentials": "Login Daten",
+		"register_4_final": "Registrieren"
 	},
 
 	"app-session": 
@@ -94,72 +255,6 @@
 		"privacy_policy": "Datenschutzrichtlinien"
 	},
 
-	"headlines": 
-	{
-		"share": "Teilen",
-		"loading": "Laden...",
-		"search_in_backups": "Backups durchsuchen",
-		"activate_account": "Account aktivieren",
-		"backup_jobs_successful": "Erfolgreiche Backupjobs",
-		"backup_jobs_queued": "Warteschlange",
-		"backup_jobs_running": "Laufende Backupjobs",
-		"backup_job_status": "Status",
-		"backup_hold": "Hold",
-		"backup_schedule": "Schedule",
-		"backup_created": "Erstelldatum",
-		"backup_modified": "Letzte Änderung",
-		"backup_start": "Anlegedatum",
-		"backup_next": "Nächste Ausführung",
-		"backup_delay": "Verzögerung",
-		"choose_profile": "Wähle dein Profil",
-		"existing_datasources": "Vorhandene Datenquellen",
-		"new_datasource": "Neue Datenquelle erstellen",
-		"new_backup": "Neues Backup erstellen",
-		"existing_datasinks": "Vorhandene Datensenken",
-		"chosen_datasource": "Gewählte Datenquelle",
-		"chosen_datasink": "Gewählte Datensenke",
-		"job_settings": "Weitere Backup Einstellmöglichkeiten",
-		"new_datasink": "Neue Datensenke erstellen",
-		"backup_log": "Backup-Log",
-		"backup_edit": "Backup bearbeiten",
-		"datasource": "Datenquelle",
-		"datasink": "Speicherziel",
-		"job_status": "Backupstatus",
-		"job_details": "Detailansicht Backup Job",
-		"user_settings": "Benutzer Einstellungen",
-		"bad_connection": "Schlechte Verbindung",
-		"verify_email": "E-Mail-Adresse bestätigen",
-		"login": "Einloggen",
-		"register": "Registrieren",
-		"start": "Backmeup & Themis",
-		"bad_login": "Fehler beim Login.",
-		"bad_register": "Fehler bei der Registrierung",
-		"create_backup": "Backup erstellen",
-		"backup_jobs": "Backup Jobs",
-		"zip_archive": "Zip Archiv",
-		"index": "Backmeup & Themis",
-		"settings": "Einstellungen",
-		"clear_html5_storage": "Appdaten löschen",
-		"logout": "Abgemeldet",
-		"message": "Text",
-		"timestamp": "Zeit",
-		"index": "Index",
-		"type": "Art",
-		"search": "Suchen",
-		"search_backup": "Backups durchsuchen",
-		"select_datasource": "Datenquelle auswählen",
-		"select_datasink": "Speicherziel auswählen",
-		"share_backup": "Backup Teilen",
-		"backup_options": "Backupoptionen",
-		"backup_to_share": "Diese Backups können geteilt werden",
-		"incoming_share": "Eingehendes Backup",
-		"incoming_shares": "Eingehende Backups",
-		"register_1_terms": "Nutzungsbedingungen",
-		"register_2_name": "Name",
-		"register_2_credentials": "Login Daten",
-		"register_4_final": "Registrieren"
-	},
-
 	"notifications": 
 	{
 		"bad_connection": "Der Verbindungsaufbau zum Themis-Server dauert zu lange. Sie werden zur Startseite weitergeleitet.",
@@ -206,19 +301,6 @@
 	"org.backmeup.dropbox": 
 	{
 		"The password of your E-Mail account": ""
-	},
-
-	"org.backmeup.filegenerator": 
-	{
-		"text": "text",
-		"text.paragraphs": "text.paragraphs",
-		"image": "image",
-		"image.size": "image.size",
-		"pdf": "pdf",
-		"pdf.paragraphs": "pdf.paragraphs",
-		"binary": "binary",
-		"binary.size": "binary.size",
-		"generator.files": "generator.files"
 	},
 
 	"org.backmeup.mail": 
@@ -317,16 +399,5 @@
 		"error_headline": "Einloggen",
 		"error": "Benutzername oder Passwort falsch.",
 		"error_button": "Ok"
-	},
-
-	"page.search": 
-	{
-		"loadingHeadline": "Laden...",
-		"loadingText": "Die Suchergebnisse werden geladen.",
-		"jobName": "Backupjob",
-		"timeStamp": "Datum",
-		"searchDetails": "Details der Suche",
-		"own item":"Eigene Datei",
-		"shared item":"Geteilte Datei"
 	}
 }

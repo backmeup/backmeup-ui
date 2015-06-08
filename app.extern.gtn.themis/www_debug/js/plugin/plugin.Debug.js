@@ -38,6 +38,10 @@ var plugin_Debug = {
 	 * @private
 	 */
 	logObject : [],
+	feedback : {
+		language : {},
+		image : {}
+	},
 	// obligate functions
 
 	/**
@@ -221,9 +225,11 @@ var plugin_Debug = {
 		feedback : {
 			language : function(object) {
 				console.log("Implement!: " + JSON.stringify(object));
+				$.extend(true, plugin_Debug.feedback.language, object);
 			},
 			image : function(object) {
 				console.log("Implement!: " + JSON.stringify(object));
+				$.extend(true, plugin_Debug.feedback.image, object);
 			}
 		}
 	}

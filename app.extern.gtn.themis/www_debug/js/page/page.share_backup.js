@@ -269,14 +269,15 @@ var page_share_backup = {
 
 		$(this.config.pageId).on('click', '.collection', function(event) {
 			var collection = JSON.parse($(this).attr('json').split("'").join('"')), searchValue = JSON.stringify(collection.documentIds).replace('[', '').replace(']', '').split(',').join(' OR ').split('"').join('');
-			app.store.localStorage.set("data-html5-themis-search-value-temp", searchValue);
+			app.store.localStorage.set("data-html5-themis-search-value", searchValue);
 			// alert(JSON.stringify(collection));
 			app.notify.alert(page_share_backup.functions.collectionOperations(collection), false, app.lang.string("collection details", "page.share_backup"), app.lang.string("close details", "page.share_backup"), false, 50)
 
 		});
 
 		$(this.config.pageId).on('click', '.app-collection-view', function(event) {
-			app.store.localStorage.set("data-html5-themis-search-value", app.store.localStorage.get("data-html5-themis-search-value-temp"));
+		//	window.setTimeout(function())
+		//	app.store.localStorage.set("data-html5-themis-search-value", app.store.localStorage.get("data-html5-themis-search-value-temp"));
 			app.nav.redirect("search.html", "none");
 		});
 	},

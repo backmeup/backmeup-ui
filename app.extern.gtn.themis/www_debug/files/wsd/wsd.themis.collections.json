@@ -18,5 +18,12 @@
 		"url": "/backmeup-service-rest/collections/{collId}/adddocuments/json?collectionId={collectionId}&documentIds={documentIds}",
 		"method": "post",
 		"timeout": "30000"
+	},
+
+	"removeFromCollection": 
+	{
+		"url": "/backmeup-service-rest/collections/{collId}/removedocuments/json?collectionId={collectionId}&documentIds={documentIds}",
+		"method": "post",
+		"timeout": "30000"
 	}
 }

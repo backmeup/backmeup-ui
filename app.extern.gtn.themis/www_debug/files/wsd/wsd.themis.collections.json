@@ -1,7 +1,7 @@
 {
 	"createCollection": 
 	{
-		"url": "/backmeup-service-rest/collections/json?name={name}&decription={decription}&documentIds={documentIds}",
+		"url": "/backmeup-service-rest/collections/json?name={name}&description={description}&documentIds={documentIds}",
 		"method": "post",
 		"timeout": "30000"
 	},
@@ -15,7 +15,7 @@
 
 	"addToCollection": 
 	{
-		"url": "/backmeup-service-rest/collections/{collId}/adddocuments/json?documentIds={documentIds}",
+		"url": "/backmeup-service-rest/collections/{collId}/adddocuments/json?collectionId={collectionId}&documentIds={documentIds}",
 		"method": "post",
 		"timeout": "30000"
 	}

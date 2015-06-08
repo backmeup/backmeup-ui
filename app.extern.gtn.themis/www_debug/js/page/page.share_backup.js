@@ -87,6 +87,12 @@ var page_share_backup = {
 
 			app.notify.loader.remove();
 			content.append(list);
+			content.append(app.ni.element.span({
+				text : "&nbsp;",
+				styles : {
+					"clear" : "both"
+				}
+			}));
 
 			content.append(app.ni.element.h2({
 				"text" : app.lang.string("my owned shares", "headlines")
@@ -119,6 +125,12 @@ var page_share_backup = {
 			});
 
 			content.append(list);
+			content.append(app.ni.element.span({
+				text : "&nbsp;",
+				styles : {
+					"clear" : "both"
+				}
+			}));
 
 			// collections
 			content.append(app.ni.element.h2({
@@ -144,6 +156,12 @@ var page_share_backup = {
 			});
 
 			content.append(list);
+			content.append(app.ni.element.span({
+				text : "&nbsp;",
+				styles : {
+					"clear" : "both"
+				}
+			}));
 
 			app.notify.loader.remove();
 			app.help.jQM.enhance(content);

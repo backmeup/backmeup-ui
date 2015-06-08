@@ -499,9 +499,10 @@ var page_search = {
 									app.notify.dialog(page_search.singleResult.getAddToCollectionInputs(collections), app.lang.string("add to collection", "page.search"), false, app.lang.string("add to collection", "page.search"), app.lang.string(
 											"cancel", "page.share"), function() {
 										// share item
-										 app.rc.getJson("addToCollection", {
+										app.rc.getJson("addToCollection", {
 											documentIds : documentIds,
 											collId : $("#cboCollections option:selected").val(),
+											collectionId : $("#cboCollections option:selected").val()
 										}, true).done(function() {
 											alert("done")
 										}).fail(function() {

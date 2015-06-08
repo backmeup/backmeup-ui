@@ -441,7 +441,7 @@ var page_search = {
 
 			$.each(collections, function(index, collection) {
 				select.append(app.ni.select.option({
-					text : collection.name + " - " + collection.decription,
+					text : collection.name + " - " + collection.description,
 					value : collection.collectionId
 				}));
 			});

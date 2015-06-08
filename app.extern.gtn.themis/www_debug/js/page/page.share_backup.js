@@ -55,7 +55,10 @@ var page_share_backup = {
 			var incomingShares = resultObject["incomingShares"], ownedShares = resultObject["ownedShares"], collections = resultObject["getCollections"];
 
 			content.append(app.ni.element.h2({
-				"text" : app.lang.string("my incoming shares", "headlines")
+				"text" : app.lang.string("my incoming shares", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
 			}));
 
 			// alert(JSON.stringify(resultObject));
@@ -87,15 +90,12 @@ var page_share_backup = {
 
 			app.notify.loader.remove();
 			content.append(list);
-			content.append(app.ni.element.span({
-				text : "&nbsp;",
-				styles : {
-					"clear" : "both"
-				}
-			}));
 
 			content.append(app.ni.element.h2({
-				"text" : app.lang.string("my owned shares", "headlines")
+				"text" : app.lang.string("my owned shares", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
 			}));
 
 			list = $(app.template.get("listA", "responsive"));
@@ -125,16 +125,13 @@ var page_share_backup = {
 			});
 
 			content.append(list);
-			content.append(app.ni.element.span({
-				text : "&nbsp;",
-				styles : {
-					"clear" : "both"
-				}
-			}));
 
 			// collections
 			content.append(app.ni.element.h2({
-				"text" : app.lang.string("my collections", "headlines")
+				"text" : app.lang.string("my collections", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
 			}));
 
 			list = $(app.template.get("listA", "responsive"));
@@ -156,12 +153,6 @@ var page_share_backup = {
 			});
 
 			content.append(list);
-			content.append(app.ni.element.span({
-				text : "&nbsp;",
-				styles : {
-					"clear" : "both"
-				}
-			}));
 
 			app.notify.loader.remove();
 			app.help.jQM.enhance(content);

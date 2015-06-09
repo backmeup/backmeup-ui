@@ -43,7 +43,7 @@
 				"post": "json",
 				"get": "query",
 				"put": "query",
-				"delete": "json"
+				"delete": "query"
 			},
 
 			"first": 

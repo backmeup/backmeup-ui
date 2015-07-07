@@ -553,7 +553,7 @@ var page_search = {
 											"cancel", "page.share"), function() {
 										// share item
 										app.rc.getJson("removeFromCollection", {
-											documentIds : documentIds[0],
+											documentIds : documentIds,
 											collId : $("#cboCollections option:selected").val(),
 											collectionId : $("#cboCollections option:selected").val()
 										}, true).done(function() {

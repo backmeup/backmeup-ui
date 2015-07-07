@@ -161,7 +161,7 @@ var page_login = {
 
 				var promise = app.rc.getJson("authenticate", {
 					"username" : container.find("#txtUsername").val(),
-					"password" : encodeURIComponent(container.find("#txtPassword").val())
+					"password" : container.find("#txtPassword").val()
 				}, true);
 
 				promise.always(function() {

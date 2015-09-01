@@ -1,0 +1,11 @@
+{
+	"name": "startToken",
+	"shortname": "startToken",
+	"template": "",
+	"useKeepAlive": true,
+	"loginObligate": true,
+	"isGlobalPage": true,
+	"contentRefresh": false,
+	"contentRefreshInterval": 0,
+	"asyncLoading": false
+}

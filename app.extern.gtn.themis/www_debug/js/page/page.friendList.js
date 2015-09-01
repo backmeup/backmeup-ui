@@ -53,9 +53,9 @@ var page_friendList = {
 					title : singleFriend.name,
 					headline : singleFriend.name,
 					text : singleFriend.description,
-					classes : [ 'heritage' ],
+					classes : [ 'friend' ],
 					attributes : {
-						"data-html5-" : singleFriend.name
+						"data-html5-friendId" : singleFriend.friendId
 					}
 				}));
 			});
@@ -77,7 +77,7 @@ var page_friendList = {
 					text : singleFriend.description,
 					classes : [ 'heritage' ],
 					attributes : {
-						"data-html5-" : singleFriend.name
+						"data-html5-friendId" : singleFriend.friendId
 					}
 				}));
 			});
@@ -134,8 +134,53 @@ var page_friendList = {
 	setEvents : function(container) {
 		app.debug.trace("page_friendList.setEvents()");
 
-		$(this.config.pageId).on("storagefilled", ".sharing", function() {
-			alert();
+		$(this.config.pageId).on("storagefilled", ".heritage", function() {
+
+//			json = app.rc.getJson("getHeritageToken", {
+//				userId : app.store.localStorage.get("data-html5-friendId")
+//			}, false, 3);
+
+			// getHeritageToken
+			app.notify.dialog({
+				text : "Erbtoken: " ,
+				title : "Erbe",
+				headline : false,
+				buttonLeft : "Erbe löschen",
+				buttonRight : "Ok",
+				callbackButtonLeft : function() {
+					app.rc.getJson("deleteAFriendHeritage", {
+						friendId : app.store.localStorage.get("data-html5-friendId")
+					}, true, 1).done(function() {
+						alert("done");
+					}).fail(function() {
+						alert("fail");
+					});
+				},
+				callbackButtonRight : false,
+				delayInMs : 0
+			});
+
+		});
+
+		$(this.config.pageId).on("storagefilled", ".friend", function() {
+			app.notify.dialog({
+				text : " " ,
+				title : "Erbe",
+				headline : false,
+				buttonLeft : "Freund löschen",
+				buttonRight : "Ok",
+				callbackButtonLeft : function() {
+					app.rc.getJson("deleteAFriend", {
+						friendId : app.store.localStorage.get("data-html5-friendId")
+					}, true, 1).done(function() {
+						alert("done");
+					}).fail(function() {
+						alert("fail");
+					});
+				},
+				callbackButtonRight : false,
+				delayInMs : 0
+			});
 		});
 
 		$(this.config.pageId).on("click", "#btnAddFriend", function(event) {

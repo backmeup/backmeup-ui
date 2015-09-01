@@ -250,8 +250,6 @@ var page_search = {
 							"data-inline" : "true",
 							"data-mini" : "true"
 						},
-						label : true,
-						labelText : "asd"
 					});
 					select.append(app.ni.select.option({
 						text : app.lang.string(key, "page.search"),
@@ -460,6 +458,23 @@ var page_search = {
 			});
 
 			div.append(friends);
+
+			div.append(app.ni.text.date({
+				id : "txtStartDate",
+				placeholder : app.lang.string("start date", "page.search"),
+				label : true,
+				labelText : app.lang.string("start date", "page.search"),
+				container : false
+			}));
+			
+			
+			div.append(app.ni.text.date({
+				id : "txtEndDate",
+				placeholder : app.lang.string("end date", "page.search"),
+				label : true,
+				labelText : app.lang.string("end date", "page.search"),
+				container : false
+			}));
 
 			return div;
 		},

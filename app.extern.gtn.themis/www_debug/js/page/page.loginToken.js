@@ -1,7 +1,7 @@
 var page_loginToken = {
 	config : null,
-	include: null,
-	include_once: null,
+	include : null,
+	include_once : null,
 
 	elements : null,
 
@@ -37,7 +37,7 @@ var page_loginToken = {
 		}));
 
 		var form = app.ni.form.form({
-			"id" : "frmLogin",
+			"id" : "frmLoginToken",
 			"attributes" : {
 				"action" : "#",
 				"data-ajax" : "false"
@@ -46,13 +46,13 @@ var page_loginToken = {
 		});
 
 		form.append(app.ni.text.text({
-			"id" : "txtUsername",
+			"id" : "txtToken",
 			"placeholder" : app.lang.string("token", "labels"),
 			"label" : false,
 			"labelText" : app.lang.string("token", "labels"),
 			"container" : false
 		}));
-	
+
 		/*
 		 * content.append(app.ni.checkbox({ "id" : "cbxSaveCedentials" }));
 		 */
@@ -67,7 +67,6 @@ var page_loginToken = {
 
 		content.append(form);
 
-		
 		content.append(app.ni.element.p({
 			"text" : app.ni.element.a({
 				"id" : "btnStart",
@@ -79,7 +78,7 @@ var page_loginToken = {
 			}),
 			"classes" : [ 'app-subtext3' ]
 		}));
-		
+
 		content.append(app.ni.element.p({
 			"text" : app.ni.element.a({
 				"id" : "btnLostPassword",
@@ -145,7 +144,41 @@ var page_loginToken = {
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.trace("page_loginToken.setEvents()");
+		$(this.config.pageId).on("submit", '#frmLoginToken', function(event) {
+			event.preventDefault();
 
+			app.template.append("#btnLogin", "app-loader-bubble-inline-button");
+
+			app.rc.getJson("authenticateWithToken", {
+				activationCode : $('#txtToken').val()
+			}, true, 3).done(function(json) {
+				if (json.accessToken != undefined) {
+					// alert(JSON.stringify(json));
+					app.store.localStorage.clearHtml5();
+					app.sess.loggedIn(true);
+					// app.store.localStorage.set("data-html5-themis-username",
+					// container.find("#txtUsername").val());
+					app.store.localStorage.set("themis-token", json.accessToken);
+
+					app.rc.getJson("search", {
+						"query" : "startup indexer"
+					}, true);
+
+					app.sess.setValue("heritage");
+					
+					app.help.navigation.redirect("startToken.html", "slideup");
+
+				} else {
+					alert("Token falsch.");
+				}
+			}).fail(function() {
+
+				alert("Token falsch.");
+
+			}).always(function() {
+				container.find(".bubblingG-inline-button").remove();
+			});
+		});
 	},
 
 	functions : {},

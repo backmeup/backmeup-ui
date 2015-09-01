@@ -1,4 +1,11 @@
 {
+	"deadManSwitch": 
+	{
+		"url": "/backmeup-service-rest/heritage/deadmanswitch/activate",
+		"method": "post",
+		"timeout": "30000"
+	},
+
 	"shareDocument": 
 	{
 		"url": "/backmeup-service-rest/sharing/add/json?withUserId={withUserId}&policyType=Document&policyValue={policyValue}&name={name}&description={description}",

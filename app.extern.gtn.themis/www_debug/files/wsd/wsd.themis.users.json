@@ -6,6 +6,13 @@
 		"timeout": "int timeout"
 	},
 
+	"getHeritageToken": 
+	{
+		"url": "/backmeup-service-rest/users/{userId}/activationCode",
+		"method": "get",
+		"timeout": "7000"
+	},
+
 	"register": 
 	{
 		"url": "/backmeup-service-rest/users?username={username}&firstname={firstname}&lastname={lastname}&email={email}&password={password}",
@@ -44,7 +51,14 @@
 	"deleteAFriend": 
 	{
 		"url": "/backmeup-service-rest/friends/delete?friendId={friendId}&list=SHARING",
-		"method": "post",
+		"method": "delete",
+		"timeout": "17000"
+	},
+
+	"deleteAFriendHeritage": 
+	{
+		"url": "/backmeup-service-rest/friends/delete?friendId={friendId}&list=HERITAGE",
+		"method": "delete",
 		"timeout": "17000"
 	},
 

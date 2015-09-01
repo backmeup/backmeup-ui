@@ -19,29 +19,31 @@ var globalPage = {
 				"classes" : [ 'ui-nodisc-icon' ]
 			})));
 
-			ul.append(app.ni.element.li({
-				"id" : "ftrLiNavShare"
-			}).append(app.ni.element.a({
-				"id" : "ftrBtnNavShare",
-				"text" : app.lang.string("share", "actions"),
-				"attributes" : {
-					"data-icon" : "forward",
-					"href" : "share_backup.html"
-				},
-				"classes" : [ 'ui-nodisc-icon' ]
-			})));
+			if (!app.sess.getValue('heritage'))
+				ul.append(app.ni.element.li({
+					"id" : "ftrLiNavShare"
+				}).append(app.ni.element.a({
+					"id" : "ftrBtnNavShare",
+					"text" : app.lang.string("share", "actions"),
+					"attributes" : {
+						"data-icon" : "forward",
+						"href" : "share_backup.html"
+					},
+					"classes" : [ 'ui-nodisc-icon' ]
+				})));
 
-			ul.append(app.ni.element.li({
-				"id" : "ftrLiNavAdministrate"
-			}).append(app.ni.element.a({
-				"id" : "ftrBtnNavAdministrate",
-				"text" : app.lang.string("administrate", "actions"),
-				"attributes" : {
-					"data-icon" : "gear",
-					"href" : "backup_jobs.html",
-				},
-				"classes" : [ 'ui-nodisc-icon' ]
-			})));
+			if (!app.sess.getValue('heritage'))
+				ul.append(app.ni.element.li({
+					"id" : "ftrLiNavAdministrate"
+				}).append(app.ni.element.a({
+					"id" : "ftrBtnNavAdministrate",
+					"text" : app.lang.string("administrate", "actions"),
+					"attributes" : {
+						"data-icon" : "gear",
+						"href" : "backup_jobs.html",
+					},
+					"classes" : [ 'ui-nodisc-icon' ]
+				})));
 
 			ul.append(app.ni.element.li().append(app.ni.element.a({
 				"id" : "ftrBtnNavMore",
@@ -69,6 +71,7 @@ var globalPage = {
 					"data-role" : "listview"
 				}
 			});
+
 			ul.append(app.ni.element.li().append(app.ni.element.a({
 				"id" : "navBtnNavSearch",
 				"text" : app.lang.string("search", "actions"),
@@ -76,21 +79,24 @@ var globalPage = {
 					"href" : "#"
 				}
 			})));
-			ul.append(app.ni.element.li().append(app.ni.element.a({
-				"id" : "navBtnNavShare",
-				"text" : app.lang.string("share", "actions"),
-				"attributes" : {
-					"href" : "share_backup.html"
-				}
-			})));
 
-			ul.append(app.ni.element.li().append(app.ni.element.a({
-				"id" : "navBtnNavAdministrate",
-				"text" : app.lang.string("administrate", "actions"),
-				"attributes" : {
-					"href" : "backup_jobs.html"
-				}
-			})));
+			if (!app.sess.getValue('heritage'))
+				ul.append(app.ni.element.li().append(app.ni.element.a({
+					"id" : "navBtnNavShare",
+					"text" : app.lang.string("share", "actions"),
+					"attributes" : {
+						"href" : "share_backup.html"
+					}
+				})));
+
+			if (!app.sess.getValue('heritage'))
+				ul.append(app.ni.element.li().append(app.ni.element.a({
+					"id" : "navBtnNavAdministrate",
+					"text" : app.lang.string("administrate", "actions"),
+					"attributes" : {
+						"href" : "backup_jobs.html"
+					}
+				})));
 
 			ul.append(app.ni.element.li().append(app.ni.element.a({
 				"id" : "navBtnNavMore",
@@ -131,24 +137,36 @@ var globalPage = {
 					}
 				})));
 
-			ul.append(app.ni.element.li().append(app.ni.element.a({
-				"id" : "navPageNewBackup",
-				"text" : app.lang.string("create_backup", "actions"),
-				"attributes" : {
-					"href" : "create_backup_1.html",
-
-				}
-			})));
-
-			if (!app.sess.loggedIn())
+			if (!app.sess.getValue('heritage'))
 				ul.append(app.ni.element.li().append(app.ni.element.a({
-					"id" : "navPageLogin",
-					"text" : app.lang.string("login", "actions"),
+					"id" : "navPageNewBackup",
+					"text" : app.lang.string("create_backup", "actions"),
 					"attributes" : {
-						"href" : "login.html",
+						"href" : "create_backup_1.html",
 
 					}
 				})));
+
+			if (!app.sess.getValue('heritage'))
+				ul.append(app.ni.element.li().append(app.ni.element.a({
+					"id" : "navFriendList",
+					"text" : app.lang.string("friend list", "actions"),
+					"attributes" : {
+						"href" : "friendList.html",
+
+					}
+				})));
+
+			if (!app.sess.getValue('heritage'))
+				if (!app.sess.loggedIn())
+					ul.append(app.ni.element.li().append(app.ni.element.a({
+						"id" : "navPageLogin",
+						"text" : app.lang.string("login", "actions"),
+						"attributes" : {
+							"href" : "login.html",
+
+						}
+					})));
 
 			if (app.sess.loggedIn())
 				ul.append(app.ni.element.li().append(app.ni.element.a({

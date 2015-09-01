@@ -44,7 +44,7 @@ var page_share_backup = {
 		 * "true" }, true);
 		 */
 
-		var promise = app.rc.getJson([ [ "ownedShares", {} ], [ "incomingShares", {} ], [ "getCollections", {} ] ], true);
+		var promise = app.rc.getJson([ [ "ownedShares", {} ], [ "ownedSharesHeritage", {} ], [ "incomingShares", {} ], [ "getCollections", {} ] ], true);
 
 		content.append(app.ni.element.h1({
 			"text" : app.lang.string("share_backup", "headlines")
@@ -52,7 +52,7 @@ var page_share_backup = {
 
 		promise.done(function(resultObject) {
 
-			var incomingShares = resultObject["incomingShares"], ownedShares = resultObject["ownedShares"], collections = resultObject["getCollections"];
+			var incomingShares = resultObject["incomingShares"], ownedShares = resultObject["ownedShares"], ownedSharesHeritage = resultObject["ownedSharesHeritage"], collections = resultObject["getCollections"];
 
 			content.append(app.ni.element.h2({
 				"text" : app.lang.string("my incoming shares", "headlines"),
@@ -108,9 +108,46 @@ var page_share_backup = {
 					title : app.lang.string("date", "page.share_backup") + " " + date("d.m.Y", ownedShare.policyCreationDate / 1000),
 					headline : (ownedShare.name != undefined) ? ownedShare.name : app.lang.string(ownedShare.policy, "page.share_backup"),
 					text : (ownedShare.description != undefined) ? ownedShare.description : "no description for backup",
-					classes : [ 'owned-share' ],
+					classes : [ 'owned-share', 'friend' ],
 					attributes : {
 						"json" : JSON.stringify(ownedShare).split("\"").join("'"),
+						"data-html5-revoketype" : "heritage",
+						"data-html5-themis-id" : ownedShare.id,
+						"data-html5-themis-fromuserid" : ownedShare.fromUserID,
+						"data-html5-themis-withuserid" : ownedShare.withUserID,
+						"data-html5-themis-policy" : ownedShare.policy,
+						"data-html5-themis-searchelementid" : ownedShare.sharedElementID,
+						"data-html5-themis-policycreationdate" : ownedShare.policyCreationDate,
+						"data-html5-themis-numberOfSharedDocuments" : ownedShare.numberOfSharedDocuments,
+						"data-html5-themis-name" : ownedShare.name,
+						"data-html5-themis-approvedBySharingpartner" : ownedShare.approvedBySharingpartner
+					}
+				}));
+			});
+
+			content.append(list);
+
+			content.append(app.ni.element.h2({
+				"text" : app.lang.string("my owned shares heritage", "headlines"),
+				"styles" : {
+					"clear" : "both"
+				}
+			}));
+
+			list = $(app.template.get("listA", "responsive"));
+
+			$.each(ownedSharesHeritage, function(index, ownedShare) {
+				// alert(JSON.stringify(jobJson));
+				list.append(app.ni.list.thumbnail({
+					href : "#",
+					imageSrc : app.img.getUrlById("incoming_" + ownedShare.policy + "_" + ownedShare.approvedBySharingpartner),
+					title : app.lang.string("date", "page.share_backup") + " " + date("d.m.Y", ownedShare.policyCreationDate / 1000),
+					headline : (ownedShare.name != undefined) ? ownedShare.name : app.lang.string(ownedShare.policy, "page.share_backup"),
+					text : (ownedShare.description != undefined) ? ownedShare.description : "no description for backup",
+					classes : [ 'owned-share', 'heritage' ],
+					attributes : {
+						"json" : JSON.stringify(ownedShare).split("\"").join("'"),
+						"data-html5-revoketype" : "heritage",
 						"data-html5-themis-id" : ownedShare.id,
 						"data-html5-themis-fromuserid" : ownedShare.fromUserID,
 						"data-html5-themis-withuserid" : ownedShare.withUserID,
@@ -234,9 +271,16 @@ var page_share_backup = {
 			});
 		});
 
-		$(this.config.pageId).on('click', '.app-share-delete', function(event) {
+		$(this.config.pageId).on('storagefilled', '.app-share-delete', function(event) {
 			app.notify.close.all().done(function() {
-				app.rc.getJson('deleteOwnShare', {
+				var webservice;
+
+				if (app.store.localStorage.get("data-html5-revoketype") == "heritage")
+					webservice = "deleteOwnShareHeritage"
+				else if (app.store.localStorage.get("data-html5-revoketype") == "friends")
+					webservice = "deleteOwnShare";
+
+				app.rc.getJson(webservice, {
 					policyID : app.store.localStorage.get("data-html5-themis-id")
 				}, true).done(function() {
 					alert("done");

@@ -90,6 +90,13 @@
 		"timeout": "30000"
 	},
 
+	"ownedSharesHeritage": 
+	{
+		"url": "/backmeup-service-rest/heritage/owned",
+		"method": "get",
+		"timeout": "30000"
+	},
+
 	"incomingShares": 
 	{
 		"url": "/backmeup-service-rest/sharing/incoming",
@@ -100,6 +107,13 @@
 	"deleteOwnShare": 
 	{
 		"url": "/backmeup-service-rest/sharing/remove?policyID={policyID}",
+		"method": "delete",
+		"timeout": "30000"
+	},
+
+	"deleteOwnShareHeritage": 
+	{
+		"url": "/backmeup-service-rest/heritage/remove?policyID={policyID}",
 		"method": "delete",
 		"timeout": "30000"
 	},

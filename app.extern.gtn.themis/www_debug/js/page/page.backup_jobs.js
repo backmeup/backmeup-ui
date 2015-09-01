@@ -256,7 +256,6 @@ var page_backup_jobs = {
 						webservice = "shareBackup";
 					} else if ($("#selFriend option:selected").hasClass("heritage")) {
 						webservice = "shareBackupHeritage";
-						alert("heritage")
 					}
 
 					app.rc.getJson(webservice, {

@@ -77,7 +77,7 @@ var page_friendList = {
 					text : singleFriend.description,
 					classes : [ 'heritage' ],
 					attributes : {
-						"data-html5-friendId" : singleFriend.friendId
+						"data-html5-friendId" : singleFriend.bmuUserId
 					}
 				}));
 			});
@@ -136,13 +136,13 @@ var page_friendList = {
 
 		$(this.config.pageId).on("storagefilled", ".heritage", function() {
 
-//			json = app.rc.getJson("getHeritageToken", {
-//				userId : app.store.localStorage.get("data-html5-friendId")
-//			}, false, 3);
+			json = app.rc.getJson("getHeritageToken", {
+				userId : app.store.localStorage.get("data-html5-friendId")
+			}, false, 3);
 
 			// getHeritageToken
 			app.notify.dialog({
-				text : "Erbtoken: " ,
+				text : "Erbtoken: " + json.activationCode,
 				title : "Erbe",
 				headline : false,
 				buttonLeft : "Erbe löschen",
@@ -164,7 +164,7 @@ var page_friendList = {
 
 		$(this.config.pageId).on("storagefilled", ".friend", function() {
 			app.notify.dialog({
-				text : " " ,
+				text : " ",
 				title : "Erbe",
 				headline : false,
 				buttonLeft : "Freund löschen",

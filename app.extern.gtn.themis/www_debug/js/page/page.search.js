@@ -452,7 +452,7 @@ var page_search = {
 			$.each(heritageList, function(index, singleFriend) {
 				friends.append(app.ni.select.option({
 					text : singleFriend.name + " - " + singleFriend.description,
-					value : singleFriend.friendId,
+					value : singleFriend.bmuUserId,
 					classes : [ 'heritage' ]
 				}));
 			});

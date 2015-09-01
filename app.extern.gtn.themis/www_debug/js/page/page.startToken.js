@@ -16,7 +16,7 @@ var page_startToken = {
 	creator : function(container) {
 		app.debug.trace("page_startToken.creator()");
 		var content = container.find('div[data-role=content]');
-		content.append("<h1>Hello World</h1>");
+		content.append("<h1>Erbe holen</h1>");
 
 		content.append(app.ni.element.a({
 			id : "btnDeadManSwitch",

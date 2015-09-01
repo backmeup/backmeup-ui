@@ -146,7 +146,7 @@ var page_friendList = {
 				title : "Erbe",
 				headline : false,
 				buttonLeft : "Erbe löschen",
-				buttonRight : "Ok",
+				buttonRight : "Als pdf",
 				callbackButtonLeft : function() {
 					app.rc.getJson("deleteAFriendHeritage", {
 						friendId : app.store.localStorage.get("data-html5-friendId")
@@ -156,7 +156,24 @@ var page_friendList = {
 						alert("fail");
 					});
 				},
-				callbackButtonRight : false,
+				callbackButtonRight : function() {
+					$.ajax({
+						url : "http://themis-dev01.backmeup.at/backmeup-service-rest/users/" + app.store.localStorage.get("data-html5-friendId") + "/activationCode",
+						async : false,
+						// accepts : "application/pdf",
+						headers : {
+							"Authorization" : app.store.localStorage.get("themis-token"),
+							"Accept" : "application/pdf"
+						},
+						success : function(data) {
+							var blob = new Blob([ data ]);
+							var link = document.createElement('a');
+							link.href = window.URL.createObjectURL(blob);
+							link.download = "token_" + new Date() + ".pdf";
+							link.click();
+						}
+					});
+				},
 				delayInMs : 0
 			});
 

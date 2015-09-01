@@ -245,7 +245,7 @@ var plugin_Notification = {
 					$("#popupDialog #btn-dialog-right").text(notification.buttonRight);
 
 					if (typeof notification.text == "object") {
-						$("#popupDialog div.ui-content p").html(notification.text);
+						$("#popupDialog div.ui-content p").replaceWith(notification.text);
 					} else {
 						$("#popupDialog div.ui-content p").html(notification.text);
 					}
@@ -322,6 +322,16 @@ var plugin_Notification = {
 			alert(event.alert);
 		},
 		alert : function(text, title, headline, button, callbackButton, delayInMs) {
+			var object = text;
+			if ($.isPlainObject(text)) {
+				delayInMs = object.delayInMs;
+				callbackButton = object.callbackButton;
+				button = object.button;
+				headline = object.headline;
+				title = object.title;
+				text = object.text;
+			}
+
 			plugin_Notification.functions.close.all().done(function() {
 				if (text == undefined)
 					text = false;
@@ -347,6 +357,18 @@ var plugin_Notification = {
 			});
 		},
 		dialog : function(text, title, headline, buttonLeft, buttonRight, callbackButtonLeft, callbackButtonRight, delayInMs) {
+			var object = text;
+			if ($.isPlainObject(text)) {
+				delayInMs = object.delayInMs;
+				callbackButtonRight = object.callbackButtonRight;
+				callbackButtonLeft = object.callbackButtonLeft;
+				buttonRight = object.buttonRight;
+				buttonLeft = object.buttonLeft;
+				headline = object.headline;
+				title = object.title;
+				text = object.text;
+			}
+
 			plugin_Notification.functions.close.all().done(function() {
 				if (text == undefined || text == null)
 					text = false;

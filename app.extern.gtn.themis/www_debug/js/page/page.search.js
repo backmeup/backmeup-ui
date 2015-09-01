@@ -409,7 +409,9 @@ var page_search = {
 		getSharingInputs : function() {
 			var div = app.ni.element.div({
 				classes : [ 'app-themis-sharing' ]
-			});
+			}), friends = app.ni.select.single({
+				id : "selFriend"
+			}), sharingList, heritageList;
 
 			div.append(app.ni.text.text({
 				id : "txtShareName",
@@ -427,13 +429,37 @@ var page_search = {
 				container : false
 			}));
 
-			div.append(app.ni.text.text({
-				id : "txtShareUserId",
-				placeholder : app.lang.string("share userid", "page.search"),
-				label : true,
-				labelText : app.lang.string("share userid", "page.search"),
-				container : false
-			}));
+			// div.append(app.ni.text.text({
+			// id : "txtShareUserId",
+			// placeholder : app.lang.string("share userid", "page.search"),
+			// label : true,
+			// labelText : app.lang.string("share userid", "page.search"),
+			// container : false
+			// }));
+
+			result = app.rc.getJson([ [ "listFriendsSharing", {} ], [ "listFriendsHeritage", {} ] ], false, 3);
+
+			sharingList = result['listFriendsSharing'];
+			heritageList = result['listFriendsHeritage'];
+
+			$.each(sharingList, function(index, singleFriend) {
+				if (singleFriend.bmuUser)
+					friends.append(app.ni.select.option({
+						text : singleFriend.name + " - " + singleFriend.description,
+						value : singleFriend.bmuUserId,
+						classes : [ 'friend' ]
+					}));
+			});
+
+			$.each(heritageList, function(index, singleFriend) {
+				friends.append(app.ni.select.option({
+					text : singleFriend.name + " - " + singleFriend.description,
+					value : singleFriend.friendId,
+					classes : [ 'heritage' ]
+				}));
+			});
+
+			div.append(friends);
 
 			return div;
 		},
@@ -506,8 +532,15 @@ var page_search = {
 			app.notify.close.all().done(function() {
 				app.notify.dialog(page_search.singleResult.getSharingInputs(), singleSearchResult.title, false, app.lang.string("share item", "page.search"), app.lang.string("don't share item", "page.share"), function() {
 					// share item
-					app.rc.getJson("shareDocument", {
-						withUserId : parseInt($("#txtShareUserId").val()),
+					var webservice;
+
+					if ($("#selFriend option:selected").hasClass("friend"))
+						webservice = "shareDocument";
+					else if ($("#selFriend option:selected").hasClass("heritage"))
+						webservice = "shareDocumentHeritage";
+
+					app.rc.getJson(webservice, {
+						withUserId : parseInt($("#selFriend option:selected").val()),
 						policyValue : app.store.localStorage.get("data-html5-fileid"),
 						name : $("#txtShareName").val(),
 						description : $("#txtShareDescription").val()
@@ -527,7 +560,14 @@ var page_search = {
 			app.notify.close.all().done(function() {
 				app.notify.dialog(page_search.singleResult.getCollectionInputs(), app.lang.string("create collection", "page.search"), false, app.lang.string("create collection", "page.search"), app.lang.string("cancel", "page.share"), function() {
 					// share item
-					app.rc.getJson("createCollection", {
+					var webservice;
+
+					if ($("#selFriend option:selected").hasClass("friend"))
+						webservice = "createCollection";
+					else if ($("#selFriend option:selected").hasClass("heritage"))
+						webservice = "createCollectionHeritage";
+
+					app.rc.getJson(webservice, {
 						documentIds : documentIds,
 						name : $("#txtCollectionName").val(),
 						description : $("#txtCollectionDescription").val()
@@ -549,8 +589,8 @@ var page_search = {
 						app.rc.getJson("getCollections", {}, true).done(
 								function(collections) {
 
-									app.notify.dialog(page_search.singleResult.getAddToCollectionInputs(collections), app.lang.string("remove from collection", "page.search"), false, app.lang.string("remove from collection", "page.search"), app.lang.string(
-											"cancel", "page.share"), function() {
+									app.notify.dialog(page_search.singleResult.getAddToCollectionInputs(collections), app.lang.string("remove from collection", "page.search"), false, app.lang.string("remove from collection", "page.search"), app.lang
+											.string("cancel", "page.share"), function() {
 										// share item
 										app.rc.getJson("removeFromCollection", {
 											documentIds : documentIds,
@@ -608,8 +648,16 @@ var page_search = {
 						documentArray.push($(element).attr('data-html5-fileid'));
 					})
 					// alert(JSON.stringify(documentArray));
-					app.rc.getJson("shareDocumentGroup", {
-						withUserId : parseInt($("#txtShareUserId").val()),
+
+					var webservice;
+
+					if ($("#selFriend option:selected").hasClass("friend"))
+						webservice = "shareDocumentGroup";
+					else if ($("#selFriend option:selected").hasClass("heritage"))
+						webservice = "shareDocumentGroupHeritage";
+
+					app.rc.getJson(webservice, {
+						withUserId : parseInt($("#selFriend option:selected").val()),
 						policyValue : JSON.stringify(documentArray).split('"').join(''),
 						name : $("#txtShareName").val(),
 						description : $("#txtShareDescription").val()

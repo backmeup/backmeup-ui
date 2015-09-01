@@ -248,8 +248,19 @@ var page_backup_jobs = {
 			app.notify.close.all().done(function() {
 				app.notify.dialog(page_search.singleResult.getSharingInputs(), title, false, app.lang.string("share backup", "page.backup_jobs"), app.lang.string("don't share item", "page.backup_jobs"), function() {
 					// share item
-					app.rc.getJson("shareBackup", {
-						withUserId : parseInt($("#txtShareUserId").val()),
+
+					var webservice;
+
+					if ($("#selFriend option:selected").hasClass("friend")) {
+						alert("friend");
+						webservice = "shareBackup";
+					} else if ($("#selFriend option:selected").hasClass("heritage")) {
+						webservice = "shareBackupHeritage";
+						alert("heritage")
+					}
+
+					app.rc.getJson(webservice, {
+						withUserId : parseInt($("#selFriend option:selected").val()),
 						name : $("#txtShareName").val(),
 						policyValue : app.store.localStorage.get("data-html5-themis-backupid")
 					}, true).done(function() {
@@ -272,8 +283,16 @@ var page_backup_jobs = {
 								app.notify.dialog(page_search.singleResult.getSharingInputs(), app.lang.string("share all from now", "page.backup_jobs"), false, app.lang.string("share backup", "page.backup_jobs"), app.lang.string("don't share item",
 										"page.backup_jobs"), function() {
 									// share item
-									app.rc.getJson("shareAllFromNow", {
-										withUserId : parseInt($("#txtShareUserId").val()),
+
+									var webservice;
+
+									if ($("#selFriend option:selected").hasClass("friend"))
+										webservice = "shareAllFromNow";
+									else if ($("#selFriend option:selected").hasClass("heritage"))
+										webservice = "shareAllFromNowHeritage";
+
+									app.rc.getJson(webservice, {
+										withUserId : parseInt($("#selFriend option:selected").val()),
 										name : $("#txtShareName").val(),
 										policyValue : ""
 									}, true).done(function() {
@@ -296,8 +315,15 @@ var page_backup_jobs = {
 								app.notify.dialog(page_search.singleResult.getSharingInputs(), app.lang.string("share all from now", "page.backup_jobs"), false, app.lang.string("share backup", "page.backup_jobs"), app.lang.string("don't share item",
 										"page.backup_jobs"), function() {
 									// share item
-									app.rc.getJson("shareAll", {
-										withUserId : parseInt($("#txtShareUserId").val()),
+									var webservice;
+
+									if ($("#selFriend option:selected").hasClass("friend"))
+										webservice = "shareAll";
+									else if ($("#selFriend option:selected").hasClass("heritage"))
+										webservice = "shareAllHeritage";
+
+									app.rc.getJson(webservice, {
+										withUserId : parseInt($("#selFriend option:selected").val()),
 										name : $("#txtShareName").val(),
 										policyValue : ""
 									}, true).done(function() {

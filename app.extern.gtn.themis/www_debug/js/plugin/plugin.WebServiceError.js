@@ -17,11 +17,11 @@ var plugin_WebServiceError = {
 
 	// called after all plugins are loaded
 	pluginsLoaded : function() {
-		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
+		app.debug.trace("plugin_WebServiceError.pluginsLoaded()");
 		var dfd = $.Deferred(), promises = Array(), promiseOfPromises;
 
 		if (plugin_WebServiceError.config.errorKeys == undefined) {
-			console.error("No errorKeys Array in plugin.WebServiceError.json");
+			app.debug.error("No errorKeys Array in plugin.WebServiceError.json");
 			dfd.reject();
 		}
 
@@ -48,7 +48,7 @@ var plugin_WebServiceError = {
 	// called after all pages are loaded
 	// caller pages.js
 	pagesLoaded : function() {
-		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
+		app.debug.trace("plugin_WebServiceError.pagesLoaded()");
 		var dfd = $.Deferred();
 		dfd.resolve();
 		return dfd.promise();
@@ -58,31 +58,31 @@ var plugin_WebServiceError = {
 	// called after pluginsLoaded()
 	// caller: plugins.js
 	definePluginEvents : function() {
-		app.debug.alert("plugin_" + this.config.name + ".definePluginEvents()", 11);
+		app.debug.trace("plugin_WebServiceError.definePluginEvents()");
 
 	},
 	// called by pages.js
 	// called for each page after createPage();
 	afterHtmlInjectedBeforePageComputing : function(container) {
-		app.debug.alert("plugin_" + this.config.name + ".afterHtmlInjectedBeforePageComputing()", 11);
+		app.debug.trace("plugin_WebServiceError.afterHtmlInjectedBeforePageComputing()");
 
 	},
 	// called once
 	// set the jQuery delegates
 	// caller: pages.js
 	pageSpecificEvents : function(container) {
-		app.debug.alert("plugin_" + this.config.name + ".pageSpecificEvents()", 11);
+		app.debug.trace("plugin_WebServiceError.pageSpecificEvents()");
 
 	},
 	// private functions
 	loadDefinitionFileAsync : function(path) {
-		app.debug.alert("pugin.WebServiceError.js ~ plugin_WebServiceError.loadDefinitionFileAsync(" + path + ")", 20);
+		app.debug.trace("plugin_WebServiceError.loadDefinitionFileAsync(" + path + ")", 20);
 		var dfd = $.Deferred(), promise;
 		promise = globalLoader.AsyncJsonLoader(path);
 
 		promise.done(function(json) {
 			$.each(json, function(name, values) {
-				app.debug.alert("pugin.WebServiceError.js ~ plugin_WebServiceError.loadDefinitionFileAsync() - add: " + name, 20);
+				app.debug.debug("pugin.WebServiceError.js ~ plugin_WebServiceError.loadDefinitionFileAsync() - add: " + name, 20);
 				plugin_WebServiceError.config.wse[name] = values;
 			});
 			dfd.resolve();
@@ -95,11 +95,11 @@ var plugin_WebServiceError = {
 	},
 
 	loadDefinitionFile : function(path) {
-		app.debug.alert("pugin.WebServiceError.js ~ plugin_WebServiceError.loadDefinitionFile(" + path + ")", 20);
+		app.debug.trace("plugin_WebServiceError.loadDefinitionFile()");
+		app.debug.debug("Load definition file: " + path);
 		var json = globalLoader.JsonLoader(path);
-		app.debug.alert("pugin.WebServiceError.js ~ plugin_WebServiceError.loadDefinitionFile() - add each webservice definition", 20);
 		$.each(json, function(name, values) {
-			app.debug.alert("pugin.WebServiceError.js ~ plugin_WebServiceError.loadDefinitionFile() - add: " + name, 20);
+			app.debug.debug("Add definition: " + name, 20);
 			plugin_WebServiceError.config.wse[name] = values;
 		});
 	},
@@ -107,41 +107,48 @@ var plugin_WebServiceError = {
 	// public functions
 	// called by user
 	functions : {
-		doAction : function() {
+		action : function(exceptionConfig) {
+			app.debug.trace("plugin_WebServiceError.functions.action()");
 		},
 
-		getExceptionConfig : function(exception) {
-			app.debug.alert("plugin.WebServiceError.js ~ plugin_WebServiceError.functions.getExceptionConfig()", 60);
+		getErrorName : function(webserviceResult) {
+			app.debug.trace("plugin_WebServiceError.functions.getErrorName()");
+			var errorName = false;
 
-			var errorName = null;
-
-			app.debug.alert("plugin.WebServiceError.js ~ plugin_WebServiceError.functions.getExceptionConfig()" + JSON.stringify(exception));
-
-			if (exception.statusText === "error" && exception.readyState === 0 && exception.status === 0) {
+			if (webserviceResult.statusText === "error" && webserviceResult.readyState === 0 && webserviceResult.status === 0) {
+				app.debug.debug("plugin_WebServiceError.functions.getErrorName() - case: webservice timed out");
 				errorName = "timeout";
-			} else {
+			}
 
-				// if (exception.error != undefined) {
-				// errorName = exception.error;
-				// } else if (exception.status != undefined) {
-				// errorName = exception.status;
-				// } else if (exception.exception)
-				// errorName = exception.exception;
+			else {
 
-				$.each(plugin_WebServiceError.config.errorKeys, function(key, value) {
-					if (exception[value] != undefined) {
-						errorName = exception[value];
+				$.each(plugin_WebServiceError.config.errorKeys, function(index, errorKey) {
+
+					if (webserviceResult.hasOwnProperty(errorKey)) {
+						app.debug.debug("plugin_WebServiceError.functions.getErrorName() - case: webservice result has error key: " + errorKey);
+						errorName = webserviceResult[errorKey];
 						return false;
 					}
+
 				});
 			}
 
-			if (errorName != null) {
-				app.debug.alert("plugin.WebServiceError.js ~ plugin_WebServiceError.functions.getExceptionConfig() - errors", 60);
+			return errorName;
+		},
+
+		getExceptionConfig : function(webserviceResult) {
+			app.debug.trace("plugin_WebServiceError.functions.getExceptionConfig()");
+
+			var errorName = null;
+
+			errorName = plugin_WebServiceError.functions.getErrorName(webserviceResult);
+
+			if (errorName) {
+				app.debug.debug("plugin_WebServiceError.functions.getExceptionConfig() - errors");
 				for (key in plugin_WebServiceError.config.wse) {
-					app.debug.alert("plugin.WebServiceError.js ~ plugin_WebServiceError.functions.getExceptionConfig() - " + key + " == " + errorName, 60);
+					app.debug.debug("plugin_WebServiceError.functions.getExceptionConfig() - " + key + " == " + errorName);
 					if (key == errorName) {
-						app.debug.alert("plugin.WebServiceError.js ~ plugin_WebServiceError.functions.getExceptionConfig() - case: error found", 60);
+						app.debug.debug("plugin_WebServiceError.functions.getExceptionConfig() - case: error found");
 						return plugin_WebServiceError.config.wse[key];
 					}
 				}

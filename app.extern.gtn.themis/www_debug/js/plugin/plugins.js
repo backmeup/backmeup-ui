@@ -49,6 +49,11 @@ var plugins = {
 			promise = globalLoader.AsyncJsonLoader("../js/plugin/plugins.json");
 			promise.done(function(data) {
 				plugins.config = data;
+				// remove unused plugins
+				$.each(plugins.config, function(pluginName, use) {
+					if (!use)
+						delete plugins.config[pluginName];
+				});
 				dfd.resolve();
 			});
 
@@ -68,6 +73,14 @@ var plugins = {
 
 	verifyPlugins : function() {
 		var dfd = $.Deferred();
+
+		$.each(plugins.config, function(pluginName, loaded) {
+			if (plugins.config.Debug && loaded) {
+				if (!window['plugin_' + pluginName].priv)
+					console.warn("The plugin " + pluginName + " has no priv object.");
+			}
+		});
+
 		dfd.resolve();
 		return dfd.promise();
 	},
@@ -223,6 +236,22 @@ var plugins = {
 		dfd.resolve();
 		return dfd.promise();
 	},
+
+	functions : {
+		pluginLoaded : function(pluginName) {
+			app.debug.trace("plugins.functions.pluginLoaded()");
+			if (plugins.config.hasOwnProperty(pluginName)) {
+				app.debug.debug("plugins.functions.pluginLoaded() - true: " + pluginName);
+				return true;
+			}
+
+			else {
+				app.debug.debug("plugins.functions.pluginLoaded() - false: " + pluginName);
+				return false;
+			}
+		},
+
+	}
 };
 
 // constructor

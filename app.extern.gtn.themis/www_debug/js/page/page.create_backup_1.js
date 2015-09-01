@@ -141,7 +141,7 @@ var page_create_backup_1 = {
 			app.help.navigation.redirect("create_backup_1_newSource.html", "slide");
 		});
 		$(page_create_backup_1.config.pageId).on("click", ".authRequired-true", function(event) {
-			var callerElement = $(this).clone(), promise, authDataList;
+			var callerElement = $(this).clone(), promise;//, authDataList;
 			// alert(callerElement.html());
 			// get existing auths
 			promise = app.rc.getJson("getAuthdataForPlugin", {
@@ -176,7 +176,6 @@ var page_create_backup_1 = {
 					}));
 
 				});
-
 				app.notify.dialog(authDataList, app.lang.string("choose_profile", "headlines"), false, app.lang.string("new_source_profile", "actions"), app.lang.string("cancel", "actions"), function(popup) {
 					window.setTimeout(function() {
 						switch (callerElement.attr("data-html5-authType")) {

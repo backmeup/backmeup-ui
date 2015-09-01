@@ -139,6 +139,16 @@ var globalPage = {
 
 				}
 			})));
+			
+			
+			ul.append(app.ni.element.li().append(app.ni.element.a({
+				"id" : "navFriendList",
+				"text" : app.lang.string("friend list", "actions"),
+				"attributes" : {
+					"href" : "friendList.html",
+
+				}
+			})));
 
 			if (!app.sess.loggedIn())
 				ul.append(app.ni.element.li().append(app.ni.element.a({

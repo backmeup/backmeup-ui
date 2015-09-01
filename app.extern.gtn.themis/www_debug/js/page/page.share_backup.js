@@ -253,8 +253,16 @@ var page_share_backup = {
 
 					plugin_Notification.functions.dialog(page_search.singleResult.getSharingInputs(), false, app.lang.string("share collection", "page.share_backup"), app.lang.string("cancel", "page.share_backup"), app.lang.string(
 							"share collection", "page.share_backup"), false, function() {
-						app.rc.getJson("shareCollection", {
-							withUserId : parseInt($("#txtShareUserId").val()),
+
+						var webservice;
+
+						if ($("#selFriend option:selected").hasClass("friend"))
+							webservice = "shareCollection";
+						else if ($("#selFriend option:selected").hasClass("heritage"))
+							webservice = "shareCollectionHeritage";
+
+						app.rc.getJson(webservice, {
+							withUserId : parseInt($("#selFriend option:selected").val()),
 							policyValue : app.store.localStorage.get("data-html5-collectionId"),
 							name : $("#txtShareName").val(),
 							description : $("#txtShareDescription").val()
@@ -276,8 +284,9 @@ var page_share_backup = {
 		});
 
 		$(this.config.pageId).on('click', '.app-collection-view', function(event) {
-		//	window.setTimeout(function())
-		//	app.store.localStorage.set("data-html5-themis-search-value", app.store.localStorage.get("data-html5-themis-search-value-temp"));
+			// window.setTimeout(function())
+			// app.store.localStorage.set("data-html5-themis-search-value",
+			// app.store.localStorage.get("data-html5-themis-search-value-temp"));
 			app.nav.redirect("search.html", "none");
 		});
 	},

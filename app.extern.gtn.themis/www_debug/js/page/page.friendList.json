@@ -1,0 +1,11 @@
+{
+	"name": "friendList",
+	"shortname": "friendList",
+	"template": "",
+	"useKeepAlive": true,
+	"loginObligate": true,
+	"isGlobalPage": true,
+	"contentRefresh": true,
+	"contentRefreshInterval": 30000,
+	"asyncLoading": false
+}

@@ -1,12 +1,55 @@
 {
-	"template":{
-		"url":"string url",
-		"method":"string method",
-		"timeout":"int timeout"
+	"template": 
+	{
+		"url": "string url",
+		"method": "string method",
+		"timeout": "int timeout"
 	},
-	"register":{
-		"url":"/backmeup-service-rest/users?username={username}&firstname={firstname}&lastname={lastname}&email={email}&password={password}",
-		"method":"post",
-		"timeout":"17000"
+
+	"register": 
+	{
+		"url": "/backmeup-service-rest/users?username={username}&firstname={firstname}&lastname={lastname}&email={email}&password={password}",
+		"method": "post",
+		"timeout": "17000"
+	},
+
+	"listFriendsSharing": 
+	{
+		"url": "/backmeup-service-rest/friends/list?list=SHARING",
+		"method": "get",
+		"timeout": "17000"
+	},
+
+	"listFriendsHeritage": 
+	{
+		"url": "/backmeup-service-rest/friends/list?list=HERITAGE",
+		"method": "get",
+		"timeout": "17000"
+	},
+
+	"addAFriendSharing": 
+	{
+		"url": "/backmeup-service-rest/friends/add?name={name}&description={description}&email={email}&friendListType=SHARING",
+		"method": "post",
+		"timeout": "17000"
+	},
+
+	"addAFriendHeritage": 
+	{
+		"url": "/backmeup-service-rest/friends/add?name={name}&description={description}&email={email}&friendListType=HERITAGE",
+		"method": "post",
+		"timeout": "17000"
+	},
+
+	"deleteAFriend": 
+	{
+		"url": "/backmeup-service-rest/friends/delete?friendId={friendId}&list=SHARING",
+		"method": "post",
+		"timeout": "17000"
+	},
+
+	"renameAFriend": 
+	{
+		
 	}
 }

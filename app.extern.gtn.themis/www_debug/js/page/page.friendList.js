@@ -166,11 +166,11 @@ var page_friendList = {
 							"Accept" : "application/pdf"
 						},
 						success : function(data) {
-							var blob = new Blob([ data ]);
-							var link = document.createElement('a');
-							link.href = window.URL.createObjectURL(blob);
-							link.download = "token_" + new Date() + ".pdf";
-							link.click();
+							var blob = new Blob([ data ], {
+								type : 'application/pdf'
+							});
+							var fileURL = URL.createObjectURL(blob);
+							window.open(fileURL);
 						}
 					});
 				},

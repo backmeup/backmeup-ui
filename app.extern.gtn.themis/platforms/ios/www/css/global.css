@@ -22,11 +22,19 @@ p.app-subtext1 {
 	position: absolute;
 	width: 100%;
 	left: 0px;
-	bottom: 30px;
+	bottom: 20px;
 	text-align: center;
 }
 
 p.app-subtext2 {
+	position: absolute;
+	width: 100%;
+	left: 0px;
+	bottom: 40px;
+	text-align: center;
+}
+
+p.app-subtext3 {
 	position: absolute;
 	width: 100%;
 	left: 0px;

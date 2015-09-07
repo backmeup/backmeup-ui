@@ -1,7 +1,21 @@
 {
+	"deadManSwitch": 
+	{
+		"url": "/backmeup-service-rest/heritage/deadmanswitch/activate",
+		"method": "post",
+		"timeout": "30000"
+	},
+
 	"shareDocument": 
 	{
 		"url": "/backmeup-service-rest/sharing/add/json?withUserId={withUserId}&policyType=Document&policyValue={policyValue}&name={name}&description={description}",
+		"method": "post",
+		"timeout": "30000"
+	},
+
+	"shareDocumentHeritage": 
+	{
+		"url": "/backmeup-service-rest/heritage/add/json?withUserId={withUserId}&policyType=Document&policyValue={policyValue}&name={name}&description={description}",
 		"method": "post",
 		"timeout": "30000"
 	},
@@ -13,9 +27,23 @@
 		"timeout": "30000"
 	},
 
+	"shareDocumentGroupHeritage": 
+	{
+		"url": "/backmeup-service-rest/heritage/add/json?withUserId={withUserId}&policyType=DocumentGroup&policyValue={policyValue}&name={name}&description={description}",
+		"method": "post",
+		"timeout": "30000"
+	},
+
 	"shareBackup": 
 	{
 		"url": "/backmeup-service-rest/sharing/add/json?withUserId={withUserId}&policyType=Backup&policyValue={policyValue}&name={name}&description={description}",
+		"method": "post",
+		"timeout": "30000"
+	},
+
+	"shareBackupHeritage": 
+	{
+		"url": "/backmeup-service-rest/heritage/add/json?withUserId={withUserId}&policyType=Backup&policyValue={policyValue}&name={name}&description={description}",
 		"method": "post",
 		"timeout": "30000"
 	},
@@ -27,9 +55,23 @@
 		"timeout": "30000"
 	},
 
+	"shareCollectionHeritage": 
+	{
+		"url": "/backmeup-service-rest/heritage/add/json?withUserId={withUserId}&policyType=TaggedCollection&policyValue={policyValue}&name={name}&description={description}",
+		"method": "post",
+		"timeout": "30000"
+	},
+
 	"shareAllFromNow": 
 	{
 		"url": "/backmeup-service-rest/sharing/add/json?withUserId={withUserId}&policyType=AllFromNow&policyValue={policyValue}&name={name}&description={description}",
+		"method": "post",
+		"timeout": "30000"
+	},
+
+	"shareAllFromNowHeritage": 
+	{
+		"url": "/backmeup-service-rest/heritage/add/json?withUserId={withUserId}&policyType=AllFromNow&policyValue={policyValue}&name={name}&description={description}",
 		"method": "post",
 		"timeout": "30000"
 	},
@@ -41,9 +83,23 @@
 		"timeout": "30000"
 	},
 
+	"shareAllHeritage": 
+	{
+		"url": "/backmeup-service-rest/heritage/add/json?withUserId={withUserId}&policyType=AllInklOld&policyValue={policyValue}&name={name}&description={description}",
+		"method": "post",
+		"timeout": "30000"
+	},
+
 	"ownedShares": 
 	{
 		"url": "/backmeup-service-rest/sharing/owned",
+		"method": "get",
+		"timeout": "30000"
+	},
+
+	"ownedSharesHeritage": 
+	{
+		"url": "/backmeup-service-rest/heritage/owned",
 		"method": "get",
 		"timeout": "30000"
 	},
@@ -62,22 +118,27 @@
 		"timeout": "30000"
 	},
 
+	"deleteOwnShareHeritage": 
+	{
+		"url": "/backmeup-service-rest/heritage/remove?policyID={policyID}",
+		"method": "delete",
+		"timeout": "30000"
+	},
+
 	"deleteAllOwnedShares": 
 	{
 		"url": "/backmeup-service-rest/sharing/remove/all",
 		"method": "delete",
 		"timeout": "30000"
 	},
-	
-	
+
 	"approveIncomingShare": 
 	{
 		"url": "/backmeup-service-rest/sharing/incoming/approval/json?approve=true&policyID={policyID}",
 		"method": "post",
 		"timeout": "30000"
 	},
-	
-	
+
 	"declineIncomingShare": 
 	{
 		"url": "/backmeup-service-rest/sharing/incoming/approval/json?approve=false&policyID={policyID}",

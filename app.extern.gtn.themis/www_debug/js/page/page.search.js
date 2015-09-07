@@ -575,14 +575,9 @@ var page_search = {
 			app.notify.close.all().done(function() {
 				app.notify.dialog(page_search.singleResult.getCollectionInputs(), app.lang.string("create collection", "page.search"), false, app.lang.string("create collection", "page.search"), app.lang.string("cancel", "page.share"), function() {
 					// share item
-					var webservice;
 
-					if ($("#selFriend option:selected").hasClass("friend"))
-						webservice = "createCollection";
-					else if ($("#selFriend option:selected").hasClass("heritage"))
-						webservice = "createCollectionHeritage";
 
-					app.rc.getJson(webservice, {
+					app.rc.getJson("createCollection", {
 						documentIds : documentIds,
 						name : $("#txtCollectionName").val(),
 						description : $("#txtCollectionDescription").val()

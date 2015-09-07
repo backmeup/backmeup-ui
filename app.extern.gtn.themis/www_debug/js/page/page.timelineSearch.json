@@ -1,0 +1,11 @@
+{
+	"name": "timelineSearch",
+	"shortname": "timelineSearch",
+	"template": "",
+	"asyncLoading": false,
+	"useKeepAlive": true,
+	"loginObligate": true,
+	"isGlobalPage": true,
+	"contentRefresh": false,
+	"contentRefreshInterval": 0
+}

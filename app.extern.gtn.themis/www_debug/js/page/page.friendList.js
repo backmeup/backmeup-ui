@@ -165,6 +165,7 @@ var page_friendList = {
 							"Authorization" : app.store.localStorage.get("themis-token"),
 							"Accept" : "application/pdf"
 						},
+						dataType : "text",
 						success : function(data) {
 							var blob = new Blob([ data ], {
 								type : 'application/pdf'

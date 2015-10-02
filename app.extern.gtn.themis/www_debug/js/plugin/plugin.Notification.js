@@ -1,29 +1,25 @@
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
-
 /**
- * @author Martin Kattner <martin.kattner@gmail.com>
- */
-
-// ~/www/js$ jsdoc ./ -r -p -d documentation
-/**
- * Plugin: plugin_Notification
+ * Copyright (c) 2015 martin.kattner@stygs.com
  * 
- * @version 1.0
- * @namespace plugin_Notification
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
+
 var plugin_Notification = {
 	config : null,
 	notifications : null,
@@ -107,13 +103,13 @@ var plugin_Notification = {
 			app.store.localStorage.removeObject("popup_notifications");
 			plugin_Notification.popupShow();
 		});
+
 		$(document).on("click", "#btn-alert", function() {
-			$("#popupAlert").on("popupafterclose", function(event, ui) {
-				$("#popupAlert").off("popupafterclose");
+			$("#popupAlert").one("popupafterclose", function(event, ui) {
 
 				if (plugin_Notification.callbackFunction) {
 					plugin_Notification.callbackFunction($("#popupAlert"));
-					plugin_Notification.callbackFunction == null;
+					plugin_Notification.callbackFunction = null;
 				}
 
 				plugin_Notification.cleanupPopup($("#popupAlert"));
@@ -126,12 +122,11 @@ var plugin_Notification = {
 
 		$(document).on("click", "#btn-dialog-left", function() {
 
-			$("#popupDialog").on("popupafterclose", function(event, ui) {
-				$("#popupDialog").off("popupafterclose");
+			$("#popupDialog").one("popupafterclose", function(event, ui) {
 
 				if (plugin_Notification.callbackFunctionBtnLeft) {
 					plugin_Notification.callbackFunctionBtnLeft($("#popupDialog"));
-					plugin_Notification.callbackFunctionBtnLeft == null;
+					plugin_Notification.callbackFunctionBtnLeft = null;
 				}
 
 				plugin_Notification.cleanupPopup($("#popupDialog"));
@@ -142,17 +137,18 @@ var plugin_Notification = {
 		});
 
 		$(document).on("click", "#btn-dialog-right", function() {
-			$("#popupDialog").on("popupafterclose", function(event, ui) {
-				$("#popupDialog").off("popupafterclose");
+			$("#popupDialog").one("popupafterclose", function(event, ui) {
+				
+				if (plugin_Notification.callbackFunctionBtnRight) {
+					plugin_Notification.callbackFunctionBtnRight($("#popupDialog"));
+					plugin_Notification.callbackFunctionBtnRight = null;
+				}
+				plugin_Notification.cleanupPopup($("#popupDialog"));
+				plugin_Notification.popupShow();
 			});
 
 			$("#popupDialog").popup("close");
-			if (plugin_Notification.callbackFunctionBtnRight) {
-				plugin_Notification.callbackFunctionBtnRight($("#popupDialog"));
-				plugin_Notification.callbackFunctionBtnRight == null;
-			}
-			plugin_Notification.cleanupPopup($("#popupDialog"));
-			plugin_Notification.popupShow();
+
 		});
 
 		$(document).on("popupbeforeposition", "div[data-role=popup]", function(event, ui) {
@@ -404,29 +400,43 @@ var plugin_Notification = {
 			alert : function() {
 				var dfd = $.Deferred();
 				if ($("#popupAlert").parent().hasClass("ui-popup-active")) {
+					
 					$("#popupAlert").on("popupafterclose", function(event, ui) {
 						$("#popupAlert").off("popupafterclose");
 						dfd.resolve();
 					});
+					
 					$("#popupAlert").popup("close");
+					
 					plugin_Notification.cleanupPopup($("#popupAlert"));
-				} else {
+					
+				} 
+				
+				else {
 					dfd.resolve();
 				}
+				
 				return dfd.promise();
 			},
 			dialog : function() {
 				var dfd = $.Deferred();
 				if ($("#popupDialog").parent().hasClass("ui-popup-active")) {
+					
 					$("#popupDialog").on("popupafterclose", function(event, ui) {
 						$("#popupDialog").off("popupafterclose");
 						dfd.resolve();
 					});
+					
 					$("#popupDialog").popup("close");
+					
 					plugin_Notification.cleanupPopup($("#popupDialog"));
-				} else {
+					
+				} 
+				
+				else {
 					dfd.resolve();
 				}
+				
 				return dfd.promise();
 			},
 			all : function() {
@@ -478,7 +488,14 @@ var plugin_Notification = {
 					plugin_Notification.functions.loader.remove();
 				}
 			},
-			bubbleDiv : function(show, text, headline) {
+			bubbleDiv : function(show, text, headline, appendTo) {
+				var object = show;
+				if ($.isPlainObject(show)) {
+					appendTo = object.appendTo;
+					headline = object.headline;
+					text = object.text;
+					show = object.show;
+				}
 				if (show) {
 					var loader = app.template.get("app-loader-bubbleDiv");
 					if (text != undefined) {
@@ -487,7 +504,10 @@ var plugin_Notification = {
 					if (headline != undefined) {
 						loader.find("h1").text(headline)
 					}
-					$("div[data-role=content]").append(loader);
+					if (appendTo)
+						appendTo.append(loader);
+					else
+						$("div[data-role=content]").append(loader);
 				} else {
 					plugin_Notification.functions.loader.remove();
 				}

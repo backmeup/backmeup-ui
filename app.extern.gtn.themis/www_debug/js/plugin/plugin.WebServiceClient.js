@@ -1,28 +1,25 @@
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
-
 /**
- * @author Martin Kattner <martin.kattner@gmail.com>
- */
-
-/**
- * Plugin:
+ * Copyright (c) 2015 martin.kattner@stygs.com
  * 
- * @version 1.0
- * @namespace
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
+
 var plugin_WebServiceClient = {
 	config : null,
 	constructor : function() {
@@ -89,7 +86,7 @@ var plugin_WebServiceClient = {
 		app.debug.alert("plugin_WebServiceClient.getAjax(" + url + ", " + data + ", " + type + ", " + method + ", " + timeout + ", " + async + ")");
 		app.debug.alert("plugin_WebServiceClient.getAjax() - webservice: " + url + "?" + data);
 
-		var json = null, dfd = null, headers = null, contentType, splittedData, obj, pairs, paramKey, paramValue, indexOfEquals, newData, encodedValue;
+		var json = null, dfd = null, headers = null, contentType, splittedData, obj, pairs, paramKey, paramValue, indexOfEquals, newData, encodedValue, exeptionConfig;
 
 		if (async) {
 			app.debug.alert("plugin_WebServiceClient.getAjax() - case: webservice is async - create deferred object");
@@ -222,12 +219,11 @@ var plugin_WebServiceClient = {
 					app.debug.alert("plugin_WebServiceClient.getAjax() beforeSend: set http headers");
 					if (plugin_WebServiceClient.config.useHeaderToken) {
 						app.debug.alert("plugin_WebServiceClient.getAjax() case: plugin_WebServiceClient.config.useHeaderToken =≠ true");
-						app.debug.alert("plugin_WebServiceClient.getAjax() paramerter: " + plugin_WebServiceClient.config.headerToken.key + " = "
-								+ app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value));
+						app.debug.alert("plugin_WebServiceClient.getAjax() paramerter: " + plugin_WebServiceClient.config.headerToken.key + " = " + app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value));
 
 						jqXHR.setRequestHeader(plugin_WebServiceClient.config.headerToken.key, app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value));
 					}
-					
+
 					if (headers != null) {
 						app.debug.alert("plugin_WebServiceClient.getAjax() - case: headers != null");
 						app.debug.alert("plugin_WebServiceClient.getAjax() - set additional headers");
@@ -261,8 +257,8 @@ var plugin_WebServiceClient = {
 								dfd.resolve(json);
 							}
 
-						} 
-						
+						}
+
 						else {
 							if (dfd != undefined && dfd != null) {
 								app.debug.alert("plugin_WebServiceClient.getAjax() - case: exception found: " + JSON.stringify(exeptionConfig));
@@ -359,25 +355,45 @@ var plugin_WebServiceClient = {
 
 		getServer : function(name, asObject) {
 			app.debug.trace("plugin_WebServiceClient.functions.getServer()");
+
 			var server = plugin_WebServiceClient.getPreferedServer(name);
-			if (asObject == undefined)
+
+			if (asObject == undefined) {
 				asObject = false;
+			}
+
 			// alert(JSON.stringify(server));
-			if (asObject === true)
+			if (asObject === true) {
+				app.debug.debug("plugin_WebServiceClient.functions.getServer() - case: return server as object: " + JSON.stringify(server));
 				return server;
-			else if (asObject == false)
-				return server.scheme + server.scheme_specific_part + server.host + ":" + server.port + server.path;
-			else
+			}
+
+			else if (asObject == false) {
+				server = server.scheme + server.scheme_specific_part + server.host + ":" + server.port + server.path;
+				app.debug.debug("plugin_WebServiceClient.functions.getServer() - case: return server as string");
+				return server;
+			}
+
+			else {
 				console.error("Error");
+			}
 		},
 
 		setServer : function(name, url, async) {
 			app.debug.trace("plugin_WebServiceClient.functions.setServer()");
+
 			url = URI(url);
-			var scheme = url.scheme(), hostname = url.hostname(), port = url.port(), path = url.path();
+
+			var scheme, hostname, port, path;
+
+			scheme = url.scheme();
+			hostname = url.hostname();
+			port = url.port();
+			path = url.path();
 
 			if (scheme === "") {
-				scheme = plugin_WebServiceClient.config.server[name].template.scheme;
+				app.debug.debug("plugin_WebServiceClient.functions.setServer() - case: scheme is not set");
+				scheme = "http";
 			}
 
 			if (hostname === "") {
@@ -385,14 +401,27 @@ var plugin_WebServiceClient = {
 			}
 
 			if (port === "") {
-				port = plugin_WebServiceClient.config.server[name].template.port;
+				app.debug.debug("plugin_WebServiceClient.functions.setServer() - case: port is not set");
+
+				if (scheme === "http") {
+					app.debug.debug("plugin_WebServiceClient.functions.setServer() - case: scheme == http - use port: 80");
+					port = 80;
+				}
+
+				else if (scheme === "https") {
+					app.debug.debug("plugin_WebServiceClient.functions.setServer() - case: scheme == https - use port: 443");
+					port = 443;
+
+				}
 			}
 
 			if (path === "") {
+				app.debug.debug("plugin_WebServiceClient.functions.setServer() - case: path is not set");
 				path = plugin_WebServiceClient.config.server[name].template.path;
 			}
 
 			app.info.set("plugin_WebServiceClient.config.server." + name + ".first.scheme", scheme);
+			app.info.set("plugin_WebServiceClient.config.server." + name + ".first.scheme_specific_part", "://");
 			app.info.set("plugin_WebServiceClient.config.server." + name + ".first.host", hostname);
 			app.info.set("plugin_WebServiceClient.config.server." + name + ".first.port", port);
 			app.info.set("plugin_WebServiceClient.config.server." + name + ".first.path", path);

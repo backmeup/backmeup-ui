@@ -1,28 +1,25 @@
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
-
 /**
- * @author Martin Kattner <martin.kattner@gmail.com>
- */
-
-/**
- * Plugin:
+ * Copyright (c) 2015 martin.kattner@stygs.com
  * 
- * @version 1.0
- * @namespace plugin_Debug
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
+
 var plugin_Debug = {
 	/**
 	 * Configuration loaded from json file or html5 storage. Use
@@ -214,6 +211,9 @@ var plugin_Debug = {
 		info : function(output) {
 			this.log(output, "INFO");
 		},
+		app : function(output) {
+			this.log(output, "APP");
+		},
 		warn : function(output) {
 			this.log(output, "WARN");
 		},
@@ -233,21 +233,23 @@ var plugin_Debug = {
 		 *            level Current debug level.
 		 */
 		alert : function(text, level) {
-			plugin_Debug.functions.log(text, "DEBUG");
+			plugin_Debug.functions.log(text, "Dep. DEBUG");
 		},
 		log : function(output, level) {
 
-			// log to object
-			if (plugin_Debug.config.debugLevels[level] >= plugin_Debug.config.debugLevels[plugin_Debug.config.logLevel]) {
-				plugin_Debug.logObject.push(output);
-			}
-			// log to console
+			if (plugin_Debug.config.debugDevice) {
+				// log to object
+				if (plugin_Debug.config.debugLevels[level] >= plugin_Debug.config.debugLevels[plugin_Debug.config.logLevel]) {
+					plugin_Debug.logObject.push(output);
+				}
+				// log to console
 
-			// alert(output + level);
-			if (plugin_Debug.config.debugLevels[level] >= plugin_Debug.config.debugLevels[plugin_Debug.config.consoleLevel]) {
-				console.log(level + ": " + output);
+				// alert(output + level);
+				if (plugin_Debug.config.debugLevels[level] >= plugin_Debug.config.debugLevels[plugin_Debug.config.consoleLevel]) {
+					console.log(level + ": " + output);
+				}
+				// log to webservice
 			}
-			// log to webservice
 		},
 
 		/**
@@ -256,6 +258,32 @@ var plugin_Debug = {
 		showLog : function() {
 			console.warn("Deprecated function!!");
 			alert(JSON.stringify(plugin_Debug.logObject));
+		},
+		ls : {
+			wsd : function() {
+				app.debug.trace("plugin_Debug.functions.ls.wsd()");
+				$.each(plugin_RestClient.config.webservices, function(wsName, singleWsd) {
+					var path, query;
+
+					console.log("Name: " + wsName);
+
+					path = singleWsd.url.split('?')[0];
+					query = singleWsd.url.split('?')[1];
+
+					console.log("\tPath: " + path);
+					// console.log("\tQuery: " + query);
+
+					// console.log("\tPath parameter: todo");
+
+					console.log("\tQuery parameter:");
+					if (query)
+						$.each(query.split("&"), function(index, parameter) {
+							console.log("\t\t" + parameter.replace("=", " = "));
+						});
+					console.log(" ");
+				});
+
+			}
 		},
 		feedback : {
 
@@ -278,6 +306,10 @@ var plugin_Debug = {
 			imageGetJson : function() {
 				app.debug.trace("plugin_Debug.functions.feedback.languageGetJson()");
 				return JSON.stringify($.extend(true, plugin_Debug.feedback.image, plugin_ImageProvider.images));
+			},
+			wsdGetJson : function() {
+				app.debug.trace("plugin_Debug.functions.feedback.wsdGetJson()");
+				return JSON.stringify(plugin_RestClient.config.webservices);
 			}
 		}
 	},

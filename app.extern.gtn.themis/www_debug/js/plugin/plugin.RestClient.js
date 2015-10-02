@@ -1,27 +1,25 @@
 /**
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>
+ * Copyright (c) 2015 martin.kattner@stygs.com
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 
-/**
- * @author Martin Kattner <martin.kattner@gmail.com>
- * 
- * Plugin:
- * 
- * @version 1.0
- * @namespace
- */
 var plugin_RestClient = {
 	config : null,
 	constructor : function() {
@@ -136,6 +134,7 @@ var plugin_RestClient = {
 
 	getSingleJson : function(service, parameter, async) {
 		app.debug.debug("plugin_RestClient.getSingleJson() - get a single json object; async = false");
+		app.debug.info("plugin_RestClient - call: " + service);
 		var server, path, json, splittedService, wsd;
 		app.debug.debug("plugin_RestClient.getSingleJson() - get server name");
 		if (service.indexOf('.') != -1) {
@@ -154,6 +153,7 @@ var plugin_RestClient = {
 
 		else {
 			app.debug.error("plugin_RestClient.getSingleJson() - service not defined: " + service);
+			return null;
 		}
 
 		// set async to false (in each case)
@@ -177,6 +177,8 @@ var plugin_RestClient = {
 	},
 	getSingleJsonAsync : function(service, parameter, async) {
 		app.debug.debug("plugin_RestClient.getSingleJsonAsync() - get a single json object; async = true;");
+		app.debug.info("plugin_RestClient - call: " + service);
+
 		// the deferred object for the caller
 		var dfd = $.Deferred(), server, path, promise, splittedService, wsd;
 
@@ -199,6 +201,7 @@ var plugin_RestClient = {
 
 		else {
 			app.debug.error("plugin_RestClient.getSingleJsonAsync() - service not defined: " + service);
+			return dfd.reject();
 		}
 
 		// replace the parameters in path string
@@ -232,10 +235,16 @@ var plugin_RestClient = {
 
 	getMultipleJson : function(service, parameter, async) {
 		app.debug.debug("plugin_RestClient.getMultipleJson() - get multible json objects; async = false");
+		
 		var jsonObject = {};
+		
 		app.debug.debug("plugin_RestClient.getMultipleJson() - generate ajax call for each webservice");
+		
 		$.each(service, function(key, call) {
+			
 			var serviceName = call[0], parameter = call[1], server, path, json, splittedService, wsd;
+			
+			app.debug.info("plugin_RestClient - call: " + serviceName);
 
 			app.debug.debug("plugin_RestClient.getMultipleJson() - get server name");
 			if (serviceName.indexOf('.') != -1) {
@@ -256,6 +265,7 @@ var plugin_RestClient = {
 
 			else {
 				app.debug.error("plugin_RestClient.getMultipleJson() - service not defined: " + serviceName);
+				return null;
 			}
 
 			app.debug.debug("plugin_RestClient.getMultipleJson() - replace parameters in path");
@@ -283,11 +293,18 @@ var plugin_RestClient = {
 		app.debug.debug("plugin_RestClient.getMultipleJsonAsync() - get multible json objects; async = true");
 		// the deferred object for the caller
 		async = true;
+		
 		var dfd = $.Deferred(), promiseArray = [], webserviceNamesArray = [], splittedService;
+		
 		app.debug.debug("plugin_RestClient.getMultipleJsonAsync() - generate a ajax call for each webservice");
+	
 		$.each(service, function(key, call) {
+			
 			app.debug.debug("plugin_RestClient.getMultipleJsonAsync() - generate single async ajax call");
+			
 			var serviceName = call[0], parameter = call[1], server, path, promise, wsd;
+			
+			app.debug.info("plugin_RestClient - call: " + serviceName);
 
 			app.debug.debug("plugin_RestClient.getMultipleJsonAsync() - get server name");
 			if (serviceName.indexOf('.') != -1) {
@@ -307,6 +324,7 @@ var plugin_RestClient = {
 
 			else {
 				app.debug.error("plugin_RestClient.getMultipleJsonAsync() - service not defined: " + serviceName);
+				return dfd.reject();
 			}
 
 			app.debug.debug("plugin_RestClient.getMultipleJsonAsync() - replace parameters in path");
@@ -350,6 +368,7 @@ var plugin_RestClient = {
 			app.debug.debug("plugin_RestClient.getMultipleJsonAsync() - reject deferred object");
 			dfd.reject(error);
 		});
+
 		app.debug.debug("plugin_RestClient.getMultipleJsonAsync() - return: deferred promise");
 		return dfd.promise();
 	},
@@ -357,102 +376,204 @@ var plugin_RestClient = {
 	functions : {
 		getWsd : function(serviceName) {
 			app.debug.trace("plugin_RestClient.functions.getWsd()");
-			return plugin_RestClient.config.webservices[serviceName];
+			return plugin_RestClient.config.webservices[serviceName] || null;
 		},
 
-		addWebserviceDefinition : function(name, path, method, timeout, cachetime, local) {
-			app.debug.debug("plugin.RestClient.js plugin_RestClient.functions.addWebserviceDefinition(" + name + ", " + path + ", " + method + ", " + timeout + ", " + cachetime + ", " + local + ")");
-			plugin_RestClient.config.webservices[name] = {
-				"url" : path,
-				"method" : method,
-				"timeout" : timeout,
-				"cachetime" : cachetime,
-				"local" : local
-			};
+		addWsd : function(name, url, method, timeout, cacheable, cacheInMs, local) {
+			app.debug.trace("plugin.RestClient.js plugin_RestClient.functions.addWebserviceDefinition()");
+
+			if (typeof url == "object") {
+				plugin_RestClient.config.webservices[name] = url;
+			}
+
+			else {
+				plugin_RestClient.config.webservices[name] = {
+					"url" : url,
+					"method" : method,
+					"timeout" : timeout,
+					"cacheable" : cacheable,
+					"cacheInMs" : cacheInMs,
+					"local" : local
+				};
+			}
+
 			return true;
 		},
+
+		deleteWsd : function(name) {
+			delete plugin_RestClient.config.webservices[name];
+			return true;
+		},
+
+		addWebserviceDefinition : function(name, url, method, timeout, cacheable, cacheInMs, local) {
+			console.error("Depecated function!! use app.rc.addWsd(name, url, method, timeout, cacheable, cacheInMs, local)")
+
+		},
+
 		addWebserviceDefinitionFile : function(path) {
 			app.debug.debug("plugin_RestClient.functions.addWebserviceDefinitionFile(" + path + ")");
 			plugin_RestClient.loadDefinitionFile(path);
 		},
+
+		cacheJson : function(serviceName, parameter, data) {
+			app.debug.debug("plugin_RestClient.functions.cacheJson()");
+			var cachedWs, wsd;
+
+			wsd = app.rc.getWsd(serviceName);
+
+			// store into local storage
+			if ($.isPlainObject(data)) {
+				app.debug.debug("plugin_RestClient.functions.cacheJson() - store to local storage");
+
+				cachedWs = {
+					servicename : serviceName,
+					parameter : parameter,
+					cachetimestamp : Date.now(),
+					data : JSON.stringify(data)
+				};
+
+				app.store.localStorage.setObject("_t_ws_" + serviceName, cachedWs);
+
+				return true;
+			}
+
+			// restore from local storage
+			else {
+				app.debug.debug("plugin_RestClient.functions.cacheJson() - restore from local storage");
+
+				cachedWs = app.store.localStorage.getObject("_t_ws_" + serviceName);
+
+				if (JSON.stringify(parameter) !== JSON.stringify(cachedWs.parameter)) {
+					app.debug.debug("plugin_RestClient.functions.cacheJson() - case: parameter not equal");
+					return false;
+				}
+
+				else if ((cachedWs.cachetimestamp + wsd.cacheInMs) < Date.now()) {
+					app.debug.debug("plugin_RestClient.functions.cacheJson() - case: cash time timed out");
+					return false;
+				}
+
+				else {
+					return JSON.parse(cachedWs.data);
+				}
+			}
+
+			return null;
+		},
+
 		getJson : function(service, parameter, async, attempts, dfd) {
 			app.debug.debug("plugin_RestClient.functions.getJson(" + service + ", " + parameter + ", " + async + ")");
 			var json, i, promise;
+
 			if (plugins.config.KeepAlive === true && app.alive.isAlive() === true) {
-				
-				if (typeof service == "object" && (parameter == false || parameter == undefined)) {
-					app.debug.debug("plugin_RestClient.functions.getJson() - case: get multible json objects; async = false");
-					for (i = 0; i < async; i++) {
-						app.debug.debug("plugin_RestClient.functions.getJson() - AJAX attempt " + i + " of " + attempts);
-						json = plugin_RestClient.getMultipleJson(service, parameter, async);
-						if (json != null)
-							return json;
+				app.debug.debug("plugin_RestClient.functions.getJson() - case: keepAlive && isAlive");
+
+				// get multible json objects
+				if (typeof service == "object") {
+					app.debug.debug("plugin_RestClient.functions.getJson() - case: get multible json objects");
+
+					// async = false
+					if (parameter == false || parameter == undefined) {
+						app.debug.debug("plugin_RestClient.functions.getJson() case: async = false");
+
+						if (!async)
+							async = 1;
+
+						for (i = 0; i < async; i++) {
+							app.debug.debug("plugin_RestClient.functions.getJson() - AJAX attempt " + i + " of " + attempts);
+
+							json = plugin_RestClient.getMultipleJson(service, parameter, async);
+							if (json != null)
+								return json;
+						}
+					}
+
+					// async = true
+					else if (typeof service == "object" && parameter == true) {
+						app.debug.debug("plugin_RestClient.functions.getJson() - case: async = true");
+
+						promise = plugin_RestClient.getMultipleJsonAsync(service, parameter, async);
+
+						if (dfd == null || dfd == undefined)
+							dfd = $.Deferred();
+
+						promise.done(function(json) {
+							dfd.resolve(json);
+						});
+
+						promise.fail(function(errorObject) {
+							app.debug.debug("plugin_RestClient.functions.getJson() - multible json object; case: webservice failed: " + JSON.stringify(errorObject));
+
+							if (async > 1) {
+								async--;
+								plugin_RestClient.functions.getJson(service, parameter, async, null, dfd);
+							} else {
+								app.debug.debug("plugin_RestClient.functions.getJson() - multiple json object; reject deferred object");
+
+								dfd.reject(errorObject);
+							}
+						});
+
+						return dfd.promise();
+
 					}
 				}
 
-				else if (typeof service == "object" && parameter == true) {
-					app.debug.debug("plugin_RestClient.functions.getJson() - case: get multible json objects; async = true");
-					promise = plugin_RestClient.getMultipleJsonAsync(service, parameter, async);
+				// get a single json object
+				else if (typeof service == "string") {
+					app.debug.debug("plugin_RestClient.functions.getJson() - case: get a single json object");
 
-					if (dfd == null || dfd == undefined)
-						dfd = $.Deferred();
+					// async = false
+					if ((parameter == undefined || typeof parameter == "object") && (async == undefined || async == false)) {
+						app.debug.debug("plugin_RestClient.functions.getJson() - case: async = false");
 
-					promise.done(function(json) {
-						dfd.resolve(json);
-					});
+						if (!attempts)
+							attempts = 1;
 
-					promise.fail(function(errorObject) {
-						app.debug.debug("plugin_RestClient.functions.getJson() - multible json object; case: webservice failed: " + JSON.stringify(errorObject));
-						if (async > 1) {
-							async--;
-							plugin_RestClient.functions.getJson(service, parameter, async, null, dfd);
-						} else {
-							app.debug.debug("plugin_RestClient.functions.getJson() - multiple json object; reject deferred object");
-							dfd.reject(errorObject);
+						for (i = 0; i < attempts; i++) {
+							app.debug.debug("plugin_RestClient.functions.getJson() - AJAX attempt " + i + " of " + attempts);
+
+							json = plugin_RestClient.getSingleJson(service, parameter, async);
+							if (json != null)
+								return json;
 						}
-					});
+					}
 
-					return dfd.promise();
+					// async = true
+					else if ((parameter == undefined || typeof parameter == "object") && async == true) {
+						app.debug.debug("plugin_RestClient.functions.getJson() - case: async = true");
 
-				}
+						promise = plugin_RestClient.getSingleJsonAsync(service, parameter, async);
 
-				else if (typeof service == "string" && (parameter == undefined || typeof parameter == "object") && (async == undefined || async == false)) {
-					app.debug.debug("plugin_RestClient.functions.getJson() - case: get a single json object; async = false");
-					for (i = 0; i < attempts; i++) {
-						app.debug.debug("plugin_RestClient.functions.getJson() - AJAX attempt " + i + " of " + attempts);
-						json = plugin_RestClient.getSingleJson(service, parameter, async);
-						if (json != null)
-							return json;
+						if (dfd == null || dfd == undefined)
+							dfd = $.Deferred();
+
+						promise.done(function(json) {
+							dfd.resolve(json);
+						});
+
+						promise.fail(function(errorObject) {
+							app.debug.debug("plugin_RestClient.functions.getJson() - single json object; case: webservice failed: " + JSON.stringify(errorObject));
+
+							if (attempts > 1) {
+								attempts--;
+								plugin_RestClient.functions.getJson(service, parameter, async, attempts, dfd);
+							} else {
+								app.debug.debug("plugin_RestClient.functions.getJson() - single json object; reject deferred object");
+								dfd.reject(errorObject);
+							}
+						});
+
+						return dfd.promise();
 					}
 				}
+			}
 
-				else if (typeof service == "string" && (parameter == undefined || typeof parameter == "object") && async == true) {
-					app.debug.debug("plugin_RestClient.functions.getJson() - case: get a single json object; async = true");
-					promise = plugin_RestClient.getSingleJsonAsync(service, parameter, async);
-
-					if (dfd == null || dfd == undefined)
-						dfd = $.Deferred();
-
-					promise.done(function(json) {
-						dfd.resolve(json);
-					});
-
-					promise.fail(function(errorObject) {
-						app.debug.debug("plugin_RestClient.functions.getJson() - single json object; case: webservice failed: " + JSON.stringify(errorObject));
-						if (attempts > 1) {
-							attempts--;
-							plugin_RestClient.functions.getJson(service, parameter, async, attempts, dfd);
-						} else {
-							app.debug.debug("plugin_RestClient.functions.getJson() - single json object; reject deferred object");
-							dfd.reject(errorObject);
-						}
-					});
-
-					return dfd.promise();
-				}
-			} else {
+			else {
 				app.alive.badConnectionHandler();
 			}
+
+			// return error
 			return null;
 		}
 	}

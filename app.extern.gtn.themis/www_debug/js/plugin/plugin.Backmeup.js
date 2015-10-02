@@ -135,9 +135,9 @@ var plugin_Backmeup = {
 					});
 					break;
 				case 'enum':
-					var radio = "";
+					var radio = app.ni.element.div({});
 					$.each(value.defaultValue.split(','), function(k, v) {
-						radio += app.ni.radio.radio({
+						radio.append(app.ni.radio.radio({
 							"name" : value.name,
 							"placeholder" : app.lang.string(value.label, languageContext),
 							"label" : true,
@@ -147,9 +147,9 @@ var plugin_Backmeup = {
 								"title" : app.lang.string(value.description, languageContext),
 								"value" : v
 							}
-						});
+						}));
 					});
-					return $(radio);
+					return radio;
 					break;
 				default:
 					alert("Unknown type:" + value.type.toLowerCase());

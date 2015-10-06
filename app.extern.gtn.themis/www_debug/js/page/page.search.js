@@ -22,6 +22,8 @@ var page_search = {
 
 	elements : null,
 
+  spatioTemporalUI : null,
+
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
 		var dfd = $.Deferred();
@@ -76,23 +78,9 @@ var page_search = {
     var searchResults = app.ni.element.div({
 		  "id" : "divSearchResults"
 		});
-
-		var searchResultGrid = app.ni.element.div({
-			"id" : "divSearchResultGrid"
-		});
-		searchResults.append(searchResultGrid);
-
-		var searchResultHistogram = app.ni.element.div({
-			"id" : "divSearchResultHistogram"
-		});
-		searchResults.append(searchResultHistogram);
-
-		var searchResultMap = app.ni.element.div({
-			"id" : "divSearchResultMap"
-		});
-		searchResults.append(searchResultMap);
-
 		content.append(searchResults);
+
+		this.spatioTemporalUI = new SpatioTemporalUI(searchResults);
 
 		if (app.store.localStorage.get("data-html5-themis-search-value") !== null) {
 			window.setTimeout(function() {
@@ -698,7 +686,7 @@ var page_search = {
 
 	updateSearchDiv : function(searchResults) {
 		var query = app.store.localStorage.get("data-html5-themis-search-value");
-		alert(query);
+    // page_search.spatioTemporalUI.update(query);
 
 		/*
 		app.notify.loader.bubbleDiv(true, app.lang.string("loadingText", "page.search"), app.lang.string("loadingHeadline", "page.search"));

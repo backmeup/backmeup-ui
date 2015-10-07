@@ -103,6 +103,11 @@ var SimpleHistogram = function(container, opts) {
         render();
       },
 
+      redraw = function() {
+        BIN_WIDTH = computeBinWidth();
+        render();
+      },
+
       on = function(eventName, handler) {
         var handlers = eventHandlers[eventName];
         if (handlers)
@@ -125,10 +130,7 @@ var SimpleHistogram = function(container, opts) {
       };
 
   // Listen to window resize events
-  jQuery(window).on('resize', function() {
-    BIN_WIDTH = computeBinWidth();
-    render();
-  });
+  jQuery(window).on('resize', redraw);
 
   // Listen to mouse events on columns
   containerEl.on('mouseenter', '.column', function(e) {
@@ -143,6 +145,7 @@ var SimpleHistogram = function(container, opts) {
 
   // Export public methods
   this.on = on;
+  this.redraw = redraw;
   this.setData = setData;
 
 };

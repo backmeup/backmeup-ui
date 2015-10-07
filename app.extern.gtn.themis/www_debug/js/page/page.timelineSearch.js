@@ -10,11 +10,11 @@ var page_timelineSearch = {
 		var dfd = $.Deferred();
 		dfd.resolve();
 		return dfd.promise();
-
 	},
 
 	creator : function(container) {
 		app.debug.trace("page_timelineSearch.creator()");
+
     var content = $('div[data-role=content]');
 
 		var form = app.ni.form.form({
@@ -51,19 +51,30 @@ var page_timelineSearch = {
 		content.append(form);
 
 		// Anchor elements for spatiotemporal result view
-		var resultGrid = app.ni.element.div({ "id" : "divStsResultGrid"});
-    content.append(resultGrid);
-
 		var sidebar = app.ni.element.div({ "id" : "divStsSidebar" });
 		var map = app.ni.element.div({ "id" : "divStsMap" });
 		sidebar.append(map);
+
 		var histogram = app.ni.element.div({ "id" : "divStsHistogram" });
     sidebar.append(histogram);
+
 		content.append(sidebar);
-		
+
+		var resultList = app.ni.element.div({ "id" : "divStsResultList"});
+    content.append(resultList);
+
+		// Attach spatiotemporal UI to anchor elements
+		var spatioTemporalUI = new SpatioTemporalUI({
+      resultList: resultList,
+      map: map,
+      timeHistogram: histogram
+    });
+
+		spatioTemporalUI.update('*');
 	},
 
 	async : {
+
 		promise : null,
 
 		result : null,
@@ -104,6 +115,17 @@ var page_timelineSearch = {
 	setEvents : function(container) {
 		app.debug.trace("page_timelineSearch.setEvents()");
 
+		// Scroll the fixed sidebar, up to position top=0
+
+    jQuery(document).scroll(function() {
+      var scrollTop = jQuery(window).scrollTop(),
+			    resultListTop = jQuery('#divStsResultList').offset().top;
+
+      if (resultListTop > scrollTop)
+			  jQuery('#divStsSidebar').css('top', resultListTop - scrollTop);
+			else
+				jQuery('#divStsSidebar').css('top', 10);
+		});
 	},
 
 	functions : {},

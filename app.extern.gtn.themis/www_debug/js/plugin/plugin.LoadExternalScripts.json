@@ -1,9 +1,9 @@
 {
 	"name": "LoadExternalScripts",
 	"shortname": "load",
-	"scripts": 
+	"scripts":
 	{
-		"css": 
+		"css":
 		{
 			"../ext/jQueryMobile/jquery.mobile.min.css": true,
 			"../css/fonts.css": true,
@@ -13,18 +13,27 @@
 			"../css/platform.ios.css": true,
 			"../css/platform.mobile.css": true,
 			"../css/platform.cordova.css": true,
+			"../css/timelinesearch.css": true,
+			"../ext/leaflet/leaflet.css": true,
+			"../ext/spatiotemporal/dateflipper.css": true,
+			"../ext/spatiotemporal/simplehistogram.css": true,
+			"../ext/spatiotemporal/spatiotemporal-search.css": true,
 			"../template/app.responsive.grid.33.33.33.css": "true",
 			"../template/app.responsive.grid.25.75.css": "true",
 			"../template/app.responsive.grid.75.25.css": "true"
 		},
 
-		"javascript": 
+		"javascript":
 		{
 			"../ext/MD5.js": true,
 			"../ext/DATE.js": true,
 			"../ext/aerogear.min.js": false,
 			"../ext/jquery.serializejson.min.js": true,
-			"../ext/moment/moment.js": true
+			"../ext/moment/moment.js": true,
+			"../ext/leaflet/leaflet.js": true,
+			"../ext/spatiotemporal/dateflipper.js": true,
+			"../ext/spatiotemporal/simplehistogram.js": true,
+			"../ext/spatiotemporal/spatiotemporal-search.js": true
 		}
 	}
 }

@@ -152,6 +152,6 @@ var DateFlipper = function(parent, options) {
   initFields();
 
   // Export public methods
-  this.set = set;
+  this.set = function() {};
 
 };

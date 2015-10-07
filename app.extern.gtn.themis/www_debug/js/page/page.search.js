@@ -75,12 +75,32 @@ var page_search = {
 
 		content.append(form);
 
-    var searchResults = app.ni.element.div({
+    var spatioTemporalSearchContainer = app.ni.element.div({
 		  "id" : "divSearchResults"
 		});
-		content.append(searchResults);
 
-		this.spatioTemporalUI = new SpatioTemporalUI(searchResults);
+		var resultList = app.ni.element.div({
+		  "id" : "stsResultList"
+		});
+		spatioTemporalSearchContainer.append(resultList);
+
+		var map = app.ni.element.div({
+			"id" : "stsMap"
+		});
+		spatioTemporalSearchContainer.append(map);
+
+		var timehistogram = app.ni.element.div({
+		  "id" : "stsTimeHistogram"
+		});
+		spatioTemporalSearchContainer.append(timehistogram);
+
+		content.append(spatioTemporalSearchContainer);
+
+		this.spatioTemporalUI = new SpatioTemporalUI({
+      resultList: resultList,
+      map: map,
+      timeHistogram: timehistogram
+    });
 
 		if (app.store.localStorage.get("data-html5-themis-search-value") !== null) {
 			window.setTimeout(function() {
@@ -685,10 +705,10 @@ var page_search = {
 	},
 
 	updateSearchDiv : function(searchResults) {
-		var query = app.store.localStorage.get("data-html5-themis-search-value");
+		// var query = app.store.localStorage.get("data-html5-themis-search-value");
     // page_search.spatioTemporalUI.update(query);
 
-		/*
+    /*
 		app.notify.loader.bubbleDiv(true, app.lang.string("loadingText", "page.search"), app.lang.string("loadingHeadline", "page.search"));
 		var promise = app.rc.getJson("searchWithFilters", {
 			// "userId" : 8,//
@@ -740,11 +760,11 @@ var page_search = {
 
 					}
 				}));
-
 			});
 
 			searchResults.append(list);
 			app.help.jQM.enhance(searchResults);
+
 		});
 		promise.always(function() {
 			app.notify.loader.remove();

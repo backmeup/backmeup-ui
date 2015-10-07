@@ -20,37 +20,12 @@ html, body {
   height:100%;
 }
 
-
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-/* Map styles                     */
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
-
-#map {
-  position:fixed;
-  top:0;
-  height:250px;
-  width:100%;
-}
-
-
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* Result list styles             */
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-
-#resultList {
-  position:absolute;
-  top:250px;
-  bottom:0;
-  margin-left:140px;
-  padding:0 10px;
-  list-style-type:none;
-}
-
 .resultListSection {
   padding-bottom:20px;
-  border-left:1px solid #efefef;
   background-color:#fff;
 }
 
@@ -178,22 +153,6 @@ html, body {
   background-color:#e2ebf6;
   border-color:#bdd1ec;
 }
-
-
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-/* Time histogram styles          */
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
-#timehistogram {
-  position:fixed;
-  top:260px;
-  left:0;
-  bottom:0;
-  width:152px;
-  padding-left:20px;
-  box-sizing:border-box;
-}
-
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* Date flipper styles            */

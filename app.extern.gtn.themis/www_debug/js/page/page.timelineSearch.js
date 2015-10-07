@@ -15,7 +15,52 @@ var page_timelineSearch = {
 
 	creator : function(container) {
 		app.debug.trace("page_timelineSearch.creator()");
-		//this.elements.content.append("<h1>Hello World</h1>");
+    var content = $('div[data-role=content]');
+
+		var form = app.ni.form.form({
+			"id" : "frmSearch",
+			"attributes" : {
+				"action" : "#",
+				"data-ajax" : "false"
+			},
+			"label" : false
+		});
+
+		form.append(app.ni.text.text({
+			"id" : "txtSearch",
+			"placeholder" : (app.store.localStorage.get("data-html5-themis-search-value")) ?
+			  app.store.localStorage.get("data-html5-themis-search-value") :
+				app.lang.string("search", "labels"),
+			"label" : false,
+			"labelText" : app.lang.string("search", "labels"),
+			"container" : false
+		}));
+
+		form.append(app.ni.element.a({
+			"id" : "btnSearch",
+			"text" : app.lang.string("search", "actions"),
+			"attributes" : {
+				"href" : "#"
+			},
+			"classes" : [ 'ui-btn' ],
+			"styles" : {
+				"display" : "none"
+			}
+		}));
+
+		content.append(form);
+
+		// Anchor elements for spatiotemporal result view
+		var resultGrid = app.ni.element.div({ "id" : "divStsResultGrid"});
+    content.append(resultGrid);
+
+		var sidebar = app.ni.element.div({ "id" : "divStsSidebar" });
+		var map = app.ni.element.div({ "id" : "divStsMap" });
+		sidebar.append(map);
+		var histogram = app.ni.element.div({ "id" : "divStsHistogram" });
+    sidebar.append(histogram);
+		content.append(sidebar);
+		
 	},
 
 	async : {

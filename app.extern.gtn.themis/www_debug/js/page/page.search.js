@@ -22,8 +22,6 @@ var page_search = {
 
 	elements : null,
 
-  spatioTemporalUI : null,
-
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
 		var dfd = $.Deferred();
@@ -75,34 +73,16 @@ var page_search = {
 
 		content.append(form);
 
-    var spatioTemporalSearchContainer = app.ni.element.div({
-		  "id" : "divSearchResults"
+		var searchResults = app.ni.element.div({
+			"id" : "divSearchResults",
+			"styles" : {
+				"margin-top" : "15px",
+				"border-top" : "1px solid #999"
+			}
 		});
+		content.append(searchResults);
 
-		var resultList = app.ni.element.div({
-		  "id" : "stsResultList"
-		});
-		spatioTemporalSearchContainer.append(resultList);
-
-		var map = app.ni.element.div({
-			"id" : "stsMap"
-		});
-		spatioTemporalSearchContainer.append(map);
-
-		var timehistogram = app.ni.element.div({
-		  "id" : "stsTimeHistogram"
-		});
-		spatioTemporalSearchContainer.append(timehistogram);
-
-		content.append(spatioTemporalSearchContainer);
-
-		this.spatioTemporalUI = new SpatioTemporalUI({
-      resultList: resultList,
-      map: map,
-      timeHistogram: timehistogram
-    });
-
-		if (app.store.localStorage.get("data-html5-themis-search-value") !== null) {
+		if (app.store.localStorage.get("data-html5-themis-search-value") != null) {
 			window.setTimeout(function() {
 				page_search.updateSearchDiv(searchResults);
 			}, 1000);
@@ -145,7 +125,7 @@ var page_search = {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
 		$(this.config.pageId).on("focus click", "#txtSearch", function(event) {
 			$("#btnSearch").css("display", "block");
-			if (app.store.localStorage.get("data-html5-themis-search-value") && $("#txtSearch").val() === "") {
+			if (app.store.localStorage.get("data-html5-themis-search-value") && $("#txtSearch").val() == "") {
 				$("#txtSearch").val(app.store.localStorage.get("data-html5-themis-search-value"));
 				this.select();
 			}
@@ -155,14 +135,14 @@ var page_search = {
 			// app.store.localStorage.set("data-html5-themis-search-value",
 			// $("#txtSearch").val());
 			page_search.updateSearchDiv($("#divSearchResults"));
-		});
+		}),
 
 		$(this.config.pageId).on("click", "#btnRemoveFilter", function() {
 			// app.store.localStorage.set("data-html5-themis-search-value",
 			// $("#txtSearch").val());
 			$('.app-search-filter option:selected').val("");
 			page_search.updateSearchDiv($("#divSearchResults"));
-		});
+		}),
 
 		$(this.config.pageId).on("click", "#btnShareSearchResult", function() {
 			page_search.singleResult.shareDocumentGroup();
@@ -349,7 +329,7 @@ var page_search = {
 
 		getThumbnail : function(singleSearchResult) {
 			var imgUrl;
-			if ((imgUrl = singleSearchResult.thumbnailUrl) !== undefined) {
+			if ((imgUrl = singleSearchResult.thumbnailUrl) != undefined) {
 				return imgUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)));
 			} else if ((imgUrl = app.img.getUrlById("search_" + singleSearchResult.type)) != "search_" + singleSearchResult.type)
 				return imgUrl;
@@ -359,7 +339,7 @@ var page_search = {
 		},
 
 		getResultUrl : function(singleSearchResult) {
-			if (singleSearchResult.downloadUrl !== undefined) {
+			if (singleSearchResult.downloadUrl != undefined) {
 				return singleSearchResult.downloadUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)));
 			} else {
 				return false;
@@ -705,10 +685,7 @@ var page_search = {
 	},
 
 	updateSearchDiv : function(searchResults) {
-		// var query = app.store.localStorage.get("data-html5-themis-search-value");
-    // page_search.spatioTemporalUI.update(query);
 
-    /*
 		app.notify.loader.bubbleDiv(true, app.lang.string("loadingText", "page.search"), app.lang.string("loadingHeadline", "page.search"));
 		var promise = app.rc.getJson("searchWithFilters", {
 			// "userId" : 8,//
@@ -760,16 +737,15 @@ var page_search = {
 
 					}
 				}));
+
 			});
 
 			searchResults.append(list);
 			app.help.jQM.enhance(searchResults);
-
 		});
 		promise.always(function() {
 			app.notify.loader.remove();
 		});
-		*/
 	},
 
 	functions : {},

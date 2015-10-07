@@ -8,7 +8,7 @@
 
 	"shareDocument": 
 	{
-		"url": "/backmeup-service-rest/sharing/add/json?withUserId={withUserId}&policyType=Document&policyValue={policyValue}&name={name}&description={description}",
+		"url": "/backmeup-service-rest/sharing/add/json?withUserId={withUserId}&policyType=Document&policyValue={policyValue}&name={name}&description={description}&policyLifeSpanStartDate={policyLifeSpanStartDate}&policyLifeSpanEndDate={policyLifeSpanEndDate}",
 		"method": "post",
 		"timeout": "30000"
 	},

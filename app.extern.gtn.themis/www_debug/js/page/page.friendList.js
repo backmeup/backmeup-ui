@@ -85,6 +85,7 @@ var page_friendList = {
 			content.append(list);
 
 		}).fail(function() {
+
 		}).always(function() {
 
 			app.notify.loader.remove();
@@ -142,11 +143,15 @@ var page_friendList = {
 
 			// getHeritageToken
 			app.notify.dialog({
-				text : "Erbtoken: " + json.activationCode,
+				text : $("<p>Erbtoken: " + json.activationCode + "</p>").append(app.ni.element.a({
+					id : "getToken",
+					classes : [ 'ui-btn' ],
+					text : "QR Code herunterladen"
+				})),
 				title : "Erbe",
 				headline : false,
 				buttonLeft : "Erbe löschen",
-				buttonRight : "Als pdf",
+				buttonRight : "Schließen",
 				callbackButtonLeft : function() {
 					app.rc.getJson("deleteAFriendHeritage", {
 						friendId : app.store.localStorage.get("data-html5-friendId")
@@ -156,28 +161,28 @@ var page_friendList = {
 						alert("fail");
 					});
 				},
-				callbackButtonRight : function() {
-					$.ajax({
-						url : "http://themis-dev01.backmeup.at/backmeup-service-rest/users/" + app.store.localStorage.get("data-html5-friendId") + "/activationCode",
-						async : false,
-						// accepts : "application/pdf",
-						headers : {
-							"Authorization" : app.store.localStorage.get("themis-token"),
-							"Accept" : "application/pdf"
-						},
-						dataType : "text",
-						success : function(data) {
-							var blob = new Blob([ data ], {
-								type : 'application/pdf'
-							});
-							var fileURL = URL.createObjectURL(blob);
-							window.open(fileURL);
-						}
-					});
-				},
+				callbackButtonRight : false,
 				delayInMs : 0
 			});
 
+		});
+
+		$(this.config.pageId).on("storagefilled", "#getToken", function() {
+			$.ajax({
+				url : 'http://themis-dev01.backmeup.at/backmeup-service-rest/users/' + app.store.localStorage.get('data-html5-friendId') + '/activationCode',
+				async : false,
+				// accepts : "application/pdf",
+				headers : {
+					'Authorization' : app.store.localStorage.get('themis-token'),
+					'Accept' : 'application/pdf'
+				},
+				dataType : 'binary',
+				processData : false,
+				success : function(data) {
+					var fileURL = URL.createObjectURL(data);
+					window.open(fileURL);
+				}
+			});
 		});
 
 		$(this.config.pageId).on("storagefilled", ".friend", function() {

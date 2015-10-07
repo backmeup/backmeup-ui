@@ -252,9 +252,21 @@ var page_share_backup = {
 				app.rc.getJson('approveIncomingShare', {
 					policyID : app.store.localStorage.get("data-html5-themis-id")
 				}, true).done(function() {
-					alert("done");
+					app.notify.alert({
+						text : app.lang.string("text accept share done", "sharing"),
+						headline : app.lang.string("headline sharing", "sharing"),
+						button : app.lang.string("Ok", "sharing"),
+						callbackButton : false,
+						delayInMs : 0
+					});
 				}).fail(function() {
-					alert("fail");
+					app.notify.alert({
+						text : app.lang.string("text accept share fail", "sharing"),
+						headline : app.lang.string("headline sharing", "sharing"),
+						button : app.lang.string("Ok", "sharing"),
+						callbackButton : false,
+						delayInMs : 0
+					});
 				});
 			});
 		});
@@ -264,9 +276,21 @@ var page_share_backup = {
 				app.rc.getJson('declineIncomingShare', {
 					policyID : app.store.localStorage.get("data-html5-themis-id")
 				}, true).done(function() {
-					alert("done");
+					app.notify.alert({
+						text : app.lang.string("text decline share done", "sharing"),
+						headline : app.lang.string("headline sharing", "sharing"),
+						button : app.lang.string("Ok", "sharing"),
+						callbackButton : false,
+						delayInMs : 0
+					});
 				}).fail(function() {
-					alert("fail");
+					app.notify.alert({
+						text : app.lang.string("text decline share fail", "sharing"),
+						headline : app.lang.string("headline sharing", "sharing"),
+						button : app.lang.string("Ok", "sharing"),
+						callbackButton : false,
+						delayInMs : 0
+					});
 				});
 			});
 		});
@@ -283,9 +307,21 @@ var page_share_backup = {
 				app.rc.getJson(webservice, {
 					policyID : app.store.localStorage.get("data-html5-themis-id")
 				}, true).done(function() {
-					alert("done");
+					app.notify.alert({
+						text : app.lang.string("text delete share done", "sharing"),
+						headline : app.lang.string("headline sharing", "sharing"),
+						button : app.lang.string("Ok", "sharing"),
+						callbackButton : false,
+						delayInMs : 0
+					});
 				}).fail(function() {
-					alert("fail");
+					app.notify.alert({
+						text : app.lang.string("text delete share fail", "sharing"),
+						headline : app.lang.string("headline sharing", "sharing"),
+						button : app.lang.string("Ok", "sharing"),
+						callbackButton : false,
+						delayInMs : 0
+					});
 				});
 			});
 		});
@@ -311,9 +347,21 @@ var page_share_backup = {
 							name : $("#txtShareName").val(),
 							description : $("#txtShareDescription").val()
 						}, true).done(function() {
-							alert("done")
+							app.notify.alert({
+								text : app.lang.string("text share collection done", "sharing"),
+								headline : app.lang.string("headline sharing", "sharing"),
+								button : app.lang.string("Ok", "sharing"),
+								callbackButton : false,
+								delayInMs : 0
+							});
 						}).fail(function() {
-							alert("fail")
+							app.notify.alert({
+								text : app.lang.string("text share collection fail", "sharing"),
+								headline : app.lang.string("headline sharing", "sharing"),
+								button : app.lang.string("Ok", "sharing"),
+								callbackButton : false,
+								delayInMs : 0
+							});
 						});
 					}, 80);
 

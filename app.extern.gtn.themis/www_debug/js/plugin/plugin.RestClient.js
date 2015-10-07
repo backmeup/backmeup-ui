@@ -134,7 +134,7 @@ var plugin_RestClient = {
 
 	getSingleJson : function(service, parameter, async) {
 		app.debug.debug("plugin_RestClient.getSingleJson() - get a single json object; async = false");
-		app.debug.info("plugin_RestClient - call: " + service);
+		app.debug.info("plugin_RestClient - CALL: " + service);
 		var server, path, json, splittedService, wsd;
 		app.debug.debug("plugin_RestClient.getSingleJson() - get server name");
 		if (service.indexOf('.') != -1) {
@@ -177,7 +177,7 @@ var plugin_RestClient = {
 	},
 	getSingleJsonAsync : function(service, parameter, async) {
 		app.debug.debug("plugin_RestClient.getSingleJsonAsync() - get a single json object; async = true;");
-		app.debug.info("plugin_RestClient - call: " + service);
+		app.debug.info("plugin_RestClient - CALL: " + service);
 
 		// the deferred object for the caller
 		var dfd = $.Deferred(), server, path, promise, splittedService, wsd;
@@ -244,7 +244,7 @@ var plugin_RestClient = {
 			
 			var serviceName = call[0], parameter = call[1], server, path, json, splittedService, wsd;
 			
-			app.debug.info("plugin_RestClient - call: " + serviceName);
+			app.debug.info("plugin_RestClient - CALL: " + serviceName);
 
 			app.debug.debug("plugin_RestClient.getMultipleJson() - get server name");
 			if (serviceName.indexOf('.') != -1) {
@@ -304,7 +304,7 @@ var plugin_RestClient = {
 			
 			var serviceName = call[0], parameter = call[1], server, path, promise, wsd;
 			
-			app.debug.info("plugin_RestClient - call: " + serviceName);
+			app.debug.info("plugin_RestClient - CALL: " + serviceName);
 
 			app.debug.debug("plugin_RestClient.getMultipleJsonAsync() - get server name");
 			if (serviceName.indexOf('.') != -1) {

@@ -10,16 +10,6 @@
   font-style: normal;
 }
 
-html, body {
-  font-family:"Trebuchet MS", Helvetica, sans-serif;
-  font-size:14px;
-  line-height:140%;
-  margin:0;
-  padding:0;
-  background-color:#fdfdfd;
-  height:100%;
-}
-
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* Result list styles             */
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */

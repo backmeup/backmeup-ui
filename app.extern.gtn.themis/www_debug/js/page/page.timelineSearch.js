@@ -1,4 +1,5 @@
 var page_timelineSearch = {
+
 	config : null,
 	include: null,
 	include_once: null,
@@ -116,7 +117,6 @@ var page_timelineSearch = {
 		app.debug.trace("page_timelineSearch.setEvents()");
 
 		// Scroll the fixed sidebar, up to position top=0
-
     jQuery(document).scroll(function() {
       var scrollTop = jQuery(window).scrollTop(),
 			    resultListTop = jQuery('#divStsResultList').offset().top;
@@ -125,6 +125,11 @@ var page_timelineSearch = {
 			  jQuery('#divStsSidebar').css('top', resultListTop - scrollTop);
 			else
 				jQuery('#divStsSidebar').css('top', 10);
+		});
+
+		jQuery(this.config.pageId).on('submit', '#frmSearch', function(e) {
+			e.preventDefault();
+			console.log(e);
 		});
 	},
 

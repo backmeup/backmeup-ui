@@ -18,7 +18,7 @@ var SpatioTemporalUI = function(props)  {
         resultListContainer.parent().append(el);
         return el;
       })(),
-      dateFlipper = new DateFlipper(dateFlipperContainer[0]),
+      dateFlipper = new DateFlipper(dateFlipperContainer),
 
       dateFlipperDisplayTimer,
 
@@ -45,16 +45,15 @@ var SpatioTemporalUI = function(props)  {
         resultList.scrollTo(model.getFirstResultBefore(e.to));
       };
 
-      /*
       onScroll = function(e) {
-        var winHeight = $(window).height(), latestVisible;
+        var winHeight = $(window).height(), latestVisible, date;
 
         if (dateFlipperDisplayTimer) {
           clearTimeout(dateFlipperDisplayTimer);
           dateFlipperDisplayTimer = false;
         }
 
-        -dateFlipperContainer.fadeIn();
+        dateFlipperContainer.fadeIn();
         dateFlipperDisplayTimer = setTimeout(function() {
           dateFlipperContainer.fadeOut();
         }, 1200);
@@ -70,12 +69,12 @@ var SpatioTemporalUI = function(props)  {
           }
         });
 
-        dateFlipper.set(new Date(jQuery(latestVisible).data('date')));
+        date = jQuery(latestVisible).data('date');
+        if (date)
+          dateFlipper.set(new Date(date));
       };
-      */
 
-  dateFlipperContainer.hide();
-  // jQuery(window).scroll(onScroll);
+  jQuery(document).scroll(onScroll);
 
   map.on('select', onSelectOnMap);
   timeHistogram.on('select', onSelectTimeRange);
@@ -263,8 +262,6 @@ var Model = function() {
               sorted = days.map(function(day) {
                 return { date: parseInt(day), results: grouped[day] };
               });
-
-              // this.dateflipper.set(new Date(parseInt(days[0])));
 
               return sorted;
             })(),

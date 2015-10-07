@@ -36,14 +36,7 @@ var DateFlipper = function(parent, options) {
         // determined width according to the current external
         // CSS settings. We want to fix that width (but
         // hide the dummy content while we do).
-        el.find('p').css({ 'opacity': 0 });
         jQuery(parent).append(el);
-
-        colYear.css('width', colYear.outerWidth() * FIELD_STRETCH);
-        colMonth.css('width', colMonth.outerWidth() * FIELD_STRETCH);
-        colDay.css('width', colDay.outerWidth() * FIELD_STRETCH);
-
-        el.css('height', colYear.height());
       },
 
       /** Helper function to scroll one column up **/
@@ -95,6 +88,8 @@ var DateFlipper = function(parent, options) {
 
       /** Sets the dial to the specified year, month and day **/
       set = function(date) {
+        console.log(date);
+        
         var y = date.getFullYear(),
             m = MONTH_NAMES[date.getMonth()],
             d = date.getDate(),
@@ -152,6 +147,6 @@ var DateFlipper = function(parent, options) {
   initFields();
 
   // Export public methods
-  this.set = function() {};
+  this.set = set;
 
 };

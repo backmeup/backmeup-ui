@@ -22,8 +22,6 @@ var page_create_backup_3 = {
 
 	elements : null,
 
-
-
 	constructor : function() {
 		app.debug.alert("page_" + this.config.name + ".constructor()", 10);
 		var dfd = $.Deferred();
@@ -81,7 +79,7 @@ var page_create_backup_3 = {
 
 			content.append(app.ni.element.p({
 				"text" : sourceResult.getPlugin.title + " - " // +
-																// sourceResult.getPluginConfiguration.authData.name
+				// sourceResult.getPluginConfiguration.authData.name
 			}));
 
 			content.append(app.ni.element.h2({
@@ -90,7 +88,7 @@ var page_create_backup_3 = {
 
 			content.append(app.ni.element.p({
 				"text" : sinkResult.getPlugin.title + " - " // +
-															// sinkResult.getPluginConfiguration.authData.name
+				// sinkResult.getPluginConfiguration.authData.name
 			}));
 
 			content.append(app.ni.element.h2({
@@ -104,6 +102,21 @@ var page_create_backup_3 = {
 				"labelText" : app.lang.string("job_title", "labels"),
 				"container" : true
 			}));
+
+			var scheduleArray = [ 'ONCE', 'DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY' ];
+
+			var select = app.ni.select.single({
+				id : "selSchedule"
+			});
+
+			$.each(scheduleArray, function(index, singleSchedule) {
+				select.append(app.ni.select.option({
+					text : app.lang.string("schedule backup " + singleSchedule, "create backup"),
+					value : singleSchedule
+				}));
+			});
+
+			content.append(select);
 
 			content.append(app.ni.button.button({
 				"id" : "btnCreateBackup",
@@ -123,7 +136,6 @@ var page_create_backup_3 = {
 		});
 
 	},
-
 
 	async : {
 		promise : null,// to implement
@@ -155,7 +167,6 @@ var page_create_backup_3 = {
 		}
 	},
 
-
 	// set the jquery events
 	setEvents : function(container) {
 		app.debug.alert("page_" + this.config.name + ".setEvents()", 10);
@@ -164,7 +175,7 @@ var page_create_backup_3 = {
 			app.notify.loader.bubbleDiv(true, "", app.lang.string("loading", "headlines"));
 			var promise = app.rc.getJson("createBackupjob", {
 				"jobTitle" : container.find("#txtTitle").val(),
-				"schedule" : "WEEKLY",
+				"schedule" : $('#selSchedule').val(),
 				"start" : Date.now(),
 				"source" : app.store.localStorage.get("data-html5-themis-source-profileid"),
 				"actions" : [],
@@ -185,10 +196,8 @@ var page_create_backup_3 = {
 
 	},
 
-
 	functions : {},
 
-	
 	events : {
 
 		// Triggered twice during the page change cyle: First prior to any page

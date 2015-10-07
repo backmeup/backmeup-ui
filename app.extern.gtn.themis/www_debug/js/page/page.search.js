@@ -467,7 +467,6 @@ var page_search = {
 				container : false
 			}));
 
-
 			div.append(app.ni.text.date({
 				id : "txtEndDate",
 				placeholder : app.lang.string("end date", "page.search"),
@@ -554,15 +553,31 @@ var page_search = {
 					else if ($("#selFriend option:selected").hasClass("heritage"))
 						webservice = "shareDocumentHeritage";
 
+					alert($('#txtStartDate').val() + $('#txtEndDate').val());
+
 					app.rc.getJson(webservice, {
 						withUserId : parseInt($("#selFriend option:selected").val()),
 						policyValue : app.store.localStorage.get("data-html5-fileid"),
 						name : $("#txtShareName").val(),
-						description : $("#txtShareDescription").val()
+						description : $("#txtShareDescription").val(),
+						policyLifeSpanStartDate : Date.now(),
+						policyLifeSpanEndDate : Date.now() + 1000 * 1000
 					}, true).done(function() {
-						alert("done")
+						app.notify.alert({
+							text : app.lang.string("text share document done", "sharing"),
+							headline : app.lang.string("headline sharing", "sharing"),
+							button : app.lang.string("Ok", "sharing"),
+							callbackButton : false,
+							delayInMs : 0
+						});
 					}).fail(function() {
-						alert("fail")
+						app.notify.alert({
+							text : app.lang.string("text share document fail", "sharing"),
+							headline : app.lang.string("headline sharing", "sharing"),
+							button : app.lang.string("Ok", "sharing"),
+							callbackButton : false,
+							delayInMs : 0
+						});
 					});
 				}, function() {
 					// don't share item
@@ -576,15 +591,26 @@ var page_search = {
 				app.notify.dialog(page_search.singleResult.getCollectionInputs(), app.lang.string("create collection", "page.search"), false, app.lang.string("create collection", "page.search"), app.lang.string("cancel", "page.share"), function() {
 					// share item
 
-
 					app.rc.getJson("createCollection", {
 						documentIds : documentIds,
 						name : $("#txtCollectionName").val(),
 						description : $("#txtCollectionDescription").val()
 					}, true).done(function() {
-						alert("done")
+						app.notify.alert({
+							text : app.lang.string("text create collection done", "sharing"),
+							headline : app.lang.string("headline sharing", "sharing"),
+							button : app.lang.string("Ok", "sharing"),
+							callbackButton : false,
+							delayInMs : 0
+						});
 					}).fail(function() {
-						alert("fail")
+						app.notify.alert({
+							text : app.lang.string("text create collection fail", "sharing"),
+							headline : app.lang.string("headline sharing", "sharing"),
+							button : app.lang.string("Ok", "sharing"),
+							callbackButton : false,
+							delayInMs : 0
+						});
 					});
 				}, function() {
 					// don't share item
@@ -607,15 +633,33 @@ var page_search = {
 											collId : $("#cboCollections option:selected").val(),
 											collectionId : $("#cboCollections option:selected").val()
 										}, true).done(function() {
-											alert("done")
+											app.notify.alert({
+												text : app.lang.string("text remove from collection done", "sharing"),
+												headline : app.lang.string("headline sharing", "sharing"),
+												button : app.lang.string("Ok", "sharing"),
+												callbackButton : false,
+												delayInMs : 0
+											});
 										}).fail(function() {
-											alert("fail")
+											app.notify.alert({
+												text : app.lang.string("text remove from collection fail", "sharing"),
+												headline : app.lang.string("headline sharing", "sharing"),
+												button : app.lang.string("Ok", "sharing"),
+												callbackButton : false,
+												delayInMs : 0
+											});
 										});
 									}, function() {
 										// don't share item
 									}, 50);
 								}).fail(function() {
-							alert("fail");
+							app.notify.alert({
+								text : app.lang.string("text get collection fail", "sharing"),
+								headline : app.lang.string("headline sharing", "sharing"),
+								button : app.lang.string("Ok", "sharing"),
+								callbackButton : false,
+								delayInMs : 0
+							});
 						});
 					});
 
@@ -635,15 +679,33 @@ var page_search = {
 											collId : $("#cboCollections option:selected").val(),
 											collectionId : $("#cboCollections option:selected").val()
 										}, true).done(function() {
-											alert("done")
+											app.notify.alert({
+												text : app.lang.string("text add to collection done", "sharing"),
+												headline : app.lang.string("headline sharing", "sharing"),
+												button : app.lang.string("Ok", "sharing"),
+												callbackButton : false,
+												delayInMs : 0
+											});
 										}).fail(function() {
-											alert("fail")
+											app.notify.alert({
+												text : app.lang.string("text add to collection fail", "sharing"),
+												headline : app.lang.string("headline sharing", "sharing"),
+												button : app.lang.string("Ok", "sharing"),
+												callbackButton : false,
+												delayInMs : 0
+											});
 										});
 									}, function() {
 										// don't share item
 									}, 50);
 								}).fail(function() {
-							alert("fail");
+							app.notify.alert({
+								text : app.lang.string("text get collecton fail", "sharing"),
+								headline : app.lang.string("headline sharing", "sharing"),
+								button : app.lang.string("Ok", "sharing"),
+								callbackButton : false,
+								delayInMs : 0
+							});
 						});
 					});
 
@@ -672,9 +734,21 @@ var page_search = {
 						name : $("#txtShareName").val(),
 						description : $("#txtShareDescription").val()
 					}, true).done(function() {
-						alert("done")
+						app.notify.alert({
+							text : app.lang.string("text share document group done", "sharing"),
+							headline : app.lang.string("headline sharing", "sharing"),
+							button : app.lang.string("Ok", "sharing"),
+							callbackButton : false,
+							delayInMs : 0
+						});
 					}).fail(function() {
-						alert("fail")
+						app.notify.alert({
+							text : app.lang.string("text share document group fail", "sharing"),
+							headline : app.lang.string("headline sharing", "sharing"),
+							button : app.lang.string("Ok", "sharing"),
+							callbackButton : false,
+							delayInMs : 0
+						});
 					});
 				}, function() {
 					// don't share item

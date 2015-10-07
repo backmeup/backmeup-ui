@@ -233,7 +233,7 @@ var plugin_Debug = {
 		 *            level Current debug level.
 		 */
 		alert : function(text, level) {
-			plugin_Debug.functions.log(text, "Dep. DEBUG");
+			app.debug.trace("Dep. " + text);
 		},
 		log : function(output, level) {
 

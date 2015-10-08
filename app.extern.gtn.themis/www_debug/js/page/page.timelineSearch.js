@@ -68,7 +68,8 @@ var page_timelineSearch = {
 		var spatioTemporalUI = new SpatioTemporalUI({
       resultList: resultList,
       map: map,
-      timeHistogram: histogram
+      timeHistogram: histogram,
+			imagePath: '../ext/leaflet/images/'
     });
 
 		spatioTemporalUI.update('*');

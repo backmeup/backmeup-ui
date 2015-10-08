@@ -15,9 +15,7 @@
 			"../css/platform.cordova.css": true,
 			"../css/timelinesearch.css": true,
 			"../ext/leaflet/leaflet.css": true,
-			"../ext/spatiotemporal/dateflipper.css": true,
-			"../ext/spatiotemporal/simplehistogram.css": true,
-			"../ext/spatiotemporal/spatiotemporal-search.css": true,
+			"../ext/spatiotemporal/spatiotemporal-search.no-deps.css": true,
 			"../template/app.responsive.grid.33.33.33.css": "true",
 			"../template/app.responsive.grid.25.75.css": "true",
 			"../template/app.responsive.grid.75.25.css": "true"
@@ -31,9 +29,7 @@
 			"../ext/jquery.serializejson.min.js": true,
 			"../ext/moment/moment.js": true,
 			"../ext/leaflet/leaflet.js": true,
-			"../ext/spatiotemporal/dateflipper.js": true,
-			"../ext/spatiotemporal/simplehistogram.js": true,
-			"../ext/spatiotemporal/spatiotemporal-search.js": true
+			"../ext/spatiotemporal/spatiotemporal-search.no-deps.min.js": true
 		}
 	}
 }

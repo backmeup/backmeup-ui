@@ -29,8 +29,8 @@ var page_timelineSearch = {
 
 		form.append(app.ni.text.text({
 			"id" : "txtSearch",
-			"placeholder" : (app.store.localStorage.get("data-html5-themis-search-value")) ?
-			  app.store.localStorage.get("data-html5-themis-search-value") :
+			"placeholder" : (app.store.localStorage.get("data-html5-themis-timelinesearch-value")) ?
+			  app.store.localStorage.get("data-html5-themis-timelinesearch-value") :
 				app.lang.string("search", "labels"),
 			"label" : false,
 			"labelText" : app.lang.string("search", "labels"),
@@ -65,14 +65,18 @@ var page_timelineSearch = {
     content.append(resultList);
 
 		// Attach spatiotemporal UI to anchor elements
-		var spatioTemporalUI = new SpatioTemporalUI({
+		this.spatioTemporalUI = new SpatioTemporalUI({
       resultList: resultList,
       map: map,
       timeHistogram: histogram,
 			imagePath: '../ext/leaflet/images/'
     });
 
-		spatioTemporalUI.update('*');
+		if (app.store.localStorage.get("data-html5-themis-timelinesearch-value") !== null) {
+			window.setTimeout(function() {
+				page_timelineSearch.update();
+			}, 1000);
+		}
 	},
 
 	async : {
@@ -130,8 +134,16 @@ var page_timelineSearch = {
 
 		jQuery(this.config.pageId).on('submit', '#frmSearch', function(e) {
 			e.preventDefault();
-			console.log(e);
+			app.store.localStorage.set("data-html5-themis-timelinesearch-value",
+			  jQuery("#txtSearch").val());
+
+			page_timelineSearch.update();
 		});
+	},
+
+	update : function() {
+		this.spatioTemporalUI
+		    .update(app.store.localStorage.get("data-html5-themis-timelinesearch-value"));
 	},
 
 	functions : {},

@@ -69,7 +69,8 @@ var page_timelineSearch = {
       resultList: resultList,
       map: map,
       timeHistogram: histogram,
-			imagePath: '../ext/leaflet/images/'
+			imagePath: '../ext/leaflet/images/',
+			token: app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)
     });
 
 		if (app.store.localStorage.get("data-html5-themis-timelinesearch-value") !== null) {
@@ -142,8 +143,20 @@ var page_timelineSearch = {
 	},
 
 	update : function() {
-		this.spatioTemporalUI
-		    .update(app.store.localStorage.get("data-html5-themis-timelinesearch-value"));
+    // TODO just temporary - while backend isn't integrated yet
+		// this.spatioTemporalUI
+		//   .update(app.store.localStorage.get("data-html5-themis-timelinesearch-value"));
+		app.rc.getJson('searchWithFilters', {
+			query : app.store.localStorage.get('data-html5-themis-timelinesearch-value'),
+			source : '',
+			type : '',
+			job : '',
+			owner : '',
+			tag : ''
+		}, true).done(function(results) {
+			console.log(results);
+      this.spatioTemporalUI.update(results);
+		}.bind(this));
 	},
 
 	functions : {},

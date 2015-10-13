@@ -63,12 +63,12 @@ div.histogram.column.portrait.right .bar {
 }
 @font-face {
   font-family: 'FontAwesome';
-  src: url("../../fonts/fontawesome-webfont.eot?v=4.4.0");
-  src: url("../../fonts/fontawesome-webfont.eot?#iefix&v=4.4.0") format('embedded-opentype'),
-       url("../../fonts/fontawesome-webfont.woff2?v=4.4.0") format('woff2'),
-       url("../../fonts/fontawesome-webfont.woff?v=4.4.0") format('woff'),
-       url("../../fonts/fontawesome-webfont.ttf?v=4.4.0") format('truetype'),
-       url("../../fonts/fontawesome-webfont.svg?v=4.4.0#fontawesomeregular") format('svg');
+  src: url("../../css/fonts/fontawesome-webfont.eot?v=4.4.0");
+  src: url("../../css/fonts/fontawesome-webfont.eot?#iefix&v=4.4.0") format('embedded-opentype'),
+       url("../../css/fonts/fontawesome-webfont.woff2?v=4.4.0") format('woff2'),
+       url("../../css/fonts/fontawesome-webfont.woff?v=4.4.0") format('woff'),
+       url("../../css/fonts/fontawesome-webfont.ttf?v=4.4.0") format('truetype'),
+       url("../../css/fonts/fontawesome-webfont.svg?v=4.4.0#fontawesomeregular") format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -126,26 +126,25 @@ div.histogram.column.portrait.right .bar {
   font-size: 40px;
   font-family: FontAwesome;
   position: absolute;
-  top: 40px;
+  top: 20px;
   left: 0;
   width: 100px;
   height: 100px;
 }
 
-.resultContainer.text-plain .thumbnail:before {
+.resultContainer.text .thumbnail:before {
   content: '\f0f6';
 }
 
-.resultContainer.application-xhtml-xml .thumbnail:before,
-.resultContainer.text-html .thumbnail:before {
+.resultContainer.html .thumbnail:before {
   content: '\f1c9';
 }
 
-.resultContainer.image-jpeg .thumbnail:before {
+.resultContainer.image .thumbnail:before {
   content: '\f1c5';
 }
 
-.resultContainer.application-xml .thumbnail:before {
+.resultContainer.other .thumbnail:before {
   content: '\f1c9';
 }
 

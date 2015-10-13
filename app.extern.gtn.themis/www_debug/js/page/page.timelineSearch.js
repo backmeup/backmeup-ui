@@ -154,7 +154,6 @@ var page_timelineSearch = {
 			owner : '',
 			tag : ''
 		}, true).done(function(results) {
-			console.log(results);
       this.spatioTemporalUI.update(results);
 		}.bind(this));
 	},

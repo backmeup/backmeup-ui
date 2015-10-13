@@ -143,16 +143,16 @@ var page_timelineSearch = {
 	},
 
 	update : function() {
-    // TODO just temporary - while backend isn't integrated yet
-		// this.spatioTemporalUI
-		//   .update(app.store.localStorage.get("data-html5-themis-timelinesearch-value"));
+    // TODO pagination - currently we just download the first 1.5k results
 		app.rc.getJson('searchWithFilters', {
 			query : app.store.localStorage.get('data-html5-themis-timelinesearch-value'),
 			source : '',
 			type : '',
 			job : '',
 			owner : '',
-			tag : ''
+			tag : '',
+			offsetStart: 0,
+			offsetEnd: 1500
 		}, true).done(function(results) {
       this.spatioTemporalUI.update(results);
 		}.bind(this));

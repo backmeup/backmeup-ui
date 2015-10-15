@@ -249,7 +249,7 @@ var page_backup_jobs = {
 				app.notify.dialog(page_search.singleResult.getSharingInputs(), title, false, app.lang.string("share backup", "page.backup_jobs"), app.lang.string("don't share item", "page.backup_jobs"), function() {
 					// share item
 
-					var webservice;
+					var webservice, start, end;
 
 					if ($("#selFriend option:selected").hasClass("friend")) {
 						alert("friend");
@@ -258,10 +258,16 @@ var page_backup_jobs = {
 						webservice = "shareBackupHeritage";
 					}
 
+					start = ($('#txtStartDate').val()) ? parseFloat(moment($('#txtStartDate').val()).format("x")) : null;
+					end = ($('#txtEndDate').val()) ? parseFloat(moment($('#txtEndDate').val()).format("x")) : null;
+
 					app.rc.getJson(webservice, {
 						withUserId : parseInt($("#selFriend option:selected").val()),
 						name : $("#txtShareName").val(),
-						policyValue : app.store.localStorage.get("data-html5-themis-backupid")
+						policyValue : app.store.localStorage.get("data-html5-themis-backupid"),
+						description : $("#txtShareDescription").val(),
+						lifespanstart : start,
+						lifespanend : end
 					}, true).done(function() {
 						alert("done")
 					}).fail(function() {
@@ -293,7 +299,8 @@ var page_backup_jobs = {
 									app.rc.getJson(webservice, {
 										withUserId : parseInt($("#selFriend option:selected").val()),
 										name : $("#txtShareName").val(),
-										policyValue : ""
+										policyValue : "",
+										description : $("#txtShareDescription").val()
 									}, true).done(function() {
 										alert("done")
 									}).fail(function() {
@@ -314,17 +321,23 @@ var page_backup_jobs = {
 								app.notify.dialog(page_search.singleResult.getSharingInputs(), app.lang.string("share all from now", "page.backup_jobs"), false, app.lang.string("share backup", "page.backup_jobs"), app.lang.string("don't share item",
 										"page.backup_jobs"), function() {
 									// share item
-									var webservice;
+									var webservice, start, end;
 
 									if ($("#selFriend option:selected").hasClass("friend"))
 										webservice = "shareAll";
 									else if ($("#selFriend option:selected").hasClass("heritage"))
 										webservice = "shareAllHeritage";
 
+									start = ($('#txtStartDate').val()) ? parseFloat(moment($('#txtStartDate').val()).format("x")) : null;
+									end = ($('#txtEndDate').val()) ? parseFloat(moment($('#txtEndDate').val()).format("x")) : null;
+
 									app.rc.getJson(webservice, {
 										withUserId : parseInt($("#selFriend option:selected").val()),
 										name : $("#txtShareName").val(),
-										policyValue : ""
+										policyValue : "",
+										description : $("#txtShareDescription").val(),
+										lifespanstart : start,
+										lifespanend : end
 									}, true).done(function() {
 										alert("done")
 									}).fail(function() {

@@ -546,22 +546,23 @@ var page_search = {
 			app.notify.close.all().done(function() {
 				app.notify.dialog(page_search.singleResult.getSharingInputs(), singleSearchResult.title, false, app.lang.string("share item", "page.search"), app.lang.string("don't share item", "page.share"), function() {
 					// share item
-					var webservice;
+					var webservice, start, end;
 
 					if ($("#selFriend option:selected").hasClass("friend"))
 						webservice = "shareDocument";
 					else if ($("#selFriend option:selected").hasClass("heritage"))
 						webservice = "shareDocumentHeritage";
 
-					alert($('#txtStartDate').val() + $('#txtEndDate').val());
+					start = ($('#txtStartDate').val()) ? parseFloat(moment($('#txtStartDate').val()).format("x")) : null;
+					end = ($('#txtEndDate').val()) ? parseFloat(moment($('#txtEndDate').val()).format("x")) : null;
 
 					app.rc.getJson(webservice, {
 						withUserId : parseInt($("#selFriend option:selected").val()),
 						policyValue : app.store.localStorage.get("data-html5-fileid"),
 						name : $("#txtShareName").val(),
 						description : $("#txtShareDescription").val(),
-						policyLifeSpanStartDate : Date.now(),
-						policyLifeSpanEndDate : Date.now() + 1000 * 1000
+						lifespanstart : start,
+						lifespanend : end
 					}, true).done(function() {
 						app.notify.alert({
 							text : app.lang.string("text share document done", "sharing"),
@@ -715,7 +716,7 @@ var page_search = {
 			app.notify.close.all().done(function() {
 				app.notify.dialog(page_search.singleResult.getSharingInputs(), app.lang.string("share search result", "page.search"), false, app.lang.string("share item", "page.search"), app.lang.string("don't share item", "page.share"), function() {
 					// share item
-					var documentArray = [];
+					var documentArray = [], start, end;
 					$('.app-search-item').each(function(index, element) {
 						documentArray.push($(element).attr('data-html5-fileid'));
 					})
@@ -728,11 +729,16 @@ var page_search = {
 					else if ($("#selFriend option:selected").hasClass("heritage"))
 						webservice = "shareDocumentGroupHeritage";
 
+					start = ($('#txtStartDate').val()) ? parseFloat(moment($('#txtStartDate').val()).format("x")) : null;
+					end = ($('#txtEndDate').val()) ? parseFloat(moment($('#txtEndDate').val()).format("x")) : null;
+
 					app.rc.getJson(webservice, {
 						withUserId : parseInt($("#selFriend option:selected").val()),
 						policyValue : JSON.stringify(documentArray).split('"').join(''),
 						name : $("#txtShareName").val(),
-						description : $("#txtShareDescription").val()
+						description : $("#txtShareDescription").val(),
+						lifespanstart : start,
+						lifespanend : end
 					}, true).done(function() {
 						app.notify.alert({
 							text : app.lang.string("text share document group done", "sharing"),

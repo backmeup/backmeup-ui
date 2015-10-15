@@ -334,18 +334,23 @@ var page_share_backup = {
 					plugin_Notification.functions.dialog(page_search.singleResult.getSharingInputs(), false, app.lang.string("share collection", "page.share_backup"), app.lang.string("cancel", "page.share_backup"), app.lang.string(
 							"share collection", "page.share_backup"), false, function() {
 
-						var webservice;
+						var webservice, start, end;
 
 						if ($("#selFriend option:selected").hasClass("friend"))
 							webservice = "shareCollection";
 						else if ($("#selFriend option:selected").hasClass("heritage"))
 							webservice = "shareCollectionHeritage";
 
+						start = ($('#txtStartDate').val()) ? parseFloat(moment($('#txtStartDate').val()).format("x")) : null;
+						end = ($('#txtEndDate').val()) ? parseFloat(moment($('#txtEndDate').val()).format("x")) : null;
+
 						app.rc.getJson(webservice, {
 							withUserId : parseInt($("#selFriend option:selected").val()),
 							policyValue : app.store.localStorage.get("data-html5-collectionId"),
 							name : $("#txtShareName").val(),
-							description : $("#txtShareDescription").val()
+							description : $("#txtShareDescription").val(),
+							lifespanstart : start,
+							lifespanend : end
 						}, true).done(function() {
 							app.notify.alert({
 								text : app.lang.string("text share collection done", "sharing"),

@@ -1,4 +1,5 @@
 var page_timelineSearch = {
+
 	config : null,
 	include: null,
 	include_once: null,
@@ -10,15 +11,77 @@ var page_timelineSearch = {
 		var dfd = $.Deferred();
 		dfd.resolve();
 		return dfd.promise();
-
 	},
 
 	creator : function(container) {
 		app.debug.trace("page_timelineSearch.creator()");
-		//this.elements.content.append("<h1>Hello World</h1>");
+
+    var content = $('div[data-role=content]');
+
+		var form = app.ni.form.form({
+			"id" : "frmSearch",
+			"attributes" : {
+				"action" : "#",
+				"data-ajax" : "false"
+			},
+			"label" : false
+		});
+
+		form.append(app.ni.text.text({
+			"id" : "txtSearch",
+			"placeholder" : (app.store.localStorage.get("data-html5-themis-timelinesearch-value")) ?
+			  app.store.localStorage.get("data-html5-themis-timelinesearch-value") :
+				app.lang.string("search", "labels"),
+			"label" : false,
+			"labelText" : app.lang.string("search", "labels"),
+			"container" : false
+		}));
+
+		form.append(app.ni.element.a({
+			"id" : "btnSearch",
+			"text" : app.lang.string("search", "actions"),
+			"attributes" : {
+				"href" : "#"
+			},
+			"classes" : [ 'ui-btn' ],
+			"styles" : {
+				"display" : "none"
+			}
+		}));
+
+		content.append(form);
+
+		// Anchor elements for spatiotemporal result view
+		var sidebar = app.ni.element.div({ "id" : "divStsSidebar" });
+		var map = app.ni.element.div({ "id" : "divStsMap" });
+		sidebar.append(map);
+
+		var histogram = app.ni.element.div({ "id" : "divStsHistogram" });
+    sidebar.append(histogram);
+
+		content.append(sidebar);
+
+		var resultList = app.ni.element.div({ "id" : "divStsResultList"});
+    content.append(resultList);
+
+		// Attach spatiotemporal UI to anchor elements
+		this.spatioTemporalUI = new SpatioTemporalUI({
+      resultList: resultList,
+      map: map,
+      timeHistogram: histogram,
+			imagePath: '../ext/leaflet/images/',
+			token: app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)
+    });
+
+		if (app.store.localStorage.get("data-html5-themis-timelinesearch-value") !== null) {
+			window.setTimeout(function() {
+				page_timelineSearch.update();
+			}, 1000);
+		}
 	},
 
 	async : {
+
 		promise : null,
 
 		result : null,
@@ -59,6 +122,40 @@ var page_timelineSearch = {
 	setEvents : function(container) {
 		app.debug.trace("page_timelineSearch.setEvents()");
 
+		// Scroll the fixed sidebar, up to position top=0
+    jQuery(document).scroll(function() {
+      var scrollTop = jQuery(window).scrollTop(),
+			    resultListTop = jQuery('#divStsResultList').offset().top;
+
+      if (resultListTop > scrollTop)
+			  jQuery('#divStsSidebar').css('top', resultListTop - scrollTop);
+			else
+				jQuery('#divStsSidebar').css('top', 10);
+		});
+
+		jQuery(this.config.pageId).on('submit', '#frmSearch', function(e) {
+			e.preventDefault();
+			app.store.localStorage.set("data-html5-themis-timelinesearch-value",
+			  jQuery("#txtSearch").val());
+
+			page_timelineSearch.update();
+		});
+	},
+
+	update : function() {
+    // TODO pagination - currently we just download the first 1.5k results
+		app.rc.getJson('searchWithFilters', {
+			query : app.store.localStorage.get('data-html5-themis-timelinesearch-value'),
+			source : '',
+			type : '',
+			job : '',
+			owner : '',
+			tag : '',
+			offsetStart: 0,
+			offsetEnd: 1500
+		}, true).done(function(results) {
+      this.spatioTemporalUI.update(results);
+		}.bind(this));
 	},
 
 	functions : {},

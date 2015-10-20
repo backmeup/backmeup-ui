@@ -86,7 +86,7 @@ var plugin_WebServiceClient = {
 		app.debug.alert("plugin_WebServiceClient.getAjax(" + url + ", " + data + ", " + type + ", " + method + ", " + timeout + ", " + async + ")");
 		app.debug.alert("plugin_WebServiceClient.getAjax() - webservice: " + url + "?" + data);
 
-		var json = null, dfd = null, headers = null, contentType, splittedData, obj, pairs, paramKey, paramValue, indexOfEquals, newData, encodedValue, exeptionConfig;
+		var json = null, dfd = null, headers = null, contentType, splittedData, obj, pairs, paramKey, paramValue, indexOfEquals, encodedValue, exeptionConfig;
 
 		if (async) {
 			app.debug.alert("plugin_WebServiceClient.getAjax() - case: webservice is async - create deferred object");
@@ -436,12 +436,12 @@ var plugin_WebServiceClient = {
 
 		ping : function(serverName, async) {
 			app.debug.trace("plugin_WebServiceClient.functions.ping()");
-			var path, data, method, timeout, server, url, success = null;
+			var path, server, url;
 
 			path = plugin_WebServiceClient.config.server[serverName].pingPath;
 			server = plugin_WebServiceClient.getPreferedServer(serverName);
 			url = server.scheme + server.scheme_specific_part + server.host + ":" + server.port + server.path + path;
-			// alert(url);
+
 			if (async) {
 
 				return globalLoader.AsyncJsonLoader(url);

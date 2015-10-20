@@ -247,8 +247,8 @@ var plugin_HTML5Storage = {
 
 	getSpace : function(length) {
 		app.debug.trace('plugin_HTML5Storage.getSpace()');
-		var string = "";
-		for (var i = 0; i < length; i++)
+		var string = "", i;
+		for (i = 0; i < length; i++)
 			string = string + " ";
 		return string;
 	},
@@ -431,7 +431,7 @@ var plugin_HTML5Storage = {
 
 				name = name.toLowerCase();
 
-				var object = {}, compNameOfLocalStorage;
+				var object = {};
 				$.each(window.localStorage, function(key, value) {
 					var storageKey, storageValue, compNameOfLocalStorage;
 					app.debug.debug("plugin_HTML5Storage.functions.localStorage.getObject() - element: " + key + " = " + value);

@@ -227,6 +227,9 @@ var plugin_RestClient = {
 
 		promise.fail(function(error) {
 			app.debug.debug("plugin_RestClient.getSingleJsonAsync() - Webservice call failed: " + JSON.stringify(error));
+
+			app.debug.info("plugin_RestClient - FAILED: " + error.id);
+
 			dfd.reject(error);
 		});
 
@@ -235,15 +238,15 @@ var plugin_RestClient = {
 
 	getMultipleJson : function(service, parameter, async) {
 		app.debug.debug("plugin_RestClient.getMultipleJson() - get multible json objects; async = false");
-		
+
 		var jsonObject = {};
-		
+
 		app.debug.debug("plugin_RestClient.getMultipleJson() - generate ajax call for each webservice");
-		
+
 		$.each(service, function(key, call) {
-			
+
 			var serviceName = call[0], parameter = call[1], server, path, json, splittedService, wsd;
-			
+
 			app.debug.info("plugin_RestClient - CALL: " + serviceName);
 
 			app.debug.debug("plugin_RestClient.getMultipleJson() - get server name");
@@ -276,16 +279,20 @@ var plugin_RestClient = {
 					server);
 
 			app.debug.debug("plugin_RestClient.getMultipleJson() - add language wildcards wich could be defined in webservice response");
+
 			if (plugins.functions.pluginLoaded("MultilanguageIso639_3")) {
+
 				if (json.language != undefined) {
 					$.each(json.language, function(key, value) {
 						app.lang.addParameter(key, value);
 					});
 				}
 			}
+
 			app.debug.debug("plugin_RestClient.getMultipleJson() - add result to resultObject");
 			jsonObject[serviceName] = json;
 		});
+
 		return jsonObject;
 	},
 
@@ -293,17 +300,17 @@ var plugin_RestClient = {
 		app.debug.debug("plugin_RestClient.getMultipleJsonAsync() - get multible json objects; async = true");
 		// the deferred object for the caller
 		async = true;
-		
+
 		var dfd = $.Deferred(), promiseArray = [], webserviceNamesArray = [], splittedService;
-		
+
 		app.debug.debug("plugin_RestClient.getMultipleJsonAsync() - generate a ajax call for each webservice");
-	
+
 		$.each(service, function(key, call) {
-			
+
 			app.debug.debug("plugin_RestClient.getMultipleJsonAsync() - generate single async ajax call");
-			
+
 			var serviceName = call[0], parameter = call[1], server, path, promise, wsd;
-			
+
 			app.debug.info("plugin_RestClient - CALL: " + serviceName);
 
 			app.debug.debug("plugin_RestClient.getMultipleJsonAsync() - get server name");
@@ -363,9 +370,11 @@ var plugin_RestClient = {
 			app.debug.debug("plugin_RestClient.getMultipleJsonAsync() - resolve deferred object");
 			dfd.resolve(resultObject);
 		}, function(error) {
-			app.debug.debug("plugin_RestClient.getMultipleJsonAsync() - error on ohne or more async webservices");
+			app.debug.debug("plugin_RestClient.getMultipleJsonAsync() - error on or or more async webservices");
 			app.debug.debug("plugin_RestClient.getMultipleJsonAsync() - async webservice call failed: " + JSON.stringify(error));
 			app.debug.debug("plugin_RestClient.getMultipleJsonAsync() - reject deferred object");
+
+			app.debug.info("plugin_RestClient - FAILED: " + error.id);
 			dfd.reject(error);
 		});
 

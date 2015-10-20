@@ -203,25 +203,50 @@ var plugin_Debug = {
 	functions : {
 		// debug functions
 		trace : function(output) {
+			// log debug output
 			this.log(output, "TRACE");
 		},
 		debug : function(output) {
+			// log debug output
 			this.log(output, "DEBUG");
 		},
 		info : function(output) {
+			// log debug output
 			this.log(output, "INFO");
 		},
 		app : function(output) {
+			// log debug output
 			this.log(output, "APP");
 		},
 		warn : function(output) {
+			// log debug output
 			this.log(output, "WARN");
 		},
 		error : function(output) {
+			// log debug output
 			this.log(output, "ERROR");
+
+			// print stack trace
+			try {
+				console.error("Error trace:");
+			}
+
+			catch (e) {
+				;
+			}
 		},
 		fatal : function(output) {
+			// log debug output
 			this.log(output, "FATAL");
+
+			// print stack trace
+			try {
+				console.error("Error trace:");
+			}
+
+			catch (e) {
+				;
+			}
 		},
 		/**
 		 * Alert if the configured debug level is smaller then the current debug

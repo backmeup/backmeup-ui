@@ -1,0 +1,31 @@
+WELCOME to the lapstone basic user manual!
+
+Basic usage:
+call: java -jar lapstone.jar
+
+*) Page operations:
+   Modify your pages in the lapstone project.
+
+   Obligate parameters:
+   -function=page
+   -path=/absolute/path/to/your/lapstone/project
+   -name=NameOfPageToModify | NameOfPageToCreate | NameOfPageToDelete
+   -modus= new | (not yet implemented: remove | rename)
+   -lapstone=/absolute/path/to/the/lapstone/sources
+
+*) Deploy/Create a lapstone project:
+   Extend your apache cordova project with the lapstone framework.
+
+   Obligate parameters:
+   -function=deploy
+   -path=/absolute/path/to/your/lapstone/project
+   -lapstone=/absolute/path/to/the/lapstone/sources
+   
+*) Release a lapstone project:
+   Create a new build of your app for release.
+   
+   Obligate parameters:
+   -function=release
+   -path=/absolute/path/to/your/lapstone/project
+
+   

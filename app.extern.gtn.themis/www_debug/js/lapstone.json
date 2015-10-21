@@ -1,1 +1,1 @@
-{"name":"themis-app","title":"Themis","version":{"app":"0.0.53","lapstone":"0.0.345","update":false},"min":false,"startPage":"static-index.html","startPage_firstStart":"static-index.html","startPage_loggedIn":"search.html","badConnectionPage":"badConnection.html"}
+{"name":"themis-app","title":"Themis","version":{"app":"0.0.54","lapstone":"0.0.347","update":false},"min":false,"startPage":"static-index.html","startPage_firstStart":"static-index.html","startPage_loggedIn":"search.html","badConnectionPage":"badConnection.html"}

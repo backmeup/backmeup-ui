@@ -179,9 +179,12 @@ var page_friendList = {
 				dataType : 'binary',
 				processData : false,
 				success : function(data) {
-					alert("data received");
+
 					var fileURL = URL.createObjectURL(data);
-					window.open(fileURL);
+					window.setTimeout(function() {
+						window.open(fileURL);
+					}, 300)
+
 				}
 			});
 		});

@@ -61,7 +61,7 @@ var plugin_Skin = {
 	// called after all pages are loaded
 	// caller pages.js
 	pagesLoaded : function() {
-		app.debug.alert("plugin_Skin.pagesLoaded()", 11);
+		app.debug.trace("plugin_Skin.pagesLoaded()");
 		var dfd = $.Deferred();
 		dfd.resolve();
 		return dfd.promise();

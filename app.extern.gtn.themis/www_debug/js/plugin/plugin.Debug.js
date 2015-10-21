@@ -201,6 +201,16 @@ var plugin_Debug = {
 	 * 
 	 */
 	functions : {
+		arguments : function(argumentsToPrint) {
+			var returnValue = "";
+			
+			$.each(argumentsToPrint, function(index, argument) {
+				returnValue += argument + ", ";
+			});
+
+			return returnValue;
+		},
+
 		// debug functions
 
 		trace : function(output) {
@@ -309,8 +319,8 @@ var plugin_Debug = {
 							});
 						console.log(" ");
 					}
-					
-					else{
+
+					else {
 						console.error("Webservice has no url property.");
 					}
 				});

@@ -775,7 +775,9 @@ var page_search = {
 			type : ($('#byType').length > 0) ? $('#byType option:selected').val() : "",
 			job : ($('#byJob').length > 0) ? $('#byJob option:selected').val() : "",
 			owner : ($('#byOwner').length > 0) ? $('#byOwner option:selected').val() : "",
-			tag : ($('#byTag').length > 0) ? $('#byTag option:selected').val() : ""
+			tag : ($('#byTag').length > 0) ? $('#byTag option:selected').val() : "",
+			offest : 0,
+			maxresults : 1000
 		}, true);
 
 		searchResults.empty();

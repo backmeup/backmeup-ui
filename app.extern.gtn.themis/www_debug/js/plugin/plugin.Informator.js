@@ -31,7 +31,7 @@ var plugin_Informator = {
 	},
 
 	pluginsLoaded : function() {
-		app.debug.trace("plugin_Informator.pluginsLoaded(" + app.debug.arguments + ")");
+		app.debug.trace("plugin_Informator.pluginsLoaded(" + app.debug.arguments(arguments) + ")");
 
 		var dfd, global;
 
@@ -59,10 +59,9 @@ var plugin_Informator = {
 
 	// called after all pages are loaded
 	pagesLoaded : function() {
-		app.debug.trace("plugin_Informator.pagesLoaded(" + app.debug.arguments + ")");
+		app.debug.trace("plugin_Informator.pagesLoaded(" + app.debug.arguments(arguments) + ")");
 		var dfd = $.Deferred(), global;
 
-		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
 
 		// validate functionality
 
@@ -83,23 +82,23 @@ var plugin_Informator = {
 	},
 
 	definePluginEvents : function() {
-		app.debug.trace("plugin_Informator.definePluginEvents(" + app.debug.arguments + ")");
+		app.debug.trace("plugin_Informator.definePluginEvents(" + app.debug.arguments(arguments) + ")");
 
 	},
 
 	// called by pages.js
 	afterHtmlInjectedBeforePageComputing : function(container) {
-		app.debug.trace("plugin_Informator.afterHtmlInjectedBeforePageComputing(" + app.debug.arguments + ")");
+		app.debug.trace("plugin_Informator.afterHtmlInjectedBeforePageComputing(" + app.debug.arguments(arguments) + ")");
 
 	},
 	pageSpecificEvents : function(container) {
-		app.debug.trace("plugin_Informator.pageSpecificEvents(" + app.debug.arguments + ")");
+		app.debug.trace("plugin_Informator.pageSpecificEvents(" + app.debug.arguments(arguments) + ")");
 
 	},
 
 	// private functions
 	setDeep : function(el, key, value) {
-		app.debug.trace("plugin_Informator.setDeep(" + app.debug.arguments + ")");
+		app.debug.trace("plugin_Informator.setDeep(" + app.debug.arguments(arguments) + ")");
 		console.warn("Fuction is deprecated. Use: app.help.object.setDeep");
 		key = key.split('.');
 		var i = 0, n = key.length;
@@ -110,7 +109,7 @@ var plugin_Informator = {
 	},
 
 	getDeep : function(el, key) {
-		app.debug.trace("plugin_Informator.getDeep(" + app.debug.arguments + ")");
+		app.debug.trace("plugin_Informator.getDeep(" + app.debug.arguments(arguments) + ")");
 		console.warn("Fuction is deprecated. Use: app.help.object.getDeep");
 		key = key.split('.');
 		var i = 0, n = key.length;
@@ -121,7 +120,7 @@ var plugin_Informator = {
 	},
 
 	loadConfigurationIntoHtml5Storage : function(configurationObject, start) {
-		app.debug.trace("plugin_Informator.loadConfigurationIntoHtml5Storage(" + app.debug.arguments + ")");
+		app.debug.trace("plugin_Informator.loadConfigurationIntoHtml5Storage(" + app.debug.arguments(arguments) + ")");
 		app.debug.debug("plugin_Informator.loadConfigurationIntoHtml5Storage()");
 		app.debug.debug("plugin_Informator.loadConfigurationIntoHtml5Storage() - if property is in html5 storage then use this value");
 		app.debug.debug("plugin_Informator.loadConfigurationIntoHtml5Storage() - else use property from json file");
@@ -160,7 +159,7 @@ var plugin_Informator = {
 	},
 
 	loadValueIntoObject : function(locator) {
-		app.debug.trace("plugin_Informator.loadValueIntoObject(" + app.debug.arguments + ")");
+		app.debug.trace("plugin_Informator.loadValueIntoObject(" + app.debug.arguments(arguments) + ")");
 		app.debug.debug('plugin_Informator.loadValueIntoObject(' + locator + ')');
 		var propertyLocation = locator.substring(plugin_Informator.configurationPrefix.length + 1), value = app.store.localStorage.get(locator);
 		if (propertyLocation.indexOf("..") < 0)
@@ -172,7 +171,7 @@ var plugin_Informator = {
 	functions : {
 		// auch direkt die datei ���ndern
 		set : function(key, value) {
-			app.debug.trace("plugin_Informator.functions.set(" + app.debug.arguments + ")");
+			app.debug.trace("plugin_Informator.functions.set(" + app.debug.arguments(arguments) + ")");
 
 			if (plugin_Informator.config.useHtml5Storage) {
 				app.store.localStorage.set(plugin_Informator.configurationPrefix + "." + key, value);
@@ -182,8 +181,8 @@ var plugin_Informator = {
 		},
 
 		firstUse : function(value) {
-			app.debug.trace("plugin_Informator.functions.firstUse(" + app.debug.arguments + ")");
-			
+			app.debug.trace("plugin_Informator.functions.firstUse(" + app.debug.arguments(arguments) + ")");
+
 			if (value == undefined) {
 				app.debug.debug("plugin_Informator.functions.firstUse(" + value + ") - case: value == undefined");
 				app.debug.debug("plugin_Informator.functions.firstUse() - return: " + app.store.localStorage.get("informator-first-use"));
@@ -192,8 +191,8 @@ var plugin_Informator = {
 				} else {
 					return false;
 				}
-			} 
-			
+			}
+
 			else if (typeof value == "boolean") {
 				app.debug.debug("plugin_Informator.functions.firstUse(" + value + ") - case: typeof value == boolean");
 				app.debug.debug("plugin_Informator.functions.firstUse() - set firstUse to: " + value);
@@ -204,8 +203,8 @@ var plugin_Informator = {
 				}
 				app.debug.debug("plugin_Informator.functions.firstUse() - return: " + value);
 				return value;
-			} 
-			
+			}
+
 			else {
 				app.debug.debug("plugin_Informator.functions.firstUse() - return: null");
 				return null;

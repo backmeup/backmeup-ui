@@ -59,7 +59,7 @@ var plugin_Debug = {
 	 * @protected
 	 */
 	pluginsLoaded : function() {
-		app.debug.trace("plugin_Debug.pluginsLoaded()");
+		app.debug.trace("plugin_Debug.pluginsLoaded(" + app.debug.arguments(arguments) + ")");
 		var dfd = $.Deferred();
 
 		// add dev language to language array
@@ -76,7 +76,7 @@ var plugin_Debug = {
 	 * @protected
 	 */
 	pagesLoaded : function() {
-		app.debug.trace("plugin_Debug.pagesLoaded()");
+		app.debug.trace("plugin_Debug.pagesLoaded(" + app.debug.arguments(arguments) + ")");
 		var dfd = $.Deferred();
 		dfd.resolve();
 		return dfd.promise();
@@ -89,7 +89,7 @@ var plugin_Debug = {
 	 * @returns {boolean} Succesfull or unsuccessful
 	 */
 	definePluginEvents : function() {
-		app.debug.trace("plugin_Debug.definePluginEvents()");
+		app.debug.trace("plugin_Debug.definePluginEvents(" + app.debug.arguments(arguments) + ")");
 	},
 
 	// called by pages.js
@@ -102,7 +102,7 @@ var plugin_Debug = {
 	 *            {object} jQuery page div
 	 */
 	afterHtmlInjectedBeforePageComputing : function(container) {
-		app.debug.trace("plugin_Debug.pagesLoaded()");
+		app.debug.trace("plugin_Debug.pagesLoaded(" + app.debug.arguments(arguments) + ")");
 		if (plugin_Debug.config.debugDevice && (app.config.min == false)) {
 			var debugDiv, select;
 
@@ -173,7 +173,7 @@ var plugin_Debug = {
 	 *            {object} jQuery page div
 	 */
 	pageSpecificEvents : function(container) {
-		app.debug.trace("plugin_Debug.pageSpecificEvents()");
+		app.debug.trace("plugin_Debug.pageSpecificEvents(" + app.debug.arguments(arguments) + ")");
 
 		if (plugin_Debug.config.debugDevice && (app.config.min == false)) {
 			$(document).on('change', '#selConsoleLevel', function() {
@@ -203,12 +203,12 @@ var plugin_Debug = {
 	functions : {
 		arguments : function(argumentsToPrint) {
 			var returnValue = "";
-			
+
 			$.each(argumentsToPrint, function(index, argument) {
 				returnValue += argument + ", ";
 			});
 
-			return returnValue;
+			return returnValue.substring(0, returnValue.length - 2);
 		},
 
 		// debug functions
@@ -297,7 +297,7 @@ var plugin_Debug = {
 
 		ls : {
 			wsd : function() {
-				app.debug.trace("plugin_Debug.functions.ls.wsd()");
+				app.debug.trace("plugin_Debug.functions.ls.wsd(" + app.debug.arguments(arguments) + ")");
 				$.each(plugin_RestClient.config.webservices, function(wsName, singleWsd) {
 					var path, query;
 
@@ -331,27 +331,27 @@ var plugin_Debug = {
 		feedback : {
 
 			language : function(object) {
-				app.debug.trace("plugin_Debug.functions.feedback.language()");
+				app.debug.trace("plugin_Debug.functions.feedback.language(" + app.debug.arguments(arguments) + ")");
 				app.debug.warn("Unimplemented language: " + JSON.stringify(object));
 				$.extend(true, plugin_Debug.feedback.language, object);
 			},
 
 			languageGetJson : function() {
-				app.debug.trace("plugin_Debug.functions.feedback.languageGetJson()");
+				app.debug.trace("plugin_Debug.functions.feedback.languageGetJson(" + app.debug.arguments(arguments) + ")");
 				return JSON.stringify($.extend(true, plugin_Debug.feedback.language, plugin_MultilanguageIso639_3.dictionary));
 			},
 
 			image : function(object) {
-				app.debug.trace("plugin_Debug.functions.feedback.image()");
+				app.debug.trace("plugin_Debug.functions.feedback.image(" + app.debug.arguments(arguments) + ")");
 				app.debug.warn("Unimplemented image: " + JSON.stringify(object));
 				$.extend(true, plugin_Debug.feedback.image, object);
 			},
 			imageGetJson : function() {
-				app.debug.trace("plugin_Debug.functions.feedback.languageGetJson()");
+				app.debug.trace("plugin_Debug.functions.feedback.languageGetJson(" + app.debug.arguments(arguments) + ")");
 				return JSON.stringify($.extend(true, plugin_Debug.feedback.image, plugin_ImageProvider.images));
 			},
 			wsdGetJson : function() {
-				app.debug.trace("plugin_Debug.functions.feedback.wsdGetJson()");
+				app.debug.trace("plugin_Debug.functions.feedback.wsdGetJson(" + app.debug.arguments(arguments) + ")");
 				return JSON.stringify(plugin_RestClient.config.webservices);
 			}
 		}

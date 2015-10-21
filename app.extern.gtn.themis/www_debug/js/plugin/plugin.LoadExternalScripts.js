@@ -30,7 +30,7 @@ var plugin_LoadExternalScripts = {
 		return dfd.promise();
 	},
 	pluginsLoaded : function() {
-		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
+		app.debug.trace(this.config.name + ".pluginsLoaded()", 11);
 
 		var dfd = $.Deferred(), promises = Array(), promiseOfPromises;
 		
@@ -83,7 +83,7 @@ var plugin_LoadExternalScripts = {
 
 	// called after all pages are loaded
 	pagesLoaded : function() {
-		app.debug.alert("plugin_" + this.config.name + ".pagesLoaded()", 11);
+		app.debug.trace("plugin_" + this.config.name + ".pagesLoaded()", 11);
 		var dfd = $.Deferred();
 		dfd.resolve();
 		return dfd.promise();
@@ -94,11 +94,11 @@ var plugin_LoadExternalScripts = {
 	// called by pages.js
 	// called for each page
 	afterHtmlInjectedBeforePageComputing : function(container) {
-		app.debug.alert("Plugin: " + this.config.name + ".afterHtmlInjectedBeforePageComputing()", 5);
+		app.debug.trace("Plugin: " + this.config.name + ".afterHtmlInjectedBeforePageComputing()", 5);
 	},
 	// called once
 	pageSpecificEvents : function() {
-		app.debug.alert("Plugin: " + this.config.name + ".pageSpecificEvents()", 5);
+		app.debug.trace("Plugin: " + this.config.name + ".pageSpecificEvents()", 5);
 	},
 
 	loadScriptsAsync : function(scriptArray) {

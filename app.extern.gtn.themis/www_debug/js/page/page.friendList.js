@@ -169,7 +169,7 @@ var page_friendList = {
 
 		$(this.config.pageId).on("storagefilled", "#getToken", function() {
 			$.ajax({
-				url : 'http://themis-dev01.backmeup.at/backmeup-service-rest/users/' + app.store.localStorage.get('data-html5-friendId') + '/activationCode',
+				url : app.wsc.getServer("backmeup", false) + '/backmeup-service-rest/users/' + app.store.localStorage.get('data-html5-friendId') + '/activationCode',
 				async : false,
 				// accepts : "application/pdf",
 				headers : {

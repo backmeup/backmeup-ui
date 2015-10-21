@@ -201,27 +201,43 @@ var plugin_Debug = {
 	 * 
 	 */
 	functions : {
+		arguments : function(argumentsToPrint) {
+			var returnValue = "";
+			
+			$.each(argumentsToPrint, function(index, argument) {
+				returnValue += argument + ", ";
+			});
+
+			return returnValue;
+		},
+
 		// debug functions
+
 		trace : function(output) {
 			// log debug output
 			this.log(output, "TRACE");
 		},
+
 		debug : function(output) {
 			// log debug output
 			this.log(output, "DEBUG");
 		},
+
 		info : function(output) {
 			// log debug output
 			this.log(output, "INFO");
 		},
+
 		app : function(output) {
 			// log debug output
 			this.log(output, "APP");
 		},
+
 		warn : function(output) {
 			// log debug output
 			this.log(output, "WARN");
 		},
+
 		error : function(output) {
 			// log debug output
 			this.log(output, "ERROR");
@@ -235,6 +251,7 @@ var plugin_Debug = {
 				;
 			}
 		},
+
 		fatal : function(output) {
 			// log debug output
 			this.log(output, "FATAL");
@@ -248,18 +265,11 @@ var plugin_Debug = {
 				;
 			}
 		},
-		/**
-		 * Alert if the configured debug level is smaller then the current debug
-		 * level.
-		 * 
-		 * @param {string}
-		 *            text Text to show.
-		 * @param {int}
-		 *            level Current debug level.
-		 */
+
 		alert : function(text, level) {
-			app.debug.trace("Dep. " + text);
+			console.warn("Dep. " + text);
 		},
+
 		log : function(output, level) {
 
 			if (plugin_Debug.config.debugDevice) {
@@ -284,6 +294,7 @@ var plugin_Debug = {
 			console.warn("Deprecated function!!");
 			alert(JSON.stringify(plugin_Debug.logObject));
 		},
+
 		ls : {
 			wsd : function() {
 				app.debug.trace("plugin_Debug.functions.ls.wsd()");
@@ -292,24 +303,31 @@ var plugin_Debug = {
 
 					console.log("Name: " + wsName);
 
-					path = singleWsd.url.split('?')[0];
-					query = singleWsd.url.split('?')[1];
+					if (singleWsd.hasOwnProperty("url")) {
+						path = singleWsd.url.split('?')[0];
+						query = singleWsd.url.split('?')[1];
 
-					console.log("\tPath: " + path);
-					// console.log("\tQuery: " + query);
+						console.log("\tPath: " + path);
+						// console.log("\tQuery: " + query);
 
-					// console.log("\tPath parameter: todo");
+						// console.log("\tPath parameter: todo");
 
-					console.log("\tQuery parameter:");
-					if (query)
-						$.each(query.split("&"), function(index, parameter) {
-							console.log("\t\t" + parameter.replace("=", " = "));
-						});
-					console.log(" ");
+						console.log("\tQuery parameter:");
+						if (query)
+							$.each(query.split("&"), function(index, parameter) {
+								console.log("\t\t" + parameter.replace("=", " = "));
+							});
+						console.log(" ");
+					}
+
+					else {
+						console.error("Webservice has no url property.");
+					}
 				});
 
 			}
 		},
+
 		feedback : {
 
 			language : function(object) {

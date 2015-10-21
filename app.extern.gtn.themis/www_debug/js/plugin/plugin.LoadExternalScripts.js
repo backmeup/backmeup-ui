@@ -33,9 +33,14 @@ var plugin_LoadExternalScripts = {
 		app.debug.alert(this.config.name + ".pluginsLoaded()", 11);
 
 		var dfd = $.Deferred(), promises = Array(), promiseOfPromises;
+		
+	
+		// styles ordered
+		app.debug.debug("plugin_LoadExternalScripts.pluginsLoaded() - case: load ordered styles");
 		console.log("TODO - script loading");
-
-		// styles
+		
+		// styles unordered
+		app.debug.debug("plugin_LoadExternalScripts.pluginsLoaded() - case: load unordered styles");
 		$.each(plugin_LoadExternalScripts.config.scripts.css, function(key, value) {
 			if (value) {
 				if (key in plugin_LoadExternalScripts.loadedScripts) {

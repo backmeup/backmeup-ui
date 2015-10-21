@@ -777,7 +777,7 @@ var page_search = {
 			owner : ($('#byOwner').length > 0) ? $('#byOwner option:selected').val() : "",
 			tag : ($('#byTag').length > 0) ? $('#byTag option:selected').val() : "",
 			offset : 0,
-			maxresults : 1000
+			maxResults : 1000
 		}, true);
 
 		searchResults.empty();

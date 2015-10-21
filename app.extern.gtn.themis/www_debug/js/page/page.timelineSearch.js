@@ -151,8 +151,8 @@ var page_timelineSearch = {
 			job : '',
 			owner : '',
 			tag : '',
-			offsetStart: 0,
-			offsetEnd: 1500
+			offset: 0,
+			maxResults: 1500
 		}, true).done(function(results) {
       this.spatioTemporalUI.update(results);
 		}.bind(this));

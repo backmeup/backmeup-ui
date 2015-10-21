@@ -330,7 +330,7 @@ var page_search = {
 		getThumbnail : function(singleSearchResult) {
 			var imgUrl;
 			if ((imgUrl = singleSearchResult.thumbnailUrl) != undefined) {
-				return imgUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)));
+				return imgUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)) + "/" + singleSearchResult.ownerId);
 			} else if ((imgUrl = app.img.getUrlById("search_" + singleSearchResult.type)) != "search_" + singleSearchResult.type)
 				return imgUrl;
 			else {
@@ -340,7 +340,7 @@ var page_search = {
 
 		getResultUrl : function(singleSearchResult) {
 			if (singleSearchResult.downloadUrl != undefined) {
-				return singleSearchResult.downloadUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)));
+				return singleSearchResult.downloadUrl.replace("###TOKEN###", encodeURIComponent(app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)) + "/" + singleSearchResult.ownerId);
 			} else {
 				return false;
 			}

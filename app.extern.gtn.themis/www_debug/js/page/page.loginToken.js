@@ -102,6 +102,10 @@ var page_loginToken = {
 			}),
 			"classes" : [ 'app-subtext1' ]
 		}));
+		if (window.location.href.indexOf("authCode=") > -1) {
+			var authCode = window.location.href.substring(window.location.href.indexOf("authCode=") + "authCode=".length);
+			$('#txtToken').val(authCode);
+		}
 	},
 
 	async : {
@@ -165,7 +169,7 @@ var page_loginToken = {
 					}, true);
 
 					app.sess.setValue("heritage");
-					
+
 					app.help.navigation.redirect("startToken.html", "slideup");
 
 				} else {

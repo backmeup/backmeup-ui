@@ -1,8 +1,25 @@
+/**
+ * 
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
+
 var page_timelineSearch = {
 
 	config : null,
-	include: null,
-	include_once: null,
+	include : null,
+	include_once : null,
 
 	elements : null,
 
@@ -16,7 +33,7 @@ var page_timelineSearch = {
 	creator : function(container) {
 		app.debug.trace("page_timelineSearch.creator()");
 
-    var content = $('div[data-role=content]');
+		var content = $('div[data-role=content]');
 
 		var form = app.ni.form.form({
 			"id" : "frmSearch",
@@ -29,9 +46,7 @@ var page_timelineSearch = {
 
 		form.append(app.ni.text.text({
 			"id" : "txtSearch",
-			"placeholder" : (app.store.localStorage.get("data-html5-themis-timelinesearch-value")) ?
-			  app.store.localStorage.get("data-html5-themis-timelinesearch-value") :
-				app.lang.string("search", "labels"),
+			"placeholder" : (app.store.localStorage.get("data-html5-themis-timelinesearch-value")) ? app.store.localStorage.get("data-html5-themis-timelinesearch-value") : app.lang.string("search", "labels"),
 			"label" : false,
 			"labelText" : app.lang.string("search", "labels"),
 			"container" : false
@@ -52,26 +67,34 @@ var page_timelineSearch = {
 		content.append(form);
 
 		// Anchor elements for spatiotemporal result view
-		var sidebar = app.ni.element.div({ "id" : "divStsSidebar" });
-		var map = app.ni.element.div({ "id" : "divStsMap" });
+		var sidebar = app.ni.element.div({
+			"id" : "divStsSidebar"
+		});
+		var map = app.ni.element.div({
+			"id" : "divStsMap"
+		});
 		sidebar.append(map);
 
-		var histogram = app.ni.element.div({ "id" : "divStsHistogram" });
-    sidebar.append(histogram);
+		var histogram = app.ni.element.div({
+			"id" : "divStsHistogram"
+		});
+		sidebar.append(histogram);
 
 		content.append(sidebar);
 
-		var resultList = app.ni.element.div({ "id" : "divStsResultList"});
-    content.append(resultList);
+		var resultList = app.ni.element.div({
+			"id" : "divStsResultList"
+		});
+		content.append(resultList);
 
 		// Attach spatiotemporal UI to anchor elements
 		this.spatioTemporalUI = new SpatioTemporalUI({
-      resultList: resultList,
-      map: map,
-      timeHistogram: histogram,
-			imagePath: '../ext/leaflet/images/',
-			token: app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)
-    });
+			resultList : resultList,
+			map : map,
+			timeHistogram : histogram,
+			imagePath : '../ext/leaflet/images/',
+			token : app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)
+		});
 
 		if (app.store.localStorage.get("data-html5-themis-timelinesearch-value") !== null) {
 			window.setTimeout(function() {
@@ -123,27 +146,25 @@ var page_timelineSearch = {
 		app.debug.trace("page_timelineSearch.setEvents()");
 
 		// Scroll the fixed sidebar, up to position top=0
-    jQuery(document).scroll(function() {
-      var scrollTop = jQuery(window).scrollTop(),
-			    resultListTop = jQuery('#divStsResultList').offset().top;
+		jQuery(document).scroll(function() {
+			var scrollTop = jQuery(window).scrollTop(), resultListTop = jQuery('#divStsResultList').offset().top;
 
-      if (resultListTop > scrollTop)
-			  jQuery('#divStsSidebar').css('top', resultListTop - scrollTop);
+			if (resultListTop > scrollTop)
+				jQuery('#divStsSidebar').css('top', resultListTop - scrollTop);
 			else
 				jQuery('#divStsSidebar').css('top', 10);
 		});
 
 		jQuery(this.config.pageId).on('submit', '#frmSearch', function(e) {
 			e.preventDefault();
-			app.store.localStorage.set("data-html5-themis-timelinesearch-value",
-			  jQuery("#txtSearch").val());
+			app.store.localStorage.set("data-html5-themis-timelinesearch-value", jQuery("#txtSearch").val());
 
 			page_timelineSearch.update();
 		});
 	},
 
 	update : function() {
-    // TODO pagination - currently we just download the first 1.5k results
+		// TODO pagination - currently we just download the first 1.5k results
 		app.rc.getJson('searchWithFilters', {
 			query : app.store.localStorage.get('data-html5-themis-timelinesearch-value'),
 			source : '',
@@ -151,10 +172,10 @@ var page_timelineSearch = {
 			job : '',
 			owner : '',
 			tag : '',
-			offset: 0,
-			maxResults: 1500
+			offset : 0,
+			maxResults : 1500
 		}, true).done(function(results) {
-      this.spatioTemporalUI.update(results);
+			this.spatioTemporalUI.update(results);
 		}.bind(this));
 	},
 

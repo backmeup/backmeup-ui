@@ -1,2 +1,9 @@
 External frameworks, libraries and scripts:
 
+jQuery                MIT
+jQueryMobile          MIT
+DATE.js               MIT
+leaflet.js            ???
+moment.js             MIT
+spatiotemporal-search.no-deps.min.js ???
+

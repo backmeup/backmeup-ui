@@ -183,7 +183,7 @@ var plugin_HTML5Storage = {
 
 	getDeep : function(el, key) {
 		console.warn("Fuction is deprecated. Use: app.help.object.getDeep");
-		app.debug.alert('plugin_HTML5Storage.getDeep(' + el + ', ' + key + ')');
+		app.debug.debug('plugin_HTML5Storage.getDeep(' + el + ', ' + key + ')');
 		key = key.split('.');
 		var i = 0, n = key.length;
 		for (; i < n; ++i) {

@@ -16,9 +16,19 @@
   border:1px solid #efefef;
 }
 
-#divStsHistogram {
+#divStsFilters {
   position:absolute;
   top:270px;
+}
+
+#divStsFilters select {
+  height:20px;
+  width:320px;
+}
+
+#divStsHistogram {
+  position:absolute;
+  top:300px;
   bottom:0;
   width:320px;
   border:1px solid #efefef;

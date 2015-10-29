@@ -438,6 +438,7 @@ var globalLoader = {
 			attempts = globalLoader.globalAttempts;
 
 		$.ajax({
+			cache : cacheAjax(),
 			url : url,
 			async : true,
 			dataType : "text",

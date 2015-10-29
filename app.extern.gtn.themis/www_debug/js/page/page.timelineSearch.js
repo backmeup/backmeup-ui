@@ -1,18 +1,18 @@
 /**
- * 
+ *
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 var page_timelineSearch = {
@@ -70,10 +70,16 @@ var page_timelineSearch = {
 		var sidebar = app.ni.element.div({
 			"id" : "divStsSidebar"
 		});
+
 		var map = app.ni.element.div({
 			"id" : "divStsMap"
 		});
 		sidebar.append(map);
+
+		var filterDropdown = app.ni.element.div({
+			"id" : "divStsFilters"
+		});
+		sidebar.append(filterDropdown);
 
 		var histogram = app.ni.element.div({
 			"id" : "divStsHistogram"
@@ -92,6 +98,7 @@ var page_timelineSearch = {
 			resultList : resultList,
 			map : map,
 			timeHistogram : histogram,
+			filters: filterDropdown,
 			imagePath : '../ext/leaflet/images/',
 			token : app.store.localStorage.get(plugin_WebServiceClient.config.headerToken.value)
 		});

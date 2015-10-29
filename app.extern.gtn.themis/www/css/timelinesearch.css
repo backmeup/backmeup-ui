@@ -1,4 +1,6 @@
 #divStsResultList{margin-left:330px;min-height:600px;border:1px solid #efefef}
 #divStsSidebar{position:fixed;height:100%;width:320px}
 #divStsMap{width:320px;height:260px;border:1px solid #efefef}
-#divStsHistogram{position:absolute;top:270px;bottom:0;width:320px;border:1px solid #efefef}
+#divStsFilters{position:absolute;top:270px}
+#divStsFilters select{height:20px;width:320px}
+#divStsHistogram{position:absolute;top:300px;bottom:0;width:320px;border:1px solid #efefef}

@@ -1,68 +1,11 @@
-#popupDialog {
-	box-shadow: none;
-	min-width: 250px;
-}
-
-#popupDialog h1 {
-	font-size: 15px;
-	font-weight: normal;
-	padding: 7px;
-}
-
-#popupDialog h3 {
-	font-size: 16px;
-	font-weight: normal;
-}
-
-#popupDialog .ui-header {
-	
-}
-
-#popupDialog .ui-content {
-	padding: 10px 0px 0px 0px;
-	text-align: center;
-}
-
-#popupDialog .ui-content p {
-	padding: 0 10px 0 10px !important;
-}
-
-#popupDialog .ui-content ul.ui-listview {
-	margin: 0;
-}
-
-#popupDialog .ui-content ul.ui-listview>li>a {
-	background-color: #FFF;
-	border: none;
-}
-
-#popupDialog .ui-btn .ui-focus {
-	box-shadow: none !important;
-}
-
-#popupDialog .btn-container {
-	text-align: right;
-	padding: 0;
-	margin: 0;
-}
-
-#popupDialog #btn-dialog-left {
-	width: 100%;
-	padding: 10px 0px 5px 0px;
-	color: #0080FF;
-	background-color: #FFF;
-	border: none;
-	border-top: 1px solid #0080FF;
-	border-radius: 0px;
-	margin: 0;
-}
-
-#popupDialog #btn-dialog-right {
-	width: 100%;
-	padding: 10px 0px 5px 0px;
-	color: #0080FF;
-	background-color: #FFF;
-	border: none;
-	border-top: 1px solid #0080FF;
-	border-radius: 0px;
-}
+#popupDialog{box-shadow:none;min-width:250px}
+#popupDialog h1{font-size:15px;font-weight:normal;padding:7px}
+#popupDialog h3{font-size:16px;font-weight:normal}
+#popupDialog .ui-content{padding:10px 0 0 0;text-align:center}
+#popupDialog .ui-content p{padding:0 10px 0 10px !important}
+#popupDialog .ui-content ul.ui-listview{margin:0}
+#popupDialog .ui-content ul.ui-listview>li>a{background-color:#FFF;border:0}
+#popupDialog .ui-btn .ui-focus{box-shadow:none !important}
+#popupDialog .btn-container{text-align:right;padding:0;margin:0}
+#popupDialog #btn-dialog-left{width:100%;padding:10px 0 5px 0;color:#0080ff;background-color:#FFF;border:0;border-top:1px solid #0080ff;border-radius:0;margin:0}
+#popupDialog #btn-dialog-right{width:100%;padding:10px 0 5px 0;color:#0080ff;background-color:#FFF;border:0;border-top:1px solid #0080ff;border-radius:0}

@@ -156,6 +156,15 @@ var globalPage = {
 
 					}
 				})));
+			
+			ul.append(app.ni.element.li().append(app.ni.element.a({
+				"id" : "navFriendList",
+				"text" : app.lang.string("timeline search", "actions"),
+				"attributes" : {
+					"href" : "timelineSearch.html",
+
+				}
+			})));
 
 			if (!app.sess.getValue('heritage'))
 				if (!app.sess.loggedIn())

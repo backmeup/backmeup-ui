@@ -23,6 +23,7 @@
 				<version>2.5</version>
 				<configuration>
 					<webappDirectory>app.extern.gtn.themis/www_debug</webappDirectory>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
 		</plugins>
